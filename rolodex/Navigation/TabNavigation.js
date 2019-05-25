@@ -1,11 +1,33 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { Modal, Button, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator, createAppContainer , createDrawerNavigator,
   createStackNavigator} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
 // Home screen that will show the deck of business cards
 class HomeScreen extends React.Component {
+  state = { count: 0,
+    barVisible: false }
+
+  setBarVisible(visible) {
+    this.setState({
+      barVisible: visible
+    });
+  }
+
+  closeModal() {
+    this.setState({
+      barVisible: false
+    });
+  }
+
+  onPress = () => {
+    this.setBarVisible(!this.state.barVisible);
+    console.log('hello');
+    
+  }
+
+
 
   // Icons for adding and filtering
   render() {
@@ -16,9 +38,29 @@ class HomeScreen extends React.Component {
           <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} /> 
         </View>
         <View style={styles.leftTop}>
-          <Ionicons name={'ios-options'}size={30} color={'black'} />
+        <TouchableOpacity onPress={this.onPress}>
+          <Ionicons name={'ios-options'}size={30} color={'black'}/>
+        </TouchableOpacity>
         </View>
       </View>
+      {/*Adding a modal that would display the different filters */}
+      <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.barVisible}
+          onRequestClose={() => this.closeModal()}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.checkContainer}>
+                <TouchableOpacity onPress={() => this.closeModal()}>
+                  <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.innerContainer}>
+                <Text style={{color:'white', fontWeight: 'bold', fontSize: 20}}>Select filters:</Text>
+              </View>
+            </View>
+          </Modal>
       </View>
     );
   }
@@ -126,5 +168,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
                 left: 20,
                 top: 40,
+                
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  innerContainer: {
+    position: 'absolute',
+    left: 70,
+    top: 30,
+  },
+  checkContainer: {
+    position: 'absolute',
+    right: 50,
+    top: 20,
   }
 });

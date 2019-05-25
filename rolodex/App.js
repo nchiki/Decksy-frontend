@@ -50,6 +50,7 @@ const styles = StyleSheet.create({
   bigTitle: {
     fontWeight: 'bold',
     fontSize: 30,
+    fontFamily: 'monospace'
   },
   red: {
     color: 'red',
