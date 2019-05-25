@@ -1,27 +1,41 @@
 import React from 'react';
-import { Text, View, StyleSheet} from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { createBottomTabNavigator, createAppContainer , createDrawerNavigator,
+  createStackNavigator} from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 
+// Home screen that will show the deck of business cards
 class HomeScreen extends React.Component {
+
+  // Icons for adding and filtering
   render() {
     return (
-      <View style={styles.container}>
-       <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} />
+      <View>
+      <View style={{height:80, backgroundColor:'azure'}}>
+        <View style={styles.container}>
+          <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} /> 
+        </View>
+        <View style={styles.leftTop}>
+          <Ionicons name={'ios-options'}size={30} color={'black'} />
+        </View>
+      </View>
       </View>
     );
   }
 }
 
-class SettingsScreen extends React.Component {
+// Profile screen that shows own card 
+class ProfileScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Settings!</Text>
+        <Text>Welcome!</Text>
       </View>
     );
   }
 }
+
+// Using ionicons to display different icons, here is the sixe/color of those
 class IconWithBadge extends React.Component {
   render() {
     const { name, badgeCount, color, size } = this.props;
@@ -51,16 +65,20 @@ class IconWithBadge extends React.Component {
   }
 }
 
+//Styling, can show number of notifications on each screen (useful for messages)
+//Now simply shows 3 as badge in menu and nothing on profile
+
 const HomeIconWithBadge = props => {
   // You should pass down the badgeCount in some other ways like context, redux, mobx or event emitters.
   return <IconWithBadge {...props} badgeCount={3} />;
 };
-const SettingsIconWithBadge = props => {
+const ProfileIconWithBadge = props => {
   // You should pass down the badgeCount in some other ways like context, redux, mobx or event emitters.
-return <IconWithBadge  {...props} name={'ios-options'}/>;
+return <IconWithBadge  {...props} name={'ios-person'}/>;
 };
 
 
+// Design of the botton tab, which returns and highlights the correspondent icon
 const getTabBarIcon = (navigation, focused, tintColor) => {
   const { routeName } = navigation.state;
   let IconComponent = Ionicons;
@@ -68,20 +86,21 @@ const getTabBarIcon = (navigation, focused, tintColor) => {
   if (routeName === 'Home') {
     iconName = `ios-information-circle${focused ? '' : '-outline'}`;
     IconComponent = HomeIconWithBadge;
-  } else if (routeName === 'Settings') {
+  } else if (routeName === 'Profile') {
     iconName = `ios-options${focused ? '' : '-outline'}`;
-    IconComponent = SettingsIconWithBadge;
+    IconComponent = ProfileIconWithBadge;
   }
 
-  // You can return any component that you like here!
+  // You can return any component that you like here
   return <IconComponent name={iconName} size={25} color={tintColor} />;
 };
 
+// Creating the app container (botton tab) and mapping to relevant screens
 export default createAppContainer(
   createBottomTabNavigator(
     {
-      Home: { screen: HomeScreen },
-      Settings: { screen: SettingsScreen },
+      Home: { screen: HomeScreen},
+      Profile: { screen: ProfileScreen },
     },
     {
       defaultNavigationOptions: ({ navigation }) => ({
@@ -95,10 +114,17 @@ export default createAppContainer(
     }
   )
 );
+
+//Styles of the views of home screen
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
                 right: 20,
+                top: 40,
+  },
+  leftTop: {
+    position: 'absolute',
+                left: 20,
                 top: 40,
   }
 });
