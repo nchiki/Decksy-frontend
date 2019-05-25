@@ -1,19 +1,59 @@
 import React from 'react';
-import { Modal, Button, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import { createBottomTabNavigator, createAppContainer , createDrawerNavigator,
-  createStackNavigator} from 'react-navigation';
-import { Ionicons } from '@expo/vector-icons';
 
+import { Modal, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+
+import { Ionicons } from '@expo/vector-icons';
+import { CheckBox } from 'react-native-elements';
+
+function DisplayFilters() {
+        return(
+          <View>
+          <CheckBox
+                center
+                title='Software'
+                checked={this.state.checked}
+              />
+              <CheckBox
+                center
+                title='Business'
+                checked={this.state.checked}
+              />
+              <CheckBox
+                center
+                title='Finance'
+                checked={this.state.checked}
+              />
+              <CheckBox
+                center
+                title='Hardware'
+                checked={this.state.checked}
+              /></View>
+        );
+}
 // Home screen that will show the deck of business cards
 class HomeScreen extends React.Component {
-  state = { count: 0,
-    barVisible: false }
+  
+  constructor(props) {
+    super(props);
+    this.state = { count: 0,
+      barVisible: false ,
+    filtersChecked: new Map()} 
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    const item = e.target.name;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+  }
 
   setBarVisible(visible) {
     this.setState({
       barVisible: visible
     });
   }
+
 
   closeModal() {
     this.setState({
@@ -28,7 +68,8 @@ class HomeScreen extends React.Component {
   }
 
 
-
+//<Filter name={item.name} checked={this.state.filtersChecked.get(item.name)} onChange={() => this.handleChange()} />
+                     
   // Icons for adding and filtering
   render() {
     return (
@@ -58,6 +99,9 @@ class HomeScreen extends React.Component {
               </View>
               <View style={styles.innerContainer}>
                 <Text style={{color:'white', fontWeight: 'bold', fontSize: 20}}>Select filters:</Text>
+              </View>
+              <View>
+              <DisplayFilters />
               </View>
             </View>
           </Modal>
