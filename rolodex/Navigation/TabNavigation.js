@@ -37,7 +37,7 @@ class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = { count: 0,
-      barVisible: false ,
+      barVisible: false , addVisible: false,
     filtersChecked: new Map()} 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -45,15 +45,22 @@ class HomeScreen extends React.Component {
   handleChange(e) {
     const item = e.target.name;
     const isChecked = e.target.checked;
-    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+    this.setState(prevState => ({ filtersChecked: prevState.filtersChecked.set(item, isChecked) }));
   }
 
   setBarVisible(visible) {
     this.setState({
-      barVisible: visible
+      barVisible: visible,
+      addVisible: false
     });
   }
 
+  setAddOptionsVisible(visible) {
+    this.setState({
+      barVisible: false,
+      addVisible: visible
+    });
+  }
 
   closeModal() {
     this.setState({
@@ -61,12 +68,20 @@ class HomeScreen extends React.Component {
     });
   }
 
-  onPress = () => {
-    this.setBarVisible(!this.state.barVisible);
-    console.log('hello');
-    
+  closeAddModal() {
+    this.setState({
+      addVisible : false
+    })
   }
 
+
+  onFiltersPress = () => {
+    this.setBarVisible(!this.state.barVisible); 
+  }
+
+  onAddPress = () => {
+    this.setAddOptionsVisible(!this.state.addVisible); 
+  }
 
 //<Filter name={item.name} checked={this.state.filtersChecked.get(item.name)} onChange={() => this.handleChange()} />
                      
@@ -76,10 +91,12 @@ class HomeScreen extends React.Component {
       <View>
       <View style={{height:80, backgroundColor:'azure'}}>
         <View style={styles.container}>
-          <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} /> 
+          <TouchableOpacity onPress={this.onAddPress}>
+            <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} /> 
+          </TouchableOpacity>
         </View>
         <View style={styles.leftTop}>
-        <TouchableOpacity onPress={this.onPress}>
+        <TouchableOpacity onPress={this.onFiltersPress}>
           <Ionicons name={'ios-options'}size={30} color={'black'}/>
         </TouchableOpacity>
         </View>
@@ -102,6 +119,24 @@ class HomeScreen extends React.Component {
               </View>
               <View>
               <DisplayFilters />
+              </View>
+            </View>
+          </Modal>
+
+          <Modal
+          animationType="slide"
+          transparent={true}
+          visible={this.state.addVisible}
+          onRequestClose={() => this.closeAddModal()}
+          >
+            <View style={styles.modalAddContainer}>
+              <View style={styles.checkContainer}>
+                <TouchableOpacity onPress={() => this.closeAddModal()}>
+                  <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
+                </TouchableOpacity>
+              </View>
+              <View style={styles.innerContainer}>
+                <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Add:</Text>
               </View>
             </View>
           </Modal>
@@ -230,5 +265,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: 20,
-  }
+  },
+  modalAddContainer: {
+    
+    justifyContent: 'center',
+    backgroundColor: 'powderblue',
+    height: 400,
+    width: 200,
+    alignSelf:'flex-end'
+  },
 });
