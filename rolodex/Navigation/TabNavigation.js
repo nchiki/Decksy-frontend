@@ -87,7 +87,7 @@ class HomeScreen extends React.Component {
       {/*Adding a modal that would display the different filters */}
       <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={this.state.barVisible}
           onRequestClose={() => this.closeModal()}
           >
@@ -98,7 +98,7 @@ class HomeScreen extends React.Component {
                 </TouchableOpacity>
               </View>
               <View style={styles.innerContainer}>
-                <Text style={{color:'white', fontWeight: 'bold', fontSize: 20}}>Select filters:</Text>
+                <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Select filters:</Text>
               </View>
               <View>
               <DisplayFilters />
@@ -218,15 +218,17 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: 'grey',
+    height: 400,
+    width: 200
   },
   innerContainer: {
     position: 'absolute',
-    left: 70,
+    left: 10,
     top: 30,
   },
   checkContainer: {
     position: 'absolute',
-    right: 50,
+    right: 20,
     top: 20,
   }
 });
