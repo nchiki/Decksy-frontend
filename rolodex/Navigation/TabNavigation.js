@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, Modal, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
 
 import { Ionicons } from '@expo/vector-icons';
@@ -149,8 +149,15 @@ class HomeScreen extends React.Component {
 class ProfileScreen extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Welcome!</Text>
+      <View style={{ flex: 1}}>
+        <View style={{flex: 1, backgroundColor: 'azure', justifyContent: "center", alignItems: "center"}}> 
+          <Text style={styles.bigTitle}> RoloDex </Text>
+          </View>
+          <View style={{flex:9, alignItems: "center"}} >
+            <View style={{top:30}}>
+              <Image source={require('./card.png')} />
+            </View>
+        </View>
       </View>
     );
   }
@@ -273,5 +280,10 @@ const styles = StyleSheet.create({
     height: 400,
     width: 200,
     alignSelf:'flex-end'
+  },
+  bigTitle: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    fontFamily: 'monospace'
   },
 });
