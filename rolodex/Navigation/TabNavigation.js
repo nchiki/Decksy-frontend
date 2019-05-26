@@ -2,6 +2,8 @@ import React from 'react';
 
 import {Image, Modal, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import ProfileScreen from './ProfileScreen';
+import styles from './HomeStyles';
 
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
@@ -145,23 +147,6 @@ class HomeScreen extends React.Component {
   }
 }
 
-// Profile screen that shows own card 
-class ProfileScreen extends React.Component {
-  render() {
-    return (
-      <View style={{ flex: 1}}>
-        <View style={{flex: 1, backgroundColor: 'azure', justifyContent: "center", alignItems: "center"}}> 
-          <Text style={styles.bigTitle}> RoloDex </Text>
-          </View>
-          <View style={{flex:9, alignItems: "center"}} >
-            <View style={{top:30}}>
-              <Image source={require('./card.png')} />
-            </View>
-        </View>
-      </View>
-    );
-  }
-}
 
 // Using ionicons to display different icons, here is the sixe/color of those
 class IconWithBadge extends React.Component {
@@ -243,47 +228,3 @@ export default createAppContainer(
   )
 );
 
-//Styles of the views of home screen
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-                right: 20,
-                top: 40,
-  },
-  leftTop: {
-    position: 'absolute',
-                left: 20,
-                top: 40,
-                
-  },
-  modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: 'grey',
-    height: 400,
-    width: 200
-  },
-  innerContainer: {
-    position: 'absolute',
-    left: 10,
-    top: 30,
-  },
-  checkContainer: {
-    position: 'absolute',
-    right: 20,
-    top: 20,
-  },
-  modalAddContainer: {
-    
-    justifyContent: 'center',
-    backgroundColor: 'powderblue',
-    height: 400,
-    width: 200,
-    alignSelf:'flex-end'
-  },
-  bigTitle: {
-    fontWeight: 'bold',
-    fontSize: 20,
-    fontFamily: 'monospace'
-  },
-});
