@@ -2,14 +2,15 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { Divider, Card} from 'react-native-elements';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import FlipCard from 'react-native-flip-card';
          
 const users = [
   {
-  name: 'Mr. Roberts',
-  company: 'Facebook',
-  field: 'Software',
-  phoneNumber: '073004889',
-  email:'roberts@email.com'
+    name: 'Mr. Roberts',
+    company: 'Facebook',
+    field: 'Software',
+    phoneNumber: '073004889',
+    email:'roberts@email.com'
   },
   ]
   
@@ -17,28 +18,40 @@ const users = [
     render(){
       return(
              // implemented without image with header
-             <View style={{alignItems:'center', top:90}}>
+             <View style={{alignItems:'center'}}>
             {
                users.map((u, i) => {
                  return (
-                   <View key={i}>
-                  <Card title={u.name} titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
-                   <View style={styles.user}>
-                     <Text style={styles.company}>{u.company}</Text>
-                     <Text style={styles.details}><Ionicons name='ios-call'/>  {u.phoneNumber}{"\n"}
-                     <Ionicons name='ios-mail'/>  {u.email}</Text>
-                   </View>
-                   <Divider style={{ backgroundColor: 'darkblue', width: 10, bottom: 40}} />
-                   <Divider style={{ backgroundColor: 'darkblue', width: 30, bottom: 30}} />
-                   <Divider style={{ backgroundColor: 'darkblue', width: 50, bottom: 20}} />
-                   <Divider style={{ backgroundColor: 'darkblue', width: 70, bottom: 10}} />
-                   <Divider style={{ backgroundColor: 'darkblue', width: 90}} />
-                   <Divider style={{ backgroundColor: 'darkblue', width: 110, bottom: -10}}/>
-                   <Divider style={{ backgroundColor: 'darkblue', width: 130, bottom: -20}} />
-                   <Divider style={{ backgroundColor: 'darkblue', width: 150, bottom: -30}} />
-                   
-                   </Card>
-                   </View>
+                  <View key={i}><FlipCard friction={6}
+                  perspective={1000}
+                  flipHorizontal={true}
+                  flipVertical={false}
+                  flip={false}
+                  clickable={true}>
+                 <Card title={u.name} titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
+                  <View style={styles.user}>
+                    <Text style={styles.company}>{u.company}</Text>
+                    <Text style={styles.details}>{u.phoneNumber}{"\n"}{u.email}</Text>
+                  </View>
+                  <Divider style={{ backgroundColor: 'darkblue', width: 10, bottom: 40}} />
+                  <Divider style={{ backgroundColor: 'darkblue', width: 30, bottom: 30}} />
+                  <Divider style={{ backgroundColor: 'darkblue', width: 50, bottom: 20}} />
+                  <Divider style={{ backgroundColor: 'darkblue', width: 70, bottom: 10}} />
+                  <Divider style={{ backgroundColor: 'darkblue', width: 90}} />
+                  <Divider style={{ backgroundColor: 'darkblue', width: 110, bottom: -10}}/>
+                  <Divider style={{ backgroundColor: 'darkblue', width: 130, bottom: -20}} />
+                  <Divider style={{ backgroundColor: 'darkblue', width: 150, bottom: -30}} />
+                  
+                  </Card>
+                  <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
+                  <View style={styles.user}>
+                    <Text>LOVE YOU</Text>
+                  </View>
+                  
+                  
+                  </Card>
+                  </FlipCard>
+                  </View>
                  );
                })
              }
@@ -51,6 +64,10 @@ const users = [
 
   const styles = StyleSheet.create({
     containerStyle: {
+      width: 350,
+      height: 200,
+    },
+    containerBackStyle: {
       width: 350,
       height: 200,
     },
