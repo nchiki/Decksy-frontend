@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from '../styles/Styles';
 
-import { Modal, Text, View, TouchableOpacity} from 'react-native';
+import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
 
@@ -64,57 +64,66 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View>
-      <View style={{height:80, backgroundColor:'azure'}}>
-        <View style={styles.container}>
-          <TouchableOpacity onPress={this.onAddPress}>
-            <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} /> 
-          </TouchableOpacity>
+        <View style={{height:80, backgroundColor:'azure'}}>
+          <View style={styles.container}>
+            <TouchableOpacity onPress={this.onAddPress}>
+              <Ionicons name={`ios-add-circle`} size={30} color={'powderblue'} /> 
+            </TouchableOpacity>
+          </View>
+          <View style={styles.leftTop}>
+            <TouchableOpacity onPress={this.onFiltersPress}>
+              <Ionicons name={'ios-options'} size={30} color={'black'}/>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.leftTop}>
-        <TouchableOpacity onPress={this.onFiltersPress}>
-          <Ionicons name={'ios-options'}size={30} color={'black'}/>
-        </TouchableOpacity>
-        </View>
-      </View>
-      {/*Adding a modal that would display the different filters */}
-      <Modal
+        {/*Adding a modal that would display the different filters */}
+        <Modal
           animationType="slide"
           transparent={true}
           visible={this.state.barVisible}
           onRequestClose={() => this.closeModal()}
-          >
-            <View style={styles.modalContainer}>
-              <View style={styles.checkContainer}>
-                <TouchableOpacity onPress={() => this.closeModal()}>
-                  <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.innerContainer}>
-                <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Select filters:</Text>
-              </View>
-              <View>
-              <DisplayFilters />
-              </View>
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.checkContainer}>
+              <TouchableOpacity onPress={() => this.closeModal()}>
+                <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
+              </TouchableOpacity>
             </View>
-          </Modal>
+            <View style={styles.innerContainer}>
+              <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Select filters:</Text>
+            </View>
+            <View>
+              <DisplayFilters />
+            </View>
+          </View>
+        </Modal>
 
-          <Modal
+        <Modal
           animationType="slide"
           transparent={true}
           visible={this.state.addVisible}
           onRequestClose={() => this.closeAddModal()}
-          >
-            <View style={styles.modalAddContainer}>
-              <View style={styles.checkContainer}>
-                <TouchableOpacity onPress={() => this.closeAddModal()}>
-                  <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
-                </TouchableOpacity>
-              </View>
-              <View style={styles.innerContainer}>
-                <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Add:</Text>
-              </View>
+        >
+          <View style={styles.modalAddContainer}>
+            <View style={styles.checkContainer}>
+              <TouchableOpacity onPress={() => this.closeAddModal()}>
+                <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
+              </TouchableOpacity>
             </View>
-          </Modal>
+            <View style={styles.innerContainer}>
+              <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Add:</Text>
+            </View>
+          </View>
+        </Modal>
+
+        <View style={styles.section}>
+          <SectionList
+            sections={getCards()}
+            renderItem={({item}) => <Button style={styles.item} onPress={() => {Alert.alert(`You tapped on ${item}!`);}} title={item} />}
+            renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+            keyExtractor={(item, index) => index}
+          />
+        </View>
       </View>
     );
   }
@@ -123,25 +132,34 @@ export default class HomeScreen extends React.Component {
 function DisplayFilters() {
   return(
     <View>
-    <CheckBox
-          center
-          title='Software'
-          checked={this.state.checked}
-        />
-        <CheckBox
-          center
-          title='Business'
-          checked={this.state.checked}
-        />
-        <CheckBox
-          center
-          title='Finance'
-          checked={this.state.checked}
-        />
-        <CheckBox
-          center
-          title='Hardware'
-          checked={this.state.checked}
-        /></View>
+      <CheckBox
+        center
+        title='Software'
+        checked={this.state.checked}
+      />
+      <CheckBox
+        center
+        title='Business'
+        checked={this.state.checked}
+      />
+      <CheckBox
+        center
+        title='Finance'
+        checked={this.state.checked}
+      />
+      <CheckBox
+        center
+        title='Hardware'
+        checked={this.state.checked}
+      />
+    </View>
   );
 }
+
+function getCards() {
+  return [
+    {title: 'D', data: ['Devin']},
+    {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
+  ];
+}
+
