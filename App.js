@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, AppRegistry, View, StyleSheet, ScrollView} from 'react-native';
-import TabNavigation from './navigation/TabNavigation';
+
+import AppNavigation from './navigation/AppNavigation';
 const NavigatorTypes = Object.freeze({"stack":1, "tab":2, "drawer":3})
 
 
@@ -17,7 +18,7 @@ export default class FlexDimensionsBasics extends Component {
 
   navigationForType = (type) => {
     // returns the other screen: see tabNavigation.js
-        return <TabNavigation/>
+        return <AppNavigation/>
   }
 
  render() {
@@ -42,10 +43,6 @@ state = {
   hasDoneOnboarding: true
 }
 
-
-
-
-
 const styles = StyleSheet.create({
   bigTitle: {
     fontWeight: 'bold',
@@ -57,4 +54,3 @@ const styles = StyleSheet.create({
 });
 
 AppRegistry.registerComponent('rolodex', () => FlexDimensionsBasics);
-
