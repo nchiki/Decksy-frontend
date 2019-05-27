@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/Styles';
 
 import {Image, Text, View, StatusBar, Button } from 'react-native';
-
+import BusinessCard from './BusinessCard';
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
 
@@ -24,7 +24,7 @@ export default class ProfileScreen extends React.Component {
           </View> */}
           <View style={{flex:9, alignItems: "center"}} >
             <View style={{top:30}}>
-              <Image source={require('../assets/images/card.png')} />
+              <BusinessCard />
             </View>
         </View>
       </View>
