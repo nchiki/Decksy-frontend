@@ -2,17 +2,30 @@
   "name": "webapps-frontend",
   "version": "1.0.0",
   "description": "The frontend web services for WebApps project",
-  "main": "src/index.js",
+  "main": "node_modules/expo/AppEntry.js",
   "repository": "https://gitlab.doc.ic.ac.uk/g1827114/webapps-frontend",
   "author": "Hubert Kaluzny <hk4817@ic.ac.uk>",
   "license": "No License",
   "private": false,
+  "devDependencies": {
+    "@types/react": "^16.8.18",
+    "babel-preset-expo": "^5.0.0"
+  },
   "dependencies": {
     "express": "^4.17.0",
-    "mongodb": "^3.2.5"
+    "mongodb": "^3.2.5",
+    "expo": "^32.0.0",
+    "formik": "^1.5.7",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
+    "react-native-elements": "^1.1.0",
+    "react-navigation": "^3.11.0"
   },
   "scripts": {
-    "start": "node src/main.js",
-    "test": ""
-  }
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject"
+  },
+  "private": true
 }
