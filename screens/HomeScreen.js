@@ -11,6 +11,18 @@ export default class HomeScreen extends React.Component {
 
   static navigationOptions = {
     title: 'Cards',
+    headerLeft: (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Filter"
+      />
+    ),
+    headerRight: (
+      <Button
+        onPress={() => alert('This is a button!')}
+        title="Add"
+      />
+    ),
   };
   
   constructor(props) {
