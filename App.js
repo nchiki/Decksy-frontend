@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, AppRegistry, View, StyleSheet, ScrollView} from 'react-native';
-import TabNavigation from './Navigation/TabNavigation';
+import TabNavigation from './navigation/TabNavigation';
 const NavigatorTypes = Object.freeze({"stack":1, "tab":2, "drawer":3})
 
 
