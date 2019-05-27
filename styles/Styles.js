@@ -61,5 +61,9 @@ const styles = StyleSheet.create({
     height: 44,
     textAlign: 'left',
   },
+  loginTextInputs: {
+    fontSize: 110,
+
+  }
 })
 export default styles;
