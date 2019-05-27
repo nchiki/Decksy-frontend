@@ -8,6 +8,10 @@ import { CheckBox } from 'react-native-elements';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
+
+  static navigationOptions = {
+    title: 'Cards',
+  };
   
   constructor(props) {
     super(props);
@@ -48,7 +52,6 @@ export default class HomeScreen extends React.Component {
       addVisible : false
     })
   }
-
 
   onFiltersPress = () => {
     this.setBarVisible(!this.state.barVisible); 
