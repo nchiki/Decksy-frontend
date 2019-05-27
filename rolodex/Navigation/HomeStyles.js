@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
   bigTitle: {
     fontWeight: 'bold',
     fontSize: 20,
-    fontFamily: 'monospace'
   },
 })
 export default styles;
