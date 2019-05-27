@@ -1,6 +1,4 @@
-import React from 'react';
-import {Image, Modal, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import { StyleSheet } from 'react-native';
 
 //Styles of the views of home screen
 const styles = StyleSheet.create({

@@ -1,8 +1,7 @@
 import React from 'react';
-import styles from './HomeStyles';
+import styles from '../styles/Styles';
 
-import {Image, Modal, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
+import {Image, Text, View } from 'react-native';
 
 
 // Profile screen that shows own card
