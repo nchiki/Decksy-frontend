@@ -1,0 +1,18 @@
+{
+  "name": "webapps-frontend",
+  "version": "1.0.0",
+  "description": "The frontend web services for WebApps project",
+  "main": "src/index.js",
+  "repository": "https://gitlab.doc.ic.ac.uk/g1827114/webapps-frontend",
+  "author": "Hubert Kaluzny <hk4817@ic.ac.uk>",
+  "license": "No License",
+  "private": false,
+  "dependencies": {
+    "express": "^4.17.0",
+    "mongodb": "^3.2.5"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": ""
+  }
+}
