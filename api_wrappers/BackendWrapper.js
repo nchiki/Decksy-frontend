@@ -1,7 +1,3 @@
-import React from 'react';
-
-import { Text, View, Platform } from 'react-native';
-
 const API = "https://rolodex.tk/"
 
 function getUserCard(userID) {
