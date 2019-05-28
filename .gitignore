@@ -6,4 +6,5 @@ npm-debug.*
 *.key
 *.mobileprovision
 yarn.lock
-yarn-error.log 
+yarn-error.log
+.DS_Store

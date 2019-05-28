@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-//Styles of the views of home screen
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
