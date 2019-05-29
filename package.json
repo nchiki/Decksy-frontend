@@ -24,11 +24,11 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-deck-swiper": "^1.6.7",
     "react-native-elements": "^1.1.0",
+    "react-native-flip-card": "^3.5.5",
+    "react-native-qrcode": "^0.2.7",
     "react-native-share": "^1.2.0",
     "react-navigation": "^3.11.0",
-    "react-test-renderer": "^16.8.6",
-    "react-native-flip-card": "^3.5.5",
-    "react-native-qrcode": "^0.2.7"
+    "react-test-renderer": "^16.8.6"
   },
   "scripts": {
     "start": "expo start",

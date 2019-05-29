@@ -1,7 +1,9 @@
 import React from 'react';
 import styles from '../styles/Styles';
-
-import {Image, Text, View, StatusBar, Button, share } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity,  StatusBar, share } from 'react-native';
+import { Divider, Card,  Button} from 'react-native-elements';
+import CardTemplate from './BusinessCard';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
@@ -18,17 +20,9 @@ export default class ProfileScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1}}>
-        {/* <View style={{flex: 1, backgroundColor: 'azure', justifyContent: "center", alignItems: "center"}}>
-          <Text style={styles.bigTitle}> RoloDex </Text>
-          </View> */}
-          <View style={{flex:9, alignItems: "center"}} >
-            <View style={{top:30}}>
-              <Image source={require('../assets/images/card.png')} />
-            </View>
-          </View>
-      </View>
-    );
+            <CardTemplate /> );
+
+
   }
 
   onShare = async () => {
