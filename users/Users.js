@@ -3,6 +3,7 @@ const users=[
     name: 'Mr. Roberts',
     company: 'Facebook',
     field: 'Software',
+    subtitle: 'Vice Chairman',
     phoneNumber: '073004889',
     email:'roberts@email.com'
     },   
@@ -10,6 +11,7 @@ const users=[
     name: 'John',
     company: 'Amazon',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '072304889',
     email:'john@email.com'
     }, 
@@ -17,6 +19,7 @@ const users=[
     name: 'Mary',
     company: 'Google',
     field: 'Software',
+    subtitle: 'President',
     phoneNumber: '048904889',
     email:'mary@email.com'
     },
@@ -24,6 +27,7 @@ const users=[
     name: 'Sienna',
     company: 'Facebook',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '073004909',
     email:'sienna@email.com'
     },
@@ -31,6 +35,7 @@ const users=[
     name: 'Carlos',
     company: 'Palantir',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '073007889',
     email:'carlos@email.com'
     },
@@ -38,6 +43,7 @@ const users=[
     name: 'Phillip',
     company: 'Facebook',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '073004889',
     email:'phillip@email.com'
     },
@@ -45,13 +51,15 @@ const users=[
     name: 'Louis',
     company: 'Amazon',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '072004889',
     email:'louis@email.com'
     },
     {
     name: 'Jenna',
     company: 'Palantir',
-    field: 'Software',
+    field: 'Software',      
+    subtitle: 'Vice President',
     phoneNumber: '073004339',
     email:'jenna@email.com'
     },
@@ -59,6 +67,7 @@ const users=[
     name: 'Sarah',
     company: 'Facebook',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '073032889',
     email:'sarah@email.com'
     },
@@ -66,13 +75,15 @@ const users=[
     name: 'Paul',
     company: 'Amazon',
     field: 'Software',
+    subtitle: 'Vice President',
     phoneNumber: '073007789',
     email:'paul@email.com'
     },
     {
     name: 'Pierre',
     company: 'Facebook',
-    field: 'Software',
+    field: 'Software',      
+    subtitle: 'Vice President',
     phoneNumber: '073324589',
     email:'pierre@email.com'
     },

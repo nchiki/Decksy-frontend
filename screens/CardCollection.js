@@ -7,7 +7,7 @@ import users from '../users/Users'
 
 export default class CardCollection extends React.Component{
     _getCards = ({item}) => (
-
+        
         <Card title={item.name} titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
         <View style={styles.user}>
           <Text style={styles.company}>{item.company}</Text>
@@ -41,10 +41,6 @@ render () {
 
 
 }
-
-
-
-
 
   const styles = StyleSheet.create({
         list: {
