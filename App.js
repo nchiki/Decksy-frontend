@@ -57,9 +57,6 @@ export default class FlexDimensionsBasics extends Component {
   )}
 }
 
-state = {
-  hasDoneOnboarding: true
-}
 
 const styles = StyleSheet.create({
   bigTitle: {
