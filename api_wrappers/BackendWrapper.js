@@ -54,3 +54,7 @@ function getUserDetails(userID) {
     })
     .then((response) => response.json());
 }
+
+function addUserToContacts(userID, code) {
+
+}
