@@ -2,9 +2,8 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import { Divider, Card,  Button} from 'react-native-elements';
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
 import QRCode from 'react-native-qrcode';
-import FlipCard from 'react-native-flip-card';
+import CardFlip from 'react-native-card-flip';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 const u=
   {
@@ -40,18 +39,12 @@ export default class BusinessCard extends React.Component{
       return(
              // implemented without image with header
              <View style={{flex:1}}>
-
-
-                   <View style={{alignItems:'center'}}><FlipCard friction={6}
-                   perspective={1000}
-                   flipHorizontal={true}
-                   flipVertical={false}
-                   flip={false}
-                   clickable={true}>
+          <View><CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
+          <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                   <Card title={u.name} titleStyle={{color:color, fontSize: 30}} containerStyle={styles.containerStyle}>
                    <View style={styles.user}>
                      <Text style={cardStyles(color).company}>{u.company}</Text>
-                     <Text style={cardStyles(color).details}>{u.phoneNumber}{"\n"}{u.email}</Text>
+                     <Text style={cardStyles(color).details}>{u.phoneNumber}{'\n'}{u.email}</Text>
                    </View>
                    <Divider style={{ backgroundColor: color, width: 10, bottom: 40}} />
                    <Divider style={{ backgroundColor: color, width: 30, bottom: 30}} />
@@ -62,9 +55,13 @@ export default class BusinessCard extends React.Component{
                    <Divider style={{ backgroundColor: color, width: 130, bottom: -20}} />
                    <Divider style={{ backgroundColor: color, width: 150, bottom: -30}} />
 
+    
+
                    </Card>
-                   <Card title='Scan' titleStyle={{color:color, fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                    <QRCode
+                   </TouchableOpacity>
+                   <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
+                   <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
+                   <QRCode
                    value={this.state.valueForQRCode}
                    //Setting the value of QRCode
                    size={100}
@@ -74,12 +71,12 @@ export default class BusinessCard extends React.Component{
                    fgColor="#fff"
                    //Front Color of QRCode
                    />
-
-
-
                    </Card>
-                   </FlipCard>
-                   </View>
+                   </TouchableOpacity>
+                   </CardFlip>
+
+        </View>
+
 
                    <View style={styles.buttonRowContainer}>
 
@@ -97,7 +94,11 @@ export default class BusinessCard extends React.Component{
   }
 
   const styles = StyleSheet.create({
-
+    cardContainer: {
+      top:20,
+      width: 350,
+      height: 200,
+    },
     buttonRowContainer: {
       flex: 1,
       flexDirection: 'row',
@@ -105,7 +106,7 @@ export default class BusinessCard extends React.Component{
       justifyContent: 'center',
     },
     buttonContainer: {
-      top: 40,
+      top:-70,
       width: 100,
       backgroundColor: 'darkblue'
     },

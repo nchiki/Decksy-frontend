@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, StyleSheet} from 'react-native';
+import { View, StyleSheet, TouchableOpacity} from 'react-native';
 import { Card,  Button} from 'react-native-elements';
-
-import FlipCard from 'react-native-flip-card';
+import QRCode from 'react-native-qrcode';
+import CardFlip from 'react-native-card-flip';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 
 export default class CardTemplate extends React.Component {
@@ -35,18 +35,16 @@ export default class CardTemplate extends React.Component {
     return (
 
       <View style={{flex:1}}>
-          <View style={{alignItems:'center'}}><FlipCard friction={6}
-                   perspective={1000}
-                   flipHorizontal={true}
-                   flipVertical={false}
-                   flip={false}
-                   clickable={true}>
+          <View><CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
+          <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                   <Card title='name' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
                    <View style={styles.user}>
 
                    </View>
 
                    </Card>
+                   </TouchableOpacity>
+                   <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                    <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
                    <QRCode
                    value={this.state.valueForQRCode}
@@ -58,11 +56,10 @@ export default class CardTemplate extends React.Component {
                    fgColor="#fff"
                    //Front Color of QRCode
                    />
-
-
-
                    </Card>
-                   </FlipCard>
+                   </TouchableOpacity>
+                   </CardFlip>
+
         </View>
 
           <View style={styles.buttonRowContainer}>
@@ -83,7 +80,11 @@ export default class CardTemplate extends React.Component {
 
 
 const styles = StyleSheet.create({
-
+  cardContainer:{
+    top:20,
+    width: 350,
+    height: 200,
+  },
   buttonRowContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    top: 40,
+    top: -70,
     width: 100,
     backgroundColor: 'darkblue'
   },
@@ -122,27 +123,3 @@ const styles = StyleSheet.create({
   }
 })
 
-const cardStyles = (color) => StyleSheet.create({
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: color,
-    justifyContent: 'center',
-  },
-  details: {
-    right: -90,
-    bottom: -35,
-    fontSize: 15,
-    color: color
-  }
-});
-
-{/*const RootStack = createStackNavigator(
-  {
-    CardScreen: {screen : BusinessCard},
-    TemplateScreen: {screen: CardTemplate},
-  },
-  {
-    initialRouteName: 'Home',
-  }
-);*/}
