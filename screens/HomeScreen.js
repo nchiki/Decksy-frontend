@@ -5,6 +5,7 @@ import styles from '../styles/Styles';
 import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
+import CardCollection from './CardCollection';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -131,13 +132,9 @@ export default class HomeScreen extends React.Component {
           </View>
         </Modal>
 
-        <View style={styles.section}>
-          <SectionList
-            sections={getCards()}
-            renderItem={({item}) => <Button style={styles.item} onPress={() => {Alert.alert(`You tapped on ${item}!`);}} title={item} />}
-            renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-            keyExtractor={(item, index) => index}
-          />
+        {/* Displays the collection of cards */}
+        <View>
+          <CardCollection />
         </View>
       </View>
     );
