@@ -5,15 +5,15 @@ import { Divider, Card,  Button} from 'react-native-elements';
 import QRCode from 'react-native-qrcode';
 import CardFlip from 'react-native-card-flip';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
-const u=
-  {
+
+const u = {
   name: 'Mr. Roberts',
   company: 'Facebook',
   field: 'Software',
   phoneNumber: '073004889',
   email:'roberts@email.com',
   color: ''
-  }
+}
 
 export default class BusinessCard extends React.Component{
 
@@ -74,25 +74,20 @@ export default class BusinessCard extends React.Component{
                    </Card>
                    </TouchableOpacity>
                    </CardFlip>
-
+  
         </View>
-
-
-                   <View style={styles.buttonRowContainer}>
-
-                    <Button title="Save" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-                      onPress={() => this.onChangeRequested(color)}/>
-
+        <View style={styles.buttonRowContainer}>
+          <Button
+            title="Save"
+            buttonStyle={styles.buttonContainer}
+            titleStyle={{color:'white'}}
+            onPress={() => this.onChangeRequested(color)}
+          />
+        </View>
       </View>
-
-
-
-           </View>
-      );
-    }
-
+    );
   }
-
+}
   const styles = StyleSheet.create({
     cardContainer: {
       top:20,

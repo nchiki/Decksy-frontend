@@ -31,9 +31,9 @@ export default class CardTemplate extends React.Component {
   }
 
   render() {
-  const navigation = this.props.navigation;
-    return (
+    const navigation = this.props.navigation;
 
+    return (
       <View style={{flex:1}}>
           <View><CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
           <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
@@ -61,19 +61,24 @@ export default class CardTemplate extends React.Component {
                    </CardFlip>
 
         </View>
-
           <View style={styles.buttonRowContainer}>
-            <Button title="Green" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
+            <Button
+              title="Green"
+              buttonStyle={styles.buttonContainer}
+              titleStyle={{color:'white'}}
               onPress={() => this.onCardTypeRequested(CardTypes.green, navigation)}/>
-            <Button title="Blue" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
+            <Button
+              title="Blue"
+              buttonStyle={styles.buttonContainer}
+              titleStyle={{color:'white'}}
               onPress={() => this.onCardTypeRequested(CardTypes.blue, navigation)}/>
-            <Button title="Red" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
+            <Button
+              title="Red"
+              buttonStyle={styles.buttonContainer}
+              titleStyle={{color:'white'}}
               onPress={() => this.onCardTypeRequested(CardTypes.red, navigation)}/>
-
           </View>
         </View>
-
-
     );
   }
 }
@@ -108,7 +113,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center'
   },
-
   company: {
     fontSize: 25,
     fontWeight: 'bold',
