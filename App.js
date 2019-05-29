@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, AppRegistry, View, StyleSheet, ScrollView} from 'react-native';
+import { Text, AppRegistry, View, StyleSheet, ScrollView, TextInput, Button, Alert } from 'react-native';
 
 import AppNavigation from './navigation/AppNavigation';
 const NavigatorTypes = Object.freeze({"stack":1, "tab":2, "drawer":3})
@@ -9,7 +9,7 @@ const NavigatorTypes = Object.freeze({"stack":1, "tab":2, "drawer":3})
 export default class FlexDimensionsBasics extends Component {
   state = {
     navigationType: null
-  }
+  } 
 
   // Sets state to tab navigation when screen is tapped
   onNavigationTypeRequested = (navigatorType) => {
@@ -27,16 +27,34 @@ export default class FlexDimensionsBasics extends Component {
   if (this.state.navigationType) {
     return this.navigationForType(this.state.navigationType);
   }
-    return (
-  //on start should set responder acts when tapping the screen
-      <View style={{flex: 1}}onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
-          <View style={{flex: 2, backgroundColor: 'powderblue', justifyContent: "center", alignItems: "center"}}> 
-          <Text style={styles.bigTitle}> RoloDex </Text>
-          </View>
-          <View style={{flex: 3, backgroundColor: 'white'}} />
-        </View>
-    
-    )}
+  return (
+    //on start should set responder acts when tapping the screen
+    <View style={{flex: 1}} onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
+      <View style={{flex: 2, backgroundColor: 'powderblue', justifyContent: "center", alignItems: "center"}}> 
+        <Text style={styles.bigTitle}> RoloDex </Text>
+        <TextInput
+          style={styles.loginTextInputs}
+          placeholder="Email"
+          autoCorrect={false}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.loginTextInputs}
+          placeholder="Password"
+          autoCorrect={false}
+          autoCapitalize="none"
+          secureTextEntry={true}
+          textContentType="password"
+        />
+        <Button
+          onPress={() => {Alert.alert('You tried to login!');}}
+          title="Press Me"
+        />
+      </View>
+      <View style={{flex: 3, backgroundColor: 'white'}} />
+    </View>
+  )}
 }
 
 state = {
