@@ -13,7 +13,8 @@ const u=
   company: 'Facebook',
   field: 'Software',
   phoneNumber: '073004889',
-  email:'roberts@email.com'
+  email:'roberts@email.com',
+  color: ''
   }
 
 class BusinessCard extends React.Component{
@@ -29,8 +30,9 @@ class BusinessCard extends React.Component{
         }
 
 
-    onChangeRequested = () => {
-      return console.log('goBack');
+    onChangeRequested = (color) => {
+      u.color = color;
+      console.log(u.color);
     }
 
     render(){
@@ -83,7 +85,7 @@ class BusinessCard extends React.Component{
                    <View style={styles.buttonRowContainer}>
 
                     <Button title="Save" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-                      onPress={() => this.onChangeRequested()}/>
+                      onPress={() => this.onChangeRequested(color)}/>
 
       </View>
 
