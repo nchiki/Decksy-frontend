@@ -1,0 +1,5 @@
+build:
+    only:
+        - master
+    script:
+        - yarn expo build:android
