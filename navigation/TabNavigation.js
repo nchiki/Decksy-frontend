@@ -4,14 +4,18 @@ import { Text, View, Platform } from 'react-native';
 import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
+import QRCodeScannerScreen from '../screens/QRCodeScannerScreen'
 import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../screens/BusinessCard';
 import CardTemplate from '../screens/CardTemplate';
 import { Ionicons } from '@expo/vector-icons';
 
-const CollectedCardsStack = createStackNavigator({
-  CollectedCards: HomeScreen,
-});
+export const CollectedCardsStack = createStackNavigator({
+    CollectedCards: {screen: HomeScreen},
+    QRScanner: {screen: QRCodeScannerScreen},
+  },
+  { initialRouteName: 'CollectedCards' }
+);
 
 CollectedCardsStack.navigationOptions = {
   tabBarLabel: 'Cards',
@@ -27,13 +31,13 @@ CollectedCardsStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
+const ProfileScreenStack = createStackNavigator({
   Links: {screen: ProfileScreen},
   CardScreen: {screen : BusinessCard},
 
 });
 
-LinksStack.navigationOptions = {
+ProfileScreenStack.navigationOptions = {
   tabBarLabel: 'Profile',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -45,5 +49,5 @@ LinksStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   CollectedCardsStack,
-  LinksStack,
+  ProfileScreenStack,
 });

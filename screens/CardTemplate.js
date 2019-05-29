@@ -1,11 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
-import { Divider, Card,  Button} from 'react-native-elements';
+import { View, StyleSheet} from 'react-native';
+import { Card,  Button} from 'react-native-elements';
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import QRCode from 'react-native-qrcode';
 import FlipCard from 'react-native-flip-card';
-import LinksStack from '../navigation/TabNavigation';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 
 export default class CardTemplate extends React.Component {

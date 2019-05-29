@@ -5,7 +5,6 @@ import { Divider, Card,  Button} from 'react-native-elements';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import QRCode from 'react-native-qrcode';
 import FlipCard from 'react-native-flip-card';
-import LinksStack from '../navigation/TabNavigation';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 const u=
   {
@@ -65,7 +64,7 @@ export default class BusinessCard extends React.Component{
 
                    </Card>
                    <Card title='Scan' titleStyle={{color:color, fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                   <QRCode
+                    <QRCode
                    value={this.state.valueForQRCode}
                    //Setting the value of QRCode
                    size={100}
