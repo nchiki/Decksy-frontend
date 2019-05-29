@@ -9,7 +9,7 @@ import Dialog from "react-native-dialog";
 
 import styles from '../styles/Styles';
 import CardCollection from './CardCollection';
-import { addUserToContacts } from '../api_wrappers/BackendWrapper';
+import ContactCollection from '../components/ContactCollection';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <CardCollection />
+        <ContactCollection />
         </View>
       </View>
     );

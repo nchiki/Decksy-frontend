@@ -38,7 +38,7 @@ export default class BusinessCard extends React.Component{
       console.log(color)
       return(
              // implemented without image with header
-             <View style={{flex:1}}>
+             <View style={{flex:1, alignItems:'center'}}>
           <View><CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
           <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                   <Card title={u.name} titleStyle={{color:color, fontSize: 30}} containerStyle={styles.containerStyle}>
@@ -89,10 +89,18 @@ export default class BusinessCard extends React.Component{
   }
 }
   const styles = StyleSheet.create({
-    cardContainer: {
+    cardContainer:{
       top:20,
       width: 350,
       height: 200,
+      alignItems:'center',
+      justifyContent:'center',
+      alignContent:'center'
+    },
+    card:{
+      alignItems:'center',
+      justifyContent:'center',
+      alignContent:'center'
     },
     buttonRowContainer: {
       flex: 1,

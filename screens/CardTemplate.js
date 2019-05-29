@@ -34,7 +34,7 @@ export default class CardTemplate extends React.Component {
     const navigation = this.props.navigation;
 
     return (
-      <View style={{flex:1}}>
+      <View style={{flex:1, alignItems:'center'}}>
           <View><CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
           <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                   <Card title='name' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
@@ -89,6 +89,14 @@ const styles = StyleSheet.create({
     top:20,
     width: 350,
     height: 200,
+    alignItems:'center',
+    justifyContent:'center',
+    alignContent:'center'
+  },
+  card:{
+    alignItems:'center',
+    justifyContent:'center',
+    alignContent:'center'
   },
   buttonRowContainer: {
     flex: 1,
