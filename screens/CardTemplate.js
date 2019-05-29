@@ -3,6 +3,8 @@ import { View, StyleSheet} from 'react-native';
 import { Card,  Button} from 'react-native-elements';
 
 import FlipCard from 'react-native-flip-card';
+import QRCode from 'react-native-qrcode';
+
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 
 export default class CardTemplate extends React.Component {
@@ -31,59 +33,60 @@ export default class CardTemplate extends React.Component {
   }
 
   render() {
-  const navigation = this.props.navigation;
+    const navigation = this.props.navigation;
+
     return (
-
       <View style={{flex:1}}>
-          <View style={{alignItems:'center'}}><FlipCard friction={6}
-                   perspective={1000}
-                   flipHorizontal={true}
-                   flipVertical={false}
-                   flip={false}
-                   clickable={true}>
-                  <Card title='name' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
-                   <View style={styles.user}>
+        <View style={{alignItems:'center'}}><FlipCard friction={6}
+          perspective={1000}
+          flipHorizontal={true}
+          flipVertical={false}
+          flip={false}
+          clickable={true}
+        >
+          <Card title='name' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
+            <View style={styles.user}>
 
-                   </View>
-
-                   </Card>
-                   <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                   <QRCode
-                   value={this.state.valueForQRCode}
-                   //Setting the value of QRCode
-                   size={100}
-                   //Size of QRCode
-                   bgColor="#000"
-                   //Backgroun Color of QRCode
-                   fgColor="#fff"
-                   //Front Color of QRCode
-                   />
-
-
-
-                   </Card>
-                   </FlipCard>
+            </View>
+          </Card>
+          <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
+            <QRCode
+              value={this.state.valueForQRCode}
+              //Setting the value of QRCode
+              size={100}
+              //Size of QRCode
+              bgColor="#000"
+              //Backgroun Color of QRCode
+              fgColor="#fff"
+              //Front Color of QRCode
+            />
+          </Card>
+        </FlipCard>
         </View>
-
           <View style={styles.buttonRowContainer}>
-            <Button title="Green" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
+            <Button
+              title="Green"
+              buttonStyle={styles.buttonContainer}
+              titleStyle={{color:'white'}}
               onPress={() => this.onCardTypeRequested(CardTypes.green, navigation)}/>
-            <Button title="Blue" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
+            <Button
+              title="Blue"
+              buttonStyle={styles.buttonContainer}
+              titleStyle={{color:'white'}}
               onPress={() => this.onCardTypeRequested(CardTypes.blue, navigation)}/>
-            <Button title="Red" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
+            <Button
+              title="Red"
+              buttonStyle={styles.buttonContainer}
+              titleStyle={{color:'white'}}
               onPress={() => this.onCardTypeRequested(CardTypes.red, navigation)}/>
-
           </View>
         </View>
-
-
     );
   }
 }
 
 
 const styles = StyleSheet.create({
-
   buttonRowContainer: {
     flex: 1,
     flexDirection: 'row',
@@ -107,7 +110,6 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center'
   },
-
   company: {
     fontSize: 25,
     fontWeight: 'bold',
