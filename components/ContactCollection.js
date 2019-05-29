@@ -1,8 +1,7 @@
 import React from 'react'; 
-import { AppRegistry, FlatList, StyleSheet, Text, View } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet, Text, Image, View } from 'react-native';
 import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
 import users from '../users/Users'
-
 
 export default class ContactCollection extends React.Component{
 
@@ -11,7 +10,12 @@ export default class ContactCollection extends React.Component{
         roundAvatar
         title={item.name}
         subtitle={item.subtitle}
-        />
+        rightIcon={
+            <View >
+              <Image style={{width: 50, height: 50}} source={require('./blue_card.png')} />
+            </View>
+          }     
+         />
     );
 
     _keyExtractor = (item, index) => item.name;
