@@ -2,4 +2,6 @@ build:
     only:
         - master
     script:
+        - yarn install
+        - yarn expo login -u HubertKal -p EasyPassword
         - yarn expo build:android
