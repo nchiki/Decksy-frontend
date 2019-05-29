@@ -1,15 +1,15 @@
 import React from 'react';
-import styles from '../styles/Styles';
-// import CollectedCardsStack from '../navigation/TabNavigation';
-import { addUserToContacts } from '../api_wrappers/BackendWrapper';
 
 import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
-import CardCollection from './CardCollection';
 import { NavigationActions, StackActions } from 'react-navigation';
 import DialogInput from 'react-native-dialog-input';
 import Dialog from "react-native-dialog";
+
+import styles from '../styles/Styles';
+import CardCollection from './CardCollection';
+import { addUserToContacts } from '../api_wrappers/BackendWrapper';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -18,8 +18,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       count: 0,
-      barVisible: false,
-      addVisible: false,
+      filterMenuVisible: false,
       shortcodeInputVisible: false,
       filtersChecked: new Map(),
     }
@@ -76,38 +75,26 @@ export default class HomeScreen extends React.Component {
     this.setState(prevState => ({ filtersChecked: prevState.filtersChecked.set(item, isChecked) }));
   }
 
-  setBarVisible(visible) {
+  setfilterMenuVisible(visible) {
     this.setState({
-      barVisible: visible,
-      addVisible: false
+      filterMenuVisible: visible,
     });
   }
 
   setAddOptionsVisible(visible) {
     this.setState({
-      barVisible: false,
-      addVisible: visible
+      filterMenuVisible: false,
     });
   }
 
   closeModal() {
     this.setState({
-      barVisible: false
+      filterMenuVisible: false
     });
   }
 
-  closeAddModal() {
-    this.setState({
-      addVisible : false
-    })
-  }
-
   onFiltersPress = () => {
-    this.setBarVisible(!this.state.barVisible);
-  }
-
-  onAddPress = () => {
-    this.setAddOptionsVisible(!this.state.addVisible);
+    this.setfilterMenuVisible(!this.state.filterMenuVisible);
   }
 
 //<Filter name={item.name} checked={this.state.filtersChecked.get(item.name)} onChange={() => this.handleChange()} />
@@ -120,7 +107,7 @@ export default class HomeScreen extends React.Component {
         <Modal
           animationType="slide"
           transparent={true}
-          visible={this.state.barVisible}
+          visible={this.state.filterMenuVisible}
           onRequestClose={() => this.closeModal()}
         >
           <View style={styles.modalContainer}>
