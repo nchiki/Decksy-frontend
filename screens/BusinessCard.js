@@ -5,7 +5,7 @@ import { Divider, Card,  Button} from 'react-native-elements';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import QRCode from 'react-native-qrcode';
 import FlipCard from 'react-native-flip-card';
-
+import LinksStack from '../navigation/TabNavigation';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 const u=
   {
@@ -17,7 +17,7 @@ const u=
   color: ''
   }
 
-class BusinessCard extends React.Component{
+export default class BusinessCard extends React.Component{
 
     constructor() {
         super();
@@ -96,151 +96,58 @@ class BusinessCard extends React.Component{
     }
 
   }
-class Home extends React.Component {
 
-  state = {
-    cardType: null
-  }
+  const styles = StyleSheet.create({
 
-  onCardTypeRequested = (cardType) => {
-    this.setState({cardType: cardType});
-    setTimeout(() => this.cardForType(this.state.cardType), 20);
-  }
+    buttonRowContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    buttonContainer: {
+      top: 40,
+      width: 100,
+      backgroundColor: 'darkblue'
+    },
+    containerStyle: {
+      width: 350,
+      height: 200,
+    },
+    containerBackStyle:{
+      width: 350,
+      height: 200,
+    },
+    user: {
+      alignItems:'center',
+      justifyContent: 'center'
+    },
 
-  cardForType = (type) => {
-    switch (type) {
-      case CardTypes.green:
-        this.props.navigation.push('Card', {color: 'darkgreen'});
-        break;
-      case CardTypes.blue:
-        this.props.navigation.push('Card',{color: 'darkblue'});
-        break;
-      case CardTypes.red:
-        this.props.navigation.push('Card', {color: 'darkred'});
-        break;
+    company: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      color: 'darkblue',
+      justifyContent: 'center',
+    },
+    details: {
+      right: -90,
+      bottom: -35,
+      fontSize: 15,
+      color: 'darkblue'
     }
-  }
+  })
 
-  render() {
-
-    return (
-      <View style={{flex:1}}>
-          <View style={{alignItems:'center'}}><FlipCard friction={6}
-                   perspective={1000}
-                   flipHorizontal={true}
-                   flipVertical={false}
-                   flip={false}
-                   clickable={true}>
-                  <Card title='name' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
-                   <View style={styles.user}>
-
-                   </View>
-
-                   </Card>
-                   <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                   <QRCode
-                   value={this.state.valueForQRCode}
-                   //Setting the value of QRCode
-                   size={100}
-                   //Size of QRCode
-                   bgColor="#000"
-                   //Backgroun Color of QRCode
-                   fgColor="#fff"
-                   //Front Color of QRCode
-                   />
-
-
-
-                   </Card>
-                   </FlipCard>
-        </View>
-
-          <View style={styles.buttonRowContainer}>
-            <Button title="Green" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.green)}/>
-            <Button title="Blue" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.blue)}/>
-            <Button title="Red" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.red)}/>
-
-          </View>
-        </View>
-
-
-    );
-  }
-}
-
-
-const styles = StyleSheet.create({
-
-  buttonRowContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    top: 40,
-    width: 100,
-    backgroundColor: 'darkblue'
-  },
-  containerStyle: {
-    width: 350,
-    height: 200,
-  },
-  containerBackStyle:{
-    width: 350,
-    height: 200,
-  },
-  user: {
-    alignItems:'center',
-    justifyContent: 'center'
-  },
-
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: 'darkblue',
-    justifyContent: 'center',
-  },
-  details: {
-    right: -90,
-    bottom: -35,
-    fontSize: 15,
-    color: 'darkblue'
-  }
-})
-
-const cardStyles = (color) => StyleSheet.create({
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: color,
-    justifyContent: 'center',
-  },
-  details: {
-    right: -90,
-    bottom: -35,
-    fontSize: 15,
-    color: color
-  }
-});
-
-const RootStack = createStackNavigator(
-  {
-    Card: {screen : BusinessCard},
-    Home: {screen: Home},
-  },
-  {
-    initialRouteName: 'Home',
-  }
-);
-
-const AppContainer = createAppContainer(RootStack);
-
-export default class CardTemplate extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
+  const cardStyles = (color) => StyleSheet.create({
+    company: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      color: color,
+      justifyContent: 'center',
+    },
+    details: {
+      right: -90,
+      bottom: -35,
+      fontSize: 15,
+      color: color
+    }
+  });
