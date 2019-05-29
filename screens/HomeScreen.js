@@ -1,5 +1,4 @@
 import React from 'react';
-
 import styles from '../styles/Styles';
 
 import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert } from 'react-native';

@@ -3,6 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import { Divider, Card} from 'react-native-elements';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import FlipCard from 'react-native-flip-card';
+import QRCode from 'react-native-qrcode';
          
 const users = [
   {
@@ -13,8 +14,20 @@ const users = [
     email:'roberts@email.com'
   },
   ]
+
   
   export default class BusinessCard extends React.Component{
+
+    constructor() {
+      super();
+      this.state = {
+        inputValue: '',
+        // Default Value of the TextInput
+        valueForQRCode: '',
+        // Default value for the QR Code
+        };
+      } 
+
     render(){
       return(
              // implemented without image with header
@@ -43,12 +56,17 @@ const users = [
                   <Divider style={{ backgroundColor: 'darkblue', width: 150, bottom: -30}} />
                   
                   </Card>
-                  <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                  <View style={styles.user}>
-                    <Text>LOVE YOU</Text>
-                  </View>
-                  
-                  
+                  <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>              
+                    <QRCode
+                      value={this.state.valueForQRCode}
+                      //Setting the value of QRCode
+                      size={100}
+                      //Size of QRCode
+                      bgColor="#000"
+                      //Backgroun Color of QRCode
+                      fgColor="#fff
+                      //Front Color of QRCode
+                      />
                   </Card>
                   </FlipCard>
                   </View>
