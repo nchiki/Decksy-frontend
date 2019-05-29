@@ -5,7 +5,7 @@ import { Divider, Card,  Button} from 'react-native-elements';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import QRCode from 'react-native-qrcode';
 import FlipCard from 'react-native-flip-card';
-
+import LinksStack from '../navigation/TabNavigation';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 const u=
   {
@@ -96,34 +96,36 @@ class BusinessCard extends React.Component{
     }
 
   }
-class Home extends React.Component {
+export default class CardTemplate extends React.Component {
+
 
   state = {
     cardType: null
   }
 
-  onCardTypeRequested = (cardType) => {
+  onCardTypeRequested = (cardType, navigation) => {
     this.setState({cardType: cardType});
-    setTimeout(() => this.cardForType(this.state.cardType), 20);
+    setTimeout(() => this.cardForType(this.state.cardType, navigation), 20);
   }
 
-  cardForType = (type) => {
+  cardForType = (type, navigation) => {
     switch (type) {
       case CardTypes.green:
-        this.props.navigation.push('Card', {color: 'darkgreen'});
+        navigation.push('Card', {color: 'darkgreen'});
         break;
       case CardTypes.blue:
-        this.props.navigation.push('Card',{color: 'darkblue'});
+        navigation.push('Card',{color: 'darkblue'});
         break;
       case CardTypes.red:
-        this.props.navigation.push('Card', {color: 'darkred'});
+        navigation.push('Card', {color: 'darkred'});
         break;
     }
   }
 
   render() {
-
+  const navigation = this.props.navigation;
     return (
+
       <View style={{flex:1}}>
           <View style={{alignItems:'center'}}><FlipCard friction={6}
                    perspective={1000}
@@ -157,11 +159,11 @@ class Home extends React.Component {
 
           <View style={styles.buttonRowContainer}>
             <Button title="Green" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.green)}/>
+              onPress={() => this.onCardTypeRequested(CardTypes.green, navigation)}/>
             <Button title="Blue" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.blue)}/>
+              onPress={() => this.onCardTypeRequested(CardTypes.blue, navigation)}/>
             <Button title="Red" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.red)}/>
+              onPress={() => this.onCardTypeRequested(CardTypes.red, navigation)}/>
 
           </View>
         </View>
@@ -227,7 +229,7 @@ const cardStyles = (color) => StyleSheet.create({
   }
 });
 
-const RootStack = createStackNavigator(
+{/*const RootStack = createStackNavigator(
   {
     Card: {screen : BusinessCard},
     Home: {screen: Home},
@@ -235,12 +237,4 @@ const RootStack = createStackNavigator(
   {
     initialRouteName: 'Home',
   }
-);
-
-const AppContainer = createAppContainer(RootStack);
-
-export default class CardTemplate extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
+);*/}
