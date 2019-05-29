@@ -5,7 +5,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice Chairman',
     phoneNumber: '073004889',
-    email:'roberts@email.com'
+    email:'roberts@email.com',
+    color:'darkred'
     },   
     {
     name: 'John',
@@ -13,7 +14,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '072304889',
-    email:'john@email.com'
+    email:'john@email.com',
+    color:'darkblue'
     }, 
     {
     name: 'Mary',
@@ -21,7 +23,8 @@ const users=[
     field: 'Software',
     subtitle: 'President',
     phoneNumber: '048904889',
-    email:'mary@email.com'
+    email:'mary@email.com',
+    color:'darkred'
     },
     {
     name: 'Sienna',
@@ -29,7 +32,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073004909',
-    email:'sienna@email.com'
+    email:'sienna@email.com',
+    color:'darkred'
     },
     {
     name: 'Carlos',
@@ -37,7 +41,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073007889',
-    email:'carlos@email.com'
+    email:'carlos@email.com',
+    color:'darkblue'
     },
     {
     name: 'Phillip',
@@ -45,7 +50,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073004889',
-    email:'phillip@email.com'
+    email:'phillip@email.com',
+    color:'darkgreen'
     },
     {
     name: 'Louis',
@@ -53,7 +59,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '072004889',
-    email:'louis@email.com'
+    email:'louis@email.com',
+    color:'darkgreen'
     },
     {
     name: 'Jenna',
@@ -61,7 +68,8 @@ const users=[
     field: 'Software',      
     subtitle: 'Vice President',
     phoneNumber: '073004339',
-    email:'jenna@email.com'
+    email:'jenna@email.com',
+    color:'darkred'
     },
     {
     name: 'Sarah',
@@ -69,7 +77,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073032889',
-    email:'sarah@email.com'
+    email:'sarah@email.com',
+    color:'darkgreen'
     },
     {
     name: 'Paul',
@@ -77,7 +86,8 @@ const users=[
     field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073007789',
-    email:'paul@email.com'
+    email:'paul@email.com',
+    color:'darkblue'
     },
     {
     name: 'Pierre',
@@ -85,7 +95,8 @@ const users=[
     field: 'Software',      
     subtitle: 'Vice President',
     phoneNumber: '073324589',
-    email:'pierre@email.com'
+    email:'pierre@email.com',
+    color:'darkred'
     },
     ]
 
