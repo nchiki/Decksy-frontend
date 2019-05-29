@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-//Styles of the views of home screen
+
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
@@ -61,5 +61,9 @@ const styles = StyleSheet.create({
     height: 44,
     textAlign: 'left',
   },
+  loginTextInputs: {
+    fontSize: 110,
+
+  }
 })
 export default styles;
