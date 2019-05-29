@@ -64,7 +64,7 @@ const users = [
                       //Size of QRCode
                       bgColor="#000"
                       //Backgroun Color of QRCode
-                      fgColor="#fff
+                      fgColor="#fff"
                       //Front Color of QRCode
                       />
                   </Card>

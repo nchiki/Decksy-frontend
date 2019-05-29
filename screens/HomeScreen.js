@@ -5,6 +5,7 @@ import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert } from 
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
 import CardCollection from './CardCollection';
+import ContactCollection from '../components/ContactCollection';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -130,10 +131,9 @@ export default class HomeScreen extends React.Component {
             </View>
           </View>
         </Modal>
-
         {/* Displays the collection of cards */}
         <View>
-          <CardCollection />
+        <ContactCollection />
         </View>
       </View>
     );
