@@ -6,7 +6,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../screens/BusinessCard';
-import CardTemplate from '../screens/BusinessCard';
+import CardTemplate from '../screens/CardTemplate';
 import { Ionicons } from '@expo/vector-icons';
 
 const CollectedCardsStack = createStackNavigator({
@@ -30,7 +30,6 @@ CollectedCardsStack.navigationOptions = {
 const LinksStack = createStackNavigator({
   Links: {screen: ProfileScreen},
   CardScreen: {screen : BusinessCard},
-  TemplateScreen: {screen: CardTemplate},
 
 });
 

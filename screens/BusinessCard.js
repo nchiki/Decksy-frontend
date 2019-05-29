@@ -17,7 +17,7 @@ const u=
   color: ''
   }
 
-class BusinessCard extends React.Component{
+export default class BusinessCard extends React.Component{
 
     constructor() {
         super();
@@ -96,145 +96,58 @@ class BusinessCard extends React.Component{
     }
 
   }
-export default class CardTemplate extends React.Component {
 
+  const styles = StyleSheet.create({
 
-  state = {
-    cardType: null
-  }
+    buttonRowContainer: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    buttonContainer: {
+      top: 40,
+      width: 100,
+      backgroundColor: 'darkblue'
+    },
+    containerStyle: {
+      width: 350,
+      height: 200,
+    },
+    containerBackStyle:{
+      width: 350,
+      height: 200,
+    },
+    user: {
+      alignItems:'center',
+      justifyContent: 'center'
+    },
 
-  onCardTypeRequested = (cardType, navigation) => {
-    this.setState({cardType: cardType});
-    setTimeout(() => this.cardForType(this.state.cardType, navigation), 20);
-  }
-
-  cardForType = (type, navigation) => {
-    switch (type) {
-      case CardTypes.green:
-        navigation.push('Card', {color: 'darkgreen'});
-        break;
-      case CardTypes.blue:
-        navigation.push('Card',{color: 'darkblue'});
-        break;
-      case CardTypes.red:
-        navigation.push('Card', {color: 'darkred'});
-        break;
+    company: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      color: 'darkblue',
+      justifyContent: 'center',
+    },
+    details: {
+      right: -90,
+      bottom: -35,
+      fontSize: 15,
+      color: 'darkblue'
     }
-  }
+  })
 
-  render() {
-  const navigation = this.props.navigation;
-    return (
-
-      <View style={{flex:1}}>
-          <View style={{alignItems:'center'}}><FlipCard friction={6}
-                   perspective={1000}
-                   flipHorizontal={true}
-                   flipVertical={false}
-                   flip={false}
-                   clickable={true}>
-                  <Card title='name' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
-                   <View style={styles.user}>
-
-                   </View>
-
-                   </Card>
-                   <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                   <QRCode
-                   value={this.state.valueForQRCode}
-                   //Setting the value of QRCode
-                   size={100}
-                   //Size of QRCode
-                   bgColor="#000"
-                   //Backgroun Color of QRCode
-                   fgColor="#fff"
-                   //Front Color of QRCode
-                   />
-
-
-
-                   </Card>
-                   </FlipCard>
-        </View>
-
-          <View style={styles.buttonRowContainer}>
-            <Button title="Green" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.green, navigation)}/>
-            <Button title="Blue" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.blue, navigation)}/>
-            <Button title="Red" buttonStyle={styles.buttonContainer} titleStyle={{color:'white'}}
-              onPress={() => this.onCardTypeRequested(CardTypes.red, navigation)}/>
-
-          </View>
-        </View>
-
-
-    );
-  }
-}
-
-
-const styles = StyleSheet.create({
-
-  buttonRowContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonContainer: {
-    top: 40,
-    width: 100,
-    backgroundColor: 'darkblue'
-  },
-  containerStyle: {
-    width: 350,
-    height: 200,
-  },
-  containerBackStyle:{
-    width: 350,
-    height: 200,
-  },
-  user: {
-    alignItems:'center',
-    justifyContent: 'center'
-  },
-
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: 'darkblue',
-    justifyContent: 'center',
-  },
-  details: {
-    right: -90,
-    bottom: -35,
-    fontSize: 15,
-    color: 'darkblue'
-  }
-})
-
-const cardStyles = (color) => StyleSheet.create({
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: color,
-    justifyContent: 'center',
-  },
-  details: {
-    right: -90,
-    bottom: -35,
-    fontSize: 15,
-    color: color
-  }
-});
-
-{/*const RootStack = createStackNavigator(
-  {
-    Card: {screen : BusinessCard},
-    Home: {screen: Home},
-  },
-  {
-    initialRouteName: 'Home',
-  }
-);*/}
+  const cardStyles = (color) => StyleSheet.create({
+    company: {
+      fontSize: 25,
+      fontWeight: 'bold',
+      color: color,
+      justifyContent: 'center',
+    },
+    details: {
+      right: -90,
+      bottom: -35,
+      fontSize: 15,
+      color: color
+    }
+  });

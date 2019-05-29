@@ -2,7 +2,7 @@ import React from 'react';
 import styles from '../styles/Styles';
 import { View, Text, Image, StyleSheet, TouchableOpacity,  StatusBar, share } from 'react-native';
 import { Divider, Card,  Button} from 'react-native-elements';
-import CardTemplate from './BusinessCard';
+import CardTemplate from './CardTemplate';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 // Profile screen that shows own card
@@ -20,7 +20,7 @@ export default class ProfileScreen extends React.Component {
 
   render() {
     return (
-            <CardTemplate /> );
+            <CardTemplate navigation={this.props.navigation}/> );
 
 
   }
