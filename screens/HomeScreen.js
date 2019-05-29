@@ -132,6 +132,7 @@ export default class HomeScreen extends React.Component {
           </View>
         </Modal>
 
+        {/* Displays the collection of cards */}
         <View>
           <CardCollection />
         </View>
