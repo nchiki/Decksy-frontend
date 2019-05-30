@@ -31,25 +31,6 @@ export default class FlexDimensionsBasics extends Component {
     <View style={{flex: 1}} onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
       <View style={{flex: 2, backgroundColor: 'powderblue', justifyContent: "center", alignItems: "center"}}>
         <Text style={styles.bigTitle}> RoloDex </Text>
-        <TextInput
-          style={styles.loginTextInputs}
-          placeholder="Email"
-          autoCorrect={false}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.loginTextInputs}
-          placeholder="Password"
-          autoCorrect={false}
-          autoCapitalize="none"
-          secureTextEntry={true}
-          textContentType="password"
-        />
-        <Button
-          onPress={() => {Alert.alert('You tried to login!');}}
-          title="Press Me"
-        />
       </View>
       <View style={{flex: 3, backgroundColor: 'white'}} />
     </View>
