@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { AppRegistry, FlatList, StyleSheet, Text, Image, View } from 'react-native';
 import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
 import users from '../users/Users'
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 export default class ContactCollection extends React.Component{
-  _isMounted = false;
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+      _isMounted : false, details: null
+    }
+  }
 
     _getContact = ({item, i}) => (
         <View key={i} style={{height:120, flexDirection: 'row', alignItems:'center'}}>
@@ -36,14 +42,14 @@ export default class ContactCollection extends React.Component{
     _keyExtractor = (item, index) => item.name;
     
     componentDidMount() {
-      this._isMounted = true;
+      const details = apiRequests.getUserContacts(3);
+      this.setState({_isMounted : true, details: details});
     
     }  
 
 
     renderFlatList = () => {
-      const details = apiRequests.getUserContacts(3);
-      const users = details.users;
+      const users = this.state.details.users;
       if(users && users.length > 0) {
       return (
         <View style={{alignItems:'center'}}>
@@ -70,7 +76,7 @@ export default class ContactCollection extends React.Component{
   }
     
     componentWillUnmount() {
-      this._isMounted = false;
+      this.setState({_isMounted : false});
     }
 
     renderSeparator = () => {
@@ -86,8 +92,8 @@ export default class ContactCollection extends React.Component{
     };
 
     render () {
-      const Foo = this.renderFlatList;
-      return <Foo />
+      const Foo = this.state._isMounted ? this.renderFlatList : this.renderSeparator;
+      return <Foo/>
     }
 }
 
