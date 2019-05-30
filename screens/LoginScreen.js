@@ -9,6 +9,10 @@ export default class LoginScreen extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      email:null,
+      password:null,
+    }
   }
 
   static navigationOptions = ({navigation}) => {
@@ -19,7 +23,7 @@ export default class LoginScreen extends Component {
         <Button
           title="Sign Up"
           onPress={() => {
-            navigation.navigate("SignUp")
+            navigation.navigate("SignUp", this.state)
           }}
         />
       ),
@@ -38,11 +42,18 @@ export default class LoginScreen extends Component {
           style={styles.loginInputs}
           placeholder="Email Address"
           onChangeText={(email) => this.setState({email})}
+          autoCorrect={false}
+          keyboardType="email-address"
+          autoCapitalize="none"
         />
         <TextInput
           style={styles.loginInputs}
           placeholder="Password"
           onChangeText={(password) => this.setState({password})}
+          autoCorrect={false}
+          autoCapitalize="none"
+          secureTextEntry={true}
+          textContentType="password"
         />
         <Button
           title="Log In"

@@ -9,6 +9,14 @@ export default class SignUpScreen extends Component {
 
   constructor(props) {
     super(props);
+    this.state={
+      email:null,
+      firstName:null,
+      lastName:null,
+      phoneNumber:null,
+      company:null,
+      profession:null,
+    }
   }
 
   static navigationOptions = {
@@ -16,13 +24,12 @@ export default class SignUpScreen extends Component {
   };
 
   handleSignUp() {
-    // Add logic to add user to database here
-    if (!this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.email || !this.state.company || !this.state.profession) {
-      var a = 1
+    if (!this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.company || !this.state.profession) {
+      Alert.alert("Please enter all the required details")
     } else {
-      apiRequests.setUserDetails(this.state.email, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.email, this.state.company, this.state.profession);
+      apiRequests.setUserDetails(this.state.email, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.company, this.state.profession);
+      this.props.navigation.navigate("Main", this.state)
     }
-    this.props.navigation.navigate("Main")
   }
 
   render() {
