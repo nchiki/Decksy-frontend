@@ -6,6 +6,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 20,
     top: 40,
+    flex: 1,
   },
   sections: {
     flex: 1,
@@ -63,6 +64,11 @@ const styles = StyleSheet.create({
   loginInputs: {
     fontSize: 40,
     textAlign: 'center'
+  },
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    width: 120
   }
 })
 export default styles;
