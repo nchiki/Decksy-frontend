@@ -135,7 +135,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <CardCollection />
+        <ContactCollection />
         </View>
       </View>
     );
