@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, View, Button } from 'react-native';
 
 import styles from '../styles/Styles';
+import setUserDetails from '../api_wrappers/BackendWrapper';
+ 
 
 export default class SignUpScreen extends Component {
 
@@ -16,18 +18,44 @@ export default class SignUpScreen extends Component {
 
   handleSignUp() {
     // Add logic to add user to database here
+    setUserDetails(this.state.email, this.state.firstname, this.state.lastname, this.state.phonenumber, this.state.email, this.state.company, this.state.profession)
     navigation.navigate("Main")
   }
 
   render() {
     return (
       <View style={{padding: 10}}>
-        <TextInput
+         <TextInput
           style={styles.loginInputs}
-          placeholder="Email Address"
-          onChangeText={(email) => this.setState({email})}
+          placeholder="First Name"
+          onChangeText={(firstname) => this.setState({firstname})}
+        />
+         <TextInput
+          style={styles.loginInputs}
+          placeholder="Last Name"
+          onChangeText={(lastname) => this.setState({lastname})}
+        />
+         <TextInput
+          style={styles.loginInputs}
+          placeholder="Phone Number"
+          onChangeText={(phonenumber) => this.setState({phonenumber})}
+        />
+         <TextInput
+          style={styles.loginInputs}
+          placeholder="Your company or self-employed"
+          onChangeText={(company) => this.setState({company})}
         />
         <TextInput
+          style={styles.loginInputs}
+          placeholder="Your profession"
+          onChangeText={(profession) => this.setState({profession})}
+        />
+        <TextInput
+          style={styles.loginInputs}
+          placeholder="Email"
+          onChangeText={(email) => this.setState({email})}
+        />
+         <TextInput
           style={styles.loginInputs}
           placeholder="Password"
           onChangeText={(password) => this.setState({password})}

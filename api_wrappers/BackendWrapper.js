@@ -2,7 +2,7 @@ const API = "https://rolodex.tk/"
 
 function getUserCard(userID) {
   return fetch(`${API}/businesscards/getusercard/`, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({
         user: {userID},
       }),
@@ -13,7 +13,7 @@ function getUserCard(userID) {
 
 function getUserHash(userID) {
   return fetch(`${API}/businesscards/getusercard/hash`, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({
         user: {userID},
       }),
@@ -24,7 +24,7 @@ function getUserHash(userID) {
 
 function getUserContacts(userID) {
   return fetch(`${API}/user/contacts`, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({
         user: {userID},
       }),
@@ -35,7 +35,7 @@ function getUserContacts(userID) {
 
 function getUserDetails(userID) {
   return fetch(`${API}/user/details`, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({
         user: {userID},
       }),
@@ -44,6 +44,20 @@ function getUserDetails(userID) {
     .then((response) => response.json());
 }
 
-// ToContacts(userID, code) {
-//
-// }
+function setUserDetails(userID, firstname, lastname, phonenumber, email, company, profession) {
+  return fetch(`${API}/user/details`, {
+      method: 'POST',
+      body: JSON.stringify({
+        user: {userID},
+        firstName: {firstname},
+        lastName: {lastname},
+        phoneNumber: {phonenumber},
+        email:{email},
+        company: {company},
+        profession: {profession}
+      
+      }),
+      cache: 'default',
+    })
+    .then((response) => response.json());
+}
