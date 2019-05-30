@@ -39,7 +39,6 @@ export default class BusinessCard extends React.Component{
 
     render(){
       const color = this.props.navigation.getParam('color', 'NO-ID');
-      console.log(color)
       
         if(this.state.saved) {
           return (
@@ -48,7 +47,6 @@ export default class BusinessCard extends React.Component{
           )
 
         } else {
-
           return (
           
              // implemented without image with header

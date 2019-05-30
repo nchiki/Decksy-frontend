@@ -10,7 +10,7 @@ import Dialog from "react-native-dialog";
 
 import styles from '../styles/Styles';
 import ContactCollection from '../components/ContactCollection';
-import { addUserToContacts } from '../api_wrappers/BackendWrapper';
+import apiRequests from '../api_wrappers/BackendWrapper';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -69,8 +69,14 @@ export default class HomeScreen extends React.Component {
     this.setState({ shortcodeInputVisible: false });
   };
 
-  handleAdd = () => {
-    // addUserToContacts(1, this.state.shortcode);
+  handleAdd =  async () => {
+    const { navigation } = this.props;
+    const userID = navigation.getParam('userID', 'NO-ID');
+    console.log(userID);
+    
+    apiRequests.addCard(userID, this.state.shortcode);
+    const cont = await apiRequests.getUserContacts(userID);
+    console.log(cont.users);
     this.setState({ shortcodeInputVisible: false });
   };
 
@@ -92,6 +98,7 @@ export default class HomeScreen extends React.Component {
     });
   }
 
+
   closeModal() {
     this.setState({
       filterMenuVisible: false
@@ -106,6 +113,7 @@ export default class HomeScreen extends React.Component {
 
   // Icons for adding and filtering
   render() {
+    
     return (
       <View>
         {/*Adding a modal that would display the different filters */}

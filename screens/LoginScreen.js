@@ -32,7 +32,8 @@ export default class LoginScreen extends Component {
 
   handleLogin() {
     // Add logic to authenticate user here
-    this.props.navigation.navigate("Main", {userID: 1})
+    console.log('hello');
+    this.props.navigation.navigate('CollectedCards', {userID: 2})
   }
 
   render() {
