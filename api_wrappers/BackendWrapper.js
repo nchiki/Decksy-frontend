@@ -121,7 +121,7 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
       });
   },
 
-  addCard: function(cardOwner, addTo) {
+  addCard : function(cardOwner, addTo) {
     return fetch(`${API}/user/addCard`, {
       method: 'POST',
       headers: {
