@@ -1,5 +1,6 @@
 const API = "https://rolodex.tk/api"
 const apiRequests = {
+
   getUserCard: function (userID) {
   return fetch(`${API}/businesscards/getusercard`, {
       method: 'POST',
@@ -35,7 +36,7 @@ const apiRequests = {
 
 
 setUserCard: function(userID, templateID, color) {
-  
+
   fetch(`${API}/businesscards/setusercard`, {
       method: 'POST',
       headers: {
@@ -46,13 +47,13 @@ setUserCard: function(userID, templateID, color) {
         cardTemplate: {templateID},
         colour:{color}
       }),
-      
+
     }).catch(function(error) {
       console.log('There has been a problem with your setUserCard fetch operation: ' + error.message);
        // ADD THIS THROW error
         throw error;
       });
-    
+
 },
 
 getUserContacts: function(userID) {
@@ -107,10 +108,9 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         firstName: {firstname},
         lastName: {lastname},
         phoneNumber: {phonenumber},
-        email:{email},
+        email: {email},
         company: {company},
         profession: {profession}
-
       }),
       cache: 'default',
     }).
@@ -119,7 +119,27 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
        // ADD THIS THROW error
         throw error;
       });
-},
+  },
+
+  addCard: function(cardOwner, addTo) {
+    return fetch(`${API}/user/addCard`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        cardOwner: {cardOwner},
+        addTo: {addTo},
+      }),
+      cache: 'default',
+    })
+    .catch(function(error) {
+      console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+       // ADD THIS THROW error
+        throw error;
+    });
+  }
 
 }
 export default apiRequests;

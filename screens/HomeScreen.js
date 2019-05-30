@@ -10,7 +10,7 @@ import Dialog from "react-native-dialog";
 
 import styles from '../styles/Styles';
 import ContactCollection from '../components/ContactCollection';
-import { addUserToContacts } from '../api_wrappers/BackendWrapper';
+import { addUserToContacts, addCard } from '../api_wrappers/BackendWrapper';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -70,7 +70,10 @@ export default class HomeScreen extends React.Component {
   };
 
   handleAdd = () => {
-    // addUserToContacts(1, this.state.shortcode);
+    const { navigation } = this.props;
+    const userID = navigation.getParam('userID', 'NO-ID');
+    Alert.alert(userID)
+    // addCard(this.props.userID, this.state.shortcode);
     this.setState({ shortcodeInputVisible: false });
   };
 
