@@ -22,15 +22,16 @@ function getUserHash(userID) {
     .then((response) => response.json());
 }
 
-function getUserHash(userID, image) {
-  return fetch(`${API}/businesscards/setusercard`, {
+function setUserCard(userID, templateID, color) {
+  fetch(`${API}/businesscards/setusercard`, {
       method: 'POST',
       body: JSON.stringify({
         user: {userID},
-        image: {image}
+        cardTemplate: {templateID},
+        color:{color}
       }),
     })
-    .then((response) => response.json());
+    
 }
 
 function getUserContacts(userID) {
