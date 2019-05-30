@@ -16,7 +16,7 @@ export default class SignUpScreen extends Component {
 
   handleSignUp() {
     // Add logic to add user to database here
-    navigation.navigate("Main")
+    this.props.navigation.navigate("Main")
   }
 
   render() {
