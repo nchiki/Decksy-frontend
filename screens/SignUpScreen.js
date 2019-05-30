@@ -32,7 +32,7 @@ export default class SignUpScreen extends Component {
       apiRequests.setUserDetails(ID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession);
       const details = await apiRequests.getUserDetails(2);
       console.log(details.firstName);
-      this.props.navigation.navigate("Main", this.state);
+      this.props.navigation.navigate('CollectedCards', {userID: 1});
     }
   }
 

@@ -6,8 +6,8 @@ import LoginNavigation from './LoginNavigation';
 
 export default createAppContainer(createSwitchNavigator(
   {
-    Main: TabNavigation,
-    Login: LoginNavigation,
+    Main: {screen: TabNavigation},
+    Login: {screen: LoginNavigation},
   },
   {
     initialRouteName: 'Login',

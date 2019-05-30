@@ -72,6 +72,7 @@ export default class HomeScreen extends React.Component {
   handleAdd = () => {
     const { navigation } = this.props;
     const userID = navigation.getParam('userID', 'NO-ID');
+    console.log(userID);
     Alert.alert(userID)
     // addCard(this.props.userID, this.state.shortcode);
     this.setState({ shortcodeInputVisible: false });
@@ -109,6 +110,7 @@ export default class HomeScreen extends React.Component {
 
   // Icons for adding and filtering
   render() {
+    
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
