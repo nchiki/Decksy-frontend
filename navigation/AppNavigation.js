@@ -1,10 +1,15 @@
 import React from 'react';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation';
 
 import TabNavigation from './TabNavigation';
+import LoginNavigation from './LoginNavigation';
 
-export default createAppContainer(createSwitchNavigator({
-  // You could add another route here for authentication.
-  // Read more at https://reactnavigation.org/docs/en/auth-flow.html
-  Main: TabNavigation,
-}));
+export default createAppContainer(createSwitchNavigator(
+  {
+    Main: TabNavigation,
+    Login: LoginNavigation,
+  },
+  {
+    initialRouteName: 'Login',
+  }
+));
