@@ -4,30 +4,19 @@ import { AppRegistry, Text, TextInput, View, Button } from 'react-native';
 
 import styles from '../styles/Styles';
 
-export default class LoginScreen extends Component {
+export default class SignUpScreen extends Component {
 
   constructor(props) {
     super(props);
   }
 
-  static navigationOptions = ({navigation}) => {
-    const { params = {} } = navigation.state;
-    return {
-      title: 'Login',
-      headerRight: (
-        <Button
-          title="Sign Up"
-          onPress={() => {
-            navigation.navigate("SignUp")
-          }}
-        />
-      ),
-    }
+  static navigationOptions = {
+    title: 'Sign Up',
   };
 
-  handleLogin() {
-    // Add logic to authenticate user here
-    this.props.navigation.navigate("Main")
+  handleSignUp() {
+    // Add logic to add user to database here
+    navigation.navigate("Main")
   }
 
   render() {
@@ -44,9 +33,9 @@ export default class LoginScreen extends Component {
           onChangeText={(password) => this.setState({password})}
         />
         <Button
-          title="Log In"
+          title="Sign Up"
           style={styles.loginInputs}
-          onPress={() => {this.handleLogin()}}
+          onPress={() => {this.handleSignUp()}}
         />
       </View>
     );

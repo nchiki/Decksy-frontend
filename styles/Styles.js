@@ -44,7 +44,6 @@ const styles = StyleSheet.create({
     top: 20,
   },
   modalAddContainer: {
-
     justifyContent: 'center',
     backgroundColor: 'powderblue',
     height: 400,
@@ -61,9 +60,9 @@ const styles = StyleSheet.create({
     height: 44,
     textAlign: 'left',
   },
-  loginTextInputs: {
-    fontSize: 110,
-
+  loginInputs: {
+    fontSize: 40,
+    textAlign: 'center'
   }
 })
 export default styles;

@@ -8,6 +8,15 @@ const users=[
     color: 'darkblue'
     },
     {
+    shortcode: 1,
+    name: 'Mr. Robert',
+    company: 'Facebook',
+    field: 'Software',
+    phoneNumber: '073004889',
+    email:'roberts@email.com',
+    color: 'darkblue'
+    },
+    {
     name: 'John',
     company: 'Amazon',
     field: 'Software',
