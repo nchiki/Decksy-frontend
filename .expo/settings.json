@@ -3,5 +3,5 @@
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "eu-pi2"
+  "urlRandomness": "iv-4px"
 }

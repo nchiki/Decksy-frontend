@@ -1,17 +1,17 @@
-const API = "https://rolodex.tk/"
-
-function getUserCard(userID) {
+const API = "https://rolodex.tk/api"
+const apiRequests = {
+  getUserCard: function (userID) {
   return fetch(`${API}/businesscards/getusercard/card`, {
-      method: 'GET',
+      method: 'POST',
       body: JSON.stringify({
         user: {userID},
       }),
       cache: 'default',
     })
     .then((response) => response.json());
-}
+},
 
-function getUserHash(userID) {
+getUserHash: function(userID) {
   return fetch(`${API}/businesscards/getusercard/hash`, {
       method: 'GET',
       body: JSON.stringify({
@@ -20,9 +20,9 @@ function getUserHash(userID) {
       cache: 'default',
     })
     .then((response) => response.json());
-}
+},
 
-function setUserCard(userID, templateID, color) {
+setUserCard: function(userID, templateID, color) {
   fetch(`${API}/businesscards/setusercard`, {
       method: 'POST',
       body: JSON.stringify({
@@ -32,9 +32,9 @@ function setUserCard(userID, templateID, color) {
       }),
     })
     
-}
+},
 
-function getUserContacts(userID) {
+getUserContacts: function(userID) {
   return fetch(`${API}/user/contacts`, {
       method: 'GET',
       body: JSON.stringify({
@@ -43,9 +43,9 @@ function getUserContacts(userID) {
       cache: 'default',
     })
     .then((response) => response.json());
-}
+}, 
 
-function getUserDetails(userID) {
+getUserDetails: function(userID) {
   return fetch(`${API}/user/details`, {
       method: 'GET',
       body: JSON.stringify({
@@ -54,8 +54,10 @@ function getUserDetails(userID) {
       cache: 'default',
     })
     .then((response) => response.json());
-}
+}, 
 
-function addUserToContacts(userID, code) {
+addUserToContacts: function (userID, code) {
 
 }
+}
+export default apiRequests;

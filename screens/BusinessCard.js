@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
 import { Divider, Card,  Button} from 'react-native-elements';
-import setUserCard from '../api_wrappers/BackendWrapper';
+import apiRequests from '../api_wrappers/BackendWrapper';
+
 import QRCode from 'react-native-qrcode';
 import CardFlip from 'react-native-card-flip';
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
@@ -31,7 +32,9 @@ export default class BusinessCard extends React.Component{
     onChangeRequested = (color) => {
       u.color = color;
       console.log(u.color);
-      setUserCard(1, 1, color);
+      apiRequests.setUserCard(1, 1, color);
+      const details = apiRequests.getUserCard(1);
+      console.log(details.color);
     }
 
     render(){
