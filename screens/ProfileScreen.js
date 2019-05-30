@@ -9,19 +9,21 @@ import styles from '../styles/Styles';
 
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
-
-  static navigationOptions = {
-    title: 'Profile',
-    headerRight: (
-      <Icon
-        containerStyle={{paddingRight: 12}}
-        type="ionicon"
-        name={Platform.OS === "ios" ? "ios-share" : "md-share"}
-        onPress={() => params.onShare}
-        size={34}
-        color='dodgerblue'
-      />
-    ),
+  static navigationOptions = ({navigation}) => {
+    const { params = {} } = navigation.state;
+    return {
+      title: 'Profile',
+      headerRight: (
+        <Icon
+          containerStyle={{paddingRight: 12}}
+          type="ionicon"
+          name={Platform.OS === "ios" ? "ios-share" : "md-share"}
+          onPress={() => params.onShare}
+          size={34}
+          color='dodgerblue'
+        />
+      ),
+    }
   };
 
   render() {
