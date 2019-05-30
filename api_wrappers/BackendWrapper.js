@@ -32,7 +32,7 @@ setUserCard: function(userID, templateID, color) {
         color:{color}
       }),
       cache: 'default',
-    }) 
+    })
 },
 
 getUserContacts: function(userID) {
@@ -44,10 +44,21 @@ getUserContacts: function(userID) {
       cache: 'default',
     })
     .then((response) => response.json());
-}, 
+},
+
+getUserDetails: function(userID) {
+  return fetch(`${API}/user/details`, {
+      method: 'GET',
+      body: JSON.stringify({
+        user: {userID},
+      }),
+      cache: 'default',
+    })
+    .then((response) => response.json());
+},
 
 setUserDetails: function(userID, firstname, lastname, phonenumber, email, company, profession) {
-  return fetch(`${API}/user/details`, {
+  return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       body: JSON.stringify({
         user: {userID},
@@ -57,12 +68,12 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         email:{email},
         company: {company},
         profession: {profession}
-      
+
       }),
       cache: 'default',
     })
     .then((response) => response.json());
-}, 
+},
 
 }
 export default apiRequests;

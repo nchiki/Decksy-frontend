@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React from 'react';
 import { AppRegistry, FlatList, StyleSheet, Text, Image, View } from 'react-native';
 import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
 import users from '../users/Users'
@@ -7,28 +7,28 @@ export default class ContactCollection extends React.Component{
 
     _getContact = ({item}) => (
         <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
-        
-       <View style={{flex:1, alignItems:'center'}}><Text style={{fontSize:15}}>{item.name}</Text>
-        <Text style={{fontSize:11}}>{item.subtitle}</Text>
+
+        <View style={{flex:1, alignItems:'center'}}>
+          <Text style={{fontSize:17, paddingLeft:10}}>{item.name}</Text>
+          <Text style={{fontSize:11}}>{item.subtitle}</Text>
         </View>
           <View style={{flex:3}}>
           <Card title={item.name} titleStyle={{color:item.color, fontSize: 30}} containerStyle={styles.containerStyle}>
-                  <View style={styles.user}>
-                    <Text style={cardStyles(item.color).company}>{item.company}</Text>
-                    <Text style={cardStyles(item.color).details}>{item.phoneNumber}{"\n"}{item.email}</Text>
-                  </View>
-                  <Divider style={{ backgroundColor: item.color, width: 10, bottom: 40}} />
-                  <Divider style={{ backgroundColor: item.color, width: 30, bottom: 30}} />
-                  <Divider style={{ backgroundColor: item.color, width: 50, bottom: 20}} />
-                  <Divider style={{ backgroundColor: item.color, width: 70, bottom: 10}} />
-                  <Divider style={{ backgroundColor: item.color, width: 90}} />
-                  <Divider style={{ backgroundColor: item.color, width: 110, bottom: -10}}/>
-                  <Divider style={{ backgroundColor: item.color, width: 130, bottom: -20}} />
-                  <Divider style={{ backgroundColor: item.color, width: 150, bottom: -30}} />
-                  
-                  </Card>
-          </View> 
-         </View>
+            <View style={styles.user}>
+              <Text style={cardStyles(item.color).company}>{item.company}</Text>
+              <Text style={cardStyles(item.color).details}>{item.phoneNumber}{"\n"}{item.email}</Text>
+            </View>
+            <Divider style={{ backgroundColor: item.color, width: 10, bottom: 40}} />
+            <Divider style={{ backgroundColor: item.color, width: 30, bottom: 30}} />
+            <Divider style={{ backgroundColor: item.color, width: 50, bottom: 20}} />
+            <Divider style={{ backgroundColor: item.color, width: 70, bottom: 10}} />
+            <Divider style={{ backgroundColor: item.color, width: 90}} />
+            <Divider style={{ backgroundColor: item.color, width: 110, bottom: -10}}/>
+            <Divider style={{ backgroundColor: item.color, width: 130, bottom: -20}} />
+            <Divider style={{ backgroundColor: item.color, width: 150, bottom: -30}} />
+          </Card>
+        </View>
+     </View>
     );
 
     _keyExtractor = (item, index) => item.name;
@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
       alignItems:'center',
       justifyContent: 'center'
     },
-  
-    
+
+
   })
   const cardStyles = (color) => StyleSheet.create({
     company: {
