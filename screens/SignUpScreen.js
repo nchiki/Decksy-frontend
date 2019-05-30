@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, View, Button } from 'react-native';
 
 import styles from '../styles/Styles';
-import setUserDetails from '../api_wrappers/BackendWrapper';
+import apiRequests from '../api_wrappers/BackendWrapper';
  
 
 export default class SignUpScreen extends Component {
@@ -18,8 +18,8 @@ export default class SignUpScreen extends Component {
 
   handleSignUp() {
     // Add logic to add user to database here
-    setUserDetails(this.state.email, this.state.firstname, this.state.lastname, this.state.phonenumber, this.state.email, this.state.company, this.state.profession)
-    navigation.navigate("Main")
+    apiRequests.setUserDetails(this.state.email, this.state.firstname, this.state.lastname, this.state.phonenumber, this.state.email, this.state.company, this.state.profession);
+    this.props.navigation.navigate("Main")
   }
 
   render() {

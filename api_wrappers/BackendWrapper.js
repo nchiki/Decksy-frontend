@@ -1,7 +1,7 @@
-const API = "https://rolodex.tk/"
-
-function getUserCard(userID) {
-  return fetch(`${API}/businesscards/getusercard/`, {
+const API = "https://rolodex.tk/api"
+const apiRequests = {
+  getUserCard: function (userID) {
+  return fetch(`${API}/businesscards/getusercard/card`, {
       method: 'POST',
       body: JSON.stringify({
         user: {userID},
@@ -9,9 +9,9 @@ function getUserCard(userID) {
       cache: 'default',
     })
     .then((response) => response.json());
-}
+},
 
-function getUserHash(userID) {
+getUserHash: function(userID) {
   return fetch(`${API}/businesscards/getusercard/hash`, {
       method: 'POST',
       body: JSON.stringify({
@@ -20,31 +20,33 @@ function getUserHash(userID) {
       cache: 'default',
     })
     .then((response) => response.json());
-}
+},
 
-function getUserContacts(userID) {
+
+setUserCard: function(userID, templateID, color) {
+  fetch(`${API}/businesscards/setusercard`, {
+      method: 'POST',
+      body: JSON.stringify({
+        user: {userID},
+        cardTemplate: {templateID},
+        color:{color}
+      }),
+      cache: 'default',
+    }) 
+},
+
+getUserContacts: function(userID) {
   return fetch(`${API}/user/contacts`, {
-      method: 'POST',
+      method: 'GET',
       body: JSON.stringify({
         user: {userID},
       }),
       cache: 'default',
     })
     .then((response) => response.json());
-}
+}, 
 
-function getUserDetails(userID) {
-  return fetch(`${API}/user/details`, {
-      method: 'POST',
-      body: JSON.stringify({
-        user: {userID},
-      }),
-      cache: 'default',
-    })
-    .then((response) => response.json());
-}
-
-function setUserDetails(userID, firstname, lastname, phonenumber, email, company, profession) {
+setUserDetails: function(userID, firstname, lastname, phonenumber, email, company, profession) {
   return fetch(`${API}/user/details`, {
       method: 'POST',
       body: JSON.stringify({
@@ -60,4 +62,7 @@ function setUserDetails(userID, firstname, lastname, phonenumber, email, company
       cache: 'default',
     })
     .then((response) => response.json());
+}, 
+
 }
+export default apiRequests;
