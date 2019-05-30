@@ -25,22 +25,32 @@ export default class BusinessCard extends React.Component{
           // Default Value of the TextInput
           valueForQRCode: '',
           // Default value for the QR Code
+          saved: false
           };
         }
 
 
-    onChangeRequested = (color) => {
+    onChangeRequested = async (color) => {
       u.color = color;
       console.log(u.color);
       apiRequests.setUserCard(1, 1, color);
-      const details = apiRequests.getUserCard(1);
-      console.log(details.color);
+      setTimeout(() => this.setState({saved: true}), 20);
     }
 
     render(){
       const color = this.props.navigation.getParam('color', 'NO-ID');
       console.log(color)
-      return(
+      
+        if(this.state.saved) {
+          return (
+            <View style={{flex:1, alignItems:'center', justifyContent:'center'}}><Text style={{fontSize:30, fontWeight:'bold'}}>
+              Saved!</Text></View>
+          )
+
+        } else {
+
+          return (
+          
              // implemented without image with header
              <View style={{flex:1, alignItems:'center'}}>
           <View><CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
@@ -93,6 +103,7 @@ export default class BusinessCard extends React.Component{
       </View>
     );
   }
+}
 }
   const styles = StyleSheet.create({
     cardContainer:{
