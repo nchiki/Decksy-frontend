@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, View, Button } from 'react-native';
 
 import styles from '../styles/Styles';
+import getUserDetails from '../api_wrappers/BackendWrapper';
 
 export default class LoginScreen extends Component {
 
@@ -27,7 +28,7 @@ export default class LoginScreen extends Component {
 
   handleLogin() {
     // Add logic to authenticate user here
-    this.props.navigation.navigate("Main")
+    this.props.navigation.navigate("Main", {userID: 1})
   }
 
   render() {

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 
-import { AppRegistry, Text, TextInput, View, Button } from 'react-native';
+import { AppRegistry, Text, TextInput, View, Button, Alert } from 'react-native';
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
- 
 
 export default class SignUpScreen extends Component {
 
@@ -18,7 +17,11 @@ export default class SignUpScreen extends Component {
 
   handleSignUp() {
     // Add logic to add user to database here
-    apiRequests.setUserDetails(this.state.email, this.state.firstname, this.state.lastname, this.state.phonenumber, this.state.email, this.state.company, this.state.profession);
+    if (!this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.email || !this.state.company || !this.state.profession) {
+      var a = 1
+    } else {
+      apiRequests.setUserDetails(this.state.email, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.email, this.state.company, this.state.profession);
+    }
     this.props.navigation.navigate("Main")
   }
 
@@ -28,17 +31,17 @@ export default class SignUpScreen extends Component {
          <TextInput
           style={styles.loginInputs}
           placeholder="First Name"
-          onChangeText={(firstname) => this.setState({firstname})}
+          onChangeText={(firstname) => this.setState({firstName})}
         />
          <TextInput
           style={styles.loginInputs}
           placeholder="Last Name"
-          onChangeText={(lastname) => this.setState({lastname})}
+          onChangeText={(lastname) => this.setState({lastName})}
         />
          <TextInput
           style={styles.loginInputs}
           placeholder="Phone Number"
-          onChangeText={(phonenumber) => this.setState({phonenumber})}
+          onChangeText={(phonenumber) => this.setState({phoneNumber})}
         />
          <TextInput
           style={styles.loginInputs}
