@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert } from 'react-native';
+import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
 import { NavigationActions, StackActions } from 'react-navigation';
+import { Icon } from "react-native-elements";
 import DialogInput from 'react-native-dialog-input';
 import Dialog from "react-native-dialog";
 
@@ -38,19 +39,23 @@ export default class HomeScreen extends React.Component {
     return {
       title: 'Cards',
       headerLeft: (
-        <Button
-          title="Filter"
-          onPress={() => {
-            params.handleFilterButton()
-          }}
+        <Icon
+          containerStyle={{paddingLeft:12}}
+          type="ionicon"
+          name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+          onPress={() => params.handleFilterButton()}
+          size={28}
+          color='dodgerblue'
         />
       ),
       headerRight: (
-        <Button
-          title="Add Short Code"
-          onPress={() => {
-            params.handleShortcodeAddButton()
-          }}
+        <Icon
+          containerStyle={{paddingRight: 12}}
+          type="ionicon"
+          name={Platform.OS === "ios" ? "ios-add" : "md-add"}
+          onPress={() => params.handleShortcodeAddButton()}
+          size={37}
+          color='dodgerblue'
         />
       ),
     }

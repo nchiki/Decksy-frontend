@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { View, Text, Image, StyleSheet, TouchableOpacity,  StatusBar, share } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity,  StatusBar, share, Platform } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { Divider, Card,  Button} from 'react-native-elements';
+import { Divider, Card,  Button, Icon } from 'react-native-elements';
 
 import CardTemplate from '../components/CardTemplate';
 import styles from '../styles/Styles';
@@ -13,9 +13,13 @@ export default class ProfileScreen extends React.Component {
   static navigationOptions = {
     title: 'Profile',
     headerRight: (
-      <Button
-        onPress={() => {this.onShare}}
-        title="Share"
+      <Icon
+        containerStyle={{paddingRight: 12}}
+        type="ionicon"
+        name={Platform.OS === "ios" ? "ios-share" : "md-share"}
+        onPress={() => params.onShare}
+        size={34}
+        color='dodgerblue'
       />
     ),
   };
