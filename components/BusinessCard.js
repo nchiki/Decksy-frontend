@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
 import { Divider, Card,  Button} from 'react-native-elements';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
@@ -32,7 +32,7 @@ export default class BusinessCard extends React.Component{
 
       
     render(){
-      
+      const image = require('../assets/images/template8.png');
       const u = this.props.navigation.getParam('details', 'NO-ID');
       const color = this.props.navigation.getParam('color', 'NO-ID');
 
@@ -51,20 +51,26 @@ export default class BusinessCard extends React.Component{
           <View>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
-                <Card title={`${u.firstName} ${u.lastName}`} titleStyle={{color:color, fontSize: 30}} containerStyle={styles.containerStyle}>
+                <ImageBackground source={image} style={styles.containerStyle}>
+                  <View style={styles.containerStyle}>
+                  <View style={styles.titleText}>
+                      <Text style={{color:'maroon', fontSize: 25, fontWeight:'bold'}} >{`${u.firstName} ${u.lastName}`} </Text>
+                  </View>
                   <View style={styles.user}>
                     <Text style={cardStyles(color).company}>{u.company}</Text>
                     <Text style={cardStyles(color).details}>{u.phoneNumber}{'\n'}{u.email}</Text>
                   </View>
-                  <Divider style={{ backgroundColor: color, width: 10, bottom: 40}} />
+                  </View>
+                  {/* <Divider style={{ backgroundColor: color, width: 10, bottom: 40}} />
                   <Divider style={{ backgroundColor: color, width: 30, bottom: 30}} />
                   <Divider style={{ backgroundColor: color, width: 50, bottom: 20}} />
                   <Divider style={{ backgroundColor: color, width: 70, bottom: 10}} />
                   <Divider style={{ backgroundColor: color, width: 90}} />
                   <Divider style={{ backgroundColor: color, width: 110, bottom: -10}}/>
                   <Divider style={{ backgroundColor: color, width: 130, bottom: -20}} />
-                  <Divider style={{ backgroundColor: color, width: 150, bottom: -30}} />
-                </Card>
+                  <Divider style={{ backgroundColor: color, width: 150, bottom: -30}} /> */}
+                
+                </ImageBackground>
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
@@ -121,8 +127,12 @@ export default class BusinessCard extends React.Component{
       backgroundColor: 'darkblue'
     },
     containerStyle: {
+      alignItems: 'center',
       width: 350,
       height: 200,
+    },
+    titleText: {
+      top: 20
     },
     containerBackStyle:{
       width: 350,
@@ -134,14 +144,14 @@ export default class BusinessCard extends React.Component{
     },
 
     company: {
-      fontSize: 25,
+      fontSize: 20,
       fontWeight: 'bold',
       color: 'darkblue',
       justifyContent: 'center',
     },
     details: {
       right: -90,
-      bottom: -35,
+      bottom: -85,
       fontSize: 10,
       color: 'darkblue'
     }
@@ -149,15 +159,17 @@ export default class BusinessCard extends React.Component{
 
   const cardStyles = (color) => StyleSheet.create({
     company: {
-      fontSize: 25,
+      left: -90,
+      bottom: -119,
+      fontSize: 20,
       fontWeight: 'bold',
-      color: color,
+      color: 'white',
       justifyContent: 'center',
     },
     details: {
-      right: -90,
-      bottom: -35,
-      fontSize: 15,
-      color: color
+      right: -85,
+      bottom: -95,
+      fontSize: 10,
+      color: 'white'
     }
   });

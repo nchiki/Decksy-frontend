@@ -35,6 +35,7 @@ export default class ContactCollection extends React.Component{
               <Divider style={{ backgroundColor: item.color, width: 150, bottom: -30}} />
               
               </Card>
+              
       </View> 
      </View>
 );
