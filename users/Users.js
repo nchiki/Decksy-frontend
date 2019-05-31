@@ -7,15 +7,6 @@ const users=[
     phoneNumber: '073004889',
     email:'roberts@email.com',
     color:'darkred'
-    },   
-    {
-    shortcode: 1,
-    name: 'Mr. Robert',
-    company: 'Facebook',
-    field: 'Software',
-    phoneNumber: '073004889',
-    email:'roberts@email.com',
-    color: 'darkblue'
     },
     {
     name: 'John',
@@ -74,7 +65,7 @@ const users=[
     {
     name: 'Jenna',
     company: 'Palantir',
-    field: 'Software',      
+    field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073004339',
     email:'jenna@email.com',
@@ -101,7 +92,7 @@ const users=[
     {
     name: 'Pierre',
     company: 'Facebook',
-    field: 'Software',      
+    field: 'Software',
     subtitle: 'Vice President',
     phoneNumber: '073324589',
     email:'pierre@email.com',
