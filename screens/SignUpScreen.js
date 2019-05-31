@@ -43,13 +43,13 @@ export default class SignUpScreen extends Component {
           style={styles.loginInputs}
           placeholder="ID "
           onChangeText={(userID) => this.setState({userID: userID})}
-          
+
         />
          <TextInput
           style={styles.loginInputs}
           placeholder="First Name"
           onChangeText={(firstname) => this.setState({firstName: firstname})}
-          
+
         />
          <TextInput
           style={styles.loginInputs}
@@ -63,12 +63,12 @@ export default class SignUpScreen extends Component {
         />
          <TextInput
           style={styles.loginInputs}
-          placeholder="Your company or self-employed"
+          placeholder="Company/Self-Employed"
           onChangeText={(company) => this.setState({company: company})}
         />
         <TextInput
           style={styles.loginInputs}
-          placeholder="Your profession"
+          placeholder="Profession"
           onChangeText={(profession) => this.setState({profession: profession})}
         />
         <TextInput

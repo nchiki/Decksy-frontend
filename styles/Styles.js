@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   loginInputs: {
-    fontSize: 40,
+    fontSize: 35,
     textAlign: 'center'
   },
   iconContainer: {
