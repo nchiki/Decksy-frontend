@@ -9,7 +9,7 @@ const apiRequests = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
     })
@@ -23,18 +23,6 @@ const apiRequests = {
     });
 },
 
-/*getUserHash: function(userID) {
-  return fetch(`${API}/businesscards/getusercard/hash`, {
-      method: 'POST',
-      body: JSON.stringify({
-        user: {userID},
-      }),
-      cache: 'default',
-    })
-    .then((response) => response.json());
-},*/
-
-
 setUserCard: function(userID, templateID, color) {
 
   fetch(`${API}/businesscards/setusercard`, {
@@ -43,9 +31,9 @@ setUserCard: function(userID, templateID, color) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user: {userID},
-        cardTemplate: {templateID},
-        colour:{color}
+        user: userID,
+        cardTemplate: templateID,
+        colour:color
       }),
 
     }).catch(function(error) {
@@ -64,7 +52,7 @@ getUserContacts: function(userID) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
     })
@@ -83,10 +71,11 @@ getUserDetails: function(userID) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
-    }).then(function(response){
+    })
+    .then(function(response){
       return response.json();
     })
     .catch(function(error) {
@@ -104,13 +93,13 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
-        firstName: {firstname},
-        lastName: {lastname},
-        phoneNumber: {phonenumber},
-        email: {email},
-        company: {company},
-        profession: {profession}
+        user: userID,
+        firstName: firstname,
+        lastName: lastname,
+        phoneNumber: phonenumber,
+        email: email,
+        company: company,
+        profession: profession
       }),
       cache: 'default',
     }).
@@ -129,8 +118,8 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        cardOwner: {cardOwner},
-        addTo: {addTo},
+        cardOwner: cardOwner,
+        addTo: addTo,
       }),
       cache: 'default',
     })

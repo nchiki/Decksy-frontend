@@ -3,6 +3,8 @@ import { View, StyleSheet, TouchableOpacity} from 'react-native';
 import { Card,  Button} from 'react-native-elements';
 import QRCode from 'react-native-qrcode';
 import CardFlip from 'react-native-card-flip';
+import apiRequests from '../api_wrappers/BackendWrapper';
+
 const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
 
 export default class CardTemplate extends React.Component {
@@ -16,16 +18,18 @@ export default class CardTemplate extends React.Component {
     setTimeout(() => this.cardForType(this.state.cardType, navigation), 20);
   }
 
-  cardForType = (type, navigation) => {
+  cardForType = async (type, navigation) => {
+    const det = await apiRequests.getUserDetails(2);
+    
     switch (type) {
       case CardTypes.green:
-        navigation.push('CardScreen', {color: 'darkgreen'});
+        navigation.push('CardScreen', {color: 'darkgreen', details:det});
         break;
       case CardTypes.blue:
-        navigation.push('CardScreen',{color: 'darkblue'});
+        navigation.push('CardScreen',{color: 'darkblue', details:det});
         break;
       case CardTypes.red:
-        navigation.push('CardScreen', {color: 'darkred'});
+        navigation.push('CardScreen', {color: 'darkred', details:det});
         break;
     }
   }
