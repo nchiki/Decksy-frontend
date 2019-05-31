@@ -88,51 +88,51 @@ export default class ContactCollection extends React.Component{
   };
 
   render () {
-  return (
+    return (
       <FlatList
-          data={users}
-          renderItem={this._getContact}
-          keyExtractor={item => item.name}
-          ItemSeparatorComponent={this.renderSeparator}
+        data={users}
+        renderItem={this._getContact}
+        keyExtractor={item => item.name}
+        ItemSeparatorComponent={this.renderSeparator}
       />
     );
   }
+
 }
 
 
 const styles = StyleSheet.create({
-    containerStyle: {
-      width: 350,
-      height: 200,
-      transform: [{
-        scale:0.5
-      }],
-    },
-    containerBackStyle: {
-      width: 350,
-      height: 200,
-    },
-    user: {
-      alignItems:'center',
-      justifyContent: 'center'
-    },
+  containerStyle: {
+    width: 350,
+    height: 200,
+    transform: [{
+      scale:0.5
+    }],
+  },
+  containerBackStyle: {
+    width: 350,
+    height: 200,
+  },
+  user: {
+    alignItems:'center',
+    justifyContent: 'center'
+  },
+})
 
-
-  })
-  const cardStyles = (color) => StyleSheet.create({
-    company: {
-      fontSize: 25,
-      fontWeight: 'bold',
-      color: color,
-      justifyContent: 'center',
-    },
-    details: {
-      right: -85,
-      bottom: -35,
-      fontSize: 15,
-      color: color
-    }
-  })
+const cardStyles = (color) => StyleSheet.create({
+  company: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: color,
+    justifyContent: 'center',
+  },
+  details: {
+    right: -85,
+    bottom: -35,
+    fontSize: 15,
+    color: color
+  }
+})
 
 
 
