@@ -9,7 +9,7 @@ const apiRequests = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
     })
@@ -27,7 +27,7 @@ const apiRequests = {
   return fetch(`${API}/businesscards/getusercard/hash`, {
       method: 'POST',
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
     })
@@ -43,9 +43,9 @@ setUserCard: function(userID, templateID, color) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user: {userID},
-        cardTemplate: {templateID},
-        colour:{color}
+        user: userID,
+        cardTemplate: templateID,
+        colour:color
       }),
 
     }).catch(function(error) {
@@ -64,7 +64,7 @@ getUserContacts: function(userID) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
     })
@@ -83,7 +83,7 @@ getUserDetails: function(userID) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
+        user: userID,
       }),
       cache: 'default',
     }).then(function(response){
@@ -104,13 +104,13 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        user: {userID},
-        firstName: {firstname},
-        lastName: {lastname},
-        phoneNumber: {phonenumber},
-        email: {email},
-        company: {company},
-        profession: {profession}
+        user: userID,
+        firstName: firstname,
+        lastName: lastname,
+        phoneNumber: phonenumber,
+        email: email,
+        company: company,
+        profession: profession
       }),
       cache: 'default',
     }).
@@ -122,15 +122,15 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
   },
 
   addCard : function(cardOwner, addTo) {
-    return fetch(`${API}/user/addCard`, {
+    return fetch(`${API}/user/addcard`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        cardOwner: {cardOwner},
-        addTo: {addTo},
+        cardOwner: cardOwner,
+        addTo: addTo,
       }),
       cache: 'default',
     })

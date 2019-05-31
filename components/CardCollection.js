@@ -2,7 +2,6 @@ import React from 'react';
 import {Button, View, Text, FlatList, StyleSheet } from 'react-native';
 import { Divider, Card} from 'react-native-elements';
 
-
 import users from '../users/Users'
 
 export default class CardCollection extends React.Component{

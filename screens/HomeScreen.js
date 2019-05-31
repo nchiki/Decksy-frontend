@@ -11,6 +11,7 @@ import Dialog from "react-native-dialog";
 import styles from '../styles/Styles';
 import ContactCollection from '../components/ContactCollection';
 import apiRequests from '../api_wrappers/BackendWrapper';
+import users from '../users/Users';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -22,6 +23,8 @@ export default class HomeScreen extends React.Component {
       filterMenuVisible: false,
       shortcodeInputVisible: false,
       filtersChecked: new Map(),
+      userID: null,
+      contacts: [], //
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -73,11 +76,15 @@ export default class HomeScreen extends React.Component {
     const { navigation } = this.props;
     const userID = navigation.getParam('userID', 'NO-ID');
     console.log(userID);
-    
+
     apiRequests.addCard(userID, this.state.shortcode);
-    const cont = await apiRequests.getUserContacts(userID);
-    console.log(cont.users);
-    this.setState({ shortcodeInputVisible: false });
+    // const cont = await apiRequests.getUserContacts(userID);
+    // console.log(cont.users);
+    this.setState({
+      shortcodeInputVisible: false,
+      userID: 1,
+      // contacts: getCards(userID),
+    });
   };
 
   handleChange(e) {
@@ -98,7 +105,6 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-
   closeModal() {
     this.setState({
       filterMenuVisible: false
@@ -113,7 +119,7 @@ export default class HomeScreen extends React.Component {
 
   // Icons for adding and filtering
   render() {
-    
+
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -148,7 +154,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-        <ContactCollection />
+          <ContactCollection contacts={users} />
         </View>
       </View>
     );
@@ -182,10 +188,16 @@ function DisplayFilters() {
   );
 }
 
-function getCards() {
-  // return getUserContacts(this.userID)
+function getCards(userID) {
   return [
-    {title: 'D', data: ['Devin']},
-    {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
+    {
+    userID: 5,
+    firstName: 'Mary',
+    lastName: 'David',
+    phoneNumber: '048904889',
+    email:'mary@email.com',
+    company: 'Google',
+    profession: 'Software Engineer',
+    },
   ];
 }
