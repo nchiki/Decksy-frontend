@@ -1,12 +1,11 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
 import { Divider, Card,  Button} from 'react-native-elements';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 import QRCode from 'react-native-qrcode';
 import CardFlip from 'react-native-card-flip';
-
-const CardTypes = Object.freeze({"green":1, "blue":2, "red":3})
+import templateStyles from '../styles/TemplateStyles';
 
 
 const ID =2;
@@ -20,6 +19,7 @@ export default class BusinessCard extends React.Component{
           valueForQRCode: '',
           // Default value for the QR Code
           saved: false,
+          templateID : 8
           };
         }
 
@@ -32,9 +32,14 @@ export default class BusinessCard extends React.Component{
 
       
     render(){
-      const image = require('../assets/images/template8.png');
+      console.log(this.state.templateID);
+      const template= this.state.templateID;
+      const image = require("../assets/images/template9.png");
       const u = this.props.navigation.getParam('details', 'NO-ID');
       const color = this.props.navigation.getParam('color', 'NO-ID');
+      const templateStyle = templateStyles.getStyle9();
+      
+      console.log(templateStyle);
 
     if(this.state.saved) {
       return (
@@ -53,22 +58,14 @@ export default class BusinessCard extends React.Component{
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <ImageBackground source={image} style={styles.containerStyle}>
                   <View style={styles.containerStyle}>
-                  <View style={styles.titleText}>
-                      <Text style={{color:'maroon', fontSize: 25, fontWeight:'bold'}} >{`${u.firstName} ${u.lastName}`} </Text>
+                  <View style={templateStyle.titleText}>
+                      <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
                   </View>
-                  <View style={styles.user}>
-                    <Text style={cardStyles(color).company}>{u.company}</Text>
-                    <Text style={cardStyles(color).details}>{u.phoneNumber}{'\n'}{u.email}</Text>
+                  <View style={templateStyle.user}>
+                    <Text style={templateStyle.company}>{u.company}</Text>
+                    <Text style={templateStyle.details}>{u.phoneNumber}{'\n'}{u.email}</Text>
                   </View>
                   </View>
-                  {/* <Divider style={{ backgroundColor: color, width: 10, bottom: 40}} />
-                  <Divider style={{ backgroundColor: color, width: 30, bottom: 30}} />
-                  <Divider style={{ backgroundColor: color, width: 50, bottom: 20}} />
-                  <Divider style={{ backgroundColor: color, width: 70, bottom: 10}} />
-                  <Divider style={{ backgroundColor: color, width: 90}} />
-                  <Divider style={{ backgroundColor: color, width: 110, bottom: -10}}/>
-                  <Divider style={{ backgroundColor: color, width: 130, bottom: -20}} />
-                  <Divider style={{ backgroundColor: color, width: 150, bottom: -30}} /> */}
                 
                 </ImageBackground>
               </TouchableOpacity>
@@ -108,12 +105,18 @@ export default class BusinessCard extends React.Component{
       height: 200,
       alignItems:'center',
       justifyContent:'center',
-      alignContent:'center'
+      alignContent:'center',
+      borderRadius: 10,
+    //borderWidth: 1,
+    borderColor: 'white'
     },
     card:{
       alignItems:'center',
       justifyContent:'center',
-      alignContent:'center'
+      alignContent:'center',
+      borderRadius: 10,
+    //borderWidth: 1,
+    borderColor: 'white'
     },
     buttonRowContainer: {
       flex: 1,
@@ -127,49 +130,21 @@ export default class BusinessCard extends React.Component{
       backgroundColor: 'darkblue'
     },
     containerStyle: {
+      borderRadius: 10,
+    //borderWidth: 1,
+    borderColor: 'white',
       alignItems: 'center',
       width: 350,
       height: 200,
     },
-    titleText: {
-      top: 20
-    },
     containerBackStyle:{
       width: 350,
       height: 200,
+      borderRadius: 10,
+    //borderWidth: 1,
+    borderColor: 'white'
     },
-    user: {
-      alignItems:'center',
-      justifyContent: 'center'
-    },
-
-    company: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: 'darkblue',
-      justifyContent: 'center',
-    },
-    details: {
-      right: -90,
-      bottom: -85,
-      fontSize: 10,
-      color: 'darkblue'
-    }
+    
   })
 
-  const cardStyles = (color) => StyleSheet.create({
-    company: {
-      left: -90,
-      bottom: -119,
-      fontSize: 20,
-      fontWeight: 'bold',
-      color: 'white',
-      justifyContent: 'center',
-    },
-    details: {
-      right: -85,
-      bottom: -95,
-      fontSize: 10,
-      color: 'white'
-    }
-  });
+  

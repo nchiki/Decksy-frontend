@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { View, Text, Image, StyleSheet, TouchableOpacity,  StatusBar, share, Platform } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { Divider, Card,  Button, Icon } from 'react-native-elements';
+import { Platform } from 'react-native';
+
+import { Icon } from 'react-native-elements';
 
 import CardTemplate from '../components/CardTemplate';
-import styles from '../styles/Styles';
+
 
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
