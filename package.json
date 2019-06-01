@@ -17,6 +17,7 @@
     "schedule": "^0.4.0"
   },
   "dependencies": {
+    "@material-ui/core": "^4.0.1",
     "appcenter": "2.0.0",
     "appcenter-analytics": "2.0.0",
     "appcenter-crashes": "2.0.0",

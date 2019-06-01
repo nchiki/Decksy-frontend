@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Text, AppRegistry, View, StyleSheet, ScrollView, TextInput, Button, Alert } from 'react-native';
+import { LinearGradient } from 'expo';
 
 import AppNavigation from './navigation/AppNavigation';
 const NavigatorTypes = Object.freeze({"stack":1, "tab":2, "drawer":3})
@@ -26,19 +27,31 @@ export default class FlexDimensionsBasics extends Component {
   if (this.state.navigationType) {
     return this.navigationForType(this.state.navigationType);
   }
+
+  const  gradientHeight=500;
+  const gradientBackground  = 'purple';
+  const data = Array.from({ length: gradientHeight });
   return (
     //on start should set responder acts when tapping the screen
-    <View style={{flex: 1}} onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
-      <View style={{flex: 2, backgroundColor: 'powderblue', justifyContent: "center", alignItems: "center"}}>
-        <Text style={styles.bigTitle}> RoloDex </Text>
-      </View>
-      <View style={{flex: 3, backgroundColor: 'white'}} />
+    <View style={{ flex: 1,
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'stretch',}} onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
+      <LinearGradient
+        colors={['#CE00FF', '#00CEFF']}
+        style={{flex: 1, justifyContent: 'center'}}
+      >
+        <Text style={styles.bigTitle}>RoloDex</Text>
+      </LinearGradient>
     </View>
   )}
 }
 
 const styles = StyleSheet.create({
   bigTitle: {
+    textAlign: 'center',
+    color:'white',
+    fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 30,
   },
