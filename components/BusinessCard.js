@@ -8,6 +8,7 @@ import CardFlip from 'react-native-card-flip';
 import templateStyles from '../styles/TemplateStyles';
 
 
+
 const ID =2;
 export default class BusinessCard extends React.Component{
    
@@ -18,28 +19,25 @@ export default class BusinessCard extends React.Component{
           // Default Value of the TextInput
           valueForQRCode: '',
           // Default value for the QR Code
-          saved: false,
-          templateID : 8
+          saved: true,
+          image: null,
+          templateStyle : null,
           };
         }
 
 
+
     onChangeRequested = async (color) => {
-      apiRequests.setUserCard(ID, 1, color);
       setTimeout(() => this.setState({saved: true}), 20);
     }
 
 
-      
+    
     render(){
-      console.log(this.state.templateID);
-      const template= this.state.templateID;
-      const image = require("../assets/images/template9.png");
       const u = this.props.navigation.getParam('details', 'NO-ID');
-      const color = this.props.navigation.getParam('color', 'NO-ID');
-      const templateStyle = templateStyles.getStyle9();
-      
-      console.log(templateStyle);
+      const image = this.props.navigation.getParam('image', 'NO-ID');
+      const templateStyle = this.props.navigation.getParam('templateStyle', 'NO-ID');
+      console.log(this.state.templateStyle)
 
     if(this.state.saved) {
       return (
@@ -86,12 +84,7 @@ export default class BusinessCard extends React.Component{
             </CardFlip>
           </View>
           <View style={styles.buttonRowContainer}>
-            <Button
-              title="Save"
-              buttonStyle={styles.buttonContainer}
-              titleStyle={{color:'white'}}
-              onPress={() => this.onChangeRequested(color)}
-            />
+            
           </View>
         </View>
       );

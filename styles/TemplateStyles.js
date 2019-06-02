@@ -6,8 +6,9 @@ const templateStyles =  {
     return (
     StyleSheet.create({
       titleText: {
+        position: 'absolute',
         top: 20,
-        left:-70
+        left:20
       },
       userText: {
         color:'white', 
@@ -19,15 +20,15 @@ const templateStyles =  {
         justifyContent: 'center'
       },
       company: {
-        right: -60,
-        bottom: -110,
+        right: -85,
+        bottom: -125,
         fontSize: 20, 
         color: 'white',
         justifyContent: 'center',
       },
       details: {
         right: -85,
-        bottom: -115,
+        bottom: -130,
         fontSize: 10,
         color: 'white'
       }
@@ -40,7 +41,7 @@ const templateStyles =  {
     StyleSheet.create({
       titleText: {
         bottom: -160,
-        right: -80
+        right: -100
       },
       userText: {
         color:'white', 
@@ -53,7 +54,7 @@ const templateStyles =  {
       },
       company: {
         fontWeight:'bold',
-        right: -120,
+        right: -110,
         bottom: -115,
         fontSize: 15, 
         color: 'white',
@@ -109,7 +110,7 @@ const templateStyles =  {
     StyleSheet.create({
       titleText: {
         top:65,
-        left:-35
+        left:-60
       },
       userText: {
         color:'white', 
@@ -122,14 +123,14 @@ const templateStyles =  {
       },
       company: {
         fontWeight:'bold',
-        left:-80,
+        left:-78,
         top:70,
         fontSize: 15, 
         color: 'white',
         
       },
       details: {
-        right: -50,
+        right: -70,
         bottom:-80,
         fontSize: 10,
         color: 'white', 
@@ -177,7 +178,7 @@ const templateStyles =  {
     StyleSheet.create({
       titleText: {
         top:45,
-        left:-50
+        left:-75
       },
       userText: {
         
@@ -190,14 +191,14 @@ const templateStyles =  {
       },
       company: {
         fontWeight:'bold',
-        left:-95,
+        left:-94,
         top:50,
         fontSize: 15, 
         
         
       },
       details: {
-        right: -60,
+        right: -85,
         bottom:-85,
         fontSize: 10,
         textAlign: 'right'
@@ -244,7 +245,7 @@ const templateStyles =  {
     StyleSheet.create({
       titleText: {
         top:55,
-        left: -45
+        left: -50
       },
       userText: {
         color:'white', 
