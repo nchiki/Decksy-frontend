@@ -1,12 +1,9 @@
-import React, { Fragment } from 'react';
+import React, { Component } from 'react';
 import { AppRegistry, Button, FlatList, StyleSheet, TouchableOpacity, Text, Image, View } from 'react-native';
 import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
-import users from '../users/Users'; 
-import CardProfile from '../screens/CardProfileScreen'; 
-import { BrowserRouter, Route, } from 'react-router-dom'
 
 
-export default class ContactCollection extends React.Component{
+export default class CardProfileScreen extends React.Component {
 
   constructor(props) {
     super(props);
@@ -16,27 +13,17 @@ export default class ContactCollection extends React.Component{
     }
   }
 
-   static navigationOptions = ({navigation}) => {
-    const { params = {} } = navigation.state;
-    return {
-      title: 'CardProfile',
-    }
+    
+  static navigationOptions =
+  {
+    title: 'CardProfile',
   };
 
-  handleCardProfile = (item) =>
-  {
-     this.props.navigation.navigate('CardProfile', {item: item});
-     
-  }
-
-  _getContact = ({item}) => (
-    <View style={{height:120, flexDirection: 'row', alignItems:'center'}} >
-    <View style={{flex:1, alignItems:'center'}}><Text style={{fontSize:15}}>{item.name}</Text>
-    <Text style={{fontSize:11}}>{item.subtitle}</Text>
-    </View>
-      <View style={{flex:3}} >
-        <TouchableOpacity style={styles.card} 
-        onPress= {()=> this.handleCardProfile(item)}>
+  render() {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'NO-ID');
+    return (
+        <View style={{flex:3}} >
           <Card title={item.name} titleStyle={{color:item.color, fontSize: 30}} containerStyle={styles.containerStyle}>
               <View style={styles.user}>
                 <Text style={cardStyles(item.color).company}>{item.company}</Text>
@@ -51,66 +38,9 @@ export default class ContactCollection extends React.Component{
               <Divider style={{ backgroundColor: item.color, width: 130, bottom: -20}} />
               <Divider style={{ backgroundColor: item.color, width: 150, bottom: -30}} />
           </Card>
-        </TouchableOpacity>
-      </View> 
-     </View>
-);
-
-  _keyExtractor = (item, index) => item.name; 
-
-  componentWillMount() {
-    this.setState({
-      _isMounted : true,
-      details: this.props.contacts
-    });
-  }
-
-  renderFlatList = () => {
-    const users = this.state.details;
-    if (users && users.length > 0) {
-      return (
-        <View style={{alignItems:'center'}}>
-        {
-          users.map((u, i) => {
-            return (
-              this._getContact(u, i),
-              this.renderSeparator()
-            );
-          })
-        }
-        </View>
-      )
-    } else {
-      return null;
-    }
-  }
-
-  componentWillUnmount() {
-    this.setState({_isMounted : false});
-  }
-
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          backgroundColor: "#CED0CE",
-        }}
-      />
-    );
-  };
-
-  render () {
-    return (
-      <FlatList
-        data={users}
-        renderItem={this._getContact}
-        keyExtractor={item => item.name}
-        ItemSeparatorComponent={this.renderSeparator}
-      />
+        </View> 
     );
   }
-
 }
 
 
@@ -151,4 +81,3 @@ const cardStyles = (color) => StyleSheet.create({
     color: color
   }
 })
-
