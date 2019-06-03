@@ -47,7 +47,7 @@ export default class CardTemplate extends React.Component {
 
   save = async (navigation) => {
     apiRequests.setCard(global.userID, this.state.cardType);
-    const det = await apiRequests.getUserDetails(2);
+    const det = await apiRequests.getUserDetails(global.userID);
     this.setState({saved: true, details : det});
 
   }

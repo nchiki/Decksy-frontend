@@ -87,7 +87,6 @@ export default class HomeScreen extends React.Component {
     apiRequests.addCard(global.userID, this.state.shortcode);
     this.setState({
       shortcodeInputVisible: false,
-      userID: 1,
     });
   };
 

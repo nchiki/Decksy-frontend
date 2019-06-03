@@ -39,7 +39,7 @@ export default class ProfileScreen extends React.Component {
         </View>
         <View style={{flex:1, alignItems:'center'}}>
           <Text style={{fontSize:24}}>Your shortcode is:</Text>
-          <Text style={{fontSize:30}}>{userID}</Text>
+          <Text style={{fontSize:30}}>{global.userID}</Text>
         </View>
       </View>
     );
