@@ -7,6 +7,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import templateStyles from '../styles/TemplateStyles';
 import QRCode from 'react-native-qrcode';
+import templateUtils from './Templates';
 
 const u = {
     firstName : 'FIRST' ,
@@ -18,6 +19,7 @@ const u = {
 export default class CardTemplate extends React.Component {
 
   state = {
+    userID: 1,
     cardType: 4,
     details: u,
     image : require("../assets/images/template4.png"),
@@ -43,58 +45,21 @@ export default class CardTemplate extends React.Component {
 
   save = async (navigation) => {
     const det = await apiRequests.getUserDetails(2);
-    apiRequests.setUserCard(ID, this.state.cardType, null);
+    apiRequests.setUserCard(this.state.userID, this.state.cardType, null);
     const image = this.state.image;
     const templateStyle = this.state.templateStyle;
     navigation.push('CardScreen', {templateStyle: templateStyle, image: image, details:det});   
   }
 
   setTemplate = () => {
-    let image = null;
-    let templateStyle = null;
-      switch(this.state.cardType) {
-        case 2:
-                image = require("../assets/images/template2.png");
-                templateStyle = templateStyles.getStyle2();
-                break;
-        case 3 :
-                image = require("../assets/images/template3.png");
-                templateStyle = templateStyles.getStyle3();
-                break;
-        case 4 :
-                image = require("../assets/images/template4.png");
-                templateStyle = templateStyles.getStyle4();
-                break;
-        case 5 :
-                image = require("../assets/images/template5.png");
-                templateStyle = templateStyles.getStyle5();
-                break;
-        case 6 : 
-                image = require("../assets/images/template6.png");
-                templateStyle = templateStyles.getStyle6();
-                break;
-        case 7 :        
-                image = require("../assets/images/template7.png");
-                templateStyle = templateStyles.getStyle7();
-                break;
-        case 8 :
-                image = require("../assets/images/template8.png");
-                templateStyle = templateStyles.getStyle8();
-                break;
-        case 9 :
-                image = require("../assets/images/template9.png");
-                templateStyle = templateStyles.getStyle9();
-                break;
-        case 10 : 
-                image = require("../assets/images/template10.png");
-                templateStyle = templateStyles.getStyle10();
-                break;
-      }
+      const image = templateUtils.setImage(this.state.cardType);
+      const templateStyle = templateUtils.setStyle(this.state.cardType);
       this.setState({image : image, templateStyle: templateStyle})
   }
 
   render() {
     const image = this.state.image;
+    
     const u = this.state.details;
     const templateStyle = this.state.templateStyle;
     return (

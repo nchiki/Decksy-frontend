@@ -37,7 +37,6 @@ export default class BusinessCard extends React.Component{
       const u = this.props.navigation.getParam('details', 'NO-ID');
       const image = this.props.navigation.getParam('image', 'NO-ID');
       const templateStyle = this.props.navigation.getParam('templateStyle', 'NO-ID');
-      console.log(this.state.templateStyle)
 
     if(this.state.saved) {
       return (
