@@ -85,7 +85,7 @@ getUserDetails: function(userID) {
     });
 },
 
-setUserDetails: function(userID, firstname, lastname, phonenumber, email, company, profession) {
+setUserDetails: function(userID, firstname, lastname, phonenumber, email, company, profession, cardID) {
   return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       headers: {
@@ -99,7 +99,8 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         phoneNumber: phonenumber,
         email: email,
         company: company,
-        profession: profession
+        profession: profession,
+        card: cardID
       }),
       cache: 'default',
     }).
@@ -110,6 +111,25 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
       });
   },
 
+  setCard: function(userID, cardID) {
+    return fetch(`${API}/user/setdetails`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: userID,
+          card: cardID
+        }),
+        cache: 'default',
+      }).
+      catch(function(error) {
+        console.log('There has been a problem with your setCard fetch operation: ' + error.message);
+         // ADD THIS THROW error
+          throw error;
+        });
+    },
   addCard : function(cardOwner, addTo) {
     return fetch(`${API}/user/addcard`, {
       method: 'POST',

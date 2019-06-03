@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight } from 'react-native';
 
 import styles from '../styles/Styles';
-import getUserDetails from '../api_wrappers/BackendWrapper';
-
+import apiRequests from '../api_wrappers/BackendWrapper';
 export default class LoginScreen extends Component {
 
   constructor(props) {
@@ -13,6 +12,7 @@ export default class LoginScreen extends Component {
       email:null,
       password:null,
     }
+    global.userID = 1;
   }
 
   static navigationOptions = ({navigation}) => {
@@ -33,9 +33,17 @@ export default class LoginScreen extends Component {
     }
   };
 
-  handleLogin() {
+  handleLogin= async () => {
+    const contacts= await apiRequests.getUserContacts(global.userID);
+    const listItems = (contacts.map(async (cont) => {
+      const id = Number.parseInt(cont.user, 10);
+      const det = await apiRequests.getUserDetails(id);
+      
+      return det}) );
+    const items = await Promise.all(listItems);
+    this.props.navigation.navigate('CollectedCards', {userID: global.userID, contacts : items})
+
     // Add logic to authenticate user here
-    this.props.navigation.navigate('CollectedCards', {userID: this.state.email})
   }
 
   render() {
@@ -51,6 +59,16 @@ export default class LoginScreen extends Component {
             onChangeText={(email) => this.setState({email})}
             autoCorrect={false}
             keyboardType="email-address"
+            autoCapitalize="none"
+          />
+        </View>
+        <View style={{flex: 1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="User ID"
+            onChangeText={(id) => global.userID= Number.parseInt(id, 10)}
+            autoCorrect={false}
+            keyboardType="numeric"
             autoCapitalize="none"
           />
         </View>

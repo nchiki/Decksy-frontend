@@ -12,6 +12,7 @@ import styles from '../styles/Styles';
 import ContactCollection from '../components/ContactCollection';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import users from '../users/Users';
+import CardCollection from '../components/CardCollection';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -25,13 +26,14 @@ export default class HomeScreen extends React.Component {
       filtersChecked: new Map(),
       userID: null,
       contacts: [],
-      displayMode : 1,
+      displayValue : 1
     }
     this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
     const { navigation } = this.props;
+    this.setState({contacts : this.props.navigation.getParam('contacts', 'NO-ID')});
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleFilterButton: this.onFiltersPress
@@ -55,13 +57,6 @@ export default class HomeScreen extends React.Component {
           color='dodgerblue'
         />
       ),
-      headerTitle: (
-        <Button
-        onPress={() => this.updateDisplay}
-        title='changeDisplay'
-        color='deepskyblue'
-      />
-      ),
       headerRight: (
 
         <Icon
@@ -76,15 +71,7 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  updateDisplay = () => {
-    const display = this.state.displayMode;
-    console.log(displayMode);
-    if(display == 1) {
-      this.setState({displayMode : 2});
-    } else {
-      this.setState({displayMode: 1})
-    }
-  };
+
 
   showShortcodeInput = () => {
     this.setState({ shortcodeInputVisible: true });
@@ -96,14 +83,26 @@ export default class HomeScreen extends React.Component {
 
   handleAdd =  async () => {
     const { navigation } = this.props;
-    const userID = navigation.getParam('userID', 'NO-ID');
-
-    apiRequests.addCard(userID, this.state.shortcode);
+    //const userID = navigation.getParam('userID', 'NO-ID');
+    apiRequests.addCard(global.userID, this.state.shortcode);
+    setTimeout(() => this.getContactsForDisplay(), 20);
     this.setState({
       shortcodeInputVisible: false,
-      userID: 1,
     });
   };
+
+  getContactsForDisplay = async () => {
+    const contacts= await apiRequests.getUserContacts(global.userID);
+    const listItems = (contacts.map(async (cont) => {
+      const id = Number.parseInt(cont.user, 10);
+      const det = await apiRequests.getUserDetails(id);
+      return det}) );
+    const items = await Promise.all(listItems);
+    console.log(items);
+    setTimeout(() => this.setState({
+      contacts: items
+    }), 20);
+  }
 
   handleChange(e) {
     const item = e.target.name;
@@ -133,10 +132,33 @@ export default class HomeScreen extends React.Component {
     this.setfilterMenuVisible(!this.state.filterMenuVisible);
   }
 
+  updateDisplay = () => {
+    const display = this.state.displayValue;
+    if(display == 1) {
+      this.setState({displayValue : 2});
+    } else {
+      this.setState({displayValue: 1})
+    }
+
+  };
+
+  DeckDisplay(displayValue, navigation, contacts) {
+    if (displayValue == 1) {
+      return (
+        <ContactCollection contacts={contacts} navigation={navigation} />
+      )
+    } else {
+      return (
+        <CardCollection contacts={contacts} navigation={navigation} />
+      )
+    }
+
+  }
   // Icons for adding and filtering
   render() {
-    //const displayMode = this.state.displayMode;
-    //console.log(displayMode);
+   
+    const displayValue = this.state.displayValue;
+    const contacts = this.state.contacts;
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -171,12 +193,15 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <ContactCollection contacts={users} display={this.state.displayMode} navigation={this.props.navigation} />
+          <Button title='Change Display' onPress={this.updateDisplay} />
+          {this.DeckDisplay(displayValue, this.props.navigation, contacts)}
         </View>
       </View>
     );
   }
 }
+
+
 
 function DisplayFilters() {
   return(
@@ -203,18 +228,4 @@ function DisplayFilters() {
       />
     </View>
   );
-}
-
-function getCards(userID) {
-  return [
-    {
-    userID: 5,
-    firstName: 'Mary',
-    lastName: 'David',
-    phoneNumber: '048904889',
-    email:'mary@email.com',
-    company: 'Google',
-    profession: 'Software Engineer',
-    },
-  ];
 }
