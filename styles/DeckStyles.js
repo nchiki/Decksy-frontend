@@ -26,6 +26,7 @@ const deckStyles =  {
         fontSize: 35, 
         color: 'white',
         justifyContent: 'center',
+        textAlign: 'right',
       },
       details: {
         right: -185,

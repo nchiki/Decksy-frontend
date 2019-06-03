@@ -25,12 +25,14 @@ const templateStyles =  {
         fontSize: 20, 
         color: 'white',
         justifyContent: 'center',
+        textAlign: 'right'
       },
       details: {
         right: -85,
         bottom: -130,
         fontSize: 10,
-        color: 'white'
+        color: 'white',
+        textAlign: 'right'
       }
     })
     );
@@ -46,7 +48,8 @@ const templateStyles =  {
       userText: {
         color:'white', 
         fontSize: 20, 
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign:'right'
       },
       user: {
         alignItems:'center',
@@ -59,6 +62,7 @@ const templateStyles =  {
         fontSize: 15, 
         color: 'white',
         justifyContent: 'center',
+        textAlign:'right'
       },
       details: {
         left: -90,
@@ -80,7 +84,8 @@ const templateStyles =  {
       userText: {
         color:'white', 
         fontSize: 20, 
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign: 'center'
       },
       user: {
         alignItems:'center',
@@ -88,11 +93,10 @@ const templateStyles =  {
       },
       company: {
         fontWeight:'bold',
-        
         top:75,
         fontSize: 15, 
         color: 'white',
-        justifyContent: 'center',
+        textAlign: 'center'
       },
       details: {
         right: -90,
@@ -149,7 +153,8 @@ const templateStyles =  {
       userText: {
         color:'white', 
         fontSize: 20, 
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign: 'center'
       },
       user: {
         alignItems:'center',
@@ -160,7 +165,7 @@ const templateStyles =  {
         top:60,
         fontSize: 15, 
         color: 'white',
-        
+        textAlign: 'center'
       },
       details: {
         
@@ -181,7 +186,7 @@ const templateStyles =  {
         left:-75
       },
       userText: {
-        
+        textAlign: 'left',
         fontSize: 20, 
         fontWeight:'bold'
       },
@@ -194,7 +199,7 @@ const templateStyles =  {
         left:-94,
         top:50,
         fontSize: 15, 
-        
+        textAlign: 'left'
         
       },
       details: {
@@ -216,7 +221,8 @@ const templateStyles =  {
     userText: {
       color:'maroon', 
       fontSize: 25, 
-      fontWeight:'bold'
+      fontWeight:'bold',
+      textAlign: 'center'
     },
     user: {
       alignItems:'center',
@@ -229,13 +235,14 @@ const templateStyles =  {
       fontWeight: 'bold',
       color: 'white',
       justifyContent: 'center',
-      
+      textAlign: 'right'
     },
     details: {
       right: -85,
       bottom: -95,
       fontSize: 10,
-      color: 'white'
+      color: 'white',
+      textAlign: 'right'
     }
   }));
   },
@@ -250,7 +257,8 @@ const templateStyles =  {
       userText: {
         color:'white', 
         fontSize: 20, 
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign: 'center'
       },
       user: {
         alignItems:'center',
@@ -262,7 +270,7 @@ const templateStyles =  {
         left: -55,
         fontSize: 15, 
         color: 'white',
-        
+        textAlign: 'center'
       },
       details: {
         left:-55,
@@ -285,7 +293,8 @@ const templateStyles =  {
       userText: {
         color:'lightskyblue', 
         fontSize: 20, 
-        fontWeight:'bold'
+        fontWeight:'bold',
+        textAlign: 'center'
       },
       user: {
         alignItems:'center',
@@ -297,14 +306,14 @@ const templateStyles =  {
         left: -15,
         fontSize: 15, 
         color: 'lightskyblue',
-        
+        textAlign: 'center'
       },
       details: {
         left:-80,
         bottom:-120,
         fontSize: 10,
         color: 'lightskyblue', 
-        
+        textAlign: 'left'
       }
     })
     );

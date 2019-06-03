@@ -16,6 +16,7 @@ setImage : function (cardType) {
                     deckStyles.getStyle10()];    
       return styles[cardType-2];
   },
+  
   setProfileStyle : function (cardType) {
     const styles = [templateStyles.getStyle2(), templateStyles.getStyle3(), templateStyles.getStyle4(), templateStyles.getStyle5(),
         templateStyles.getStyle6(), templateStyles.getStyle7(), templateStyles.getStyle8(), templateStyles.getStyle9(), 

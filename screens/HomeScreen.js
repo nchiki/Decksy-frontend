@@ -12,6 +12,7 @@ import styles from '../styles/Styles';
 import ContactCollection from '../components/ContactCollection';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import users from '../users/Users';
+import CardCollection from '../components/CardCollection';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -24,8 +25,8 @@ export default class HomeScreen extends React.Component {
       shortcodeInputVisible: false,
       filtersChecked: new Map(),
       userID: null,
-      contacts: [],
-      displayMode : 1,
+      contacts: [], 
+      displayValue : 1
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -55,13 +56,6 @@ export default class HomeScreen extends React.Component {
           color='dodgerblue'
         />
       ),
-      headerTitle: (
-        <Button
-        onPress={() => this.updateDisplay}
-        title='changeDisplay'
-        color='deepskyblue'
-      />
-      ),
       headerRight: (
 
         <Icon
@@ -76,15 +70,7 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  updateDisplay = () => {
-    const display = this.state.displayMode;
-    console.log(displayMode);
-    if (display == 1) {
-      this.setState({displayMode : 2});
-    } else {
-      this.setState({displayMode: 1})
-    }
-  };
+  
 
   showShortcodeInput = () => {
     this.setState({ shortcodeInputVisible: true });
@@ -133,10 +119,31 @@ export default class HomeScreen extends React.Component {
     this.setfilterMenuVisible(!this.state.filterMenuVisible);
   }
 
+  updateDisplay = () => {
+    const display = this.state.displayValue;
+    if(display == 1) {
+      this.setState({displayValue : 2});
+    } else {
+      this.setState({displayValue: 1})
+    }
+   
+  };
+
+  DeckDisplay(displayValue, navigation) {
+    if (displayValue == 1) {
+      return (
+        <ContactCollection contacts={users} navigation={navigation} />
+      )
+    } else {
+      return (
+        <CardCollection contacts={users} navigation={navigation} />
+      )
+    }
+    
+  }
   // Icons for adding and filtering
   render() {
-    //const displayMode = this.state.displayMode;
-    //console.log(displayMode);
+    const displayValue = this.state.displayValue;
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -171,12 +178,15 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <ContactCollection contacts={users} display={this.state.displayMode} navigation={this.props.navigation} />
+          <Button title='Change Display' onPress={this.updateDisplay} />
+          {this.DeckDisplay(displayValue, this.props.navigation)}
         </View>
       </View>
     );
   }
 }
+
+
 
 function DisplayFilters() {
   return(

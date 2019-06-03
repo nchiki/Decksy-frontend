@@ -1,10 +1,8 @@
-import React, { Fragment } from 'react';
-import { AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
-import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
-import users from '../users/Users';
-import CardProfile from '../screens/CardProfileScreen';
+import React from 'react';
+import {FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
 
-import deckStyles from '../styles/DeckStyles';
+import users from '../users/Users';
+
 import templateUtils from './Templates';
 
 
@@ -15,7 +13,6 @@ export default class ContactCollection extends React.Component{
     this.state = {
       _isMounted : false,
       details: null,
-      displayValue: true
     }
   }
 
@@ -31,7 +28,7 @@ export default class ContactCollection extends React.Component{
      this.props.navigation.navigate('CardProfile', {item: item});
   }
 
-  _getContact1 = ({item}) => (
+  _getContact = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
       <View style={{flex:1, alignItems:'left', marginLeft:16}}>
         <Text style={{fontSize:18}}>{item.name}</Text>
@@ -55,23 +52,7 @@ export default class ContactCollection extends React.Component{
     </View>
   );
 
-_getContact2 = ({item}) => (
-<View style={{height:120}}>
-   <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
-      <View style={styles.containerStyle}>
-        <View style={templateUtils.setStyle(item.templateID).titleText}>
-            <Text style={templateUtils.setStyle(item.templateID).userText} >{`${item.name}`} </Text>
-        </View>
-        <View style={templateUtils.setStyle(item.templateID).user}>
-            <Text style={templateUtils.setStyle(item.templateID).company}>{item.company}</Text>
-            <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
-        </View>
-      </View>
 
-  </ImageBackground>
-</View>
-
-);
 
   _keyExtractor = (item, index) => item.name;
 
@@ -117,18 +98,12 @@ _getContact2 = ({item}) => (
     );
   };
 
-  changeDisplay = () => {
-    const displayValue = !this.state.displayValue;
-    this.setState({displayValue  : displayValue});
-
-  };
 
   render () {
-
       return (
           <FlatList
           data={users}
-          renderItem={this._getContact1}
+          renderItem={this._getContact}
           keyExtractor={item => item.name}
           ItemSeparatorComponent={this.renderSeparator}
           />
