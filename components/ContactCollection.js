@@ -28,7 +28,7 @@ export default class ContactCollection extends React.Component{
  
   _getContact = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
-      <View style={{flex:1, alignItems:'left', marginLeft:16}}>
+      <View style={{flex:1, alignItems:'flex-start', marginLeft:16}}>
         <Text style={{fontSize:18}}>{`${item.firstName} ${item.lastName}`}</Text>
         <Text style={{fontSize:13}}>{item.profession}</Text>
       </View>
