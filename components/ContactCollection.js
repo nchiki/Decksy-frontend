@@ -1,7 +1,10 @@
-import React from 'react';
-import {  FlatList, StyleSheet, Text, ImageBackground, View , Switch} from 'react-native';
-
+import React, { Fragment } from 'react';
+import { AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
+import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
 import users from '../users/Users';
+import CardProfile from '../screens/CardProfileScreen';
+
+import deckStyles from '../styles/DeckStyles';
 import templateUtils from './Templates';
 
 
@@ -16,14 +19,27 @@ export default class ContactCollection extends React.Component{
     }
   }
 
-  
+   static navigationOptions = ({navigation}) => {
+    const { params = {} } = navigation.state;
+    return {
+      title: 'CardProfile',
+    }
+  };
+
+  handleCardProfile = (item) =>
+  {
+     this.props.navigation.navigate('CardProfile', {item: item});
+
+  }
+
   _getContact1 = ({item}) => (
-    <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
-    
-   <View style={{flex:1, alignItems:'center'}}><Text style={{fontSize:15}}>{item.name}</Text>
+    <View style={{height:120, flexDirection: 'row', alignItems:'center'}} >
+    <View style={{flex:1, alignItems:'center'}}><Text style={{fontSize:15}}>{item.name}</Text>
     <Text style={{fontSize:11}}>{item.subtitle}</Text>
     </View>
       <View style={{flex:3}}>
+      <TouchableOpacity style={styles.card} 
+      onPress= {()=> this.handleCardProfile(item)}>
       <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
                   <View style={styles.containerStyle}>
                   <View style={templateUtils.setStyle(item.templateID).titleText}>
@@ -34,9 +50,10 @@ export default class ContactCollection extends React.Component{
                     <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
                   </View>
                   </View>
-                
+
     </ImageBackground>
-      </View> 
+    </TouchableOpacity>
+      </View>
      </View>
 );
 _getContact2 = ({item}) => (
@@ -148,6 +165,11 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent: 'center'
   },
+  card:{
+    alignItems:'center',
+    justifyContent:'center',
+    alignContent:'center'
+  }
 })
 
 

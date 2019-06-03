@@ -37,6 +37,7 @@
     "react-native-qrcode-scanner": "1.2.1",
     "react-native-share": "^1.2.1",
     "react-navigation": "^3.11.0",
+    "react-router-dom": "^5.0.0",
     "react-test-renderer": "^16.8.6"
   },
   "scripts": {

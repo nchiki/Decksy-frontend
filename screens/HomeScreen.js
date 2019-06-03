@@ -71,7 +71,7 @@ export default class HomeScreen extends React.Component {
         />
       ),
     }
-  };
+  }; 
 
   updateDisplay = () => {
     //const display = this.state.displayMode;
@@ -93,15 +93,11 @@ export default class HomeScreen extends React.Component {
   handleAdd =  async () => {
     const { navigation } = this.props;
     const userID = navigation.getParam('userID', 'NO-ID');
-    
 
     apiRequests.addCard(userID, this.state.shortcode);
-    // const cont = await apiRequests.getUserContacts(userID);
-    // console.log(cont.users);
     this.setState({
       shortcodeInputVisible: false,
       userID: 1,
-      // contacts: getCards(userID),
     });
   };
 
@@ -132,8 +128,6 @@ export default class HomeScreen extends React.Component {
   onFiltersPress = () => {
     this.setfilterMenuVisible(!this.state.filterMenuVisible);
   }
-
-//<Filter name={item.name} checked={this.state.filtersChecked.get(item.name)} onChange={() => this.handleChange()} />
 
   // Icons for adding and filtering
   render() {
@@ -173,7 +167,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <ContactCollection contacts={users} />
+          <ContactCollection contacts={users} navigation={this.props.navigation} />
         </View>
       </View>
     );

@@ -1,8 +1,6 @@
 import deckStyles from '../styles/DeckStyles';
 import templateStyles from '../styles/TemplateStyles';
 const templateUtils = {
-
-
 setImage : function (cardType) {
     const images = [require("../assets/images/template2.png"), require("../assets/images/template3.png"), 
                     require("../assets/images/template4.png"), require("../assets/images/template5.png"),
