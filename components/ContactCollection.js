@@ -50,7 +50,6 @@ export default class ContactCollection extends React.Component{
                     <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
                   </View>
                   </View>
-
     </ImageBackground>
     </TouchableOpacity>
       </View>
@@ -125,7 +124,7 @@ _getContact2 = ({item}) => (
   };
 
   render () {
-    //if(this.props.displayMode == 'display1') {
+   
       return (
           <FlatList
           data={users}
@@ -134,16 +133,6 @@ _getContact2 = ({item}) => (
           ItemSeparatorComponent={this.renderSeparator}
           />   
       );
-    /*} else {
-      return (
-        <FlatList
-        data={users}
-        renderItem={this._getContact2}
-        keyExtractor={item => item.name}
-        ItemSeparatorComponent={this.renderSeparator}
-        />
-      );
-    }*/
   }
 
 }

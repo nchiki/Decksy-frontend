@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
       filtersChecked: new Map(),
       userID: null,
       contacts: [], //
-      //displayMode : 'display1',
+      displayMode : 1,
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -54,8 +54,8 @@ export default class HomeScreen extends React.Component {
       ),
       headerTitle: (
         <Button
-        onPress={() => this.updateDisplay()} 
-        title='button'//{this.state.displayMode}
+        onPress={() => this.updateDisplay} 
+        title='changeDisplay'
         color='deepskyblue'
       />
       ),
@@ -74,12 +74,13 @@ export default class HomeScreen extends React.Component {
   }; 
 
   updateDisplay = () => {
-    //const display = this.state.displayMode;
-    /*if(display == 'display1') {
-      this.setState({displayMode : 'display2'});
+    const display = this.state.displayMode;
+    console.log(displayMode);
+    if(display == 1) {
+      this.setState({displayMode : 2});
     } else {
-      this.setState({displayMode: 'display1'})
-    }*/
+      this.setState({displayMode: 1})
+    }
   };
 
   showShortcodeInput = () => {
@@ -167,7 +168,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <ContactCollection contacts={users} navigation={this.props.navigation} />
+          <ContactCollection contacts={users} display={this.state.displayMode} navigation={this.props.navigation} />
         </View>
       </View>
     );

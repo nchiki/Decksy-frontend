@@ -19,7 +19,7 @@ export default class BusinessCard extends React.Component{
           // Default Value of the TextInput
           valueForQRCode: '',
           // Default value for the QR Code
-          saved: true,
+          saved: false,
           image: null,
           templateStyle : null,
           };
