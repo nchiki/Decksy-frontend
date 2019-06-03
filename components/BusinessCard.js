@@ -34,10 +34,14 @@ export default class BusinessCard extends React.Component{
 
     
     render(){
-      const u = this.props.navigation.getParam('details', 'NO-ID');
-      const image = this.props.navigation.getParam('image', 'NO-ID');
-      const templateStyle = this.props.navigation.getParam('templateStyle', 'NO-ID');
+      // const u = this.props.navigation.getParam('details', 'NO-ID');
+      // const image = this.props.navigation.getParam('image', 'NO-ID');
+      // const templateStyle = this.props.navigation.getParam('templateStyle', 'NO-ID');
 
+      const u = this.props.details;
+      const image = this.props.image;
+      const templateStyle = this.props.templateStyle;
+      
     if(this.state.saved) {
       return (
         <View style={{flex:1, alignItems:'center', justifyContent:'center'}}>

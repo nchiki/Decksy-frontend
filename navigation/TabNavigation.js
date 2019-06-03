@@ -38,7 +38,9 @@ CollectedCardsStack.navigationOptions = {
 const ProfileScreenStack = createStackNavigator({
   ProfileScreen: {screen: ProfileScreen},
   CardScreen: {screen : BusinessCard},
-});
+  CardTemplateScreen : {screen : CardTemplate}
+},
+);
 
 ProfileScreenStack.navigationOptions = {
   tabBarLabel: 'Profile',

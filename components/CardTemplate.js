@@ -8,6 +8,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import templateStyles from '../styles/TemplateStyles';
 import QRCode from 'react-native-qrcode';
 import templateUtils from './Templates';
+import BusinessCard from './BusinessCard';
 
 const u = {
     firstName : 'FIRST' ,
@@ -16,14 +17,15 @@ const u = {
     email : 'NAME@EMAIL:COM',
     phoneNumber : 99999999,
 }
-export default class CardTemplate extends React.Component {
 
+export default class CardTemplate extends React.Component {
   state = {
     userID: 1,
     cardType: 4,
     details: u,
-    image : require("../assets/images/template4.png"),
-    templateStyle : templateStyles.getStyle4()
+    image : require("../assets/images/template2.png"),
+    templateStyle : templateStyles.getStyle2(),
+    saved : false
   }
 
   onCardTypeRightRequested = () => {
@@ -45,12 +47,8 @@ export default class CardTemplate extends React.Component {
 
   save = async (navigation) => {
     const det = await apiRequests.getUserDetails(2);
-    const contacts = await apiRequests.getUserContacts(2);
-    console.log(contacts);
-    const card = await apiRequests.getUserCard(2);
-    console.log(card);
-    const templateStyle = this.state.templateStyle;
-    navigation.push('CardScreen', {templateStyle: templateStyle, image: image, details:det});   
+    this.setState({saved: true, details : det});
+
   }
 
   setTemplate = () => {
@@ -59,12 +57,29 @@ export default class CardTemplate extends React.Component {
       this.setState({image : image, templateStyle: templateStyle})
   }
 
+  handleEdit = () => {
+    this.setState({saved: false, details : u});
+  }
+
   render() {
     const image = this.state.image;
     const u = this.state.details;
     const templateStyle = this.state.templateStyle;
-    return (
-<View style={{flex:1, alignItems:'center'}}>
+    const saved = this.state.saved;
+    if(saved) {
+      return (
+        <View style={{flex:1, alignItems:'center'}}>
+          <View style={{flex: 3}}>
+            <BusinessCard image={image} details={u} templateStyle={templateStyle}/>
+          </View>
+          <View style={{flex: 2}}>
+            <Button title='Edit' onPress={() => this.handleEdit()}/>
+          </View>
+        </View>
+      )
+    } else {
+      return (
+        <View style={{flex:1, alignItems:'center'}}>
           <View style= {{top:100}}>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
@@ -112,6 +127,7 @@ export default class CardTemplate extends React.Component {
         </View>
       );
     }
+  }
 }
 
 

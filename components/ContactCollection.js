@@ -1,8 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
 
-import users from '../users/Users';
-
 import templateUtils from './Templates';
 
 const templateID = 4;
@@ -95,7 +93,6 @@ export default class ContactCollection extends React.Component{
     );
   };
 
-
   render () {
       return (
           <FlatList
@@ -106,9 +103,7 @@ export default class ContactCollection extends React.Component{
           />
       );
   }
-
 }
-
 
 const styles = StyleSheet.create({
   containerStyle: {
