@@ -13,7 +13,7 @@ const u = {
     firstName : 'FIRST' ,
     lastName: 'LAST',
     company : 'COMPANY',
-    email : 'NAME@EMAIL:COM',
+    email : 'NAME@EMAIL.COM',
     phoneNumber : 99999999,
 }
 export default class CardTemplate extends React.Component {
@@ -46,7 +46,7 @@ export default class CardTemplate extends React.Component {
   save = async (navigation) => {
     const det = await apiRequests.getUserDetails(2);
     const templateStyle = this.state.templateStyle;
-    navigation.push('CardScreen', {templateStyle: templateStyle, image: image, details:det});   
+    navigation.push('CardScreen', {templateStyle: templateStyle, image: image, details:det});
   }
 
   setTemplate = () => {
@@ -75,7 +75,7 @@ export default class CardTemplate extends React.Component {
                     <Ionicons name='ios-mail' size={10}/> {u.email}</Text>
                   </View>
                   </View>
-                
+
                 </ImageBackground>
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
@@ -89,20 +89,20 @@ export default class CardTemplate extends React.Component {
                     //Backgroun Color of QRCode
                     fgColor="#fff"
                     //Front Color of QRCode
-                  /> 
+                  />
                 </Card>
               </TouchableOpacity>
             </CardFlip>
           </View>
           <View style={styles.buttonRowContainer}>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onCardTypeLeftRequested()}>
-              <Ionicons name='ios-arrow-dropleft' size={26}/> 
+              <Ionicons name='ios-arrow-dropleft' size={26}/>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.save(this.props.navigation)}>
               <Text style={{fontWeight:'bold'}}> Save </Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onCardTypeRightRequested()}>
-              <Ionicons name='ios-arrow-dropright' size={26}/> 
+              <Ionicons name='ios-arrow-dropright' size={26}/>
             </TouchableOpacity>
           </View>
         </View>
@@ -118,7 +118,7 @@ export default class CardTemplate extends React.Component {
       height: 200,
       alignItems:'center',
       justifyContent:'center',
-      
+
       borderRadius: 10,
     //borderWidth: 1,
     borderColor: 'white'
@@ -164,7 +164,5 @@ export default class CardTemplate extends React.Component {
     //borderWidth: 1,
     borderColor: 'white'
     },
-    
-  })
-          
 
+  })
