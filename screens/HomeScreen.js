@@ -42,6 +42,9 @@ export default class HomeScreen extends React.Component {
     const { params = {} } = navigation.state;
     return {
       title: 'Cards',
+      headerTitleStyle: {
+        fontSize: 25
+      },
       headerLeft: (
         <Icon
           containerStyle={{paddingLeft:12}}
@@ -71,7 +74,7 @@ export default class HomeScreen extends React.Component {
         />
       ),
     }
-  }; 
+  };
 
   updateDisplay = () => {
     const display = this.state.displayMode;
@@ -156,7 +159,7 @@ export default class HomeScreen extends React.Component {
               <DisplayFilters />
             </View>
           </View>
-        </Modal>
+        </Modal> 
 
         <Dialog.Container visible={this.state.shortcodeInputVisible}>
           <Dialog.Title>Add User by Shortcode</Dialog.Title>
