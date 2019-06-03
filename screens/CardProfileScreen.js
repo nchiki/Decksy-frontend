@@ -21,9 +21,7 @@ export default class CardProfileScreen extends React.Component {
 
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
-    console.log(params.item);
     const firstName = params.item.firstName;
-    console.log(firstName);
     return {
       title: `${firstName}\'${firstName.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
