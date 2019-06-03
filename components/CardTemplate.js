@@ -68,7 +68,7 @@ export default class CardTemplate extends React.Component {
     const saved = this.state.saved;
     if(saved) {
       return (
-        <View style={{flex:1, alignItems:'center'}}>
+        <View style={{flex:1, alignItems:'center', marginTop:40}}>
           <View style={{flex: 3}}>
             <BusinessCard image={image} details={u} templateStyle={templateStyle}/>
           </View>
