@@ -38,54 +38,72 @@ export default class SignUpScreen extends Component {
 
   render() {
     return (
-      <View style={{padding: 10}}>
-        <TextInput
-          style={styles.loginInputs}
-          placeholder="ID "
-          onChangeText={(userID) => this.setState({userID: userID})}
-
-        />
-         <TextInput
-          style={styles.loginInputs}
-          placeholder="First Name"
-          onChangeText={(firstname) => this.setState({firstName: firstname})}
-
-        />
-         <TextInput
-          style={styles.loginInputs}
-          placeholder="Last Name"
-          onChangeText={(lastname) => this.setState({lastName: lastname})}
-        />
-         <TextInput
-          style={styles.loginInputs}
-          placeholder="Phone Number"
-          onChangeText={(phonenumber) => this.setState({phoneNumber: phonenumber})}
-        />
-         <TextInput
-          style={styles.loginInputs}
-          placeholder="Company/Self-Employed"
-          onChangeText={(company) => this.setState({company: company})}
-        />
-        <TextInput
-          style={styles.loginInputs}
-          placeholder="Profession"
-          onChangeText={(profession) => this.setState({profession: profession})}
-        />
-        <TextInput
-          style={styles.loginInputs}
-          placeholder="Email"
-          onChangeText={(email) => this.setState({email:email})}
-        />
-         <TextInput
-          style={styles.loginInputs}
-          placeholder="Password"
-          onChangeText={(password) => this.setState({password: password})}
-        />
-        <Button
-          title="Sign Up"
-          style={styles.loginInputs}
-          onPress={() => {this.handleSignUp()}}
-        />
+      <View style={{padding: 10, flex:1}}>
+        <View style={{flex:4}} />
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="ID "
+            onChangeText={(userID) => this.setState({userID: userID})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="First Name"
+            onChangeText={(firstname) => this.setState({firstName: firstname})}
+          />
+          </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="Last Name"
+            onChangeText={(lastname) => this.setState({lastName: lastname})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="Phone Number"
+            onChangeText={(phonenumber) => this.setState({phoneNumber: phonenumber})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="Company/Self-Employed"
+            onChangeText={(company) => this.setState({company: company})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="Profession"
+            onChangeText={(profession) => this.setState({profession: profession})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="Email"
+            onChangeText={(email) => this.setState({email:email})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="Password"
+            onChangeText={(password) => this.setState({password: password})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <Button
+            title="Sign Up"
+            style={styles.loginInputs}
+            onPress={() => {this.handleSignUp()}}
+          />
+        </View>
+        <View style={{flex:4}} />
       </View>
     );
   }
