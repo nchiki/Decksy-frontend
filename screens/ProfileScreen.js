@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Platform } from 'react-native';
+import { Platform, View, Text } from 'react-native';
 
 import { Icon } from 'react-native-elements';
 
@@ -25,13 +25,23 @@ export default class ProfileScreen extends React.Component {
           size={34}
           color='dodgerblue'
         />
-      ), 
+      ),
     }
   };
 
   render() {
+    const { navigation } = this.props;
+    const userID = navigation.getParam('userID', 'NO ID SET');
     return (
-      <CardTemplate navigation={this.props.navigation} />
+      <View style={{flex:1}}>
+        <View style={{flex:3}}>
+          <CardTemplate navigation={this.props.navigation} />
+        </View>
+        <View style={{flex:1, alignItems:'center'}}>
+          <Text style={{fontSize:24}}>Your shortcode is:</Text>
+          <Text style={{fontSize:30}}>{userID}</Text>
+        </View>
+      </View>
     );
   }
 

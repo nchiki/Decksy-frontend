@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
       shortcodeInputVisible: false,
       filtersChecked: new Map(),
       userID: null,
-      contacts: [], 
+      contacts: [],
       displayValue : 1
     }
     this.handleChange = this.handleChange.bind(this);
@@ -70,7 +70,7 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  
+
 
   showShortcodeInput = () => {
     this.setState({ shortcodeInputVisible: true });
@@ -126,7 +126,7 @@ export default class HomeScreen extends React.Component {
     } else {
       this.setState({displayValue: 1})
     }
-   
+
   };
 
   DeckDisplay(displayValue, navigation, contacts) {
@@ -139,7 +139,7 @@ export default class HomeScreen extends React.Component {
         <CardCollection contacts={contacts} navigation={navigation} />
       )
     }
-    
+
   }
   // Icons for adding and filtering
   render() {

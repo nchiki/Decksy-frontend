@@ -30,7 +30,7 @@ export default class ContactCollection extends React.Component{
   _getContact = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
       <View style={{flex:1, alignItems:'left', marginLeft:16}}>
-        <Text style={{fontSize:18}}>{`${item.firstName}${item.lastName}`}</Text>
+        <Text style={{fontSize:18}}>{`${item.firstName} ${item.lastName}`}</Text>
         <Text style={{fontSize:13}}>{item.profession}</Text>
       </View>
       <View style={{flex:3, marginRight:-70}}>
@@ -38,7 +38,7 @@ export default class ContactCollection extends React.Component{
           <ImageBackground source={templateUtils.setImage(templateID)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
               <View style={templateUtils.setStyle(templateID).titleText}>
-                  <Text style={templateUtils.setStyle(templateID).userText} >{`${item.firstName}${item.lastName}`} </Text>
+                  <Text style={templateUtils.setStyle(templateID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
               <View style={templateUtils.setStyle(templateID).user}>
                 <Text style={templateUtils.setStyle(templateID).company}>{item.company}</Text>
