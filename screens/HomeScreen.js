@@ -25,6 +25,7 @@ export default class HomeScreen extends React.Component {
       filtersChecked: new Map(),
       userID: null,
       contacts: [], //
+      //displayMode : 'display1',
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -51,7 +52,15 @@ export default class HomeScreen extends React.Component {
           color='dodgerblue'
         />
       ),
+      headerTitle: (
+        <Button
+        onPress={() => this.updateDisplay()} 
+        title='button'//{this.state.displayMode}
+        color='deepskyblue'
+      />
+      ),
       headerRight: (
+        
         <Icon
           containerStyle={{paddingRight: 12}}
           type="ionicon"
@@ -62,6 +71,15 @@ export default class HomeScreen extends React.Component {
         />
       ),
     }
+  };
+
+  updateDisplay = () => {
+    //const display = this.state.displayMode;
+    /*if(display == 'display1') {
+      this.setState({displayMode : 'display2'});
+    } else {
+      this.setState({displayMode: 'display1'})
+    }*/
   };
 
   showShortcodeInput = () => {
@@ -119,7 +137,8 @@ export default class HomeScreen extends React.Component {
 
   // Icons for adding and filtering
   render() {
-
+    //const displayMode = this.state.displayMode;
+    //console.log(displayMode);
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -201,3 +220,4 @@ function getCards(userID) {
     },
   ];
 }
+

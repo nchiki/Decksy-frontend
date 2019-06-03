@@ -1,8 +1,7 @@
 import React from 'react';
-import {  FlatList, StyleSheet, Text, ImageBackground, View } from 'react-native';
+import {  FlatList, StyleSheet, Text, ImageBackground, View , Switch} from 'react-native';
 
 import users from '../users/Users';
-import deckStyles from '../styles/DeckStyles';
 import templateUtils from './Templates';
 
 
@@ -13,11 +12,12 @@ export default class ContactCollection extends React.Component{
     this.state = {
       _isMounted : false,
       details: null,
+      displayValue: true
     }
   }
 
   
-  _getContact = ({item}) => (
+  _getContact1 = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
     
    <View style={{flex:1, alignItems:'center'}}><Text style={{fontSize:15}}>{item.name}</Text>
@@ -39,7 +39,23 @@ export default class ContactCollection extends React.Component{
       </View> 
      </View>
 );
-
+_getContact2 = ({item}) => (
+<View style={{height:120}}>
+   <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
+      <View style={styles.containerStyle}>
+        <View style={templateUtils.setStyle(item.templateID).titleText}>
+            <Text style={templateUtils.setStyle(item.templateID).userText} >{`${item.name}`} </Text>
+        </View>
+        <View style={templateUtils.setStyle(item.templateID).user}>
+            <Text style={templateUtils.setStyle(item.templateID).company}>{item.company}</Text>
+            <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+        </View>
+      </View>
+              
+  </ImageBackground>
+</View> 
+   
+);
 
   _keyExtractor = (item, index) => item.name;
 
@@ -85,15 +101,32 @@ export default class ContactCollection extends React.Component{
     );
   };
 
+  changeDisplay = () => {
+    const displayValue = !this.state.displayValue;
+    this.setState({displayValue  : displayValue});
+
+  };
+
   render () {
-    return (
-      <FlatList
+    //if(this.props.displayMode == 'display1') {
+      return (
+          <FlatList
+          data={users}
+          renderItem={this._getContact1}
+          keyExtractor={item => item.name}
+          ItemSeparatorComponent={this.renderSeparator}
+          />   
+      );
+    /*} else {
+      return (
+        <FlatList
         data={users}
-        renderItem={this._getContact}
+        renderItem={this._getContact2}
         keyExtractor={item => item.name}
         ItemSeparatorComponent={this.renderSeparator}
-      />
-    );
+        />
+      );
+    }*/
   }
 
 }
@@ -125,20 +158,3 @@ const styles = StyleSheet.create({
 
 
 
-/*
-  <Card title={item.name} titleStyle={{color:item.colour, fontSize: 30}} containerStyle={styles.containerStyle}>
-  <View style={styles.user}>
-  <Text style={styles.company}>{item.company}</Text>
-  <Text style={styles.details}>{item.phoneNumber}{"\n"}{item.email}</Text>
-  </View>
-  <Divider style={{ backgroundColor: item.colour, width: 10, bottom: 40}} />
-  <Divider style={{ backgroundColor: item.colour, width: 30, bottom: 30}} />
-  <Divider style={{ backgroundColor: item.colour, width: 50, bottom: 20}} />
-  <Divider style={{ backgroundColor: item.colour, width: 70, bottom: 10}} />
-  <Divider style={{ backgroundColor: item.colour, width: 90}} />
-  <Divider style={{ backgroundColor: item.colour, width: 110, bottom: -10}}/>
-  <Divider style={{ backgroundColor: item.colour, width: 130, bottom: -20}} />
-  <Divider style={{ backgroundColor: item.colour, width: 150, bottom: -30}} />
-  </Card>
-  }}}
-  />*/

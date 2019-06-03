@@ -31,6 +31,8 @@ CollectedCardsStack.navigationOptions = {
   ),
 };
 
+
+
 const ProfileScreenStack = createStackNavigator({
   ProfileScreen: {screen: ProfileScreen},
   CardScreen: {screen : BusinessCard},

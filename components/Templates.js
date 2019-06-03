@@ -1,4 +1,5 @@
 import deckStyles from '../styles/DeckStyles';
+import templateStyles from '../styles/TemplateStyles';
 const templateUtils = {
 
 
@@ -16,8 +17,13 @@ setImage : function (cardType) {
                     deckStyles.getStyle6(), deckStyles.getStyle7(), deckStyles.getStyle8(), deckStyles.getStyle9(), 
                     deckStyles.getStyle10()];    
       return styles[cardType-2];
+  },
+  setProfileStyle : function (cardType) {
+    const styles = [templateStyles.getStyle2(), templateStyles.getStyle3(), templateStyles.getStyle4(), templateStyles.getStyle5(),
+        templateStyles.getStyle6(), templateStyles.getStyle7(), templateStyles.getStyle8(), templateStyles.getStyle9(), 
+        templateStyles.getStyle10()];    
+      return styles[cardType-2];
   }
-
 }
 
 export default templateUtils;

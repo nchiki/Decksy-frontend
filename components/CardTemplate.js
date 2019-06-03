@@ -53,13 +53,12 @@ export default class CardTemplate extends React.Component {
 
   setTemplate = () => {
       const image = templateUtils.setImage(this.state.cardType);
-      const templateStyle = templateUtils.setStyle(this.state.cardType);
+      const templateStyle = templateUtils.setProfileStyle(this.state.cardType);
       this.setState({image : image, templateStyle: templateStyle})
   }
 
   render() {
     const image = this.state.image;
-    
     const u = this.state.details;
     const templateStyle = this.state.templateStyle;
     return (
