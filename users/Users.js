@@ -6,6 +6,7 @@ const users=[
     subtitle: 'Vice Chairman',
     phoneNumber: '073004889',
     email:'roberts@email.com',
+    templateID: 3,
     color:'darkred'
     },
     {
@@ -15,6 +16,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '072304889',
     email:'john@email.com',
+    templateID: 5,
     color: 'darkblue'
     },
     {
@@ -24,6 +26,7 @@ const users=[
     subtitle: 'President',
     phoneNumber: '048904889',
     email:'mary@email.com',
+    templateID: 6,
     color:'darkred'
     },
     {
@@ -33,6 +36,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073004909',
     email:'sienna@email.com',
+    templateID: 3,
     color:'darkred'
     },
     {
@@ -42,6 +46,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073007889',
     email:'carlos@email.com',
+    templateID: 2,
     color:'darkblue'
     },
     {
@@ -51,6 +56,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073004889',
     email:'phillip@email.com',
+    templateID: 7,
     color:'darkgreen'
     },
     {
@@ -60,6 +66,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '072004889',
     email:'louis@email.com',
+    templateID: 8,
     color:'darkgreen'
     },
     {
@@ -69,6 +76,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073004339',
     email:'jenna@email.com',
+    templateID: 4,
     color:'darkred'
     },
     {
@@ -78,6 +86,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073032889',
     email:'sarah@email.com',
+    templateID: 10,
     color:'darkgreen'
     },
     {
@@ -87,6 +96,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073007789',
     email:'paul@email.com',
+    templateID: 9,
     color:'darkblue'
     },
     {
@@ -96,6 +106,7 @@ const users=[
     subtitle: 'Vice President',
     phoneNumber: '073324589',
     email:'pierre@email.com',
+    templateID: 9,
     color:'darkred'
     },
     ]

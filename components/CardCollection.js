@@ -5,21 +5,88 @@ import { Divider, Card} from 'react-native-elements';
 import users from '../users/Users'
 
 export default class CardCollection extends React.Component{
-  _getCards = ({item}) => (
-    <Card title={item.name} titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerStyle}>
-      <View style={styles.user}>
-        <Text style={styles.company}>{item.company}</Text>
-        <Text style={styles.details}>{item.phoneNumber}{"\n"}{item.email}</Text>
-      </View>
-      <Divider style={{ backgroundColor: 'darkblue', width: 10, bottom: 40}} />
-      <Divider style={{ backgroundColor: 'darkblue', width: 30, bottom: 30}} />
-      <Divider style={{ backgroundColor: 'darkblue', width: 50, bottom: 20}} />
-      <Divider style={{ backgroundColor: 'darkblue', width: 70, bottom: 10}} />
-      <Divider style={{ backgroundColor: 'darkblue', width: 90}} />
-      <Divider style={{ backgroundColor: 'darkblue', width: 110, bottom: -10}}/>
-      <Divider style={{ backgroundColor: 'darkblue', width: 130, bottom: -20}} />
-      <Divider style={{ backgroundColor: 'darkblue', width: 150, bottom: -30}} />
-    </Card>
+
+  setImage = (cardType) => {
+    let image = null;
+      switch(cardType) {
+        case 2:
+                image = require("../assets/images/template2.png");
+                break;
+        case 3 :
+                image = require("../assets/images/template3.png");
+                break;
+        case 4 :
+                image = require("../assets/images/template4.png");
+                break;
+        case 5 :
+                image = require("../assets/images/template5.png");
+                break;
+        case 6 : 
+                image = require("../assets/images/template6.png");
+                break;
+        case 7 :        
+                image = require("../assets/images/template7.png");
+                break;
+        case 8 :
+                image = require("../assets/images/template8.png");
+                break;
+        case 9 :
+                image = require("../assets/images/template9.png");
+                break;
+        case 10 : 
+                image = require("../assets/images/template10.png");
+                break;
+      }
+      return image;
+  }
+
+  setStyle = (cardType) => {
+    let templateStyle = null;
+      switch(cardType) {
+        case 2:
+                templateStyle = templateStyles.getStyle2();
+                break;
+        case 3 :
+                templateStyle = templateStyles.getStyle3();
+                break;
+        case 4 :
+                templateStyle = templateStyles.getStyle4();
+                break;
+        case 5 :
+                templateStyle = templateStyles.getStyle5();
+                break;
+        case 6 : 
+                templateStyle = templateStyles.getStyle6();
+                break;
+        case 7 :        
+                templateStyle = templateStyles.getStyle7();
+                break;
+        case 8 :
+                templateStyle = templateStyles.getStyle8();
+                break;
+        case 9 :
+                templateStyle = templateStyles.getStyle9();
+                break;
+        case 10 : 
+                templateStyle = templateStyles.getStyle10();
+                break;
+      }
+      return templateStyle;
+  }
+
+  _getCards = ({u}) => (
+    <ImageBackground source={this.setImage(u.templateID)} style={styles.containerStyle}>
+                  <View style={styles.containerStyle}>
+                  <View style={this.setStyle(u.templateID).titleText}>
+                      <Text style={this.setStyle(u.templateID).userText} >{`${u.firstName} ${u.lastName}`} </Text>
+                  </View>
+                  <View style={this.setStyle(u.templateID).user}>
+                    <Text style={this.setStyle(u.templateID).company}>{u.company}</Text>
+                    <Text style={this.setStyle(u.templateID).details}>{u.phoneNumber}{'\n'}{u.email}</Text>
+                  </View>
+                  </View>
+                
+    </ImageBackground>
   );
 
   _keyExtractor = (item, index) => item.name;
