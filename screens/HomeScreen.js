@@ -79,7 +79,7 @@ export default class HomeScreen extends React.Component {
   updateDisplay = () => {
     const display = this.state.displayMode;
     console.log(displayMode);
-    if(display == 1) {
+    if (display == 1) {
       this.setState({displayMode : 2});
     } else {
       this.setState({displayMode: 1})

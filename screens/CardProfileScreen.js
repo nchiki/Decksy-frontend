@@ -18,13 +18,16 @@ export default class CardProfileScreen extends React.Component {
   }
 
 
-  static navigationOptions =
-    {
-      title: 'Card Profile',
+  static navigationOptions = ({navigation}) => {
+    const { params = {} } = navigation.state;
+    const name = params.item.name;
+    return {
+      title: `${name}\'${name.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
         fontSize: 25
       },
-    };
+    }
+  };
 
   render() {
     const { navigation } = this.props;
