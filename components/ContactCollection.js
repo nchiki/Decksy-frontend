@@ -5,7 +5,7 @@ import users from '../users/Users';
 
 import templateUtils from './Templates';
 
-
+const templateID = 4;
 export default class ContactCollection extends React.Component{
 
   constructor(props) {
@@ -28,22 +28,23 @@ export default class ContactCollection extends React.Component{
      this.props.navigation.navigate('CardProfile', {item: item});
   }
 
+  // CHANGE templateID TO item.templateID WHEN API REQUEST RETURNS TEMPLATE ID TOO
   _getContact = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
       <View style={{flex:1, alignItems:'left', marginLeft:16}}>
-        <Text style={{fontSize:18}}>{item.name}</Text>
-        <Text style={{fontSize:13}}>{item.subtitle}</Text>
+        <Text style={{fontSize:18}}>{`${item.firstName}${item.lastName}`}</Text>
+        <Text style={{fontSize:13}}>{item.profession}</Text>
       </View>
       <View style={{flex:3, marginRight:-70}}>
         <TouchableOpacity style={styles.card} onPress= {() => this.handleCardProfile(item)}>
-          <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
+          <ImageBackground source={templateUtils.setImage(templateID)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
-              <View style={templateUtils.setStyle(item.templateID).titleText}>
-                  <Text style={templateUtils.setStyle(item.templateID).userText} >{`${item.name}`} </Text>
+              <View style={templateUtils.setStyle(templateID).titleText}>
+                  <Text style={templateUtils.setStyle(templateID).userText} >{`${item.firstName}${item.lastName}`} </Text>
               </View>
-              <View style={templateUtils.setStyle(item.templateID).user}>
-                <Text style={templateUtils.setStyle(item.templateID).company}>{item.company}</Text>
-                <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              <View style={templateUtils.setStyle(templateID).user}>
+                <Text style={templateUtils.setStyle(templateID).company}>{item.company}</Text>
+                <Text style={templateUtils.setStyle(templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
               </View>
             </View>
           </ImageBackground>
@@ -51,10 +52,6 @@ export default class ContactCollection extends React.Component{
       </View>
     </View>
   );
-
-
-
-  _keyExtractor = (item, index) => item.name;
 
   componentWillMount() {
     this.setState({
@@ -102,9 +99,9 @@ export default class ContactCollection extends React.Component{
   render () {
       return (
           <FlatList
-          data={users}
+          data={this.props.contacts}
           renderItem={this._getContact}
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.firstName}
           ItemSeparatorComponent={this.renderSeparator}
           />
       );

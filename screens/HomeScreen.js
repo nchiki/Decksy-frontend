@@ -129,14 +129,14 @@ export default class HomeScreen extends React.Component {
    
   };
 
-  DeckDisplay(displayValue, navigation) {
+  DeckDisplay(displayValue, navigation, contacts) {
     if (displayValue == 1) {
       return (
-        <ContactCollection contacts={users} navigation={navigation} />
+        <ContactCollection contacts={contacts} navigation={navigation} />
       )
     } else {
       return (
-        <CardCollection contacts={users} navigation={navigation} />
+        <CardCollection contacts={contacts} navigation={navigation} />
       )
     }
     
@@ -144,6 +144,7 @@ export default class HomeScreen extends React.Component {
   // Icons for adding and filtering
   render() {
     const displayValue = this.state.displayValue;
+    const contacts = this.props.navigation.getParam('contacts', 'NO-ID');
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -179,7 +180,7 @@ export default class HomeScreen extends React.Component {
         {/* Displays the collection of cards */}
         <View>
           <Button title='Change Display' onPress={this.updateDisplay} />
-          {this.DeckDisplay(displayValue, this.props.navigation)}
+          {this.DeckDisplay(displayValue, this.props.navigation, contacts)}
         </View>
       </View>
     );

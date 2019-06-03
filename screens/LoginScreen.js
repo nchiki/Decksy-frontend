@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight } from 'react-native';
 
 import styles from '../styles/Styles';
-import getUserDetails from '../api_wrappers/BackendWrapper';
-
+import apiRequests from '../api_wrappers/BackendWrapper';
 export default class LoginScreen extends Component {
 
   constructor(props) {
@@ -33,9 +32,17 @@ export default class LoginScreen extends Component {
     }
   };
 
-  handleLogin() {
+  handleLogin= async () => {
+    const contacts= await apiRequests.getUserContacts(2);
+    const listItems = (contacts.map(async (cont) => {
+      const id = Number.parseInt(cont.user, 10);
+      const det = await apiRequests.getUserDetails(id);
+      return det}) );
+    const items = await Promise.all(listItems);
+    this.props.navigation.navigate('CollectedCards', {userID: this.state.email, contacts : items})
+
     // Add logic to authenticate user here
-    this.props.navigation.navigate('CollectedCards', {userID: this.state.email})
+    
   }
 
   render() {

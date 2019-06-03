@@ -4,7 +4,7 @@ import {View, Text, FlatList, StyleSheet, ImageBackground, TouchableOpacity} fro
 import templateUtils from './Templates';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
-
+const templateID = 4;
 export default class CardCollection extends React.Component{
 
  
@@ -19,17 +19,19 @@ export default class CardCollection extends React.Component{
   {
      this.props.navigation.navigate('CardProfile', {item: item});
   }
+
+  // CHANGE templateID TO item.templateID WHEN API REQUEST RETURNS TEMPLATE ID TOO
   _getCards = ({item}) => (
     <TouchableOpacity style={styles.card} 
       onPress= {()=> this.handleCardProfile(item)}>
-        <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
+        <ImageBackground source={templateUtils.setImage(templateID)} style={styles.containerStyle}>
                   <View style={styles.containerStyle}>
-                  <View style={templateUtils.setProfileStyle(item.templateID).titleText}>
-                      <Text style={templateUtils.setProfileStyle(item.templateID).userText} >{item.name} </Text>
+                  <View style={templateUtils.setProfileStyle(templateID).titleText}>
+                      <Text style={templateUtils.setProfileStyle(templateID).userText} >{`${item.firstName}${item.lastName}`} </Text>
                   </View>
-                  <View style={templateUtils.setProfileStyle(item.templateID).user}>
-                    <Text style={templateUtils.setProfileStyle(item.templateID).company}>{item.company}</Text>
-                    <Text style={templateUtils.setProfileStyle(item.templateID).details}><Ionicons name='ios-call' size={10}/> {item.phoneNumber}{'\n'}
+                  <View style={templateUtils.setProfileStyle(templateID).user}>
+                    <Text style={templateUtils.setProfileStyle(templateID).company}>{item.company}</Text>
+                    <Text style={templateUtils.setProfileStyle(templateID).details}><Ionicons name='ios-call' size={10}/> {item.phoneNumber}{'\n'}
                     <Ionicons name='ios-mail' size={10}/> {item.email}</Text>
                   </View>
                   </View>
@@ -37,7 +39,9 @@ export default class CardCollection extends React.Component{
         </TouchableOpacity>
   );
 
-  _keyExtractor = (item, index) => item.name;
+  _keyExtractor = (item, index) => {
+    return (item.firstName);
+  }
 
   renderSeparator = () => {
         return (

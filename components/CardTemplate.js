@@ -45,6 +45,10 @@ export default class CardTemplate extends React.Component {
 
   save = async (navigation) => {
     const det = await apiRequests.getUserDetails(2);
+    const contacts = await apiRequests.getUserContacts(2);
+    console.log(contacts);
+    const card = await apiRequests.getUserCard(2);
+    console.log(card);
     const templateStyle = this.state.templateStyle;
     navigation.push('CardScreen', {templateStyle: templateStyle, image: image, details:det});   
   }
