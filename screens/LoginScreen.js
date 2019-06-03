@@ -19,6 +19,9 @@ export default class LoginScreen extends Component {
     const { params = {} } = navigation.state;
     return {
       title: 'Login',
+      headerTitleStyle: {
+        fontSize: 25
+      },
       headerRight: (
         <Button
           title="Sign Up"

@@ -22,6 +22,9 @@ export default class SignUpScreen extends Component {
 
   static navigationOptions = {
     title: 'Sign Up',
+    headerTitleStyle: {
+      fontSize: 25
+    },
   };
 
   handleSignUp = async () => {

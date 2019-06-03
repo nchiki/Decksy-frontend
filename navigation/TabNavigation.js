@@ -4,7 +4,8 @@ import { Text, View, Platform } from 'react-native';
 import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
-import QRCodeScannerScreen from '../screens/QRCodeScannerScreen'
+import QRCodeScannerScreen from '../screens/QRCodeScannerScreen';
+import CardProfileScreen from '../screens/CardProfileScreen';
 import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../components/BusinessCard';
 import CardTemplate from '../components/CardTemplate';
@@ -13,12 +14,16 @@ import { Ionicons } from '@expo/vector-icons';
 export const CollectedCardsStack = createStackNavigator({
     CollectedCards: {screen: HomeScreen},
     QRScanner: {screen: QRCodeScannerScreen},
+    CardProfile: {screen: CardProfileScreen},
   },
   { initialRouteName: 'CollectedCards' }
 );
 
 CollectedCardsStack.navigationOptions = {
   tabBarLabel: 'Cards',
+  tabsStyle: {
+      labelStyle: { fontSize: 30 },
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -38,6 +43,9 @@ const ProfileScreenStack = createStackNavigator({
 
 ProfileScreenStack.navigationOptions = {
   tabBarLabel: 'Profile',
+  tabsStyle: {
+      labelStyle: { fontSize: 30 },
+  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -47,6 +55,10 @@ ProfileScreenStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-  CollectedCardsStack,
-  ProfileScreenStack,
-});
+    CollectedCardsStack,
+    ProfileScreenStack,
+  },
+  {
+    tabBarOptions: {labelStyle: { fontSize: 14 }}
+  }
+);
