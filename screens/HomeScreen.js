@@ -24,7 +24,7 @@ export default class HomeScreen extends React.Component {
       shortcodeInputVisible: false,
       filtersChecked: new Map(),
       userID: null,
-      contacts: [], //
+      contacts: [],
       displayMode : 1,
     }
     this.handleChange = this.handleChange.bind(this);
@@ -57,13 +57,13 @@ export default class HomeScreen extends React.Component {
       ),
       headerTitle: (
         <Button
-        onPress={() => this.updateDisplay} 
+        onPress={() => this.updateDisplay}
         title='changeDisplay'
         color='deepskyblue'
       />
       ),
       headerRight: (
-        
+
         <Icon
           containerStyle={{paddingRight: 12}}
           type="ionicon"
@@ -159,7 +159,7 @@ export default class HomeScreen extends React.Component {
               <DisplayFilters />
             </View>
           </View>
-        </Modal> 
+        </Modal>
 
         <Dialog.Container visible={this.state.shortcodeInputVisible}>
           <Dialog.Title>Add User by Shortcode</Dialog.Title>
@@ -218,4 +218,3 @@ function getCards(userID) {
     },
   ];
 }
-
