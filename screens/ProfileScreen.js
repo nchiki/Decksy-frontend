@@ -13,6 +13,9 @@ export default class ProfileScreen extends React.Component {
     const { params = {} } = navigation.state;
     return {
       title: 'Profile',
+      headerTitleStyle: {
+        fontSize: 25
+      },
       headerRight: (
         <Icon
           containerStyle={{paddingRight: 12}}
@@ -22,7 +25,7 @@ export default class ProfileScreen extends React.Component {
           size={34}
           color='dodgerblue'
         />
-      ),
+      ), 
     }
   };
 

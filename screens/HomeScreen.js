@@ -43,6 +43,9 @@ export default class HomeScreen extends React.Component {
     const { params = {} } = navigation.state;
     return {
       title: 'Cards',
+      headerTitleStyle: {
+        fontSize: 25
+      },
       headerLeft: (
         <Icon
           containerStyle={{paddingLeft:12}}
@@ -54,7 +57,7 @@ export default class HomeScreen extends React.Component {
         />
       ),
       headerRight: (
-        
+
         <Icon
           containerStyle={{paddingRight: 12}}
           type="ionicon"
@@ -65,7 +68,7 @@ export default class HomeScreen extends React.Component {
         />
       ),
     }
-  }; 
+  };
 
   
 
@@ -175,7 +178,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <Button title='ChangeDisplay' onPress={this.updateDisplay} />
+          <Button title='Change Display' onPress={this.updateDisplay} />
           {this.DeckDisplay(displayValue, this.props.navigation)}
         </View>
       </View>
@@ -225,4 +228,3 @@ function getCards(userID) {
     },
   ];
 }
-

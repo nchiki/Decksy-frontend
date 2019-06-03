@@ -29,28 +29,29 @@ export default class ContactCollection extends React.Component{
   }
 
   _getContact = ({item}) => (
-    <View style={{height:120, flexDirection: 'row', alignItems:'center'}} >
-    <View style={{flex:1, alignItems:'center'}}><Text style={{fontSize:15}}>{item.name}</Text>
-    <Text style={{fontSize:11}}>{item.subtitle}</Text>
-    </View>
-      <View style={{flex:3}}>
-      <TouchableOpacity style={styles.card} 
-      onPress= {()=> this.handleCardProfile(item)}>
-      <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
-                  <View style={styles.containerStyle}>
-                  <View style={templateUtils.setStyle(item.templateID).titleText}>
-                      <Text style={templateUtils.setStyle(item.templateID).userText} >{`${item.name}`} </Text>
-                  </View>
-                  <View style={templateUtils.setStyle(item.templateID).user}>
-                    <Text style={templateUtils.setStyle(item.templateID).company}>{item.company}</Text>
-                    <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
-                  </View>
-                  </View>
-    </ImageBackground>
-    </TouchableOpacity>
+    <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
+      <View style={{flex:1, alignItems:'left', marginLeft:16}}>
+        <Text style={{fontSize:18}}>{item.name}</Text>
+        <Text style={{fontSize:13}}>{item.subtitle}</Text>
       </View>
-     </View>
-);
+      <View style={{flex:3, marginRight:-70}}>
+        <TouchableOpacity style={styles.card} onPress= {() => this.handleCardProfile(item)}>
+          <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
+            <View style={styles.containerStyle}>
+              <View style={templateUtils.setStyle(item.templateID).titleText}>
+                  <Text style={templateUtils.setStyle(item.templateID).userText} >{`${item.name}`} </Text>
+              </View>
+              <View style={templateUtils.setStyle(item.templateID).user}>
+                <Text style={templateUtils.setStyle(item.templateID).company}>{item.company}</Text>
+                <Text style={templateUtils.setStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              </View>
+            </View>
+          </ImageBackground>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+
 
 
   _keyExtractor = (item, index) => item.name;
@@ -105,7 +106,7 @@ export default class ContactCollection extends React.Component{
           renderItem={this._getContact}
           keyExtractor={item => item.name}
           ItemSeparatorComponent={this.renderSeparator}
-          />   
+          />
       );
   }
 
@@ -134,12 +135,3 @@ const styles = StyleSheet.create({
     alignContent:'center'
   }
 })
-
-
-
-
-
-
-
-
-

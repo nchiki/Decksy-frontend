@@ -17,11 +17,14 @@ export default class CardProfileScreen extends React.Component {
     }
   }
 
-    
+
   static navigationOptions =
-  {
-    title: 'CardProfile',
-  };
+    {
+      title: 'Card Profile',
+      headerTitleStyle: {
+        fontSize: 25
+      },
+    };
 
   render() {
     const { navigation } = this.props;
@@ -39,7 +42,7 @@ export default class CardProfileScreen extends React.Component {
                   </View>
                   </View>
             </ImageBackground>
-          </View> 
+          </View>
     );
   }
 }
