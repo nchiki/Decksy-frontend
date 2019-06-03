@@ -34,9 +34,15 @@ export default class SignUpScreen extends Component {
       const ID = parseInt(this.state.userID, 10);
       global.userID = ID;
       apiRequests.setUserDetails(ID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, 2);
-      const details = await apiRequests.getUserDetails(2);
-      console.log(details.firstName);
-      this.props.navigation.navigate('CollectedCards', {userID: 2});
+      const contacts= await apiRequests.getUserContacts(global.userID);
+      const listItems = (contacts.map(async (cont) => {
+        const id = Number.parseInt(cont.user, 10);
+        const det = await apiRequests.getUserDetails(id);
+        
+        return det}) );
+      const items = await Promise.all(listItems);
+      this.props.navigation.navigate('CollectedCards', {userID: global.userID, contacts : items})
+    
     }
   }
 

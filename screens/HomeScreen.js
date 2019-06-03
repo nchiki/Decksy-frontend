@@ -33,6 +33,7 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props;
+    this.setState({contacts : this.props.navigation.getParam('contacts', 'NO-ID')});
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleFilterButton: this.onFiltersPress
@@ -83,12 +84,25 @@ export default class HomeScreen extends React.Component {
   handleAdd =  async () => {
     const { navigation } = this.props;
     //const userID = navigation.getParam('userID', 'NO-ID');
-
     apiRequests.addCard(global.userID, this.state.shortcode);
+    setTimeout(() => this.getContactsForDisplay(), 20);
     this.setState({
       shortcodeInputVisible: false,
     });
   };
+
+  getContactsForDisplay = async () => {
+    const contacts= await apiRequests.getUserContacts(global.userID);
+    const listItems = (contacts.map(async (cont) => {
+      const id = Number.parseInt(cont.user, 10);
+      const det = await apiRequests.getUserDetails(id);
+      return det}) );
+    const items = await Promise.all(listItems);
+    console.log(items);
+    setTimeout(() => this.setState({
+      contacts: items
+    }), 20);
+  }
 
   handleChange(e) {
     const item = e.target.name;
@@ -142,8 +156,9 @@ export default class HomeScreen extends React.Component {
   }
   // Icons for adding and filtering
   render() {
+   
     const displayValue = this.state.displayValue;
-    const contacts = this.props.navigation.getParam('contacts', 'NO-ID');
+    const contacts = this.state.contacts;
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -213,18 +228,4 @@ function DisplayFilters() {
       />
     </View>
   );
-}
-
-function getCards(userID) {
-  return [
-    {
-    userID: 5,
-    firstName: 'Mary',
-    lastName: 'David',
-    phoneNumber: '048904889',
-    email:'mary@email.com',
-    company: 'Google',
-    profession: 'Software Engineer',
-    },
-  ];
 }

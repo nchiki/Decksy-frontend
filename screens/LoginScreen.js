@@ -34,14 +34,14 @@ export default class LoginScreen extends Component {
   };
 
   handleLogin= async () => {
-    const contacts= await apiRequests.getUserContacts(2);
+    const contacts= await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
       
       return det}) );
     const items = await Promise.all(listItems);
-    this.props.navigation.navigate('CollectedCards', {userID: this.state.email, contacts : items})
+    this.props.navigation.navigate('CollectedCards', {userID: global.userID, contacts : items})
 
     // Add logic to authenticate user here
   }

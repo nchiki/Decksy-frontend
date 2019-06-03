@@ -93,7 +93,7 @@ export default class ContactCollection extends React.Component{
   };
 
   render () {
-    console.log(global.userID);
+  
       return (
           <FlatList
           data={this.props.contacts}
