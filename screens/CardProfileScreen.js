@@ -14,15 +14,18 @@ export default class CardProfileScreen extends React.Component {
     this.state = {
       _isMounted : false,
       details: null,
+      templateID: 4,
     }
   }
 
 
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
-    const name = params.item.name;
+    console.log(params.item);
+    const firstName = params.item.firstName;
+    console.log(firstName);
     return {
-      title: `${name}\'${name.endsWith("s") ? "" : "s"} Card`,
+      title: `${firstName}\'${firstName.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
         fontSize: 25
       },
@@ -35,14 +38,14 @@ export default class CardProfileScreen extends React.Component {
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
-          <ImageBackground source={templateUtils.setImage(item.templateID)} style={styles.containerStyle}>
+          <ImageBackground source={templateUtils.setImage(this.state.templateID)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
-              <View style={templateUtils.setProfileStyle(item.templateID).titleText}>
-                <Text style={templateUtils.setProfileStyle(item.templateID).userText} >{`${item.name}`} </Text>
+              <View style={templateUtils.setProfileStyle(this.state.templateID).titleText}>
+                <Text style={templateUtils.setProfileStyle(this.state.templateID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
-              <View style={templateUtils.setProfileStyle(item.templateID).user}>
-                <Text style={templateUtils.setProfileStyle(item.templateID).company}>{item.company}</Text>
-                <Text style={templateUtils.setProfileStyle(item.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              <View style={templateUtils.setProfileStyle(this.state.templateID).user}>
+                <Text style={templateUtils.setProfileStyle(this.state.templateID).company}>{item.company}</Text>
+                <Text style={templateUtils.setProfileStyle(this.state.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
               </View>
             </View>
           </ImageBackground>
