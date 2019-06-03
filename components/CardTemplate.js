@@ -21,7 +21,7 @@ const u = {
 export default class CardTemplate extends React.Component {
   state = {
     userID: 1,
-    cardType: 4,
+    cardType: 2,
     details: u,
     image : require("../assets/images/template2.png"),
     templateStyle : templateStyles.getStyle2(),
@@ -46,6 +46,7 @@ export default class CardTemplate extends React.Component {
   }
 
   save = async (navigation) => {
+    apiRequests.setCard(global.userID, this.state.cardType);
     const det = await apiRequests.getUserDetails(2);
     this.setState({saved: true, details : det});
 

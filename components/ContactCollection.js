@@ -3,7 +3,6 @@ import {FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, Vi
 
 import templateUtils from './Templates';
 
-const templateID = 4;
 export default class ContactCollection extends React.Component{
 
   constructor(props) {
@@ -26,7 +25,7 @@ export default class ContactCollection extends React.Component{
      this.props.navigation.navigate('CardProfile', {item: item});
   }
 
-  // CHANGE templateID TO item.templateID WHEN API REQUEST RETURNS TEMPLATE ID TOO
+ 
   _getContact = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
       <View style={{flex:1, alignItems:'left', marginLeft:16}}>
@@ -35,14 +34,14 @@ export default class ContactCollection extends React.Component{
       </View>
       <View style={{flex:3, marginRight:-70}}>
         <TouchableOpacity style={styles.card} onPress= {() => this.handleCardProfile(item)}>
-          <ImageBackground source={templateUtils.setImage(templateID)} style={styles.containerStyle}>
+          <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
-              <View style={templateUtils.setStyle(templateID).titleText}>
-                  <Text style={templateUtils.setStyle(templateID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+              <View style={templateUtils.setStyle(item.card).titleText}>
+                  <Text style={templateUtils.setStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
-              <View style={templateUtils.setStyle(templateID).user}>
-                <Text style={templateUtils.setStyle(templateID).company}>{item.company}</Text>
-                <Text style={templateUtils.setStyle(templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              <View style={templateUtils.setStyle(item.card).user}>
+                <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
+                <Text style={templateUtils.setStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
               </View>
             </View>
           </ImageBackground>
@@ -94,6 +93,7 @@ export default class ContactCollection extends React.Component{
   };
 
   render () {
+    console.log(global.userID);
       return (
           <FlatList
           data={this.props.contacts}

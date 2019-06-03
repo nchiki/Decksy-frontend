@@ -82,9 +82,9 @@ export default class HomeScreen extends React.Component {
 
   handleAdd =  async () => {
     const { navigation } = this.props;
-    const userID = navigation.getParam('userID', 'NO-ID');
+    //const userID = navigation.getParam('userID', 'NO-ID');
 
-    apiRequests.addCard(userID, this.state.shortcode);
+    apiRequests.addCard(global.userID, this.state.shortcode);
     this.setState({
       shortcodeInputVisible: false,
       userID: 1,

@@ -12,6 +12,7 @@ export default class LoginScreen extends Component {
       email:null,
       password:null,
     }
+    global.userID = 1;
   }
 
   static navigationOptions = ({navigation}) => {
@@ -37,12 +38,12 @@ export default class LoginScreen extends Component {
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
+      
       return det}) );
     const items = await Promise.all(listItems);
     this.props.navigation.navigate('CollectedCards', {userID: this.state.email, contacts : items})
 
     // Add logic to authenticate user here
-    
   }
 
   render() {
@@ -58,6 +59,16 @@ export default class LoginScreen extends Component {
             onChangeText={(email) => this.setState({email})}
             autoCorrect={false}
             keyboardType="email-address"
+            autoCapitalize="none"
+          />
+        </View>
+        <View style={{flex: 1}}>
+          <TextInput
+            style={styles.loginInputs}
+            placeholder="User ID"
+            onChangeText={(id) => global.userID= Number.parseInt(id, 10)}
+            autoCorrect={false}
+            keyboardType="numeric"
             autoCapitalize="none"
           />
         </View>

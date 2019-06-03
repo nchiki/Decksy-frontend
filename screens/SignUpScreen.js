@@ -32,7 +32,7 @@ export default class SignUpScreen extends Component {
       Alert.alert("Please enter all the required details")
     } else {
       const ID = parseInt(this.state.userID, 10);
-      apiRequests.setUserDetails(ID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession);
+      apiRequests.setUserDetails(ID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, 2);
       const details = await apiRequests.getUserDetails(2);
       console.log(details.firstName);
       this.props.navigation.navigate('CollectedCards', {userID: 2});
