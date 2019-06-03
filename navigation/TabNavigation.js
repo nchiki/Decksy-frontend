@@ -21,9 +21,6 @@ export const CollectedCardsStack = createStackNavigator({
 
 CollectedCardsStack.navigationOptions = {
   tabBarLabel: 'Cards',
-  tabsStyle: {
-      labelStyle: { fontSize: 30 },
-  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -45,9 +42,6 @@ const ProfileScreenStack = createStackNavigator({
 
 ProfileScreenStack.navigationOptions = {
   tabBarLabel: 'Profile',
-  tabsStyle: {
-      labelStyle: { fontSize: 30 },
-  },
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
