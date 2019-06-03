@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   bigTitle: {
     fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 45,
   },
   item: {
     padding: 10,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   loginInputs: {
-    fontSize: 35,
+    fontSize: 30,
     textAlign: 'center'
   },
   iconContainer: {
