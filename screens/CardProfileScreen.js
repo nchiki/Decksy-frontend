@@ -131,7 +131,7 @@ getNotes = async(item) => {
         </View>
         <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} value= {this.state.text}
+          <TextInput style={{fontSize:15}} value= {this.state.text} style={{textAlign: 'center', fontStyle: 'italic'}}
           onChangeText={(text) => {
             this.state.text = text;
             this.saveNotes();
