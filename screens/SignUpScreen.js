@@ -40,11 +40,9 @@ export default class SignUpScreen extends Component {
       const listItems = (contacts.map(async (cont) => {
         const id = Number.parseInt(cont.user, 10);
         const det = await apiRequests.getUserDetails(id);
-        
         return det}) );
       const items = await Promise.all(listItems);
       this.props.navigation.navigate('CollectedCards', {userID: global.userID, contacts : items})
-    
     }
   }
 
@@ -92,6 +90,9 @@ export default class SignUpScreen extends Component {
             style={styles.loginInputs}
             placeholder="Email"
             onChangeText={(email) => this.setState({email:email})}
+            autoCorrect={false}
+            keyboardType="email-address"
+            autoCapitalize="none"
           />
         </View>
         <View style={{flex:1}}>
@@ -99,6 +100,10 @@ export default class SignUpScreen extends Component {
             style={styles.loginInputs}
             placeholder="Password"
             onChangeText={(password) => this.setState({password: password})}
+            autoCorrect={false}
+            autoCapitalize="none"
+            secureTextEntry={true}
+            textContentType="password"
           />
         </View>
         <View style={{flex:1}}>
