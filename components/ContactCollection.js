@@ -98,7 +98,7 @@ export default class ContactCollection extends React.Component{
           <FlatList
           data={this.props.contacts}
           renderItem={this._getContact}
-          keyExtractor={item => item.firstName}
+          keyExtractor={item => item.email}
           ItemSeparatorComponent={this.renderSeparator}
           />
       );

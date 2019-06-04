@@ -53,12 +53,11 @@ export default class HomeScreen extends React.Component {
           type="ionicon"
           name={Platform.OS === "ios" ? "ios-options" : "md-options"}
           onPress={() => params.handleFilterButton()}
-          size={28}
+          size={28} 
           color='dodgerblue'
         />
       ),
       headerRight: (
-
         <Icon
           containerStyle={{paddingRight: 12}}
           type="ionicon"
@@ -70,8 +69,6 @@ export default class HomeScreen extends React.Component {
       ),
     }
   };
-
-
 
   showShortcodeInput = () => {
     this.setState({ shortcodeInputVisible: true });
@@ -156,7 +153,7 @@ export default class HomeScreen extends React.Component {
   }
   // Icons for adding and filtering
   render() {
-   
+
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
     return (

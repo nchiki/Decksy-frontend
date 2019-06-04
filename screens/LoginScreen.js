@@ -38,7 +38,7 @@ export default class LoginScreen extends Component {
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
-      
+
       return det}) );
     const items = await Promise.all(listItems);
     this.props.navigation.navigate('CollectedCards', {userID: global.userID, contacts : items})
@@ -51,16 +51,6 @@ export default class LoginScreen extends Component {
       <View style={{padding: 10, flex: 1, justifyContent: 'center'}}>
         <View style={{flex: 5, justifyContent: "center", alignItems: "center"}}>
           <Text style={styles.bigTitle}>RoloDex</Text>
-        </View>
-        <View style={{flex: 1}}>
-          <TextInput
-            style={styles.loginInputs}
-            placeholder="Email Address"
-            onChangeText={(email) => this.setState({email})}
-            autoCorrect={false}
-            keyboardType="email-address"
-            autoCapitalize="none"
-          />
         </View>
         <View style={{flex: 1}}>
           <TextInput
