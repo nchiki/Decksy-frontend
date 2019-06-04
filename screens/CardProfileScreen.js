@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react';
 import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
-import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
+import { List, ListItem, Divider, Card, CardItem, Icon } from 'react-native-elements';
 import users from '../users/Users';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import { Icon } from "react-native-elements";
 import OptionsMenu from "react-native-options-menu";
 
-import users from '../users/Users';
+
 import templateUtils from '../components/Templates';
 
 export default class CardProfileScreen extends React.Component {
@@ -107,6 +106,10 @@ saveNotes = async() => {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
     const defaultText= this.getNotes(); 
+<<<<<<< screens/CardProfileScreen.js
+=======
+   
+>>>>>>> screens/CardProfileScreen.js
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -155,17 +158,3 @@ const styles = StyleSheet.create({
   }
 })
 
-const cardStyles = (color) => StyleSheet.create({
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: color,
-    justifyContent: 'center',
-  },
-  details: {
-    right: -85,
-    bottom: -35,
-    fontSize: 15,
-    color: color
-  }
-})

@@ -39,7 +39,7 @@ export default class CardCollection extends React.Component{
   );
 
   _keyExtractor = (item, index) => {
-    return (item.firstName);
+    return (item.email);
   }
 
   renderSeparator = () => {
