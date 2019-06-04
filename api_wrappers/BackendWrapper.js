@@ -180,8 +180,8 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        userID: userID,
-        contactID: contactID,
+        user: userID,
+        contact: contactID,
         note: note,
       }),
       cache: 'default',
