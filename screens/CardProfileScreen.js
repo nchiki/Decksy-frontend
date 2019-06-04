@@ -1,11 +1,10 @@
-import React, { Fragment } from 'react';
-import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
-import { List, ListItem, Divider, Card, CardItem, Icon } from 'react-native-elements';
-import users from '../users/Users';
+import React from 'react';
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
+import {Icon } from 'react-native-elements';
+
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
 
-import apiRequests from '../api_wrappers/BackendWrapper';
 import templateUtils from '../components/Templates';
 
 export default class CardProfileScreen extends React.Component {
@@ -106,21 +105,18 @@ saveNotes = async() => {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
     const defaultText= this.getNotes(); 
-<<<<<<< screens/CardProfileScreen.js
-=======
    
->>>>>>> screens/CardProfileScreen.js
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
-          <ImageBackground source={templateUtils.setImage(this.state.templateID)} style={styles.containerStyle}>
+          <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
-              <View style={templateUtils.setProfileStyle(this.state.templateID).titleText}>
-                <Text style={templateUtils.setProfileStyle(this.state.templateID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+              <View style={templateUtils.setProfileStyle(item.card).titleText}>
+                <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
-              <View style={templateUtils.setProfileStyle(this.state.templateID).user}>
-                <Text style={templateUtils.setProfileStyle(this.state.templateID).company}>{item.company}</Text>
-                <Text style={templateUtils.setProfileStyle(this.state.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              <View style={templateUtils.setProfileStyle(item.card).user}>
+                <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
+                <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
               </View>
             </View>
           </ImageBackground>
