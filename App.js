@@ -38,7 +38,7 @@ export default class FlexDimensionsBasics extends Component {
       justifyContent: 'center',
       alignItems: 'stretch',}} onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
       <LinearGradient
-        colors={['#CE00FF', '#00CEFF']}
+        colors={['#4AB3F6', '#A4D8F9']}
         style={{flex: 1, justifyContent: 'center'}}
       >
         <Text style={styles.bigTitle}>RoloDex</Text>

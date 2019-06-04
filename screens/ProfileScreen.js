@@ -5,6 +5,8 @@ import { Platform, View, Text } from 'react-native';
 import { Icon } from 'react-native-elements';
 
 import CardTemplate from '../components/CardTemplate';
+import OptionsMenu from "react-native-options-menu";
+import apiRequests from '../api_wrappers/BackendWrapper';
 
 
 // Profile screen that shows own card
@@ -17,21 +19,33 @@ export default class ProfileScreen extends React.Component {
         fontSize: 25
       },
       headerRight: (
-        <Icon
-          containerStyle={{paddingRight: 12}}
-          type="ionicon"
-          name={Platform.OS === "ios" ? "ios-share" : "md-share"}
-          onPress={() => params.onShare}
-          size={34}
-          color='dodgerblue'
+        <OptionsMenu
+          customButton={(
+            <Icon
+              containerStyle={{paddingRight: 12}}
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-settings" : "md-settings"}
+              size={35}
+              color='dodgerblue'
+            />
+          )}
+          options={["Edit details", "Log out","Cancel"]}
+          actions={[() => params.changeSettings(), () => params.logOut(), console.log]}
         />
       ),
     }
   };
 
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({
+      changeSettings: () => this.changeSettings(),
+      logOut: () => this.logOut(),
+    });
+  }
+
   render() {
     const { navigation } = this.props;
-    const userID = navigation.getParam('userID', 'NO ID SET');
     return (
       <View style={{flex:1}}>
         <View style={{flex:3}}>
@@ -43,6 +57,16 @@ export default class ProfileScreen extends React.Component {
         </View>
       </View>
     );
+  }
+
+  changeSettings = async () => {
+    const det = await apiRequests.getUserDetails(global.userID);
+    this.props.navigation.navigate('EditDetailsScreen', {details: det});
+
+  }
+
+  logOut = () => {
+    alert('Not implemented yet :) ');
   }
 
   onShare = async () => {
