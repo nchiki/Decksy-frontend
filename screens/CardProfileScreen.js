@@ -1,7 +1,7 @@
 import React from 'react';
 import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
 import { Icon} from 'react-native-elements';
-
+import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
 import email from 'react-native-email';
@@ -59,7 +59,12 @@ export default class CardProfileScreen extends React.Component {
   }
 
   handleCall() {
-    this.launchURL(`tel:${this.state.details.phoneNumber}`);
+    const args = {
+      number: this.state.details.phoneNumber, // String value with the number to call
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+    }
+     
+    call(args).catch(console.error)
   }
 
   launchURL(url) {
