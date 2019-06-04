@@ -1,8 +1,6 @@
-import React, { Fragment } from 'react';
-import { AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput } from 'react-native';
-import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
-import users from '../users/Users';
-import CardProfile from '../screens/CardProfileScreen';
+import React from 'react';
+import {Button, StyleSheet, ImageBackground, Text, View, TextInput, Linking } from 'react-native';
+
 
 import templateUtils from '../components/Templates';
 
@@ -35,6 +33,10 @@ export default class CardProfileScreen extends React.Component {
           color="#fff"
         />
       ),
+      headerRight : (
+        <Button onPress={() => Linking.openURL('mailto:support@example.com') }
+      title="support@example.com" />
+      )
     }
   };
 
@@ -104,17 +106,3 @@ const styles = StyleSheet.create({
   }
 })
 
-const cardStyles = (color) => StyleSheet.create({
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: color,
-    justifyContent: 'center',
-  },
-  details: {
-    right: -85,
-    bottom: -35,
-    fontSize: 15,
-    color: color
-  }
-})
