@@ -194,23 +194,28 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
     },
 
     getNote: function(userID, contactID) {
-      return fetch(`${API}/user/setnote`, {
+      return fetch(`${API}/user/getnote`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json, text/plain, */*',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          note: note,
+          user: userID, 
+          contact: contactID,
         }),
-        cache: 'default',
+      cache: 'default',
+      })
+      .then(function(response){
+        return response.json();
       })
       .catch(function(error) {
-        console.log('There has been a problem with your getNote fetch operation: ' + error.message);
-         // ADD THIS THROW error
-          throw error;
+      console.log('There has been a problem with your getID fetch operation: ' + error.message);
+      // ADD THIS THROW error
+        throw error;
       });
-      }
+},
+
 
 }
 

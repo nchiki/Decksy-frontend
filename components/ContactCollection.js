@@ -1,5 +1,6 @@
 import React from 'react';
 import {FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
+import apiRequests from '../api_wrappers/BackendWrapper';
 
 import templateUtils from './Templates';
 
@@ -20,9 +21,10 @@ export default class ContactCollection extends React.Component{
     }
   };
 
+  
   handleCardProfile = (item) =>
   {
-     this.props.navigation.navigate('CardProfile', {item: item});
+    this.props.navigation.navigate('CardProfile', {item: item});
   }
 
  
