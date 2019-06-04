@@ -4,7 +4,7 @@ import { Alert, Button, StyleSheet, ImageBackground, Text, View, TextInput, Plat
 import { Icon } from "react-native-elements";
 import OptionsMenu from "react-native-options-menu";
 
-
+import apiRequests from '../api_wrappers/BackendWrapper';
 import templateUtils from '../components/Templates';
 
 export default class CardProfileScreen extends React.Component {
