@@ -1,7 +1,8 @@
-import React from 'react';
-import { Alert, Button, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-
-import { Icon } from "react-native-elements";
+import React, { Fragment } from 'react';
+import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
+import { List, ListItem, Divider, Card, CardItem, Icon } from 'react-native-elements';
+import users from '../users/Users';
+import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
 
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -81,12 +82,20 @@ export default class CardProfileScreen extends React.Component {
     }).catch(err => console.warn('An unexpected error happened', err));
   }
     
-    saveNotes = async(navigation) => {
-    const item = navigation.getParam('item', 'NO-ID');
-    console.log(this.props.userID); 
-    console.log(item.userID);
-    apiRequests.setNote(this.props.userID, item.userID, this.state.text);
-  }
+
+async componentDidMount() {
+  this.saveNotes(); 
+}
+
+saveNotes = async() => {
+  const { navigation } = this.props;
+  const item = navigation.getParam('item', 'NO-ID');
+  apiRequests.setNote(this.props.userID, item.userID, this.state.text);
+  const det = await apiRequests.getNote(this.props.userID, item.userID);
+  card.setState({text: det});
+  console.log(this.props.userID); 
+  console.log(item.userID);
+}
 
   getNotes = async() => {
     const note = await apiRequests.getNote(this.props.userID, item.userID);
@@ -97,27 +106,30 @@ export default class CardProfileScreen extends React.Component {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
     const defaultText= this.getNotes(); 
+<<<<<<< screens/CardProfileScreen.js
+=======
    
+>>>>>>> screens/CardProfileScreen.js
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
-          <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+          <ImageBackground source={templateUtils.setImage(this.state.templateID)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
-              <View style={templateUtils.setProfileStyle(item.card).titleText}>
-                <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+              <View style={templateUtils.setProfileStyle(this.state.templateID).titleText}>
+                <Text style={templateUtils.setProfileStyle(this.state.templateID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
-              <View style={templateUtils.setProfileStyle(item.card).user}>
-                <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
-                <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              <View style={templateUtils.setProfileStyle(this.state.templateID).user}>
+                <Text style={templateUtils.setProfileStyle(this.state.templateID).company}>{item.company}</Text>
+                <Text style={templateUtils.setProfileStyle(this.state.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
               </View>
             </View>
           </ImageBackground>
         </View>
         <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} defaultValue={defaultText}
+          <TextInput style={{fontSize:15}} defaultValue={defaultText.note}
           onChangeText={(text) => {
-            this.setState({text}); 
+            this.state.text = text; 
           }
         }/>
         </View>
