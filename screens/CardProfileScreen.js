@@ -1,7 +1,7 @@
-import React from 'react';
-import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import {Icon } from 'react-native-elements';
-
+import React, { Fragment } from 'react';
+import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
+import { Icon, List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
+import users from '../users/Users';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
 
@@ -13,21 +13,9 @@ export default class CardProfileScreen extends React.Component {
     super(props);
     this.state = {
       _isMounted : false,
-      text: null,
+      text: "",
       templateID: 4,
     }
-  }
-
-  componentDidMount() {
-    const { navigation } = this.props;
-    this.setState({
-      details: navigation.getParam('item', 'NO-ID')
-    })
-    navigation.setParams({
-      handleEmailButton: () => this.handleEmail(),
-      handleMessageButton: () => this.handleMessage(),
-      handleCallButton: () => this.handleCall(),
-    });
   }
 
   static navigationOptions = ({navigation}) => {
@@ -56,7 +44,7 @@ export default class CardProfileScreen extends React.Component {
     }
   };
 
-  handleEmail() {
+ async handleEmail() {
     this.launchURL(`mailto:${this.state.details.email}`);
   }
 
@@ -80,32 +68,41 @@ export default class CardProfileScreen extends React.Component {
         }
     }).catch(err => console.warn('An unexpected error happened', err));
   }
-    
+
 
 async componentDidMount() {
-  this.saveNotes(); 
+  const { navigation } = this.props;
+  this.setState({
+    details: navigation.getParam('item', 'NO-ID')
+  })
+  navigation.setParams({
+    handleEmailButton: () => this.handleEmail(),
+    handleMessageButton: () => this.handleMessage(),
+    handleCallButton: () => this.handleCall(),
+  });
 }
 
 saveNotes = async() => {
   const { navigation } = this.props;
   const item = navigation.getParam('item', 'NO-ID');
-  apiRequests.setNote(this.props.userID, item.userID, this.state.text);
-  const det = await apiRequests.getNote(this.props.userID, item.userID);
-  card.setState({text: det});
-  console.log(this.props.userID); 
-  console.log(item.userID);
+  apiRequests.setNote(global.userID, item.user, this.state.text);
+  const det = await apiRequests.getNote(global.userID, item.user);
+  this.setState({text: det});
 }
 
-  getNotes = async() => {
-    const note = await apiRequests.getNote(this.props.userID, item.userID);
-    return note;
+getNotes = async(item) => {
+  const note = await apiRequests.getNote(global.userID, item.user);
+  if (note) {
+    this.state.text= note.note;
   }
+}
+
 
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
-    const defaultText= this.getNotes(); 
-   
+    this.getNotes(item);
+
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -123,9 +120,10 @@ saveNotes = async() => {
         </View>
         <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} defaultValue={defaultText.note}
+          <TextInput style={{fontSize:15}} value= {this.state.text}
           onChangeText={(text) => {
-            this.state.text = text; 
+            this.state.text = text;
+            this.saveNotes();
           }
         }/>
         </View>
@@ -153,4 +151,3 @@ const styles = StyleSheet.create({
     alignContent:'center'
   }
 })
-
