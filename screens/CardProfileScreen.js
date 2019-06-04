@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
-import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon, List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
-import users from '../users/Users';
+import React from 'react';
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
+import { Icon} from 'react-native-elements';
+
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
-
+import email from 'react-native-email';
 import templateUtils from '../components/Templates';
 
 export default class CardProfileScreen extends React.Component {
@@ -43,9 +43,15 @@ export default class CardProfileScreen extends React.Component {
       ),
     }
   };
+ 
 
  async handleEmail() {
-    this.launchURL(`mailto:${this.state.details.email}`);
+    const to = [this.state.details.email] // string or array of email addresses
+    email(to, {
+        subject: 'Subject',
+        body: 'Body'
+    }).catch(console.error)
+
   }
 
   handleMessage() {
