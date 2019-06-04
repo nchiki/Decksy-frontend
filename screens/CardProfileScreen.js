@@ -21,7 +21,6 @@ export default class CardProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
     const firstName = params.item.firstName;
-    const item = this;
      return {
       title: `${firstName}\'${firstName.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
@@ -53,7 +52,7 @@ export default class CardProfileScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
-    const defaultText= this.getNotes().note; 
+    const defaultText= this.getNotes(); 
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -71,7 +70,7 @@ export default class CardProfileScreen extends React.Component {
         </View>
         <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} defaultValue={defaultText}
+          <TextInput style={{fontSize:15}} defaultValue={defaultText.note}
           onChangeText={(text) => {
             this.state.text = text; 
           }
