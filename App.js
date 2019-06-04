@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
   bigTitle: {
     textAlign: 'center',
     color:'white',
-    fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 30,
   },

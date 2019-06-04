@@ -5,6 +5,7 @@ import { AppRegistry, Text, TextInput, View, Button, Alert } from 'react-native'
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
+
 export default class SignUpScreen extends Component {
 
   constructor(props) {
@@ -31,7 +32,8 @@ export default class SignUpScreen extends Component {
     if (!this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.company || !this.state.profession) {
       Alert.alert("Please enter all the required details")
     } else {
-      const ID = await apiRequests.getID();
+      const IDobject= await apiRequests.getID();
+      const ID = IDobject.reserved;
       global.userID = Number.parseInt(ID, 10);
       apiRequests.setUserDetails(ID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, 2);
       const contacts= await apiRequests.getUserContacts(global.userID);

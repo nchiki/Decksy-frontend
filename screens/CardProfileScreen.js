@@ -58,14 +58,14 @@ export default class CardProfileScreen extends React.Component {
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
-          <ImageBackground source={templateUtils.setImage(this.state.templateID)} style={styles.containerStyle}>
+          <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
-              <View style={templateUtils.setProfileStyle(this.state.templateID).titleText}>
-                <Text style={templateUtils.setProfileStyle(this.state.templateID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+              <View style={templateUtils.setProfileStyle(item.card).titleText}>
+                <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
-              <View style={templateUtils.setProfileStyle(this.state.templateID).user}>
-                <Text style={templateUtils.setProfileStyle(this.state.templateID).company}>{item.company}</Text>
-                <Text style={templateUtils.setProfileStyle(this.state.templateID).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+              <View style={templateUtils.setProfileStyle(item.card).user}>
+                <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
+                <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
               </View>
             </View>
           </ImageBackground>
