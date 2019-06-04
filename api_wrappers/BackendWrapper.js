@@ -148,7 +148,47 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
        // ADD THIS THROW error
         throw error;
     });
-  }
+  },
+
+  setNote: function(userID, contactID, note) {
+    return fetch(`${API}/user/setnote`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        userID: userID,
+        contactID: contactID,
+        note: note,
+      }),
+      cache: 'default',
+    })
+    .catch(function(error) {
+      console.log('There has been a problem with your setNote fetch operation: ' + error.message);
+       // ADD THIS THROW error
+        throw error;
+    });
+    },
+
+    getNote: function(userID, contactID) {
+      return fetch(`${API}/user/setnote`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          note: note,
+        }),
+        cache: 'default',
+      })
+      .catch(function(error) {
+        console.log('There has been a problem with your getNote fetch operation: ' + error.message);
+         // ADD THIS THROW error
+          throw error;
+      });
+      }
 
 }
 export default apiRequests;

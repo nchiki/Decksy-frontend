@@ -6,14 +6,13 @@ import CardProfile from '../screens/CardProfileScreen';
 
 import templateUtils from '../components/Templates';
 
-
 export default class CardProfileScreen extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       _isMounted : false,
-      details: null,
+      text: null,
       templateID: 4,
     }
   }
@@ -22,17 +21,40 @@ export default class CardProfileScreen extends React.Component {
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
     const firstName = params.item.firstName;
-    return {
+     return {
       title: `${firstName}\'${firstName.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
         fontSize: 25
       },
+      headerLeft: (
+        <Button
+          onPress={() => {
+            saveNotes(navigation);
+            navigation.navigate("CollectedCards", this.state)}}
+          title="Info"
+          color="#fff"
+        />
+      ),
     }
   };
+
+  saveNotes = async(navigation) => {
+    const item = navigation.getParam('item', 'NO-ID');
+    console.log(this.props.userID); 
+    console.log(item.userID);
+    apiRequests.setNote(this.props.userID, item.userID, this.state.text);
+  }
+
+  getNotes = async() => {
+    const note = await apiRequests.getNote(this.props.userID, item.userID);
+    return note;
+  }
 
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
+    const defaultText= this.getNotes(); 
+    this.setState({text: defaultText}); 
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -48,9 +70,13 @@ export default class CardProfileScreen extends React.Component {
             </View>
           </ImageBackground>
         </View>
-        <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20, marginBottom: 10}}>
+        <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}}></TextInput>
+          <TextInput style={{fontSize:15}} defaultValue={defaultText}
+          onChangeText={(text) => {
+            this.setState({text}); 
+          }
+        }/>
         </View>
       </View>
     );

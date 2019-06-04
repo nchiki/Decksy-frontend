@@ -48,7 +48,7 @@ export default class LoginScreen extends Component {
 
   render() {
     return (
-      <View style={{padding: 10, flex: 1, justifyContent: 'centerText'}}>
+      <View style={{padding: 10, flex: 1, justifyContent: 'center'}}>
         <View style={{flex: 5, justifyContent: "center", alignItems: "center"}}>
           <Text style={styles.bigTitle}>RoloDex</Text>
         </View>
