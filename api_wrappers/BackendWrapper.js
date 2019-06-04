@@ -148,7 +148,32 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
        // ADD THIS THROW error
         throw error;
     });
-  }
+  },
+  
+  getID: function() {
+    return fetch(`${API}/user/makeid`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          
+        }),
+        cache: 'default',
+      })
+      .then(function(response){
+        return response.json();
+      })
+      .catch(function(error) {
+      console.log('There has been a problem with your getID fetch operation: ' + error.message);
+       // ADD THIS THROW error
+        throw error;
+      });
+  },
 
 }
+
+
+
 export default apiRequests;
