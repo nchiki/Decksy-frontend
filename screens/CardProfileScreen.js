@@ -68,7 +68,7 @@ export default class CardProfileScreen extends React.Component {
         }
     }).catch(err => console.warn('An unexpected error happened', err));
   }
-    
+
 
 async componentDidMount() {
   const { navigation } = this.props;
@@ -93,7 +93,7 @@ saveNotes = async() => {
 getNotes = async(item) => {
   const note = await apiRequests.getNote(global.userID, item.user);
   if (note) {
-    this.state.text= note.note;  
+    this.state.text= note.note;
   }
 }
 
@@ -102,7 +102,7 @@ getNotes = async(item) => {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
     this.getNotes(item);
-   
+
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -122,8 +122,8 @@ getNotes = async(item) => {
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
           <TextInput style={{fontSize:15}} value= {this.state.text}
           onChangeText={(text) => {
-            this.state.text = text; 
-            this.saveNotes(); 
+            this.state.text = text;
+            this.saveNotes();
           }
         }/>
         </View>
@@ -149,20 +149,5 @@ const styles = StyleSheet.create({
     alignItems:'center',
     justifyContent:'center',
     alignContent:'center'
-  }
-})
-
-const cardStyles = (color) => StyleSheet.create({
-  company: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    color: color,
-    justifyContent: 'center',
-  },
-  details: {
-    right: -85,
-    bottom: -35,
-    fontSize: 15,
-    color: color
   }
 })
