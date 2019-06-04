@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import { AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput } from 'react-native';
+import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
 import { List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
+import { Icon } from "react-native-elements";
+import OptionsMenu from "react-native-options-menu";
+
 import users from '../users/Users';
-import CardProfile from '../screens/CardProfileScreen';
-
 import templateUtils from '../components/Templates';
-
 
 export default class CardProfileScreen extends React.Component {
 
@@ -18,6 +18,17 @@ export default class CardProfileScreen extends React.Component {
     }
   }
 
+  componentDidMount() {
+    const { navigation } = this.props;
+    this.setState({
+      details: navigation.getParam('item', 'NO-ID')
+    })
+    navigation.setParams({
+      handleEmailButton: () => this.handleEmail(),
+      handleMessageButton: () => this.handleMessage(),
+      handleCallButton: () => this.handleCall(),
+    });
+  }
 
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
@@ -27,12 +38,53 @@ export default class CardProfileScreen extends React.Component {
       headerTitleStyle: {
         fontSize: 25
       },
+      headerRight: (
+        <OptionsMenu
+          customButton={(
+            <Icon
+              containerStyle={{paddingRight: 12}}
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
+              size={35}
+              color='dodgerblue'
+            />
+          )}
+          options={["Email", "Message", "Call", "Cancel"]}
+          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), console.log]}
+        />
+      ),
     }
   };
+
+  handleEmail() {
+    this.launchURL(`mailto:${this.state.details.email}`);
+  }
+
+  handleMessage() {
+    Alert.alert("Message!");
+  }
+
+  handleCall() {
+    this.launchURL(`tel:${this.state.details.phoneNumber}`);
+  }
+
+  launchURL(url) {
+    Linking.canOpenURL(url).then(supported => {
+    if(!supported) {
+            console.log('Can\'t handle url: ' + url);
+        } else {
+            Linking.openURL(url)
+            .catch(err => {
+        console.warn('openURL error', err);
+            });
+        }
+    }).catch(err => console.warn('An unexpected error happened', err));
+  }
 
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
+
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -61,7 +113,6 @@ export default class CardProfileScreen extends React.Component {
 const styles = StyleSheet.create({
   containerStyle: {
     borderRadius: 10,
-    //borderWidth: 1,
     borderColor: 'white',
     alignItems: 'center',
     width: 350,
