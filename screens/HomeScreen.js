@@ -89,7 +89,7 @@ export default class HomeScreen extends React.Component {
   handleCancelFilter = () => {
     this.setState({ filterMenuVisible: false });
   };
-
+  
   handleAdd =  async () => {
     const { navigation } = this.props;
     //const userID = navigation.getParam('userID', 'NO-ID');
@@ -100,6 +100,7 @@ export default class HomeScreen extends React.Component {
     });
   };
 
+
   getContactsForDisplay = async () => {
     const contacts= await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
@@ -107,11 +108,11 @@ export default class HomeScreen extends React.Component {
       const det = await apiRequests.getUserDetails(id);
       return det}) );
     const items = await Promise.all(listItems);
+    console.log(items);
     setTimeout(() => this.setState({
       contacts: items
     }), 20);
   }
-
 
   handleFilter =  async () => {
     const filter = this.state.filters;

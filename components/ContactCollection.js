@@ -4,6 +4,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 
 import templateUtils from './Templates';
 
+
 export default class ContactCollection extends React.Component{
 
   constructor(props) {
