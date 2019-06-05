@@ -25,23 +25,29 @@ export default class EditDetails extends Component {
   }
 
   static navigationOptions = {
-    title: 'Sign Up',
+    title: 'Edit Details',
     headerTitleStyle: {
       fontSize: 25
     },
   };
 
 
-  addToLinks = async(name, URL) => {
-    const linkID = await apiRequests.addLink(global.userID, name, URL); 
-    console.log(linkID); 
-    let links = this.state.links;
-    links.push(linkID); 
-    this.state.links = links;
+  addAllLinks = () => {
+   // for (let i = 0; i < this.state.links.length; i = i+2) {
+      console.log(this.state.links.length); 
+      console.log(this.state.links[0]); 
+      console.log(this.state.links[1]); 
+   // }
+  }
+
+  addToLinks = (item, position) => {
+    let links = this.state.links; 
+    console.log(item); 
+    links.splice(position, 0, item); 
+    this.state.links = links; 
   }
 
   addLinkFields = () => {
-    console.log("entered addLinkFields"); 
     var links=[];  
     for (let i = 0; i < numOfLinks; i++) {
       var name = ""; 
@@ -52,19 +58,22 @@ export default class EditDetails extends Component {
           key = {i}
           style={styles.loginInputs}
           placeholder="Name of the link"
-          onChangeText={(linkName) => name = linkName }
+          onChangeText={(linkName) => {
+            this.addToLinks(linkName, i); 
+          }
+        }
         />
         <TextInput
           key = {'_'+i}
           style={styles.loginInputs}
           placeholder="URL"
-          onChangeText={(url) => URL = url
+          onChangeText={(url) => {
+            this.addToLinks(url, i+1); 
+          }
           }
         />
       </View>
       )
-      this.addToLinks(name, URL);
-      console.log("finished pushing");
     }
     return links; 
   }
@@ -90,6 +99,7 @@ export default class EditDetails extends Component {
 
 
   handleSubmit = async () => {
+      this.addAllLinks(); 
       apiRequests.setUserDetails(this.state.userID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, this.state.cardID);    
       this.props.navigation.goBack();
     }
