@@ -43,7 +43,7 @@ export default class CardProfileScreen extends React.Component {
       ),
     }
   };
- 
+
 
  async handleEmail() {
     const to = [this.state.details.email] // string or array of email addresses
@@ -61,9 +61,9 @@ export default class CardProfileScreen extends React.Component {
   handleCall() {
     const args = {
       number: this.state.details.phoneNumber, // String value with the number to call
-      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
     }
-     
+
     call(args).catch(console.error)
   }
 
@@ -129,14 +129,19 @@ getNotes = async(item) => {
             </View>
           </ImageBackground>
         </View>
-        <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
-          <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} value= {this.state.text} style={{textAlign: 'center', fontStyle: 'italic'}}
-          onChangeText={(text) => {
-            this.state.text = text;
-            this.saveNotes();
-          }
-        }/>
+        <Text style={{fontSize:24, textAlign:'center', marginTop:30, }}>Notes:</Text>
+        <View style={{backgroundColor: 'lightyellow', width:350, alignSelf: 'center', marginTop:3, borderRadius:8}}>
+          <TextInput
+            value= {this.state.text.trim()}
+            style={{textAlign: 'left', fontSize:16, marginLeft:10, marginRight:10}}
+            onChangeText={(text) => {
+              this.state.text = text;
+              this.saveNotes();
+            }}
+            editable = {true}
+            multiline= {true}
+          />
+          <View style={{height:4}} />
         </View>
       </View>
     );

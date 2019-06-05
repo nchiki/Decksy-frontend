@@ -62,7 +62,7 @@ export default class CardCollection extends React.Component{
         keyExtractor={this._keyExtractor}
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={this.renderSeparator}
-        style={{marginTop:10}}
+        style={{marginTop:8}}
       />
     )
   }

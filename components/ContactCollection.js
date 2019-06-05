@@ -22,13 +22,13 @@ export default class ContactCollection extends React.Component{
     }
   };
 
-  
+
   handleCardProfile = (item) =>
   {
     this.props.navigation.navigate('CardProfile', {item: item});
   }
 
- 
+
   _getContact = ({item}) => (
     <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
       <View style={{flex:1, alignItems:'flex-start', marginLeft:16}}>
@@ -96,13 +96,14 @@ export default class ContactCollection extends React.Component{
   };
 
   render () {
-  
+
       return (
           <FlatList
           data={this.props.contacts}
           renderItem={this._getContact}
           keyExtractor={item => item.email}
           ItemSeparatorComponent={this.renderSeparator}
+          style={{marginTop: -2}}
           />
       );
   }
