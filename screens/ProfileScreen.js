@@ -29,8 +29,9 @@ export default class ProfileScreen extends React.Component {
               color='dodgerblue'
             />
           )}
-          options={["Edit details", "Log out","Cancel"]}
-          actions={[() => params.changeSettings(), () => params.logOut()]}
+          destructiveIndex={1}
+          options={["Edit details", "Sign out", "Cancel"]}
+          actions={[() => params.changeSettings(), () => params.logOut(), () => {}]}
         />
       ),
     }
