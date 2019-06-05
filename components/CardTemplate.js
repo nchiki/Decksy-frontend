@@ -99,7 +99,8 @@ export default class CardTemplate extends React.Component {
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <Card title='Scan' titleStyle={{color:'darkblue', fontSize: 30}} containerStyle={styles.containerBackStyle}>
-                <QRCode
+                <View style={{alignItems: 'center'}} >
+                  <QRCode
                     value={this.state.valueForQRCode}
                     //Setting the value of QRCode
                     size={100}
@@ -108,7 +109,8 @@ export default class CardTemplate extends React.Component {
                     //Backgroun Color of QRCode
                     fgColor="#fff"
                     //Front Color of QRCode
-                  />
+                    />
+                  </View>
                 </Card>
               </TouchableOpacity>
             </CardFlip>
