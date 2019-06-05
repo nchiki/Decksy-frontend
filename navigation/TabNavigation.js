@@ -17,7 +17,9 @@ export const CollectedCardsStack = createStackNavigator({
     QRScanner: {screen: QRCodeScannerScreen},
     CardProfile: {screen: CardProfileScreen},
   },
-  { initialRouteName: 'CollectedCards' }
+  { initialRouteName: 'CollectedCards',
+    swipeEnabled: true,
+  }
 );
 
 CollectedCardsStack.navigationOptions = {
@@ -35,13 +37,11 @@ CollectedCardsStack.navigationOptions = {
 };
 
 
-
 const ProfileScreenStack = createStackNavigator({
   ProfileScreen: {screen: ProfileScreen},
   CardScreen: {screen : BusinessCard},
   CardTemplateScreen : {screen : CardTemplate},
   EditDetailsScreen : {screen: EditDetails}
-  
 },
 );
 
