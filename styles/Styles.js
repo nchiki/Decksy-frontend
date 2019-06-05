@@ -62,8 +62,14 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
   loginInputs: {
-    fontSize: 30,
-    textAlign: 'center'
+    fontSize: 26, 
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    width: '55%',
+    alignSelf: 'center',
+    height: 45,
   },
   iconContainer: {
     flexDirection: "row",
