@@ -132,7 +132,7 @@ getNotes = async(item) => {
         <Text style={{fontSize:24, textAlign:'center', marginTop:30, }}>Notes:</Text>
         <View style={{backgroundColor: 'lightyellow', width:350, alignSelf: 'center', marginTop:3, borderRadius:8}}>
           <TextInput
-            value= {this.state.text.trim()}
+            value= {this.state.text}
             style={{textAlign: 'left', fontSize:16, marginLeft:10, marginRight:10}}
             onChangeText={(text) => {
               this.state.text = text;
