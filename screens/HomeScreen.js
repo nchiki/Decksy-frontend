@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert, Platform } from 'react-native';
+import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert, Platform, SegmentedControlIOS, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
 import { NavigationActions, StackActions } from 'react-navigation';
@@ -32,7 +32,7 @@ export default class HomeScreen extends React.Component {
       displayValue : 1,
 
     }
-    
+
   }
 
   componentDidMount() {
@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
           type="ionicon"
           name={Platform.OS === "ios" ? "ios-options" : "md-options"}
           onPress={() => params.handleFilterButton()}
-          size={28} 
+          size={28}
           color='dodgerblue'
         />
       ),
@@ -89,7 +89,7 @@ export default class HomeScreen extends React.Component {
   handleCancelFilter = () => {
     this.setState({ filterMenuVisible: false });
   };
-  
+
   handleAdd =  async () => {
     const { navigation } = this.props;
     //const userID = navigation.getParam('userID', 'NO-ID');
@@ -118,101 +118,74 @@ export default class HomeScreen extends React.Component {
     const filter = this.state.filters;
     const contacts = this.state.contacts;
     const listItems = (contacts.filter(cont => {
-      if(!cont.field) { return false} else {
-      let field = (cont.field).toLowerCase(); 
-      return field.indexOf(
-      filter.toLowerCase()) != -1}}) );
-   
-    setTimeout(() => 
+      if (!cont.field) {
+        return false
+      } else {
+        let field = (cont.field).toLowerCase();
+        return field.indexOf(filter.toLowerCase()) != -1
+      }
+    }));
+
+    setTimeout(() =>
     this.setState({
       filterMenuVisible : false,
       contacts : listItems,
       filters: null
     }), 20);
   };
-  
-  updateDisplay = () => {
-    const display = this.state.displayValue;
-    if(display == 1) {
-      this.setState({displayValue : 2});
-    } else {
-      this.setState({displayValue: 1})
-    }
 
+  updateDisplay = () => {
+    this.setState({displayValue: (this.state.displayValue == 1 ? 2 : 1)});
   };
 
   DeckDisplay(displayValue, navigation, contacts) {
-    if (displayValue == 1) {
-      return (
-        <ContactCollection contacts={contacts} navigation={navigation} />
-      )
-    } else {
-      return (
-        <CardCollection contacts={contacts} navigation={navigation} />
-      )
-    }
-
+    return displayValue == 1 ?
+      (<ContactCollection contacts={contacts} navigation={navigation} />)
+      : (<CardCollection contacts={contacts} navigation={navigation} />)
   }
-  // Icons for adding and filtering
+
   render() {
 
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
+    const changeDisplayButton = Platform.OS === "ios" ? (
+        <SegmentedControlIOS
+          values={['Informative View', 'Visual View']}
+          selectedIndex={this.state.displayValue - 1}
+          onChange={(event) => {
+            this.setState(
+              {displayValue: event.nativeEvent.selectedSegmentIndex + 1});
+          }}
+          style={{marginTop:7, width:"70%", alignSelf: 'center'}}
+        />)
+      : (<Button title='Change Display' onPress={this.updateDisplay} />)
+
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
         <Dialog.Container
           visible={this.state.filterMenuVisible}>
-          <Dialog.Title>Filter:</Dialog.Title>
-          <Dialog.Description>Enter field:</Dialog.Description>
+          <Dialog.Title>Filter</Dialog.Title>
+          <Dialog.Description>Enter a keyword that you would like to be used to filter your business cards</Dialog.Description>
           <Dialog.Input onChangeText={(inputText) => this.setState({filters:inputText})}/>
-          <Dialog.Button label="Cancel" onPress={this.handleCancelFilter} />
+          <Dialog.Button label="Cancel" onPress={this.handleCancelFilter} bold={true} />
           <Dialog.Button label="Filter" onPress={this.handleFilter} />
         </Dialog.Container>
 
-        <Dialog.Container visible={this.state.shortcodeInputVisible}>
-          <Dialog.Title>Add User by Shortcode</Dialog.Title>
-          <Dialog.Description>Enter shortcode:</Dialog.Description>
+        <Dialog.Container visible={this.state.shortcodeInputVisible} >
+          <Dialog.Title>Add User</Dialog.Title>
+          <Dialog.Description>Enter a user's shortcode to add their business card to your collection</Dialog.Description>
           <Dialog.Input onChangeText={(inputText) => this.setState({shortcode:inputText})}/>
-          <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+          <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
           <Dialog.Button label="Add" onPress={this.handleAdd} />
         </Dialog.Container>
 
         {/* Displays the collection of cards */}
         <View>
-          <Button title='Change Display' onPress={this.updateDisplay} />
+          {changeDisplayButton}
           {this.DeckDisplay(displayValue, this.props.navigation, contacts)}
         </View>
       </View>
     );
   }
-}
-
-
-
-function DisplayFilters() {
-  return(
-    <View>
-      <CheckBox
-        center
-        title='Software'
-        checked={false}
-      />
-      <CheckBox
-        center
-        title='Business'
-        checked={false}
-      />
-      <CheckBox
-        center
-        title='Finance'
-        checked={false}
-      />
-      <CheckBox
-        center
-        title='Hardware'
-        checked={false}
-      />
-    </View>
-  );
 }
