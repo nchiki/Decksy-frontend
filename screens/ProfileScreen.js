@@ -25,12 +25,12 @@ export default class ProfileScreen extends React.Component {
               containerStyle={{paddingRight: 12}}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-settings" : "md-settings"}
-              size={35}
+              size={33}
               color='dodgerblue'
             />
           )}
           options={["Edit details", "Log out","Cancel"]}
-          actions={[() => params.changeSettings(), () => params.logOut(), console.log]}
+          actions={[() => params.changeSettings(), () => params.logOut()]}
         />
       ),
     }
@@ -62,11 +62,11 @@ export default class ProfileScreen extends React.Component {
   changeSettings = async () => {
     const det = await apiRequests.getUserDetails(global.userID);
     this.props.navigation.navigate('EditDetailsScreen', {details: det});
-
   }
 
   logOut = () => {
-    alert('Not implemented yet :) ');
+    global.userID = 1;
+    this.props.navigation.navigate('Login');
   }
 
   onShare = async () => {

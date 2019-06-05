@@ -111,6 +111,61 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
       });
   },
 
+
+addUser: function(firstname, lastname, phonenumber, email, company, profession, cardID) {
+  return fetch(`${API}/user/adduser`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        firstName: firstname,
+        lastName: lastname,
+        phoneNumber: phonenumber,
+        email: email,
+        company: company,
+        profession: profession,
+        card: cardID
+      }),
+      cache: 'default',
+    }).then(function(response){
+      return response.json();
+    })
+    .catch(function(error) {
+      console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+       // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  setUserWithFieldDetails: function(userID, firstname, lastname, phonenumber, email, company, profession, field, cardID) {
+    return fetch(`${API}/user/setdetails`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          user: userID,
+          firstName: firstname,
+          lastName: lastname,
+          phoneNumber: phonenumber,
+          email: email,
+          company: company,
+          profession: profession,
+          field: field,
+          card: cardID
+        }),
+        cache: 'default',
+      }).
+      catch(function(error) {
+        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+         // ADD THIS THROW error
+          throw error;
+        });
+    },
+  
   setCard: function(userID, cardID) {
     return fetch(`${API}/user/setdetails`, {
         method: 'POST',

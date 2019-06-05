@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
-import { Alert, AppRegistry, Button, FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon, List, ListItem, Divider, Card, CardItem } from 'react-native-elements';
-import users from '../users/Users';
+import React from 'react';
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
+import { Icon} from 'react-native-elements';
+import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
-
+import email from 'react-native-email';
 import templateUtils from '../components/Templates';
 
 export default class CardProfileScreen extends React.Component {
@@ -43,9 +43,15 @@ export default class CardProfileScreen extends React.Component {
       ),
     }
   };
+ 
 
  async handleEmail() {
-    this.launchURL(`mailto:${this.state.details.email}`);
+    const to = [this.state.details.email] // string or array of email addresses
+    email(to, {
+        subject: 'Subject',
+        body: 'Body'
+    }).catch(console.error)
+
   }
 
   handleMessage() {
@@ -53,7 +59,12 @@ export default class CardProfileScreen extends React.Component {
   }
 
   handleCall() {
-    this.launchURL(`tel:${this.state.details.phoneNumber}`);
+    const args = {
+      number: this.state.details.phoneNumber, // String value with the number to call
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+    }
+     
+    call(args).catch(console.error)
   }
 
   launchURL(url) {
@@ -120,7 +131,7 @@ getNotes = async(item) => {
         </View>
         <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
           <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} value= {this.state.text}
+          <TextInput style={{fontSize:15}} value= {this.state.text} style={{textAlign: 'center', fontStyle: 'italic'}}
           onChangeText={(text) => {
             this.state.text = text;
             this.saveNotes();

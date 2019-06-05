@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { AppRegistry, Text, TextInput, View, Button, Alert } from 'react-native';
+import { ScrollView, TextInput, View, Button, Alert } from 'react-native';
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -19,6 +19,7 @@ export default class SignUpScreen extends Component {
       phoneNumber:null,
       company:null,
       profession:null,
+      field: null,
     }
   }
 
@@ -30,27 +31,25 @@ export default class SignUpScreen extends Component {
   };
 
   handleSignUp = async () => {
-    console.log(this.state.links[0]); 
-    if (!this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.company || !this.state.profession) {
+    if (!this.state.field || !this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.company || !this.state.profession) {
       Alert.alert("Please enter all the required details")
     } else {
-      const IDobject= await apiRequests.getID();
-      const ID = IDobject.reserved;
+      const IDobject = await apiRequests.addUser(this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, this.state.field, 2);
+      const ID = IDobject.user;
       global.userID = Number.parseInt(ID, 10);
-      apiRequests.setUserDetails(ID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, 2);
       const contacts= await apiRequests.getUserContacts(global.userID);
       const listItems = (contacts.map(async (cont) => {
         const id = Number.parseInt(cont.user, 10);
         const det = await apiRequests.getUserDetails(id);
         return det}) );
       const items = await Promise.all(listItems);
-      this.props.navigation.navigate('CollectedCards', {userID: global.userID, contacts : items})
+      this.props.navigation.navigate('ProfileScreen', {userID: global.userID, contacts : items})
     }
   }
 
   render() {
     return (
-      <View style={{padding: 10, flex:1}}>
+      <ScrollView style={{padding: 10, flex:1}}>
         <View style={{flex:4}} />
         <View style={{flex:1}}>
           <TextInput
@@ -90,6 +89,13 @@ export default class SignUpScreen extends Component {
         <View style={{flex:1}}>
           <TextInput
             style={styles.loginInputs}
+            placeholder="Field of work"
+            onChangeText={(field) => this.setState({field: field})}
+          />
+        </View>
+        <View style={{flex:1}}>
+          <TextInput
+            style={styles.loginInputs}
             placeholder="Email"
             onChangeText={(email) => this.setState({email:email})}
             autoCorrect={false}
@@ -116,7 +122,7 @@ export default class SignUpScreen extends Component {
           />
         </View>
         <View style={{flex:4}} />
-      </View>
+      </ScrollView>
     );
   }
 }
