@@ -6,7 +6,7 @@ import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 
-export default class EditDetails extends Component {
+export default class EditDetailsScreen extends Component {
 
   constructor(props) {
     super(props);
@@ -23,7 +23,7 @@ export default class EditDetails extends Component {
   }
 
   static navigationOptions = {
-    title: 'Sign Up',
+    title: 'Edit Details',
     headerTitleStyle: {
       fontSize: 25
     },
@@ -42,12 +42,12 @@ export default class EditDetails extends Component {
         profession:details.profession,
         cardID: details.card
     })
-   
+
   }
 
 
   handleSubmit = async () => {
-      apiRequests.setUserDetails(this.state.userID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, this.state.cardID);    
+      apiRequests.setUserDetails(this.state.userID, this.state.firstName, this.state.lastName, this.state.phoneNumber,this.state.email, this.state.company, this.state.profession, this.state.cardID);
       this.props.navigation.goBack();
     }
 
@@ -55,11 +55,11 @@ export default class EditDetails extends Component {
       const details = this.props.navigation.getParam('details', 'NULL');
     return (
       <ScrollView style={{padding: 10, flex:1}}>
-          <Text style={{fontWeight: 'bold', fontSize:20}}> Leave the unchanged fields blank:</Text>
         <View style={{flex:4}} />
         <View style={{flex:1}}>
           <TextInput
             style={styles.loginInputs}
+            value={this.props.details.firstName}
             placeholder={details.firstName}
             onChangeText={(firstname) => this.setState({firstName: firstname})}
           />
