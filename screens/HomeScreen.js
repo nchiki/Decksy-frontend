@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert, Platform } from 'react-native';
+import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert, Platform, SegmentedControlIOS } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { CheckBox } from 'react-native-elements';
 import { NavigationActions, StackActions } from 'react-navigation';
@@ -32,7 +32,7 @@ export default class HomeScreen extends React.Component {
       displayValue : 1,
 
     }
-    
+
   }
 
   componentDidMount() {
@@ -57,7 +57,7 @@ export default class HomeScreen extends React.Component {
           type="ionicon"
           name={Platform.OS === "ios" ? "ios-options" : "md-options"}
           onPress={() => params.handleFilterButton()}
-          size={28} 
+          size={28}
           color='dodgerblue'
         />
       ),
@@ -89,7 +89,7 @@ export default class HomeScreen extends React.Component {
   handleCancelFilter = () => {
     this.setState({ filterMenuVisible: false });
   };
-  
+
   handleAdd =  async () => {
     const { navigation } = this.props;
     //const userID = navigation.getParam('userID', 'NO-ID');
@@ -119,18 +119,18 @@ export default class HomeScreen extends React.Component {
     const contacts = this.state.contacts;
     const listItems = (contacts.filter(cont => {
       if(!cont.field) { return false} else {
-      let field = (cont.field).toLowerCase(); 
+      let field = (cont.field).toLowerCase();
       return field.indexOf(
       filter.toLowerCase()) != -1}}) );
-   
-    setTimeout(() => 
+
+    setTimeout(() =>
     this.setState({
       filterMenuVisible : false,
       contacts : listItems,
       filters: null
     }), 20);
   };
-  
+
   updateDisplay = () => {
     const display = this.state.displayValue;
     if(display == 1) {
@@ -158,6 +158,16 @@ export default class HomeScreen extends React.Component {
 
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
+    const changeDisplayButton = Platform.OS === "ios" ? (
+      <SegmentedControlIOS
+        values={['Informative View', 'Visual View']}
+        selectedIndex={this.state.displayValue - 1}
+        onChange={(event) => {
+          this.setState(
+            {displayValue: event.nativeEvent.selectedSegmentIndex + 1});
+        }}
+        style={{marginTop:5, width:"70%", alignSelf: 'center'}}
+      />) : (<Button title='Change Display' onPress={this.updateDisplay} />)
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
@@ -180,7 +190,7 @@ export default class HomeScreen extends React.Component {
 
         {/* Displays the collection of cards */}
         <View>
-          <Button title='Change Display' onPress={this.updateDisplay} />
+          {changeDisplayButton}
           {this.DeckDisplay(displayValue, this.props.navigation, contacts)}
         </View>
       </View>

@@ -7,7 +7,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default class CardCollection extends React.Component{
 
- 
+
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
     return {
@@ -21,7 +21,7 @@ export default class CardCollection extends React.Component{
   }
 
   _getCards = ({item}) => (
-    <TouchableOpacity style={styles.card} 
+    <TouchableOpacity style={styles.card}
       onPress= {()=> this.handleCardProfile(item)}>
         <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
                   <View style={styles.containerStyle}>
@@ -59,9 +59,10 @@ export default class CardCollection extends React.Component{
       <FlatList
         data={this.props.contacts}
         renderItem={this._getCards}
-        keyExtractor={this._keyExtractor} 
+        keyExtractor={this._keyExtractor}
         contentContainerStyle={styles.list}
         ItemSeparatorComponent={this.renderSeparator}
+        style={{marginTop:10}}
       />
     )
   }
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
                 justifyContent:'center',
                 flexGrow:1
               },
-              
+
               containerStyle: {
                 borderRadius: 10,
               //borderWidth: 1,
@@ -83,5 +84,5 @@ const styles = StyleSheet.create({
                 width: 350,
                 height: 200,
               },
-              
+
         });
