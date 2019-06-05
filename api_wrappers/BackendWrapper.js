@@ -216,6 +216,97 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
       });
 },
 
+addLink: function(userID, name, value) {
+  return fetch(`${API}/links/addlink`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      user: userID, 
+      name: name,
+      value: value,
+    }),
+  cache: 'default',
+  })
+  .then(function(response){
+    return response.json();
+  })
+  .catch(function(error) {
+  console.log('There has been a problem with your getID fetch operation: ' + error.message);
+  // ADD THIS THROW error
+    throw error;
+  });
+},
+
+editLink: function(link, name, value) {
+  return fetch(`${API}/links/editlink`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      link: link, 
+      name: name,
+      value: value,
+    }),
+  cache: 'default',
+  })
+  .then(function(response){
+    return response.json();
+  })
+  .catch(function(error) {
+  console.log('There has been a problem with your getID fetch operation: ' + error.message);
+  // ADD THIS THROW error
+    throw error;
+  });
+},
+
+removeLink: function(link) {
+  return fetch(`${API}/links/removelink`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      link: link, 
+    }),
+  cache: 'default',
+  })
+  .then(function(response){
+    return response.json();
+  })
+  .catch(function(error) {
+  console.log('There has been a problem with your getID fetch operation: ' + error.message);
+  // ADD THIS THROW error
+    throw error;
+  });
+},
+
+getLink: function(link) {
+  return fetch(`${API}/links/getlink`, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      link: link, 
+    }),
+  cache: 'default',
+  })
+  .then(function(response){
+    return response.json();
+  })
+  .catch(function(error) {
+  console.log('There has been a problem with your getID fetch operation: ' + error.message);
+  // ADD THIS THROW error
+    throw error;
+  });
+}
 
 }
 

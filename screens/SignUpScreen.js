@@ -13,6 +13,7 @@ export default class SignUpScreen extends Component {
     this.state={
       userID:null,
       email:null,
+      links: [],
       firstName:null,
       lastName:null,
       phoneNumber:null,
@@ -29,6 +30,7 @@ export default class SignUpScreen extends Component {
   };
 
   handleSignUp = async () => {
+    console.log(this.state.links[0]); 
     if (!this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.company || !this.state.profession) {
       Alert.alert("Please enter all the required details")
     } else {
@@ -105,7 +107,7 @@ export default class SignUpScreen extends Component {
             secureTextEntry={true}
             textContentType="password"
           />
-        </View>
+        </View> 
         <View style={{flex:1}}>
           <Button
             title="Sign Up"

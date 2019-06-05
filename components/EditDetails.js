@@ -5,6 +5,7 @@ import { Text, TextInput, View, Button, Alert } from 'react-native';
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
+var numOfLinks = 0; 
 
 export default class EditDetails extends Component {
 
@@ -16,6 +17,7 @@ export default class EditDetails extends Component {
       firstName:null,
       lastName:null,
       phoneNumber:null,
+      links: null,
       company:null,
       profession:null,
       cardID: null
@@ -29,6 +31,46 @@ export default class EditDetails extends Component {
     },
   };
 
+
+  addToLinks = async(name, URL) => {
+    const linkID = await apiRequests.addLink(global.userID, name, URL); 
+    console.log(linkID); 
+    let links = this.state.links;
+    links.push(linkID); 
+    this.state.links = links;
+  }
+
+  addLinkFields = () => {
+    console.log("entered addLinkFields"); 
+    var links=[];  
+    for (let i = 0; i < numOfLinks; i++) {
+      var name = ""; 
+      var URL = ""; 
+      links.push(
+      <View key = {i} style={{flex:1}}>
+        <TextInput
+          key = {i}
+          style={styles.loginInputs}
+          placeholder="Name of the link"
+          onChangeText={(linkName) => name = linkName }
+        />
+        <TextInput
+          key = {'_'+i}
+          style={styles.loginInputs}
+          placeholder="URL"
+          onChangeText={(url) => URL = url
+          }
+        />
+      </View>
+      )
+      this.addToLinks(name, URL);
+      console.log("finished pushing");
+    }
+    return links; 
+  }
+
+
+
   componentDidMount() {
     const { navigation } = this.props;
     const details =  navigation.getParam('details', 'NULL');
@@ -38,6 +80,7 @@ export default class EditDetails extends Component {
         firstName:details.firstName,
         lastName:details.lastName,
         phoneNumber:details.phoneNumber,
+        links: details.links,
         company:details.company,
         profession:details.profession,
         cardID: details.card
@@ -92,6 +135,7 @@ export default class EditDetails extends Component {
             onChangeText={(profession) => this.setState({profession: profession})}
           />
         </View>
+         {this.addLinkFields()} 
         <View style={{flex:1}}>
           <TextInput
             style={styles.loginInputs}
@@ -113,6 +157,12 @@ export default class EditDetails extends Component {
             textContentType="password"
           />
         </View>
+        <View style={{flex:1}}>
+            <Button title="Add link" onPress={() => { 
+              numOfLinks++;
+              this.forceUpdate(); }
+            }/>
+          </View>
         <View style={{flex:1}}>
           <Button
             title="Submit"
