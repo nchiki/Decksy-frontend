@@ -8,11 +8,14 @@ import { Icon } from "react-native-elements";
 import DialogInput from 'react-native-dialog-input';
 import Dialog from "react-native-dialog";
 
-import styles from '../styles/Styles';
 import ContactCollection from '../components/ContactCollection';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import users from '../users/Users';
+
 import CardCollection from '../components/CardCollection';
+
+
+
+
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -23,12 +26,13 @@ export default class HomeScreen extends React.Component {
       count: 0,
       filterMenuVisible: false,
       shortcodeInputVisible: false,
-      filtersChecked: new Map(),
+      filters: null,
       userID: null,
       contacts: [],
-      displayValue : 1
+      displayValue : 1,
+
     }
-    this.handleChange = this.handleChange.bind(this);
+    
   }
 
   componentDidMount() {
@@ -74,8 +78,16 @@ export default class HomeScreen extends React.Component {
     this.setState({ shortcodeInputVisible: true });
   };
 
+  onFiltersPress = () =>{
+    this.setState({ filterMenuVisible: true });
+  }
+
   handleCancel = () => {
     this.setState({ shortcodeInputVisible: false });
+  };
+
+  handleCancelFilter = () => {
+    this.setState({ filterMenuVisible: false });
   };
 
   handleAdd =  async () => {
@@ -95,40 +107,29 @@ export default class HomeScreen extends React.Component {
       const det = await apiRequests.getUserDetails(id);
       return det}) );
     const items = await Promise.all(listItems);
-    console.log(items);
     setTimeout(() => this.setState({
       contacts: items
     }), 20);
   }
 
-  handleChange(e) {
-    const item = e.target.name;
-    const isChecked = e.target.checked;
-    this.setState(prevState => ({ filtersChecked: prevState.filtersChecked.set(item, isChecked) }));
-  }
 
-  setfilterMenuVisible(visible) {
+  handleFilter =  async () => {
+    const filter = this.state.filters;
+    const contacts = this.state.contacts;
+    const listItems = (contacts.filter(cont => {
+      if(!cont.field) { return false} else {
+      let field = (cont.field).toLowerCase(); 
+      return field.indexOf(
+      filter.toLowerCase()) != -1}}) );
+   
+    setTimeout(() => 
     this.setState({
-      filterMenuVisible: visible,
-    });
-  }
-
-  setAddOptionsVisible(visible) {
-    this.setState({
-      filterMenuVisible: false,
-    });
-  }
-
-  closeModal() {
-    this.setState({
-      filterMenuVisible: false
-    });
-  }
-
-  onFiltersPress = () => {
-    this.setfilterMenuVisible(!this.state.filterMenuVisible);
-  }
-
+      filterMenuVisible : false,
+      contacts : listItems,
+      filters: null
+    }), 20);
+  };
+  
   updateDisplay = () => {
     const display = this.state.displayValue;
     if(display == 1) {
@@ -159,26 +160,14 @@ export default class HomeScreen extends React.Component {
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.filterMenuVisible}
-          onRequestClose={() => this.closeModal()}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.checkContainer}>
-              <TouchableOpacity onPress={() => this.closeModal()}>
-                <Ionicons name={'ios-checkmark'}size={50} color={'white'}/>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.innerContainer}>
-              <Text style={{color:'white', fontWeight: 'bold', fontSize: 18}}>Select filters:</Text>
-            </View>
-            <View>
-              <DisplayFilters />
-            </View>
-          </View>
-        </Modal>
+        <Dialog.Container
+          visible={this.state.filterMenuVisible}>
+          <Dialog.Title>Filter:</Dialog.Title>
+          <Dialog.Description>Enter field:</Dialog.Description>
+          <Dialog.Input onChangeText={(inputText) => this.setState({filters:inputText})}/>
+          <Dialog.Button label="Cancel" onPress={this.handleCancelFilter} />
+          <Dialog.Button label="Filter" onPress={this.handleFilter} />
+        </Dialog.Container>
 
         <Dialog.Container visible={this.state.shortcodeInputVisible}>
           <Dialog.Title>Add User by Shortcode</Dialog.Title>

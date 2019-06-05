@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Text, TextInput, View, Button, Alert } from 'react-native';
+import { ScrollView, Text, TextInput, View, Button, Alert } from 'react-native';
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -54,7 +54,7 @@ export default class EditDetails extends Component {
   render() {
       const details = this.props.navigation.getParam('details', 'NULL');
     return (
-      <View style={{padding: 10, flex:1}}>
+      <ScrollView style={{padding: 10, flex:1}}>
           <Text style={{fontWeight: 'bold', fontSize:20}}> Leave the unchanged fields blank:</Text>
         <View style={{flex:4}} />
         <View style={{flex:1}}>
@@ -121,7 +121,7 @@ export default class EditDetails extends Component {
           />
         </View>
         <View style={{flex:4}} />
-      </View>
+      </ScrollView>
     );
   }
 }
