@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { ScrollView, TextInput, View, Button, Alert } from 'react-native';
+import { ScrollView, TextInput, View, Button, Alert, TouchableHighlight, Text } from 'react-native';
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -48,52 +48,53 @@ export default class SignUpScreen extends Component {
   }
 
   render() {
+    const spacing = 10;
     return (
       <ScrollView style={{padding: 10, flex:1}}>
         <View style={{flex:4}} />
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: 15}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="First Name"
             onChangeText={(firstname) => this.setState({firstName: firstname})}
           />
           </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Last Name"
             onChangeText={(lastname) => this.setState({lastName: lastname})}
           />
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Phone Number"
             onChangeText={(phonenumber) => this.setState({phoneNumber: phonenumber})}
           />
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Company/Self-Employed"
             onChangeText={(company) => this.setState({company: company})}
           />
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Profession"
             onChangeText={(profession) => this.setState({profession: profession})}
           />
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Field of work"
             onChangeText={(field) => this.setState({field: field})}
           />
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Email"
@@ -103,7 +104,7 @@ export default class SignUpScreen extends Component {
             autoCapitalize="none"
           />
         </View>
-        <View style={{flex:1}}>
+        <View style={{flex:1, marginTop: spacing}}>
           <TextInput
             style={styles.loginInputs}
             placeholder="Password"
@@ -114,12 +115,12 @@ export default class SignUpScreen extends Component {
             textContentType="password"
           />
         </View>
-        <View style={{flex:1}}>
-          <Button
-            title="Sign Up"
-            style={styles.loginInputs}
-            onPress={() => {this.handleSignUp()}}
-          />
+        <View style={{flex:1, marginTop: spacing, alignItems: 'center'}}>
+          <TouchableHighlight onPress={() => this.handleSignUp()} underlayColor='blue'>
+            <View style={{alignItems: 'center', backgroundColor: '#2196F3', width: 110, height:40, borderRadius:5}}>
+              <Text style={{color:'white', fontSize:30}}>Sign up</Text>
+            </View>
+          </TouchableHighlight>
         </View>
         <View style={{flex:4}} />
       </ScrollView>

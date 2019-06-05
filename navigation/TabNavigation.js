@@ -10,7 +10,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../components/BusinessCard';
 import CardTemplate from '../components/CardTemplate';
 import { Ionicons } from '@expo/vector-icons';
-import EditDetails from '../components/EditDetails';
+import EditDetailsScreen from '../screens/EditDetailsScreen';
 
 export const CollectedCardsStack = createStackNavigator({
     CollectedCards: {screen: HomeScreen},
@@ -41,7 +41,7 @@ const ProfileScreenStack = createStackNavigator({
   ProfileScreen: {screen: ProfileScreen},
   CardScreen: {screen : BusinessCard},
   CardTemplateScreen : {screen : CardTemplate},
-  EditDetailsScreen : {screen: EditDetails}
+  EditDetailsScreen : {screen: EditDetailsScreen}
 },
 );
 
