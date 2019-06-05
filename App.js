@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, AppRegistry, View, StyleSheet, ScrollView, TextInput, Button, Alert } from 'react-native';
+import { Text, AppRegistry, View, StyleSheet, ScrollView, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import AppNavigation from './navigation/AppNavigation';
@@ -42,6 +42,7 @@ export default class FlexDimensionsBasics extends Component {
         style={{flex: 1, justifyContent: 'center'}}
       >
         <Text style={styles.bigTitle}>RoloDex</Text>
+        <ActivityIndicator size="large" color="#0000ff" style={{marginTop: 40}}/>
       </LinearGradient>
     </View>
   )}

@@ -19,7 +19,7 @@ export default class QRCodeScannerScreen extends Component {
     Linking
       .openURL(e.data)
       .catch(err => console.error('An error occured', err));
-  }
+  } 
 
   takePicture = async function() {
     if (this.camera) {
