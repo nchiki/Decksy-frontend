@@ -15,8 +15,6 @@ const templateUtils = {
     const styles = [deckStyles.getStyle2(), deckStyles.getStyle3(), deckStyles.getStyle4(), deckStyles.getStyle5(),
     deckStyles.getStyle6(), deckStyles.getStyle7(), deckStyles.getStyle8(), deckStyles.getStyle9(),
     deckStyles.getStyle10()];
-    console.log("cardType:");
-    console.log(cardType);
     return styles[cardType - 2];
   },
 
