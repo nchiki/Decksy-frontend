@@ -67,6 +67,9 @@ export default class ContactCollection extends React.Component{
         <View style={{alignItems:'center'}}>
         {
           users.map((u, i) => {
+            if (!u.card) {
+              u.card = 2; 
+            }
             return (
               this._getContact(u, i),
               this.renderSeparator()

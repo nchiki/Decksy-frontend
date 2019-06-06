@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
@@ -12,16 +12,16 @@ export default class CardProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _isMounted : false,
+      _isMounted: false,
       text: "",
       templateID: 4,
     }
   }
 
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     const firstName = params.item.firstName;
-     return {
+    return {
       title: `${firstName}\'${firstName.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
         fontSize: 25
@@ -30,7 +30,7 @@ export default class CardProfileScreen extends React.Component {
         <OptionsMenu
           customButton={(
             <Icon
-              containerStyle={{paddingRight: 12}}
+              containerStyle={{ paddingRight: 12 }}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
               size={35}
@@ -43,13 +43,13 @@ export default class CardProfileScreen extends React.Component {
       ),
     }
   };
- 
 
- async handleEmail() {
+
+  async handleEmail() {
     const to = [this.state.details.email] // string or array of email addresses
     email(to, {
-        subject: 'Subject',
-        body: 'Body'
+      subject: 'Subject',
+      body: 'Body'
     }).catch(console.error)
 
   }
@@ -63,50 +63,50 @@ export default class CardProfileScreen extends React.Component {
       number: this.state.details.phoneNumber, // String value with the number to call
       prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
     }
-     
+
     call(args).catch(console.error)
   }
 
   launchURL(url) {
     Linking.canOpenURL(url).then(supported => {
-    if(!supported) {
-            console.log('Can\'t handle url: ' + url);
-        } else {
-            Linking.openURL(url)
-            .catch(err => {
-        console.warn('openURL error', err);
-            });
-        }
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        Linking.openURL(url)
+          .catch(err => {
+            console.warn('openURL error', err);
+          });
+      }
     }).catch(err => console.warn('An unexpected error happened', err));
   }
 
 
-async componentDidMount() {
-  const { navigation } = this.props;
-  this.setState({
-    details: navigation.getParam('item', 'NO-ID')
-  })
-  navigation.setParams({
-    handleEmailButton: () => this.handleEmail(),
-    handleMessageButton: () => this.handleMessage(),
-    handleCallButton: () => this.handleCall(),
-  });
-}
-
-saveNotes = async() => {
-  const { navigation } = this.props;
-  const item = navigation.getParam('item', 'NO-ID');
-  apiRequests.setNote(global.userID, item.user, this.state.text);
-  const det = await apiRequests.getNote(global.userID, item.user);
-  this.setState({text: det});
-}
-
-getNotes = async(item) => {
-  const note = await apiRequests.getNote(global.userID, item.user);
-  if (note) {
-    this.state.text= note.note;
+  async componentDidMount() {
+    const { navigation } = this.props;
+    this.setState({
+      details: navigation.getParam('item', 'NO-ID')
+    })
+    navigation.setParams({
+      handleEmailButton: () => this.handleEmail(),
+      handleMessageButton: () => this.handleMessage(),
+      handleCallButton: () => this.handleCall(),
+    });
   }
-}
+
+  saveNotes = async () => {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'NO-ID');
+    apiRequests.setNote(global.userID, item.user, this.state.text);
+    const det = await apiRequests.getNote(global.userID, item.user);
+    this.setState({ text: det });
+  }
+
+  getNotes = async (item) => {
+    const note = await apiRequests.getNote(global.userID, item.user);
+    if (note) {
+      this.state.text = note.note;
+    }
+  }
 
 
   render() {
@@ -115,8 +115,8 @@ getNotes = async(item) => {
     this.getNotes(item);
 
     return (
-      <View style={{flex:1}}>
-        <View style={{marginTop:30}} alignItems='center'>
+      <View style={{ flex: 1 }}>
+        <View style={{ marginTop: 30 }} alignItems='center'>
           <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
               <View style={templateUtils.setProfileStyle(item.card).titleText}>
@@ -125,18 +125,22 @@ getNotes = async(item) => {
               <View style={templateUtils.setProfileStyle(item.card).user}>
                 <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
                 <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+                <Text style={{ color: 'blue' }}
+                  onPress={() => LinkingIOS.openURL('http://google.com')}>
+                  Google
+              </Text>
               </View>
             </View>
           </ImageBackground>
         </View>
-        <View style={{backgroundColor: 'lightyellow', marginTop:25, marginLeft: 20, marginRight: 20}}>
-          <Text style={{fontSize:24, textAlign:'center' }}>Notes:</Text>
-          <TextInput style={{fontSize:15}} value= {this.state.text} style={{textAlign: 'center', fontStyle: 'italic'}}
-          onChangeText={(text) => {
-            this.state.text = text;
-            this.saveNotes();
-          }
-        }/>
+        <View style={{ backgroundColor: 'lightyellow', marginTop: 25, marginLeft: 20, marginRight: 20 }}>
+          <Text style={{ fontSize: 24, textAlign: 'center' }}>Notes:</Text>
+          <TextInput style={{ fontSize: 15 }} value={this.state.text} style={{ textAlign: 'center', fontStyle: 'italic' }}
+            onChangeText={(text) => {
+              this.state.text = text;
+              this.saveNotes();
+            }
+            } />
         </View>
       </View>
     );
@@ -153,12 +157,12 @@ const styles = StyleSheet.create({
     height: 200,
   },
   user: {
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'center'
   },
-  card:{
-    alignItems:'center',
-    justifyContent:'center',
-    alignContent:'center'
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center'
   }
 })

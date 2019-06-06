@@ -5,7 +5,6 @@ import { ScrollView, TextInput, View, Button, Alert } from 'react-native';
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
-
 export default class SignUpScreen extends Component {
 
   constructor(props) {
