@@ -165,7 +165,7 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
           throw error;
         });
     },
-  
+
   setCard: function(userID, cardID) {
     return fetch(`${API}/user/setdetails`, {
         method: 'POST',
@@ -204,7 +204,7 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
         throw error;
     });
   },
-  
+
   getID: function() {
     return fetch(`${API}/user/makeid`, {
       method: 'POST',
@@ -213,7 +213,7 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        
+
       }),
       cache: 'default',
     })
@@ -228,6 +228,8 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
 },
 
   setNote: function(userID, contactID, note) {
+    console.log("setNote:")
+    console.log(note)
     return fetch(`${API}/user/setnote`, {
       method: 'POST',
       headers: {
@@ -249,6 +251,7 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
     },
 
     getNote: function(userID, contactID) {
+      console.log("getNote called");
       return fetch(`${API}/user/getnote`, {
         method: 'POST',
         headers: {
@@ -256,7 +259,7 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          user: userID, 
+          user: userID,
           contact: contactID,
         }),
       cache: 'default',

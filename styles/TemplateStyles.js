@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 
 const templateStyles = {
   getStyle2: function () {
-
     return (
       StyleSheet.create({
         titleText: {
@@ -33,19 +32,12 @@ const templateStyles = {
           fontSize: 10,
           color: 'white',
           textAlign: 'right'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
   },
-  getStyle3: function () {
 
+  getStyle3: function () {
     return (
       StyleSheet.create({
         titleText: {
@@ -76,13 +68,6 @@ const templateStyles = {
           top: -20,
           fontSize: 10,
           color: 'white'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
@@ -115,13 +100,6 @@ const templateStyles = {
         details: {
           right: -90,
           top: -24,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
-        },
-        links: {
-          right: 20,
-          top: 15,
           fontSize: 10,
           color: 'white',
           textAlign: 'right'
@@ -160,13 +138,6 @@ const templateStyles = {
           fontSize: 10,
           color: 'white',
           textAlign: 'right'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
@@ -201,13 +172,6 @@ const templateStyles = {
           fontSize: 10,
           color: 'white',
           textAlign: 'center'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
@@ -242,13 +206,6 @@ const templateStyles = {
           bottom: -85,
           fontSize: 10,
           textAlign: 'right'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
@@ -282,13 +239,6 @@ const templateStyles = {
         details: {
           right: -85,
           bottom: -95,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
-        },
-        links: {
-          right: 20,
-          top: 15,
           fontSize: 10,
           color: 'white',
           textAlign: 'right'
@@ -327,13 +277,6 @@ const templateStyles = {
           fontSize: 10,
           color: 'white',
           textAlign: 'center'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
@@ -370,13 +313,6 @@ const templateStyles = {
           fontSize: 10,
           color: 'lightskyblue',
           textAlign: 'left'
-        },
-        links: {
-          right: 20,
-          top: 15,
-          fontSize: 10,
-          color: 'white',
-          textAlign: 'right'
         }
       })
     );
