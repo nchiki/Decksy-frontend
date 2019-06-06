@@ -41,6 +41,7 @@ export default class SignUpScreen extends Component {
         const det = await apiRequests.getUserDetails(id);
         return det}) );
       const items = await Promise.all(listItems);
+      global.contacts = items;
       this.props.navigation.navigate('ProfileScreen', {userID: global.userID, contacts : items})
     }
   }
