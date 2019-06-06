@@ -99,7 +99,7 @@ export default class ContactCollection extends React.Component{
   };
 
   render () {
-
+    
       return (
           <FlatList
           data={this.props.contacts}

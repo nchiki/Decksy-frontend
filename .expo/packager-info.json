@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://fz-tkx.anonymous.webapps-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.fz-tkx.anonymous.webapps-frontend.exp.direct",
+  "ngrokPid": 14266
 }

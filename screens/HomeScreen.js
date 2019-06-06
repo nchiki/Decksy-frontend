@@ -35,7 +35,12 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props;
-    this.setState({contacts : this.props.navigation.getParam('contacts', 'NO-ID')});
+    let contacts = this.props.navigation.getParam('contacts', 'NO-ID');
+ 
+    if(contacts == 'NO-ID') {
+      contacts = global.contacts;
+    }
+    this.setState({contacts: contacts});
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleFilterButton: this.onFiltersPress
@@ -85,7 +90,6 @@ export default class HomeScreen extends React.Component {
 
   handleAdd =  async () => {
     const { navigation } = this.props;
-    //const userID = navigation.getParam('userID', 'NO-ID');
     apiRequests.addCard(global.userID, this.state.shortcode);
     setTimeout(() => this.getContactsForDisplay(), 20);
     this.setState({
@@ -100,7 +104,6 @@ export default class HomeScreen extends React.Component {
       const det = await apiRequests.getUserDetails(id);
       return det}) );
     const items = await Promise.all(listItems);
-    console.log(items);
     setTimeout(() => this.setState({
       contacts: items
     }), 20);
