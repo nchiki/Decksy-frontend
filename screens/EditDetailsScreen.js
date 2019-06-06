@@ -36,11 +36,12 @@ export default class EditDetailsScreen extends Component {
     for (let i = 0; i < this.state.links.length; i = i + 2) {
       const name = this.state.links[i];
       const url = this.state.links[i + 1];
-      var linkID = this.getLink(name, url);
-      linkID.then(linkID = linkID.link, linkID = null);
-      let links = this.state.links;
-      links.push(linkID);
-      this.state.links = links;
+      if (name != null && url != null) {
+        var linkID = this.getLink(name, url);
+        let links = this.state.links;
+        links.push(linkID.link);
+        this.state.links = links;
+      }
     }
   }
 
@@ -57,8 +58,16 @@ export default class EditDetailsScreen extends Component {
 
 
   addLinkFields = () => {
+    const { navigation } = this.props;
+    const details = navigation.getParam('details', 'NULL');
     var linkFields = [];
+    var placeHolder_name = null;
     for (let i = 0; i < numOfLinks; i++) {
+      if (!details.links[i]) {
+        placeHolder_name = "Name of the link";
+      } else {
+        placeHolder_name = details.links[i];
+      }
       linkFields.push(
         <View key={i} style={{ flex: 1 }}>
           <TextInput
@@ -101,7 +110,6 @@ export default class EditDetailsScreen extends Component {
       profession: details.profession,
       cardID: details.card
     })
-
   }
 
   handleSubmit = async () => {
@@ -156,6 +164,7 @@ export default class EditDetailsScreen extends Component {
             onChangeText={(profession) => this.setState({ profession: profession })}
           />
         </View>
+        {this.addLinkFields()}
         <View style={{ flex: 1, marginTop: spacing }}>
           <TextInput
             style={styles.loginInputs}

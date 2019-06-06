@@ -43,10 +43,6 @@ export default class CardProfileScreen extends React.Component {
       ),
     }
   };
-<<<<<<< HEAD
-=======
-
->>>>>>> master
 
 
   async handleEmail() {
