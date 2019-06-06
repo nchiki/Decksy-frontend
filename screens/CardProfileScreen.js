@@ -44,8 +44,7 @@ export default class CardProfileScreen extends React.Component {
     }
   };
 
-
- async handleEmail() {
+  async handleEmail() {
     const to = [this.state.details.email] // string or array of email addresses
     email(to, {
         subject: 'Subject',
@@ -63,56 +62,59 @@ export default class CardProfileScreen extends React.Component {
       number: this.state.details.phoneNumber, // String value with the number to call
       prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
     }
-
     call(args).catch(console.error)
   }
 
   launchURL(url) {
     Linking.canOpenURL(url).then(supported => {
-    if(!supported) {
-            console.log('Can\'t handle url: ' + url);
-        } else {
-            Linking.openURL(url)
-            .catch(err => {
-        console.warn('openURL error', err);
-            });
-        }
+      if (!supported) {
+        console.log('Can\'t handle url: ' + url);
+      } else {
+        Linking.openURL(url)
+        .catch(err => {
+          console.warn('openURL error', err);
+        });
+      }
     }).catch(err => console.warn('An unexpected error happened', err));
   }
 
-
-async componentDidMount() {
-  const { navigation } = this.props;
-  this.setState({
-    details: navigation.getParam('item', 'NO-ID')
-  })
-  navigation.setParams({
-    handleEmailButton: () => this.handleEmail(),
-    handleMessageButton: () => this.handleMessage(),
-    handleCallButton: () => this.handleCall(),
-  });
-}
-
-saveNotes = async() => {
-  const { navigation } = this.props;
-  const item = navigation.getParam('item', 'NO-ID');
-  apiRequests.setNote(global.userID, item.user, this.state.text);
-  const det = await apiRequests.getNote(global.userID, item.user);
-  this.setState({text: det});
-}
-
-getNotes = async(item) => {
-  const note = await apiRequests.getNote(global.userID, item.user);
-  if (note) {
-    this.state.text= note.note;
+  async componentDidMount() {
+    const { navigation } = this.props;
+    this.setState({
+      details: navigation.getParam('item', 'NO-ID'),
+    })
+    navigation.setParams({
+      handleEmailButton: () => this.handleEmail(),
+      handleMessageButton: () => this.handleMessage(),
+      handleCallButton: () => this.handleCall(),
+    });
+    this.getNotes(this.state.userID); 
   }
-}
 
+  async componentWillUnmount() {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'NO-ID');
+    apiRequests.setNote(global.userID, item.user, this.state.text);
+  }
+
+  saveNotes = async() => {
+    const { navigation } = this.props;
+    const item = navigation.getParam('item', 'NO-ID');
+    apiRequests.setNote(global.userID, item.user, this.state.text);
+  }
+
+  getNotes = async(item) => {
+    const note = await apiRequests.getNote(global.userID, item.user);
+    console.log("getNotes:")
+    console.log(note)
+    if (note) {
+      this.setState({text: note.note});
+    }
+  }
 
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
-    this.getNotes(item);
 
     return (
       <View style={{flex:1}}>
@@ -132,11 +134,11 @@ getNotes = async(item) => {
         <Text style={{fontSize:24, textAlign:'center', marginTop:30, }}>Notes:</Text>
         <View style={{backgroundColor: 'lightyellow', width:350, alignSelf: 'center', marginTop:3, borderRadius:8}}>
           <TextInput
-            value= {this.state.text}
+            value={this.state.text}
             style={{textAlign: 'left', fontSize:16, marginLeft:10, marginRight:10}}
             onChangeText={(text) => {
-              this.state.text = text;
-              this.saveNotes();
+              this.setState({text: text});
+              // this.saveNotes();
             }}
             editable = {true}
             multiline= {true}
@@ -147,7 +149,6 @@ getNotes = async(item) => {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   containerStyle: {

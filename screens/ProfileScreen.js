@@ -11,6 +11,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
+  
   static navigationOptions = ({navigation}) => {
     const { params = {} } = navigation.state;
     return {
@@ -69,25 +70,4 @@ export default class ProfileScreen extends React.Component {
     global.userID = 1;
     this.props.navigation.navigate('Login');
   }
-
-  onShare = async () => {
-    try {
-      const result = await Share.share({
-        message:
-          'React Native | A framework for building native apps using React',
-      });
-
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
 }
