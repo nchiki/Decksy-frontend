@@ -46,9 +46,10 @@ export default class CardProfileScreen extends React.Component {
 
   getURL = async () => {
     const linkID = this.state.details.links[0];
-    console.log(linkID);
     const link = await apiRequests.getLink(linkID);
-    return link;
+    if (!link) {
+      return link;
+    }
   }
 
   async handleEmail() {
