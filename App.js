@@ -42,7 +42,6 @@ export default class FlexDimensionsBasics extends Component {
         style={{flex: 1, justifyContent: 'center'}}
       >
         <Text style={styles.bigTitle}>RoloDex</Text>
-        <ActivityIndicator size="large" color="#0000ff" style={{marginTop: 40}}/>
       </LinearGradient>
     </View>
   )}

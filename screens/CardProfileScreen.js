@@ -68,7 +68,7 @@ export default class CardProfileScreen extends React.Component {
   launchURL(url) {
     Linking.canOpenURL(url).then(supported => {
       if (!supported) {
-        console.log('Can\'t handle url: ' + url);
+        console.log(`Can\'t handle url: ${url}`);
       } else {
         Linking.openURL(url)
         .catch(err => {
@@ -80,33 +80,25 @@ export default class CardProfileScreen extends React.Component {
 
   async componentDidMount() {
     const { navigation } = this.props;
+    const details = navigation.getParam('item', 'NO-ID')
     this.setState({
-      details: navigation.getParam('item', 'NO-ID'),
+      details: details,
     })
     navigation.setParams({
       handleEmailButton: () => this.handleEmail(),
       handleMessageButton: () => this.handleMessage(),
       handleCallButton: () => this.handleCall(),
     });
-    this.getNotes(this.state.userID); 
+    console.log(details)
+    this.getNotes(details.user);
   }
 
   async componentWillUnmount() {
-    const { navigation } = this.props;
-    const item = navigation.getParam('item', 'NO-ID');
-    apiRequests.setNote(global.userID, item.user, this.state.text);
+    apiRequests.setNote(global.userID, this.state.details.user, this.state.text);
   }
 
-  saveNotes = async() => {
-    const { navigation } = this.props;
-    const item = navigation.getParam('item', 'NO-ID');
-    apiRequests.setNote(global.userID, item.user, this.state.text);
-  }
-
-  getNotes = async(item) => {
-    const note = await apiRequests.getNote(global.userID, item.user);
-    console.log("getNotes:")
-    console.log(note)
+  getNotes = async(userID) => {
+    const note = await apiRequests.getNote(global.userID, userID);
     if (note) {
       this.setState({text: note.note});
     }
@@ -115,7 +107,6 @@ export default class CardProfileScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
-
     return (
       <View style={{flex:1}}>
         <View style={{marginTop:30}} alignItems='center'>
@@ -138,7 +129,6 @@ export default class CardProfileScreen extends React.Component {
             style={{textAlign: 'left', fontSize:16, marginLeft:10, marginRight:10}}
             onChangeText={(text) => {
               this.setState({text: text});
-              // this.saveNotes();
             }}
             editable = {true}
             multiline= {true}
