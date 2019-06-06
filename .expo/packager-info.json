@@ -1,9 +1,18 @@
 {
   "devToolsPort": 19002,
+<<<<<<< HEAD
   "expoServerPort": 19000,
   "packagerPort": 19001,
   "packagerPid": 13510,
   "expoServerNgrokUrl": "https://4e-pw6.anonymous.webapps-frontend.exp.direct",
   "packagerNgrokUrl": "https://packager.4e-pw6.anonymous.webapps-frontend.exp.direct",
   "ngrokPid": 13528
+=======
+  "expoServerPort": null,
+  "packagerPort": null,
+  "packagerPid": null,
+  "expoServerNgrokUrl": "https://fz-tkx.anonymous.webapps-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.fz-tkx.anonymous.webapps-frontend.exp.direct",
+  "ngrokPid": 14266
+>>>>>>> a7a87e3bf6c48d487c81f6acc2680a3575a3fe03
 }
