@@ -41,7 +41,7 @@ export default class SignUpScreen extends Component {
         company: this.state.company,
         profession: this.state.profession,
         field: this.state.field,
-        card: this.state.card
+        card: 2
       }
       const IDobject = await apiRequests.addUser(details);
       global.userID = Number.parseInt(IDobject.user, 10);
