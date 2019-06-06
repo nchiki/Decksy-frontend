@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
@@ -12,16 +12,16 @@ export default class CardProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _isMounted : false,
+      _isMounted: false,
       text: "",
       templateID: 4,
     }
   }
 
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     const firstName = params.item.firstName;
-     return {
+    return {
       title: `${firstName}\'${firstName.endsWith("s") ? "" : "s"} Card`,
       headerTitleStyle: {
         fontSize: 25
@@ -30,7 +30,7 @@ export default class CardProfileScreen extends React.Component {
         <OptionsMenu
           customButton={(
             <Icon
-              containerStyle={{paddingRight: 12}}
+              containerStyle={{ paddingRight: 12 }}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
               size={35}
@@ -47,8 +47,8 @@ export default class CardProfileScreen extends React.Component {
   async handleEmail() {
     const to = [this.state.details.email] // string or array of email addresses
     email(to, {
-        subject: 'Subject',
-        body: 'Body'
+      subject: 'Subject',
+      body: 'Body'
     }).catch(console.error)
 
   }
@@ -71,9 +71,9 @@ export default class CardProfileScreen extends React.Component {
         console.log(`Can\'t handle url: ${url}`);
       } else {
         Linking.openURL(url)
-        .catch(err => {
-          console.warn('openURL error', err);
-        });
+          .catch(err => {
+            console.warn('openURL error', err);
+          });
       }
     }).catch(err => console.warn('An unexpected error happened', err));
   }
@@ -97,10 +97,10 @@ export default class CardProfileScreen extends React.Component {
     apiRequests.setNote(global.userID, this.state.details.user, this.state.text);
   }
 
-  getNotes = async(userID) => {
+  getNotes = async (userID) => {
     const note = await apiRequests.getNote(global.userID, userID);
     if (note) {
-      this.setState({text: note.note});
+      this.setState({ text: note.note });
     }
   }
 
@@ -108,8 +108,8 @@ export default class CardProfileScreen extends React.Component {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
     return (
-      <View style={{flex:1}}>
-        <View style={{marginTop:30}} alignItems='center'>
+      <View style={{ flex: 1 }}>
+        <View style={{ marginTop: 30 }} alignItems='center'>
           <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
               <View style={templateUtils.setProfileStyle(item.card).titleText}>
@@ -118,22 +118,26 @@ export default class CardProfileScreen extends React.Component {
               <View style={templateUtils.setProfileStyle(item.card).user}>
                 <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
                 <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+                <Text style={{ color: 'blue' }}
+                  onPress={() => LinkingIOS.openURL('http://google.com')}>
+                  Google
+              </Text>
               </View>
             </View>
           </ImageBackground>
         </View>
-        <Text style={{fontSize:24, textAlign:'center', marginTop:30, }}>Notes:</Text>
-        <View style={{backgroundColor: 'lightyellow', width:350, alignSelf: 'center', marginTop:3, borderRadius:8}}>
+        <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 30, }}>Notes:</Text>
+        <View style={{ backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>
           <TextInput
             value={this.state.text}
-            style={{textAlign: 'left', fontSize:16, marginLeft:10, marginRight:10}}
+            style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10 }}
             onChangeText={(text) => {
-              this.setState({text: text});
+              this.setState({ text: text });
             }}
-            editable = {true}
-            multiline= {true}
+            editable={true}
+            multiline={true}
           />
-          <View style={{height:4}} />
+          <View style={{ height: 4 }} />
         </View>
       </View>
     );
@@ -149,12 +153,12 @@ const styles = StyleSheet.create({
     height: 200,
   },
   user: {
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'center'
   },
-  card:{
-    alignItems:'center',
-    justifyContent:'center',
-    alignContent:'center'
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center'
   }
 })
