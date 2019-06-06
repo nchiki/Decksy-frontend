@@ -33,7 +33,17 @@ export default class SignUpScreen extends Component {
     if (!this.state.field || !this.state.email || !this.state.firstName || !this.state.lastName || !this.state.phoneNumber || !this.state.company || !this.state.profession) {
       Alert.alert("Please enter all the required details")
     } else {
-      const IDobject = await apiRequests.addUser(this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.email, this.state.company, this.state.profession, this.state.field, 2);
+      let details = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        phoneNumber: this.state.phoneNumber,
+        email: this.state.email,
+        company: this.state.company,
+        profession: this.state.profession,
+        field: this.state.field,
+        card: this.state.card
+      }
+      const IDobject = await apiRequests.addUser(details);
       global.userID = Number.parseInt(IDobject.user, 10);
       const contacts = await apiRequests.getUserContacts(global.userID);
       const listItems = (contacts.map(async (cont) => {

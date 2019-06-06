@@ -3,7 +3,13 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
+<<<<<<< HEAD
   "expoServerNgrokUrl": null,
   "packagerNgrokUrl": null,
   "ngrokPid": null
+=======
+  "expoServerNgrokUrl": "https://65-qxz.anonymous.webapps-frontend.exp.direct",
+  "packagerNgrokUrl": "https://packager.65-qxz.anonymous.webapps-frontend.exp.direct",
+  "ngrokPid": 17260
+>>>>>>> master
 }

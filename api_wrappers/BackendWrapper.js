@@ -2,7 +2,7 @@ const API = "https://rolodex.tk/api"
 const apiRequests = {
 
   getUserCard: function (userID) {
-  return fetch(`${API}/businesscards/getusercard`, {
+    return fetch(`${API}/businesscards/getusercard`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -13,19 +13,19 @@ const apiRequests = {
       }),
       cache: 'default',
     })
-    .then(function(response){
-      return response.json();
-    })
-    .catch(function(error) {
-    console.log('There has been a problem with your getUserCard fetch operation: ' + error.message);
-     // ADD THIS THROW error
-      throw error;
-    });
-},
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getUserCard fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
-setUserCard: function(userID, templateID, color) {
+  setUserCard: function (userID, templateID, color) {
 
-  fetch(`${API}/businesscards/setusercard`, {
+    fetch(`${API}/businesscards/setusercard`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,60 +33,60 @@ setUserCard: function(userID, templateID, color) {
       body: JSON.stringify({
         user: userID,
         cardTemplate: templateID,
-        colour:color
+        colour: color
       }),
 
-    }).catch(function(error) {
+    }).catch(function (error) {
       console.log('There has been a problem with your setUserCard fetch operation: ' + error.message);
-       // ADD THIS THROW error
-        throw error;
-      });
-
-},
-
-getUserContacts: function(userID) {
-  return fetch(`${API}/user/contacts`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user: userID,
-      }),
-      cache: 'default',
-    })
-    .then((response) => response.json()).catch(function(error) {
-      console.log('There has been a problem with your getUserContacts fetch operation: ' + error.message);
-       // ADD THIS THROW error
-        throw error;
-      });
-},
-
-getUserDetails: function(userID) {
-  return fetch(`${API}/user/details`, {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        user: userID,
-      }),
-      cache: 'default',
-    })
-    .then(function(response){
-      return response.json();
-    })
-    .catch(function(error) {
-    console.log('There has been a problem with your getUserDetails fetch operation: ' + error.message);
-     // ADD THIS THROW error
+      // ADD THIS THROW error
       throw error;
     });
-},
 
-setUserDetails: function(userID, firstname, lastname, phonenumber, email, company, profession, cardID) {
-  return fetch(`${API}/user/setdetails`, {
+  },
+
+  getUserContacts: function (userID) {
+    return fetch(`${API}/user/contacts`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+      }),
+      cache: 'default',
+    })
+      .then((response) => response.json()).catch(function (error) {
+        console.log('There has been a problem with your getUserContacts fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  getUserDetails: function (userID) {
+    return fetch(`${API}/user/details`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getUserDetails fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  setUserDetails: function (userID, firstname, lastname, phonenumber, email, company, profession, cardID) {
+    return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
@@ -104,88 +104,80 @@ setUserDetails: function(userID, firstname, lastname, phonenumber, email, compan
       }),
       cache: 'default',
     }).
-    catch(function(error) {
-      console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
-       // ADD THIS THROW error
+      catch(function (error) {
+        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+        // ADD THIS THROW error
         throw error;
       });
   },
 
 
-addUser: function(firstname, lastname, phonenumber, email, company, profession, cardID) {
-  return fetch(`${API}/user/adduser`, {
+  addUser: function (details) {
+    return fetch(`${API}/user/adduser`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(details),
+      cache: 'default',
+    }).then(function (response) {
+      return response.json();
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  setUserWithFieldDetails: function (userID, firstname, lastname, phonenumber, email, company, profession, field, cardID) {
+    return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        user: userID,
         firstName: firstname,
         lastName: lastname,
         phoneNumber: phonenumber,
         email: email,
         company: company,
         profession: profession,
+        field: field,
         card: cardID
       }),
       cache: 'default',
-    }).then(function(response){
-      return response.json();
-    })
-    .catch(function(error) {
-      console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
-       // ADD THIS THROW error
+    }).
+      catch(function (error) {
+        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+        // ADD THIS THROW error
         throw error;
       });
   },
 
-  setUserWithFieldDetails: function(userID, firstname, lastname, phonenumber, email, company, profession, field, cardID) {
+  setCard: function (userID, cardID) {
     return fetch(`${API}/user/setdetails`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: userID,
-          firstName: firstname,
-          lastName: lastname,
-          phoneNumber: phonenumber,
-          email: email,
-          company: company,
-          profession: profession,
-          field: field,
-          card: cardID
-        }),
-        cache: 'default',
-      }).
-      catch(function(error) {
-        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
-         // ADD THIS THROW error
-          throw error;
-        });
-    },
-
-  setCard: function(userID, cardID) {
-    return fetch(`${API}/user/setdetails`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: userID,
-          card: cardID
-        }),
-        cache: 'default',
-      }).
-      catch(function(error) {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        card: cardID
+      }),
+      cache: 'default',
+    }).
+      catch(function (error) {
         console.log('There has been a problem with your setCard fetch operation: ' + error.message);
-         // ADD THIS THROW error
-          throw error;
-        });
-    },
-  addCard : function(cardOwner, addTo) {
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+  addCard: function (cardOwner, addTo) {
     return fetch(`${API}/user/addcard`, {
       method: 'POST',
       headers: {
@@ -198,14 +190,14 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
       }),
       cache: 'default',
     })
-    .catch(function(error) {
-      console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
-       // ADD THIS THROW error
+      .catch(function (error) {
+        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+        // ADD THIS THROW error
         throw error;
-    });
+      });
   },
 
-  getID: function() {
+  getID: function () {
     return fetch(`${API}/user/makeid`, {
       method: 'POST',
       headers: {
@@ -217,17 +209,17 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
       }),
       cache: 'default',
     })
-    .then(function(response){
-      return response.json();
-    })
-    .catch(function(error) {
-    console.log('There has been a problem with your getID fetch operation: ' + error.message);
-     // ADD THIS THROW error
-      throw error;
-    });
-},
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
-  setNote: function(userID, contactID, note) {
+  setNote: function (userID, contactID, note) {
     console.log("setNote:")
     console.log(note)
     return fetch(`${API}/user/setnote`, {
@@ -243,128 +235,128 @@ addUser: function(firstname, lastname, phonenumber, email, company, profession, 
       }),
       cache: 'default',
     })
-    .catch(function(error) {
-      console.log('There has been a problem with your setNote fetch operation: ' + error.message);
-       // ADD THIS THROW error
-        throw error;
-    });
-    },
-
-    getNote: function(userID, contactID) {
-      console.log("getNote called");
-      return fetch(`${API}/user/getnote`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          user: userID,
-          contact: contactID,
-        }),
-      cache: 'default',
-      })
-      .then(function(response){
-        return response.json();
-      })
-      .catch(function(error) {
-      console.log('There has been a problem with your getID fetch operation: ' + error.message);
-      // ADD THIS THROW error
+      .catch(function (error) {
+        console.log('There has been a problem with your setNote fetch operation: ' + error.message);
+        // ADD THIS THROW error
         throw error;
       });
-},
+  },
 
-addLink: function(userID, name, value) {
-  return fetch(`${API}/links/addlink`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      user: userID, 
-      name: name,
-      value: value,
-    }),
-  cache: 'default',
-  })
-  .then(function(response){
-    return response.json();
-  })
-  .catch(function(error) {
-  console.log('There has been a problem with your getID fetch operation: ' + error.message);
-  // ADD THIS THROW error
-    throw error;
-  });
-},
+  getNote: function (userID, contactID) {
+    console.log("getNote called");
+    return fetch(`${API}/user/getnote`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        contact: contactID,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
-editLink: function(link, name, value) {
-  return fetch(`${API}/links/editlink`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      link: link, 
-      name: name,
-      value: value,
-    }),
-  cache: 'default',
-  })
-  .then(function(response){
-    return response.json();
-  })
-  .catch(function(error) {
-  console.log('There has been a problem with your getID fetch operation: ' + error.message);
-  // ADD THIS THROW error
-    throw error;
-  });
-},
+  addLink: function (userID, name, value) {
+    return fetch(`${API}/links/addlink`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        name: name,
+        value: value,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
-removeLink: function(link) {
-  return fetch(`${API}/links/removelink`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      link: link, 
-    }),
-  cache: 'default',
-  })
-  .then(function(response){
-    return response.json();
-  })
-  .catch(function(error) {
-  console.log('There has been a problem with your getID fetch operation: ' + error.message);
-  // ADD THIS THROW error
-    throw error;
-  });
-},
+  editLink: function (link, name, value) {
+    return fetch(`${API}/links/editlink`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        link: link,
+        name: name,
+        value: value,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
-getLink: function(link) {
-  return fetch(`${API}/links/getlink`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      link: link, 
-    }),
-  cache: 'default',
-  })
-  .then(function(response){
-    return response.json();
-  })
-  .catch(function(error) {
-  console.log('There has been a problem with your getID fetch operation: ' + error.message);
-  // ADD THIS THROW error
-    throw error;
-  });
-}
+  removeLink: function (link) {
+    return fetch(`${API}/links/removelink`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        link: link,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  getLink: function (link) {
+    return fetch(`${API}/links/getlink`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        link: link,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  }
 
 }
 
