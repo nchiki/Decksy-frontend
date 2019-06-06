@@ -43,6 +43,10 @@ export default class CardProfileScreen extends React.Component {
       ),
     }
   };
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 
 
   async handleEmail() {
@@ -61,7 +65,7 @@ export default class CardProfileScreen extends React.Component {
   handleCall() {
     const args = {
       number: this.state.details.phoneNumber, // String value with the number to call
-      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call 
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
     }
 
     call(args).catch(console.error)
@@ -133,14 +137,19 @@ export default class CardProfileScreen extends React.Component {
             </View>
           </ImageBackground>
         </View>
-        <View style={{ backgroundColor: 'lightyellow', marginTop: 25, marginLeft: 20, marginRight: 20 }}>
-          <Text style={{ fontSize: 24, textAlign: 'center' }}>Notes:</Text>
-          <TextInput style={{ fontSize: 15 }} value={this.state.text} style={{ textAlign: 'center', fontStyle: 'italic' }}
+        <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 30, }}>Notes:</Text>
+        <View style={{ backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>
+          <TextInput
+            value={this.state.text}
+            style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10 }}
             onChangeText={(text) => {
               this.state.text = text;
               this.saveNotes();
-            }
-            } />
+            }}
+            editable={true}
+            multiline={true}
+          />
+          <View style={{ height: 4 }} />
         </View>
       </View>
     );

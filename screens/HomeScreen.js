@@ -66,7 +66,7 @@ export default class HomeScreen extends React.Component {
           type="ionicon"
           name={Platform.OS === "ios" ? "ios-add" : "md-add"}
           onPress={() => params.handleShortcodeAddButton()}
-          size={37}
+          size={39}
           color='dodgerblue'
         />
       ),
