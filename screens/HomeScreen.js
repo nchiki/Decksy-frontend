@@ -42,6 +42,7 @@ export default class HomeScreen extends React.Component {
     if(contacts == 'NO-ID') {
       contacts = global.contacts;
     }
+    this.setState({contacts: contacts});
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleFilterButton: this.onFiltersPress
