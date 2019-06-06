@@ -29,7 +29,11 @@ export default class HomeScreen extends React.Component {
       filters: null,
       userID: null,
       contacts: [],
+<<<<<<< HEAD
       displayValue: 1,
+=======
+      displayValue : 1,
+>>>>>>> a0ace62b006ed650628c1b79b45c74c4ee050df6
 
     }
 
@@ -83,7 +87,11 @@ export default class HomeScreen extends React.Component {
     this.setState({ shortcodeInputVisible: true });
   };
 
+<<<<<<< HEAD
   onFiltersPress = () => {
+=======
+  onFiltersPress = () =>{
+>>>>>>> a0ace62b006ed650628c1b79b45c74c4ee050df6
     this.setState({ filterMenuVisible: true });
   }
 
@@ -95,7 +103,11 @@ export default class HomeScreen extends React.Component {
     this.setState({ filterMenuVisible: false });
   };
 
+<<<<<<< HEAD
   handleAdd = async () => {
+=======
+  handleAdd =  async () => {
+>>>>>>> a0ace62b006ed650628c1b79b45c74c4ee050df6
     const { navigation } = this.props;
     apiRequests.addCard(global.userID, this.state.shortcode);
     setTimeout(() => this.getContactsForDisplay(), 20);
@@ -118,7 +130,11 @@ export default class HomeScreen extends React.Component {
     }), 20);
   }
 
+<<<<<<< HEAD
   handleFilter = async () => {
+=======
+  handleFilter =  async () => {
+>>>>>>> a0ace62b006ed650628c1b79b45c74c4ee050df6
     const filter = this.state.filters;
     const contacts = this.state.contacts;
     const listItems = (contacts.filter(cont => {
