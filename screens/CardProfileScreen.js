@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon } from 'react-native-elements';
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, TouchableOpacity, Linking } from 'react-native';
+import { Icon, Button } from 'react-native-elements';
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
@@ -44,6 +44,13 @@ export default class CardProfileScreen extends React.Component {
     }
   };
 
+  getURL = async () => {
+    const linkID = this.state.details.links[0];
+    console.log(linkID);
+    const link = await apiRequests.getLink(linkID);
+    return link;
+  }
+
   async handleEmail() {
     const to = [this.state.details.email] // string or array of email addresses
     email(to, {
@@ -65,18 +72,6 @@ export default class CardProfileScreen extends React.Component {
     call(args).catch(console.error)
   }
 
-  launchURL(url) {
-    Linking.canOpenURL(url).then(supported => {
-      if (!supported) {
-        console.log(`Can\'t handle url: ${url}`);
-      } else {
-        Linking.openURL(url)
-          .catch(err => {
-            console.warn('openURL error', err);
-          });
-      }
-    }).catch(err => console.warn('An unexpected error happened', err));
-  }
 
   async componentDidMount() {
     const { navigation } = this.props;
@@ -104,27 +99,29 @@ export default class CardProfileScreen extends React.Component {
     }
   }
 
+  //Linking.openURL('https://google.com') 
+
   render() {
+    const url = this.getURL().value;
+    console.log(url);
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
     return (
       <View style={{ flex: 1 }}>
         <View style={{ marginTop: 30 }} alignItems='center'>
-          <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
-            <View style={styles.containerStyle}>
-              <View style={templateUtils.setProfileStyle(item.card).titleText}>
-                <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+          <TouchableOpacity style={styles.containerStyle} onPress={() => Linking.openURL(url)} >
+            <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+              <View style={styles.containerStyle}>
+                <View style={templateUtils.setProfileStyle(item.card).titleText}>
+                  <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+                </View>
+                <View style={templateUtils.setProfileStyle(item.card).user}>
+                  <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
+                  <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+                </View>
               </View>
-              <View style={templateUtils.setProfileStyle(item.card).user}>
-                <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
-                <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
-                <Text style={{ color: 'blue' }}
-                  onPress={() => LinkingIOS.openURL('http://google.com')}>
-                  Google
-              </Text>
-              </View>
-            </View>
-          </ImageBackground>
+            </ImageBackground>
+          </TouchableOpacity>
         </View>
         <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 30, }}>Notes:</Text>
         <View style={{ backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>

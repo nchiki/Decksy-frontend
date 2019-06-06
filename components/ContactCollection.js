@@ -1,21 +1,21 @@
 import React from 'react';
-import {FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
+import { FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 import templateUtils from './Templates';
 
 
-export default class ContactCollection extends React.Component{
+export default class ContactCollection extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      _isMounted : false,
+      _isMounted: false,
       details: null,
     }
   }
 
-   static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
       title: 'CardProfile',
@@ -23,24 +23,23 @@ export default class ContactCollection extends React.Component{
   };
 
 
-  handleCardProfile = (item) =>
-  {
-    this.props.navigation.navigate('CardProfile', {item: item});
+  handleCardProfile = (item) => {
+    this.props.navigation.navigate('CardProfile', { item: item });
   }
 
 
-  _getContact = ({item}) => (
-    <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
-      <View style={{flex:1, alignItems:'flex-start', marginLeft:16}}>
-        <Text style={{fontSize:18}}>{`${item.firstName} ${item.lastName}`}</Text>
-        <Text style={{fontSize:13}}>{item.profession}</Text>
+  _getContact = ({ item }) => (
+    <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
+      <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
+        <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
+        <Text style={{ fontSize: 13 }}>{item.profession}</Text>
       </View>
-      <View style={{flex:3, marginRight:-70}}>
-        <TouchableOpacity style={styles.card} onPress= {() => this.handleCardProfile(item)}>
+      <View style={{ flex: 3, marginRight: -70 }}>
+        <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
           <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
             <View style={styles.containerStyle}>
               <View style={templateUtils.setStyle(item.card).titleText}>
-                  <Text style={templateUtils.setStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+                <Text style={templateUtils.setStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
               </View>
               <View style={templateUtils.setStyle(item.card).user}>
                 <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
@@ -55,7 +54,7 @@ export default class ContactCollection extends React.Component{
 
   componentWillMount() {
     this.setState({
-      _isMounted : true,
+      _isMounted: true,
       details: this.props.contacts
     });
   }
@@ -64,18 +63,15 @@ export default class ContactCollection extends React.Component{
     const users = this.state.details;
     if (users && users.length > 0) {
       return (
-        <View style={{alignItems:'center'}}>
-        {
-          users.map((u, i) => {
-            if (!u.card) {
-              u.card = 2; 
-            }
-            return (
-              this._getContact(u, i),
-              this.renderSeparator()
-            );
-          })
-        }
+        <View style={{ alignItems: 'center' }}>
+          {
+            users.map((u, i) => {
+              return (
+                this._getContact(u, i),
+                this.renderSeparator()
+              );
+            })
+          }
         </View>
       )
     } else {
@@ -84,7 +80,7 @@ export default class ContactCollection extends React.Component{
   }
 
   componentWillUnmount() {
-    this.setState({_isMounted : false});
+    this.setState({ _isMounted: false });
   }
 
   renderSeparator = () => {
@@ -98,17 +94,17 @@ export default class ContactCollection extends React.Component{
     );
   };
 
-  render () {
-    
-      return (
-          <FlatList
-          data={this.props.contacts}
-          renderItem={this._getContact}
-          keyExtractor={item => item.email}
-          ItemSeparatorComponent={this.renderSeparator}
-          style={{marginTop: -2}}
-          />
-      );
+  render() {
+
+    return (
+      <FlatList
+        data={this.props.contacts}
+        renderItem={this._getContact}
+        keyExtractor={item => item.email}
+        ItemSeparatorComponent={this.renderSeparator}
+        style={{ marginTop: -2 }}
+      />
+    );
   }
 }
 
@@ -117,7 +113,7 @@ const styles = StyleSheet.create({
     width: 350,
     height: 200,
     transform: [{
-      scale:0.5
+      scale: 0.5
     }],
   },
   containerBackStyle: {
@@ -125,12 +121,12 @@ const styles = StyleSheet.create({
     height: 200,
   },
   user: {
-    alignItems:'center',
+    alignItems: 'center',
     justifyContent: 'center'
   },
-  card:{
-    alignItems:'center',
-    justifyContent:'center',
-    alignContent:'center'
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center'
   }
 })
