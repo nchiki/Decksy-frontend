@@ -25,7 +25,7 @@ export default class CardTemplate extends React.Component {
     cardType: 2,
     details: u,
     image: require("../assets/images/template2.png"),
-    templateStyle: templateStyles.getStyle2(),
+    templateStyle: templateUtils.setProfileStyle(2),
     saved: false
   }
 
