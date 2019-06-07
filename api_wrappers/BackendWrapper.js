@@ -24,7 +24,6 @@ const apiRequests = {
   },
 
   setUserCard: function (userID, templateID, color) {
-
     fetch(`${API}/businesscards/setusercard`, {
       method: 'POST',
       headers: {
@@ -348,18 +347,12 @@ const apiRequests = {
       }),
       cache: 'default',
     })
-      .then(function (response) {
-        console.log("GETLINK:")
-        // console.log(response);
-        console.log(JSON.stringify(response, null, 4));
-        return JSON.stringify(response, null, 4);
-      })
       .catch(function (error) {
         console.log('There has been a problem with your getLink fetch operation: ' + error.message);
         // ADD THIS THROW error
         throw error;
       });
-  }
+  },
 
 }
 

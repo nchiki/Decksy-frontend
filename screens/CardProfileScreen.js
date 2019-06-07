@@ -69,15 +69,14 @@ export default class CardProfileScreen extends React.Component {
   }
 
   getURL = async (details) => {
-    console.log("getURL:");
-    console.log(details);
     const linkID = details.links[0];
     const link = await apiRequests.getLink(linkID);
     if (link) {
-      this.setState({ url: link.url });
+      let url = link.url;
+      this.setState({ url: url });
     }
     console.log("URL")
-    console.log(link);
+    console.log(link.url);
   }
 
   async componentDidMount() {
@@ -113,10 +112,13 @@ export default class CardProfileScreen extends React.Component {
     // this.getURL();
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
+
+    console.log("NEXT URL");
+    console.log(this.state.url);
     return (
       <View style={{ flex: 1 }}>
         <View style={{ marginTop: 30 }} alignItems='center'>
-          <TouchableOpacity style={styles.containerStyle} onPress={() => Linking.openURL('https://' + this.state.url)} >
+          <TouchableOpacity style={styles.containerStyle} onPress={() => Linking.openURL(this.state.url)} >
             <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
               <View style={styles.containerStyle}>
                 <View style={templateUtils.setProfileStyle(item.card).titleText}>
