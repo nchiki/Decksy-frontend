@@ -219,8 +219,6 @@ const apiRequests = {
   },
 
   setNote: function (userID, contactID, note) {
-    console.log("setNote:")
-    console.log(note)
     return fetch(`${API}/user/setnote`, {
       method: 'POST',
       headers: {
@@ -242,7 +240,6 @@ const apiRequests = {
   },
 
   getNote: function (userID, contactID) {
-    console.log("getNote called");
     return fetch(`${API}/user/getnote`, {
       method: 'POST',
       headers: {

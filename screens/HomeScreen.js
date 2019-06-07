@@ -7,6 +7,8 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import { Icon } from "react-native-elements";
 import DialogInput from 'react-native-dialog-input';
 import Dialog from "react-native-dialog";
+import Swipeout from 'react-native-swipeout';
+import OptionsMenu from "react-native-options-menu";
 
 import ContactCollection from '../components/ContactCollection';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -39,7 +41,9 @@ export default class HomeScreen extends React.Component {
     this.setState({ contacts: contacts });
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
-      handleFilterButton: this.onFiltersPress
+      handleQRCodeAddButton: this.handleQRCode,
+      handleNFCAddButton: this.handleNFC,
+      handleFilterButton: this.onFiltersPress,
     });
   }
 
@@ -61,13 +65,18 @@ export default class HomeScreen extends React.Component {
         />
       ),
       headerRight: (
-        <Icon
-          containerStyle={{ paddingRight: 12 }}
-          type="ionicon"
-          name={Platform.OS === "ios" ? "ios-add" : "md-add"}
-          onPress={() => params.handleShortcodeAddButton()}
-          size={39}
-          color='dodgerblue'
+        <OptionsMenu
+          customButton={(
+            <Icon
+              containerStyle={{ paddingRight: 12 }}
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-add" : "md-add"}
+              size={39}
+              color='dodgerblue'
+            />
+          )}
+          options={["Shortcode", "QR Code", "NFC", "Cancel"]}
+          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => params.handleNFCAddButton(), () => {}]}
         />
       ),
     }
@@ -76,6 +85,14 @@ export default class HomeScreen extends React.Component {
   showShortcodeInput = () => {
     this.setState({ shortcodeInputVisible: true });
   };
+
+  handleQRCode = () => {
+    alert("TODO");
+  }
+
+  handleNFC = () => {
+    alert("TODO");
+  }
 
   onFiltersPress = () => {
     this.setState({ filterMenuVisible: true });
@@ -97,7 +114,6 @@ export default class HomeScreen extends React.Component {
       shortcodeInputVisible: false,
     });
   };
-
 
   getContactsForDisplay = async () => {
     const contacts = await apiRequests.getUserContacts(global.userID);
@@ -155,15 +171,15 @@ export default class HomeScreen extends React.Component {
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
     const changeDisplayButton = Platform.OS === "ios" ? (
-      <SegmentedControlIOS
-        values={['Informative View', 'Visual View']}
-        selectedIndex={this.state.displayValue - 1}
-        onChange={(event) => {
-          this.setState(
-            { displayValue: event.nativeEvent.selectedSegmentIndex + 1 });
-        }}
-        style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
-      />)
+        <SegmentedControlIOS
+          values={['Informative View', 'Visual View']}
+          selectedIndex={this.state.displayValue - 1}
+          onChange={(event) => {
+            this.setState(
+              { displayValue: event.nativeEvent.selectedSegmentIndex + 1 });
+          }}
+          style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
+        />)
       : (<Button title='Change Display' onPress={this.updateDisplay} />)
 
     return (
