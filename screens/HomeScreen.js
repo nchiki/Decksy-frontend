@@ -114,22 +114,30 @@ export default class HomeScreen extends React.Component {
 
   handleFilter = async () => {
     const filter = this.state.filters;
-    const contacts = this.state.contacts;
-    const listItems = (contacts.filter(cont => {
-      if (!cont.field) {
-        return false
-      } else {
-        let field = (cont.field).toLowerCase();
-        return field.indexOf(filter.toLowerCase()) != -1
-      }
-    }));
+    if(!filter) {
+      this.getContactsForDisplay();
+      setTimeout(() =>
+        this.setState({
+          filterMenuVisible: false,
+        }), 20);
+    } else {
+      const contacts = this.state.contacts;
+      const listItems = (contacts.filter(cont => {
+        if (!cont.field) {
+          return false
+        } else {
+          let field = (cont.field).toLowerCase();
+          return field.indexOf(filter.toLowerCase()) != -1
+        }
+      }));
 
-    setTimeout(() =>
-      this.setState({
-        filterMenuVisible: false,
-        contacts: listItems,
-        filters: null
-      }), 20);
+      setTimeout(() =>
+        this.setState({
+          filterMenuVisible: false,
+          contacts: listItems,
+          filters: null
+        }), 20);
+    }
   };
 
   updateDisplay = () => {
