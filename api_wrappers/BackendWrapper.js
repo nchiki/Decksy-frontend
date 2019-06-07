@@ -260,7 +260,7 @@ const apiRequests = {
         return response.json();
       })
       .catch(function (error) {
-        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        console.log('There has been a problem with your getNote fetch operation: ' + error.message);
         // ADD THIS THROW error
         throw error;
       });
@@ -284,7 +284,7 @@ const apiRequests = {
         return response.json();
       })
       .catch(function (error) {
-        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        console.log('There has been a problem with your addLink fetch operation: ' + error.message);
         // ADD THIS THROW error
         throw error;
       });
@@ -308,7 +308,7 @@ const apiRequests = {
         return response.json();
       })
       .catch(function (error) {
-        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        console.log('There has been a problem with your editLink fetch operation: ' + error.message);
         // ADD THIS THROW error
         throw error;
       });
@@ -330,7 +330,7 @@ const apiRequests = {
         return response.json();
       })
       .catch(function (error) {
-        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        console.log('There has been a problem with your removeLink fetch operation: ' + error.message);
         // ADD THIS THROW error
         throw error;
       });
@@ -349,10 +349,13 @@ const apiRequests = {
       cache: 'default',
     })
       .then(function (response) {
-        return response.json();
+        console.log("GETLINK:")
+        // console.log(response);
+        console.log(JSON.stringify(response, null, 4));
+        return JSON.stringify(response, null, 4);
       })
       .catch(function (error) {
-        console.log('There has been a problem with your getID fetch operation: ' + error.message);
+        console.log('There has been a problem with your getLink fetch operation: ' + error.message);
         // ADD THIS THROW error
         throw error;
       });

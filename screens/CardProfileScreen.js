@@ -68,17 +68,22 @@ export default class CardProfileScreen extends React.Component {
     call(args).catch(console.error)
   }
 
-  getURL = async () => {
-    const linkID = this.state.details.links[0];
+  getURL = async (details) => {
+    console.log("getURL:");
+    console.log(details);
+    const linkID = details.links[0];
     const link = await apiRequests.getLink(linkID);
     if (link) {
-      this.setState({ url: link });
+      this.setState({ url: link.url });
     }
+    console.log("URL")
+    console.log(link);
   }
 
   async componentDidMount() {
     const { navigation } = this.props;
-    const details = navigation.getParam('item', 'NO-ID')
+    const details = navigation.getParam('item', 'NO-ID');
+    console.log(details);
     this.setState({
       details: details,
     })
@@ -88,31 +93,30 @@ export default class CardProfileScreen extends React.Component {
       handleCallButton: () => this.handleCall(),
     });
     this.getNotes(details.user);
+    this.getURL(details);
   }
 
   async componentWillUnmount() {
     apiRequests.setNote(global.userID, this.state.details.user, this.state.text);
-    this.getURL();
   }
 
   getNotes = async (userID) => {
-    const note = await apiRequests.getNote(global.userID, userID);
-    if (note) {
-      this.setState({ text: note.note });
+    const response = await apiRequests.getNote(global.userID, userID);
+    if (response) {
+      this.setState({ text: response.note });
     }
   }
 
-  //Linking.openURL('https://google.com') 
+  //Linking.openURL('https://google.com')
 
   render() {
-    this.getURL();
+    // this.getURL();
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
-    const url = this.state.url;
     return (
       <View style={{ flex: 1 }}>
         <View style={{ marginTop: 30 }} alignItems='center'>
-          <TouchableOpacity style={styles.containerStyle} onPress={() => Linking.openURL('https://' + url.value)} >
+          <TouchableOpacity style={styles.containerStyle} onPress={() => Linking.openURL('https://' + this.state.url)} >
             <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
               <View style={styles.containerStyle}>
                 <View style={templateUtils.setProfileStyle(item.card).titleText}>
