@@ -12,10 +12,7 @@ export default class CardProfileScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      _isMounted: false,
-      text: "",
       templateID: 4,
-      url: null,
     }
   }
 
@@ -45,40 +42,6 @@ export default class CardProfileScreen extends React.Component {
     }
   };
 
-
-
-  async handleEmail() {
-    const to = [this.state.details.email] // string or array of email addresses
-    email(to, {
-      subject: 'Subject',
-      body: 'Body'
-    }).catch(console.error)
-
-  }
-
-  handleMessage() {
-    Alert.alert("Message!");
-  }
-
-  handleCall() {
-    const args = {
-      number: this.state.details.phoneNumber, // String value with the number to call
-      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
-    }
-    call(args).catch(console.error)
-  }
-
-  getURL = async (details) => {
-    const linkID = details.links[0];
-    const link = await apiRequests.getLink(linkID);
-    if (link) {
-      let url = link.url;
-      this.setState({ url: url });
-    }
-    console.log("URL")
-    console.log(link.url);
-  }
-
   async componentDidMount() {
     const { navigation } = this.props;
     const details = navigation.getParam('item', 'NO-ID');
@@ -91,30 +54,52 @@ export default class CardProfileScreen extends React.Component {
       handleMessageButton: () => this.handleMessage(),
       handleCallButton: () => this.handleCall(),
     });
-    this.getNotes(details.user);
+    this.getNote(details.user);
     this.getURL(details);
   }
 
   async componentWillUnmount() {
-    apiRequests.setNote(global.userID, this.state.details.user, this.state.text);
+    apiRequests.setNote(global.userID, this.state.details.user, this.state.note);
   }
 
-  getNotes = async (userID) => {
-    const response = await apiRequests.getNote(global.userID, userID);
-    if (response) {
-      this.setState({ text: response.note });
+  async handleEmail() {
+    const to = [this.state.details.email] // string or array of email addresses
+    email(to, {
+      subject: 'Subject',
+      body: 'Body'
+    }).catch(console.error)
+  }
+
+  handleMessage() {
+    Alert.alert("TODO");
+  }
+
+  handleCall() {
+    const args = {
+      number: this.state.details.phoneNumber, // String value with the number to call
+      prompt: false // Optional boolean property. Determines if the user should be prompt prior to the call
+    }
+    call(args).catch(console.error)
+  }
+
+  getURL = async (details) => {
+    const link = await apiRequests.getLink(details.links[0]);
+    if (link) {
+      this.setState({ url: link.url });
     }
   }
 
-  //Linking.openURL('https://google.com')
+  getNote = async (userID) => {
+    const response = await apiRequests.getNote(global.userID, userID);
+    if (response) {
+      this.setState({ note: response.note });
+    }
+  }
 
   render() {
-    // this.getURL();
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
 
-    console.log("NEXT URL");
-    console.log(this.state.url);
     return (
       <View style={{ flex: 1 }}>
         <View style={{ marginTop: 30 }} alignItems='center'>
@@ -135,10 +120,10 @@ export default class CardProfileScreen extends React.Component {
         <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 30, }}>Notes:</Text>
         <View style={{ backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>
           <TextInput
-            value={this.state.text}
+            value={this.state.note}
             style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10 }}
-            onChangeText={(text) => {
-              this.setState({ text: text });
+            onChangeText={(note) => {
+              this.setState({ note: note });
             }}
             editable={true}
             multiline={true}
