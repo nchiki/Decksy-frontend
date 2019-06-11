@@ -11,8 +11,8 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
-  
-  static navigationOptions = ({navigation}) => {
+
+  static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
       title: 'Profile',
@@ -23,7 +23,7 @@ export default class ProfileScreen extends React.Component {
         <OptionsMenu
           customButton={(
             <Icon
-              containerStyle={{paddingRight: 12}}
+              containerStyle={{ paddingRight: 12 }}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-settings" : "md-settings"}
               size={33}
@@ -32,7 +32,7 @@ export default class ProfileScreen extends React.Component {
           )}
           destructiveIndex={1}
           options={["Edit details", "Sign out", "Cancel"]}
-          actions={[() => params.changeSettings(), () => params.logOut(), () => {}]}
+          actions={[() => params.changeSettings(), () => params.logOut(), () => { }]}
         />
       ),
     }
@@ -49,13 +49,13 @@ export default class ProfileScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={{flex:1}}>
-        <View style={{flex:3}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 3 }}>
           <CardTemplate navigation={this.props.navigation} />
         </View>
-        <View style={{flex:1, alignItems:'center'}}>
-          <Text style={{fontSize:24}}>Your shortcode is:</Text>
-          <Text style={{fontSize:30}}>{global.userID}</Text>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text style={{ fontSize: 24 }}>Your shortcode is:</Text>
+          <Text style={{ fontSize: 30 }}>{global.userID}</Text>
         </View>
       </View>
     );
@@ -63,7 +63,7 @@ export default class ProfileScreen extends React.Component {
 
   changeSettings = async () => {
     const det = await apiRequests.getUserDetails(global.userID);
-    this.props.navigation.navigate('EditDetailsScreen', {details: det});
+    this.props.navigation.navigate('EditDetailsScreen', { details: det });
   }
 
   logOut = () => {

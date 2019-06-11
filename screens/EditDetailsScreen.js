@@ -5,8 +5,6 @@ import { ScrollView, Text, TextInput, View, Button, Alert, TouchableHighlight } 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
-var numOfLinks = 0;
-
 export default class EditDetailsScreen extends Component {
 
   constructor(props) {
@@ -32,70 +30,6 @@ export default class EditDetailsScreen extends Component {
   };
 
 
-  addAllLinks = () => {
-    for (let i = 0; i < this.state.links.length; i = i + 2) {
-      const name = this.state.links[i];
-      const url = this.state.links[i + 1];
-      if (name != null && url != null) {
-        var linkID = this.getLink(name, url);
-        let links = this.state.links;
-        links.push(linkID.link);
-        this.state.links = links;
-      }
-    }
-  }
-
-  addToLinks = (item, position) => {
-    let links = this.state.links;
-    links.splice(position, 0, item);
-    this.state.links = links;
-  }
-
-  getLink = async (name, URL) => {
-    const linkID = await apiRequests.addLink(global.userID, name, URL);
-    return linkID;
-  }
-
-
-  addLinkFields = () => {
-    const { navigation } = this.props;
-    const details = navigation.getParam('details', 'NULL');
-    var linkFields = [];
-    var placeHolder_name = null;
-    for (let i = 0; i < numOfLinks; i++) {
-      if (!details.links[i]) {
-        placeHolder_name = "Name of the link";
-      } else {
-        placeHolder_name = details.links[i];
-      }
-      linkFields.push(
-        <View key={i} style={{ flex: 1 }}>
-          <TextInput
-            key={i}
-            style={styles.loginInputs}
-            placeholder="Name of the link"
-            onSubmitEditing={(linkName) => {
-              this.addToLinks(linkName.nativeEvent.text, i);
-            }
-            }
-          />
-          <TextInput
-            key={'_' + i}
-            style={styles.loginInputs}
-            placeholder="URL"
-            onSubmitEditing={(url) => {
-              this.addToLinks(url.nativeEvent.text, i + 1);
-            }
-            }
-          />
-        </View>
-      )
-    }
-    return linkFields;
-  }
-
-
-
   componentDidMount() {
     const { navigation } = this.props;
     const details = navigation.getParam('details', 'NULL');
@@ -113,7 +47,6 @@ export default class EditDetailsScreen extends Component {
   }
 
   handleSubmit = async () => {
-    this.addAllLinks();
     apiRequests.setUserDetails(this.state.userID, this.state.firstName, this.state.lastName, this.state.phoneNumber, this.state.email, this.state.company, this.state.profession, this.state.cardID);
     this.props.navigation.goBack();
   }
@@ -164,7 +97,6 @@ export default class EditDetailsScreen extends Component {
             onChangeText={(profession) => this.setState({ profession: profession })}
           />
         </View>
-        {this.addLinkFields()}
         <View style={{ flex: 1, marginTop: spacing }}>
           <TextInput
             style={styles.loginInputs}
@@ -187,13 +119,6 @@ export default class EditDetailsScreen extends Component {
             secureTextEntry={true}
             textContentType="password"
           />
-        </View>
-        <View style={{ flex: 1 }}>
-          <Button title="Add link" onPress={() => {
-            numOfLinks++;
-            this.forceUpdate();
-          }
-          } />
         </View>
         <View style={{ flex: 1, marginTop: spacing + 4, alignItems: 'center' }}>
           <TouchableHighlight onPress={() => this.handleSubmit()} underlayColor='blue'>

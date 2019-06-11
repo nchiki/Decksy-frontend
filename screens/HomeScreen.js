@@ -24,6 +24,9 @@ export default class HomeScreen extends React.Component {
       count: 0,
       filterMenuVisible: false,
       shortcodeInputVisible: false,
+      requestVisible: false,
+      requestUser: null,
+      requestID: null,
       filters: null,
       userID: null,
       contacts: [],
@@ -76,7 +79,7 @@ export default class HomeScreen extends React.Component {
             />
           )}
           options={["Shortcode", "QR Code", "NFC", "Cancel"]}
-          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => params.handleNFCAddButton(), () => {}]}
+          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => params.handleNFCAddButton(), () => { }]}
         />
       ),
     }
@@ -108,7 +111,8 @@ export default class HomeScreen extends React.Component {
 
   handleAdd = async () => {
     const { navigation } = this.props;
-    apiRequests.addCard(global.userID, this.state.shortcode);
+    apiRequests.addCard(this.state.shortcode, global.userID);
+    apiRequests.addRequest(this.state.shortcode, global.userID);
     setTimeout(() => this.getContactsForDisplay(), 20);
     this.setState({
       shortcodeInputVisible: false,
@@ -119,6 +123,7 @@ export default class HomeScreen extends React.Component {
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
+      console.log(id);
       const det = await apiRequests.getUserDetails(id);
       return det
     }));
@@ -130,7 +135,7 @@ export default class HomeScreen extends React.Component {
 
   handleFilter = async () => {
     const filter = this.state.filters;
-    if(!filter) {
+    if (!filter) {
       this.getContactsForDisplay();
       setTimeout(() =>
         this.setState({
@@ -166,20 +171,50 @@ export default class HomeScreen extends React.Component {
       : (<CardCollection contacts={contacts} navigation={navigation} />)
   }
 
-  render() {
+  checkRequests = async () => {
+    let requests = await apiRequests.getRequests(global.userID);
+    if (requests.requests[0] != null) {
+      let fstRequest = requests.requests[0];
+      let user = await apiRequests.getUserDetails(fstRequest.from);
+      this.setState({
+        requestVisible: true, requestUser: user.firstName + " " + user.lastName,
+        requestID: fstRequest.request
+      });
+    }
+  };
 
+  handleAddRequest = async () => {
+    await apiRequests.acceptRequest(this.state.requestID);
+    this.getContactsForDisplay();
+    this.setState({
+      requestVisible: false, requestUser: null,
+      requestID: null
+    });
+  }
+
+  handleRemoveRequest = async () => {
+    await apiRequests.removeRequest(this.state.requestID);
+    this.setState({
+      requestVisible: false, requestUser: null,
+      requestID: null
+    });
+  }
+
+  render() {
+    this.checkRequests();
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
+    console.log(this.state.contacts);
     const changeDisplayButton = Platform.OS === "ios" ? (
-        <SegmentedControlIOS
-          values={['Informative View', 'Visual View']}
-          selectedIndex={this.state.displayValue - 1}
-          onChange={(event) => {
-            this.setState(
-              { displayValue: event.nativeEvent.selectedSegmentIndex + 1 });
-          }}
-          style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
-        />)
+      <SegmentedControlIOS
+        values={['Informative View', 'Visual View']}
+        selectedIndex={this.state.displayValue - 1}
+        onChange={(event) => {
+          this.setState(
+            { displayValue: event.nativeEvent.selectedSegmentIndex + 1 });
+        }}
+        style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
+      />)
       : (<Button title='Change Display' onPress={this.updateDisplay} />)
 
     return (
@@ -200,6 +235,14 @@ export default class HomeScreen extends React.Component {
           <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
           <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
           <Dialog.Button label="Add" onPress={this.handleAdd} />
+        </Dialog.Container>
+
+        <Dialog.Container
+          visible={this.state.requestVisible}>
+          <Dialog.Title>Addrequests</Dialog.Title>
+          <Dialog.Description>Do you want to add {this.state.requestUser} to your contacts?</Dialog.Description>
+          <Dialog.Button label="Yes" onPress={this.handleAddRequest} />
+          <Dialog.Button label="No" onPress={this.handleRemoveRequest} />
         </Dialog.Container>
 
         {/* Displays the collection of cards */}
