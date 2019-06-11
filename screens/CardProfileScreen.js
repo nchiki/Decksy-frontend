@@ -6,6 +6,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 import OptionsMenu from "react-native-options-menu";
 import email from 'react-native-email';
 import templateUtils from '../components/Templates';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 export default class CardProfileScreen extends React.Component {
 
@@ -111,7 +112,8 @@ export default class CardProfileScreen extends React.Component {
                 </View>
                 <View style={templateUtils.setProfileStyle(item.card).user}>
                   <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
-                  <Text style={templateUtils.setProfileStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+                  <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
+                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
                 </View>
               </View>
             </ImageBackground>

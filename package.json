@@ -37,6 +37,7 @@
     "react-native-elements": "^1.1.0",
     "react-native-email": "^1.0.2",
     "react-native-flip-card": "^3.5.5",
+    "react-native-grid-component": "^2.0.0",
     "react-native-mail-launcher": "^1.0.5",
     "react-native-options-menu": "^2.0.2",
     "react-native-phone-call": "^1.0.9",
@@ -44,6 +45,7 @@
     "react-native-qrcode-scanner": "1.2.1",
     "react-native-share": "^1.2.1",
     "react-native-sms": "^1.9.0",
+    "react-native-swipeout": "^2.3.6",
     "react-navigation": "^3.11.0",
     "react-router-dom": "^5.0.0",
     "react-test-renderer": "^16.8.6"

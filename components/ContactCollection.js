@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Swipeout from 'react-native-swipeout';
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 import templateUtils from './Templates';
 
 export default class ContactCollection extends React.Component {
@@ -52,7 +52,8 @@ export default class ContactCollection extends React.Component {
                 </View>
                 <View style={templateUtils.setStyle(item.card).user}>
                   <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
-                  <Text style={templateUtils.setStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
+                  <Text style={templateUtils.setStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
+                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
                 </View>
               </View>
             </ImageBackground>
