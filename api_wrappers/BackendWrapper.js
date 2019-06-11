@@ -374,6 +374,25 @@ const apiRequests = {
       });
   },
 
+  setPinned: function(userID, contactID, pinned) {
+    fetch(`${API}/businesscards/setusercard`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: userID,
+        contact: templateID,
+        pinned: pinned
+      })
+    })
+    .catch(function (error) {
+      console.log('There has been a problem with your setPinned fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+    });
+  }
+
 }
 
 

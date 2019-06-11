@@ -108,11 +108,11 @@ export default class HomeScreen extends React.Component {
 
   handleAdd = async () => {
     const { navigation } = this.props;
-    apiRequests.addCard(global.userID, this.state.shortcode);
     setTimeout(() => this.getContactsForDisplay(), 20);
     this.setState({
       shortcodeInputVisible: false,
     });
+    apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
   getContactsForDisplay = async () => {
