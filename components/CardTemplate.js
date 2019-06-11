@@ -46,6 +46,11 @@ export default class CardTemplate extends React.Component {
     setTimeout(() => this.setTemplate(), 20);
   }
 
+  showGallery = async () => {
+    const det = await apiRequests.getUserDetails(global.userID);
+    this.props.navigation.navigate('TemplatesGallery', {details: det});
+  }
+
   save = async (navigation) => {
     apiRequests.setCard(global.userID, this.state.cardType);
     const det = await apiRequests.getUserDetails(global.userID);
@@ -81,7 +86,13 @@ export default class CardTemplate extends React.Component {
     } else {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
+         
           <View style={{ top: 40 }}>
+          <View style={{alignItems: 'right' }}>
+          <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.showGallery()}>
+              <Text style={{ fontWeight: 'bold' }}> Gallery </Text>
+            </TouchableOpacity>
+          </View>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <ImageBackground source={image} style={styles.containerStyle}>
