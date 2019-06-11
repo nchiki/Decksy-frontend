@@ -71,6 +71,9 @@ export default class ContactCollection extends React.Component {
         <View style={{ alignItems: 'center' }}>
           {
             users.map((u, i) => {
+              console.log("U, I:");
+              console.log(u);
+              console.log(i);
               return (
                 this.renderRow(u, i),
                 this.renderSeparator()
@@ -95,8 +98,9 @@ export default class ContactCollection extends React.Component {
     );
   };
 
-  deleteCard() {
-    alert("TODO");
+  deleteCard(contactID) {
+    console.log(contactID);
+    apiRequests.removeContact(global.userID, contactID);
   }
 
   pinCard() {
@@ -130,7 +134,7 @@ export default class ContactCollection extends React.Component {
       text: 'Delete',
       backgroundColor: 'red',
       underlayColor: 'rgba(255, 255, 255, 1.0)',
-      onPress: () => { this.deleteCard() }
+      onPress: () => { console.log(JSON.stringify(this.state.details)); this.deleteCard(this.state.details.userID) }
     },
   ];
 

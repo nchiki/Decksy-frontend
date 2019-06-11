@@ -130,6 +130,29 @@ const apiRequests = {
       });
   },
 
+  removeContact: function (userID, contactID) {
+    console.log("removeContact called:");
+    console.log(userID);
+    console.log(contactID);
+    return fetch(`${API}/user/removecontact`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        contact: contactID,
+      }),
+      cache: 'default',
+    })
+    .catch(function (error) {
+      console.log('There has been a problem with your removeContact fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+    });
+  },
+
   setUserWithFieldDetails: function (userID, firstname, lastname, phonenumber, email, company, profession, field, cardID) {
     return fetch(`${API}/user/setdetails`, {
       method: 'POST',
