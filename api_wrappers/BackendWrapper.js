@@ -351,6 +351,42 @@ const apiRequests = {
       });
   },
 
+  addCardImage: function (userID, image) {
+    return fetch(`${API}/cards/uploadcard`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        card: image,
+      }),
+      cache: 'default',
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your addCardImage fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+    },
+    getCardImage: function (userID) {
+      return fetch(`${API}/cards/getcard/${userID}`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        },
+        cache: 'default',
+      }).then(function (response) {
+        return response.json();
+      })
+        .catch(function (error) {
+          console.log('There has been a problem with your getCardImage fetch operation: ' + error.message);
+          // ADD THIS THROW error
+          throw error;
+        });
+      },
 }
 
 

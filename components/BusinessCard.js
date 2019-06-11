@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import {Image, View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Divider, Card, Button } from 'react-native-elements';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
@@ -22,6 +22,7 @@ export default class BusinessCard extends React.Component {
       image: null,
       templateStyle: null,
       links: [],
+      picture: null
     };
   }
 
@@ -53,7 +54,34 @@ export default class BusinessCard extends React.Component {
      return linkName;
    }
    */
+displayCard(props) {
+  const u = props.details;
+    //this.resolveLinks();
+    console.log(this.state.links[0]);
+   let image = props.image;
+    const templateStyle = props.templateStyle;
+    if(props.picture) {
+      image= props.picture;
+      return (
+        <Image source={{ uri: image }} style={{ width: 350, height: 200 }} />
+      )
+    } else {
+    return (
+      <ImageBackground source={image} style={styles.containerStyle}>
+                  <View style={styles.containerStyle}>
+                    <View style={templateStyle.titleText}>
+                      <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
+                    </View>
+                    <View style={templateStyle.user}>
+                      <Text style={templateStyle.company}>{u.company}</Text>
+                      <Text style={templateStyle.details}>{u.phoneNumber}{'\n'}{u.email}{'\n'}{this.state.links.pop()}</Text>
+                    </View>
+                  </View>
 
+    </ImageBackground>
+    )
+    }
+}
 
   render() {
     // const u = this.props.navigation.getParam('details', 'NO-ID');
@@ -81,18 +109,7 @@ export default class BusinessCard extends React.Component {
           <View>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
-                <ImageBackground source={image} style={styles.containerStyle}>
-                  <View style={styles.containerStyle}>
-                    <View style={templateStyle.titleText}>
-                      <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
-                    </View>
-                    <View style={templateStyle.user}>
-                      <Text style={templateStyle.company}>{u.company}</Text>
-                      <Text style={templateStyle.details}>{u.phoneNumber}{'\n'}{u.email}{'\n'}{this.state.links.pop()}</Text>
-                    </View>
-                  </View>
-
-                </ImageBackground>
+                {this.displayCard(this.props)}
               </TouchableOpacity>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <Card title='Scan' titleStyle={{ color: 'darkblue', fontSize: 30 }} containerStyle={styles.containerBackStyle}>

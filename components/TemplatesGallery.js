@@ -81,30 +81,14 @@ export default class TemplatesGallery extends React.Component {
   
 
   render() {
-    const image = this.state.image;
-    const u = this.state.details;
-    const templateStyle = this.state.templateStyle;
-    const saved = this.state.saved;
-    if (saved) {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
-          <View style={{ flex: 3 }}>
-            <BusinessCard image={image} details={u} templateStyle={templateStyle} />
-          </View>
-          <View style={{ flex: 2 }}>
-            <Button title='Edit' onPress={() => this.handleEdit()} />
-          </View>
-        </View>
-      )
-    } else {
-      return (
+    return (
          <Grid style={styles.list} renderItem={this._renderItem}
          data={[2,3,4,5,6,7,8,9,10]}
          keyExtractor={item => item}
          numColumns={2}/>
         
-      );
-    }
+    );
+    
   }
 }
 
