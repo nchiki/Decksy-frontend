@@ -12,6 +12,7 @@ import CardTemplate from '../components/CardTemplate';
 import { Ionicons } from '@expo/vector-icons';
 import EditDetailsScreen from '../screens/EditDetailsScreen';
 import LinkScreen from '../screens/LinkScreen';
+import RequestsScreen from '../screens/RequestsScreen';
 
 export const CollectedCardsStack = createStackNavigator({
   CollectedCards: { screen: HomeScreen },
@@ -44,7 +45,8 @@ const ProfileScreenStack = createStackNavigator({
   CardScreen: { screen: BusinessCard },
   CardTemplateScreen: { screen: CardTemplate },
   EditDetailsScreen: { screen: EditDetailsScreen },
-  LinkScreen: { screen: LinkScreen }
+  LinkScreen: { screen: LinkScreen },
+  RequestsScreen: { screen: RequestsScreen }
 },
 );
 

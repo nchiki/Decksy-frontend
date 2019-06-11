@@ -19,6 +19,16 @@ export default class ProfileScreen extends React.Component {
       headerTitleStyle: {
         fontSize: 25
       },
+      headerLeft: (
+        <Icon
+          containerStyle={{ paddingLeft: 12 }}
+          type="ionicon"
+          name={Platform.OS === "ios" ? "ios-people" : "md-people"}
+          onPress={() => params.showRequests()}
+          size={33}
+          color='dodgerblue'
+        />
+      ),
       headerRight: (
         <OptionsMenu
           customButton={(
@@ -35,13 +45,14 @@ export default class ProfileScreen extends React.Component {
           actions={[() => params.changeSettings(), () => params.logOut(), () => { }]}
         />
       ),
-    }
-  };
+    };
+  }
 
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({
       changeSettings: () => this.changeSettings(),
+      showRequests: () => this.showRequests(),
       logOut: () => this.logOut(),
     });
   }
@@ -61,6 +72,12 @@ export default class ProfileScreen extends React.Component {
     );
   }
 
+  showRequests = async () => {
+    const requests = await apiRequests.getRequests(global.userID);
+    console.log(requests);
+    this.props.navigation.navigate('RequestsScreen', { requests: requests.requests });
+  }
+
   changeSettings = async () => {
     const det = await apiRequests.getUserDetails(global.userID);
     this.props.navigation.navigate('EditDetailsScreen', { details: det });
@@ -70,4 +87,4 @@ export default class ProfileScreen extends React.Component {
     global.userID = 1;
     this.props.navigation.navigate('Login');
   }
-}
+} 

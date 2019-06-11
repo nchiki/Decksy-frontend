@@ -25,7 +25,7 @@ export default class HomeScreen extends React.Component {
       filterMenuVisible: false,
       shortcodeInputVisible: false,
       requestVisible: false,
-      requestUser: null,
+      requestUser: "",
       requestID: null,
       filters: null,
       userID: null,
@@ -33,6 +33,7 @@ export default class HomeScreen extends React.Component {
       displayValue: 1,
     }
   }
+
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -171,40 +172,10 @@ export default class HomeScreen extends React.Component {
       : (<CardCollection contacts={contacts} navigation={navigation} />)
   }
 
-  checkRequests = async () => {
-    let requests = await apiRequests.getRequests(global.userID);
-    if (requests.requests[0] != null) {
-      let fstRequest = requests.requests[0];
-      let user = await apiRequests.getUserDetails(fstRequest.from);
-      this.setState({
-        requestVisible: true, requestUser: user.firstName + " " + user.lastName,
-        requestID: fstRequest.request
-      });
-    }
-  };
-
-  handleAddRequest = async () => {
-    await apiRequests.acceptRequest(this.state.requestID);
-    this.getContactsForDisplay();
-    this.setState({
-      requestVisible: false, requestUser: null,
-      requestID: null
-    });
-  }
-
-  handleRemoveRequest = async () => {
-    await apiRequests.removeRequest(this.state.requestID);
-    this.setState({
-      requestVisible: false, requestUser: null,
-      requestID: null
-    });
-  }
 
   render() {
-    this.checkRequests();
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
-    console.log(this.state.contacts);
     const changeDisplayButton = Platform.OS === "ios" ? (
       <SegmentedControlIOS
         values={['Informative View', 'Visual View']}
@@ -235,14 +206,6 @@ export default class HomeScreen extends React.Component {
           <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
           <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
           <Dialog.Button label="Add" onPress={this.handleAdd} />
-        </Dialog.Container>
-
-        <Dialog.Container
-          visible={this.state.requestVisible}>
-          <Dialog.Title>Addrequests</Dialog.Title>
-          <Dialog.Description>Do you want to add {this.state.requestUser} to your contacts?</Dialog.Description>
-          <Dialog.Button label="Yes" onPress={this.handleAddRequest} />
-          <Dialog.Button label="No" onPress={this.handleRemoveRequest} />
         </Dialog.Container>
 
         {/* Displays the collection of cards */}
