@@ -130,6 +130,29 @@ const apiRequests = {
       });
   },
 
+  removeContact: function (userID, contactID) {
+    console.log("removeContact called:");
+    console.log(userID);
+    console.log(contactID);
+    return fetch(`${API}/user/removecontact`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        contact: contactID,
+      }),
+      cache: 'default',
+    })
+    .catch(function (error) {
+      console.log('There has been a problem with your removeContact fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+    });
+  },
+
   setUserWithFieldDetails: function (userID, firstname, lastname, phonenumber, email, company, profession, field, cardID) {
     return fetch(`${API}/user/setdetails`, {
       method: 'POST',
@@ -354,8 +377,26 @@ const apiRequests = {
       });
   },
 
-  addCardImage: function (data) {
-    console.log('adding image')
+  setPinned: function (userID, contactID, pinned) {
+    fetch(`${API}/businesscards/setusercard`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user: userID,
+        contact: contactID,
+        pinned: pinned
+      })
+    })
+    .catch(function (error) {
+      console.log('There has been a problem with your setPinned fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+    });
+  },
+
+  addCardImage: function (userID, image) {
     return fetch(`${API}/cards/uploadcard`, {
       method: 'POST',
       headers: {
@@ -382,6 +423,7 @@ const apiRequests = {
       cache: 'default',
     }).then(function (response) {
       const image = response;
+      console.log('image:')
       console.log(image);
       return image;
     })

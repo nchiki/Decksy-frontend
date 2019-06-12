@@ -33,7 +33,7 @@ export default class BusinessCard extends React.Component {
   }
 
   resolveLinks = async () => {
-    //const link = await apiRequests.getLink(this.props.details.links[0]); 
+    //const link = await apiRequests.getLink(this.props.details.links[0]);
     for (let i = 0; i < this.props.details.links.length; i++) {
       const link = apiRequests.getLink(this.props.details.links[i]);
       // console.log(link);
@@ -128,7 +128,7 @@ displayCard(props) {
             </CardFlip>
           </View>
           <View style={styles.buttonRowContainer}>
-
+ 
           </View>
         </View>
       );
@@ -183,4 +183,3 @@ const styles = StyleSheet.create({
   },
 
 })
-
