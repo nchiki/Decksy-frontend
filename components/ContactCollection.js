@@ -49,7 +49,7 @@ export default class ContactCollection extends React.Component {
   }
 
   render() {
-    var sections = []
+    let sections;
     if (this.props.pinnedContacts.length > 0) {
       if (this.props.unpinnedContacts.length > 0) {
         // if there are both pinned and unpinned contacts, show to sections
@@ -63,6 +63,7 @@ export default class ContactCollection extends React.Component {
       // if there are no pinned contacts then just have a single section with no section header
       sections = [{data: this.props.unpinnedContacts}];
     }
+
     return (
       <SectionList
         renderItem={this.renderRow.bind(this)}
@@ -103,7 +104,8 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontWeight: 'bold',
     fontSize:15,
-    backgroundColor:'lightgrey'
+    backgroundColor:'lightgrey',
+    width:'100%'
   },
   emptySectionHeader: {
     height:0,

@@ -3,7 +3,7 @@ import {View, Text, SectionList, StyleSheet, ImageBackground, TouchableOpacity} 
 
 import templateUtils from './Templates';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import Swipeout from 'react-native-swipeout';
 
 export default class CardCollection extends React.Component{
 
@@ -12,27 +12,35 @@ export default class CardCollection extends React.Component{
   }
 
   _getCards = ({item}) => (
-    <TouchableOpacity
-      style={styles.card}
-      onPress= {()=> this.handleCardProfile(item)}
+    <Swipeout
+      left={this.props.swipeButtons.left}
+      right={this.props.swipeButtons.right}
+      autoClose={true}
+      backgroundColor='transparent'
+      onOpen={() => {this.props.onSwipe(item.user, item.isPinned)}}
     >
-      <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
-        <View style={styles.containerStyle}>
-          <View style={templateUtils.setProfileStyle(item.card).titleText}>
-            <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+      <TouchableOpacity
+        style={styles.card}
+        onPress= {()=> this.handleCardProfile(item)}
+      >
+        <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+          <View style={styles.containerStyle}>
+            <View style={templateUtils.setProfileStyle(item.card).titleText}>
+              <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+            </View>
+            <View style={templateUtils.setProfileStyle(item.card).user}>
+              <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
+              <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10}/> {item.phoneNumber}{'\n'}
+              <Ionicons name='ios-mail' size={10}/> {item.email}</Text>
+            </View>
           </View>
-          <View style={templateUtils.setProfileStyle(item.card).user}>
-            <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
-            <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10}/> {item.phoneNumber}{'\n'}
-            <Ionicons name='ios-mail' size={10}/> {item.email}</Text>
-          </View>
-        </View>
-      </ImageBackground>
-    </TouchableOpacity>
+        </ImageBackground>
+      </TouchableOpacity>
+    </Swipeout>
   );
 
   render () {
-    var sections = []
+    let sections;
     if (this.props.pinnedContacts.length > 0) {
       if (this.props.unpinnedContacts.length > 0) {
         // if there are both pinned and unpinned contacts, show to sections
@@ -77,5 +85,12 @@ const styles = StyleSheet.create({
     width: 350,
     height: 200,
   },
-
+  sectionHeader: {
+    fontWeight: 'bold',
+    fontSize:15,
+    backgroundColor:'lightgrey'
+  },
+  emptySectionHeader: {
+    height:0,
+  },
 });

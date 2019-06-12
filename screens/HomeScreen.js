@@ -153,7 +153,7 @@ export default class HomeScreen extends React.Component {
     this.setState({images:images});
     const items = await Promise.all(listItems);
     setTimeout(() => this.setState(
-      seperatePinnedFromUnpinned(items)
+      this.seperatePinnedFromUnpinned(items)
     ), 20);
   }
 
@@ -254,6 +254,8 @@ export default class HomeScreen extends React.Component {
                 images={this.state.images}
                 deleteCard={this.deleteCard}
                 pinCard={this.pinCard}
+                swipeButtons={this.swipeButtons}
+                onSwipe={this.onSwipe}
               />)
           }
         </View>
@@ -309,7 +311,7 @@ export default class HomeScreen extends React.Component {
     };
   }
 
-  onSwipe(contactID, contactIsPinned) {
+  onSwipe = (contactID, contactIsPinned) => {
     this.setState({
       swipedCardID: contactID,
       swipedCardIsPinned: contactIsPinned,
