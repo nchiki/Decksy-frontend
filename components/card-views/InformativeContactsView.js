@@ -1,11 +1,11 @@
 import React from 'react';
 import { SectionList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
-import apiRequests from '../api_wrappers/BackendWrapper';
+import apiRequests from '../../api_wrappers/BackendWrapper';
 import Swipeout from 'react-native-swipeout';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import templateUtils from './Templates';
+import templateUtils from '../Templates';
 
-export default class ContactCollection extends React.Component {
+export default class InformativeContactsView extends React.Component {
 
   handleCardProfile = (item) => {
     this.props.navigation.navigate('CardProfile', { item: item });
