@@ -36,9 +36,9 @@ export default class BusinessCard extends React.Component {
     //const link = await apiRequests.getLink(this.props.details.links[0]); 
     for (let i = 0; i < this.props.details.links.length; i++) {
       const link = apiRequests.getLink(this.props.details.links[i]);
-      console.log(link);
-      console.log(link.name);
-      console.log(link.value);
+      // console.log(link);
+      // console.log(link.name);
+      // console.log(link.value);
       this.state.links.push({ name: link.name });
     }
   }
@@ -57,7 +57,7 @@ export default class BusinessCard extends React.Component {
 displayCard(props) {
   const u = props.details;
     //this.resolveLinks();
-    console.log(this.state.links[0]);
+    //console.log(this.state.links[0]);
    let image = props.image;
     const templateStyle = props.templateStyle;
     if(props.picture) {
@@ -90,7 +90,7 @@ displayCard(props) {
 
     const u = this.props.details;
     //this.resolveLinks();
-    console.log(this.state.links[0]);
+    //console.log(this.state.links[0]);
     const image = this.props.image;
     const templateStyle = this.props.templateStyle;
 

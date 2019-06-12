@@ -64,8 +64,6 @@ export default class ContactCollection extends React.Component {
   );
 
   renderFlatList = () => {
-    console.log(item);
-    console.log(item.card);
     const users = this.state.details;
     if (users && users.length > 0) {
       return (

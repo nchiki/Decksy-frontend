@@ -124,8 +124,9 @@ export default class HomeScreen extends React.Component {
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
-      console.log(id);
       const det = await apiRequests.getUserDetails(id);
+      const pic = await apiRequests.getCardImage(id);
+      if(pic) {console.log('here'+ pic)}
       return det
     }));
     const items = await Promise.all(listItems);

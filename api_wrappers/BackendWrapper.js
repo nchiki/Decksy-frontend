@@ -355,6 +355,7 @@ const apiRequests = {
   },
 
   addCardImage: function (userID, image) {
+    console.log('adding image')
     return fetch(`${API}/cards/uploadcard`, {
       method: 'POST',
       headers: {
@@ -373,6 +374,7 @@ const apiRequests = {
       throw error;
     });
   },
+  
   getCardImage: function (userID) {
     return fetch(`${API}/cards/getcard/${userID}`, {
       method: 'GET',
@@ -382,7 +384,10 @@ const apiRequests = {
       },
       cache: 'default',
     }).then(function (response) {
-      return response.json();
+      const image = response.json();
+      console.log('image of card:')
+      console.log(image);
+      return image;
     })
       .catch(function (error) {
         console.log('There has been a problem with your getCardImage fetch operation: ' + error.message);
