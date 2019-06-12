@@ -39,7 +39,6 @@ export default class LoginScreen extends Component {
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
-
       return det
     }));
     const items = await Promise.all(listItems);

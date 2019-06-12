@@ -118,6 +118,7 @@ export default class HomeScreen extends React.Component {
     this.setState({
       shortcodeInputVisible: false,
     });
+    apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
   getContactsForDisplay = async () => {

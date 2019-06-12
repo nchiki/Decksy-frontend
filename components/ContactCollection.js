@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
+import { SectionList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Swipeout from 'react-native-swipeout';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -11,13 +11,14 @@ export default class ContactCollection extends React.Component {
     super(props);
     this.state = {
       details: null,
+      swipedCardIsPinned: null,
+      swipedCardID: null,
     }
   }
 
   componentWillMount() {
-    this.setState({
-      details: this.props.contacts
-    });
+    console.log(this.props.contacts);
+    this.setState(this.seperatePinnedFromUnpinned(this.props.contacts));
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -31,14 +32,40 @@ export default class ContactCollection extends React.Component {
     this.props.navigation.navigate('CardProfile', { item: item });
   }
 
-  renderRow = ({ item }) => (
-    <Swipeout
-      left={this.leftSwipeButtons}
-      right={this.rightSwipeButtons}
-      autoClose={true}
-      backgroundColor='transparent'
-    >
-      <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
+  renderRow(data) {
+    let item = data.item;
+    let rightSwipeButtons = [
+      {
+        text: 'Delete',
+        backgroundColor: 'red',
+        underlayColor: 'rgba(255, 255, 255, 1.0)',
+        onPress: () => { this.deleteCard() }
+      },
+    ];
+
+    let leftSwipeButtons = [
+      {
+        text: 'Pin',
+        backgroundColor: 'orange',
+        underlayColor: 'rgba(255, 255, 255, 1.0)',
+        onPress: () => { this.pinCard() }
+      },
+    ];
+
+    return (
+      <Swipeout
+        left={leftSwipeButtons}
+        right={rightSwipeButtons}
+        autoClose={true}
+        backgroundColor='transparent'
+        onOpen={(swipedCardIsPinned, swipedCardID) => {
+          this.setState({
+            swipedCardIsPinned: false,
+            swipedCardID: item.card,
+          })
+        }}
+      >
+        <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
         <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
           <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
           <Text style={{ fontSize: 13 }}>{item.profession}</Text>
@@ -60,89 +87,67 @@ export default class ContactCollection extends React.Component {
           </TouchableOpacity>
         </View>
       </View>
-    </Swipeout>
-  );
-
-  renderFlatList = () => {
-    console.log(item);
-    console.log(item.card);
-    const users = this.state.details;
-    if (users && users.length > 0) {
-      return (
-        <View style={{ alignItems: 'center' }}>
-          {
-            users.map((u, i) => {
-              return (
-                this.renderRow(u, i),
-                this.renderSeparator()
-              );
-            })
-          }
-        </View>
-      )
-    } else {
-      return null;
-    }
+      </Swipeout>
+    );
   }
 
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 1,
-          backgroundColor: "#CED0CE",
-        }}
-      />
-    );
-  };
+  // renderSeparator = () => {
+  //   return ( <View style={styles.seperator} /> );
+  // };
 
   deleteCard() {
-    alert("TODO");
+    apiRequests.removeContact(global.userID, contactID);
   }
 
   pinCard() {
-    alert("TODO");
+    console.log(this.state.swipedCardID);
+    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(this.state.swipedCardIsPinned));
+    this.togglePinned(this.state.swipedCardID);
   }
 
-  archiveCard() {
-    alert("TODO");
+  togglePinned(id) {
+    if (this.state.swipedCardIsPinned) {
+      this.state.unpinnedContacts.concat(this.state.pinnedContacts.filter(contact => contact.user == id));
+      this.state.pinnedContacts.filter(contact => contact.user != id);
+    } else {
+      this.state.pinnedContacts.concat(this.state.unpinnedContacts.filter(contact => contact.user == id));
+      this.state.unpinnedContacts.filter(contact => contact.user != id);
+    }
   }
 
   render() {
     return (
-      <FlatList
-        data={this.props.contacts}
-        renderItem={this.renderRow}
+      <SectionList
+        renderItem={this.renderRow.bind(this)}
+        renderSectionHeader={({section: {title}}) => (
+          <Text style={styles.sectionHeader}>{title}</Text>
+        )}
+        sections={[
+          {title: 'Pinned', data: this.state.pinnedContacts},
+          {title: 'Unpinned', data: this.state.unpinnedContacts},
+        ]}
         keyExtractor={item => item.email}
-        ItemSeparatorComponent={this.renderSeparator}
-        style={{ marginTop: -2 }}
+        ItemSeparatorComponent={() => ( <View style={styles.seperator} /> )}
+        style={{marginTop: 2, height:'100%'}}
       />
     );
   }
 
-  rightSwipeButtons = [
-    {
-      text: 'Archive',
-      backgroundColor: 'dodgerblue',
-      underlayColor: 'rgba(255, 255, 255, 1.0)',
-      onPress: () => { this.archiveCard() }
-    },
-    {
-      text: 'Delete',
-      backgroundColor: 'red',
-      underlayColor: 'rgba(255, 255, 255, 1.0)',
-      onPress: () => { this.deleteCard() }
-    },
-  ];
-
-  leftSwipeButtons = [
-    {
-      text: 'Pin',
-      backgroundColor: 'orange',
-      underlayColor: 'rgba(255, 255, 255, 1.0)',
-      onPress: () => { this.pinCard() }
-    },
-  ];
+  seperatePinnedFromUnpinned(contacts) {
+    let unpinnedContacts = [];
+    let pinnedContacts = [];
+    for (var i = 0; i < contacts.length; i++) {
+      if (contacts[i].pinned) {
+        pinnedContacts.push(contacts[i]);
+      } else {
+        unpinnedContacts.push(contacts[i]);
+      }
+    }
+    return {
+      pinnedContacts: pinnedContacts,
+      unpinnedContacts: unpinnedContacts,
+    }
+  }
 
 }
 
@@ -166,5 +171,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     alignContent: 'center'
+  },
+  sectionHeader: {
+    fontWeight: 'bold',
+    fontSize:15,
+    backgroundColor:'lightgrey'
+  },
+  seperator: {
+    height: 1,
+    backgroundColor: "#CED0CE"
   }
 })
