@@ -7,145 +7,68 @@ import templateUtils from './Templates';
 
 export default class ContactCollection extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      details: null,
-      swipedCardIsPinned: null,
-      swipedCardID: null,
-      pinnedContacts : [],
-      unpinnedContacts : []
-    }
-  }
-
-  componentDidMount() {
-    console.log(this.props.contacts);
-    setTimeout(()=> this.seperatePinnedFromUnpinned(this.props.contacts), 20);
-  }
-
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    return {
-      title: 'CardProfile',
-    }
-  };
-
   handleCardProfile = (item) => {
     this.props.navigation.navigate('CardProfile', { item: item });
   }
 
   renderRow(data) {
     let item = data.item;
-    let rightSwipeButtons = [
-      {
-        text: 'Delete',
-        backgroundColor: 'red',
-        underlayColor: 'rgba(255, 255, 255, 1.0)',
-        onPress: () => { this.deleteCard() }
-      },
-    ];
-
-    let leftSwipeButtons = [
-      {
-        text: item.isPinned ? 'Unpin' : 'Pin',
-        backgroundColor: 'orange',
-        underlayColor: 'rgba(255, 255, 255, 1.0)',
-        onPress: () => { this.pinCard() }
-      },
-    ];
-    
-    let cardID = (item.card <2) ? 2 : item.card;
+    let cardID = (item.card < 2) ? 2 : item.card;
     return (
       <Swipeout
-        left={leftSwipeButtons}
-        right={rightSwipeButtons}
+        left={this.props.swipeButtons.left}
+        right={this.props.swipeButtons.right}
         autoClose={true}
         backgroundColor='transparent'
-        onOpen={(swipedCardIsPinned, swipedCardID) => {
-          this.setState({
-            swipedCardIsPinned: item.isPinned,
-            swipedCardID: item.user,
-          })
-        }}
+        onOpen={() => {this.props.onSwipe(item.user, item.isPinned)}}
       >
         <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
-          <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
-          <Text style={{ fontSize: 13 }}>{item.profession}</Text>
-        </View>
-        <View style={{ flex: 3, marginRight: -70 }}>
-          <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
-            <ImageBackground source={templateUtils.setImage(cardID)} style={styles.containerStyle}>
-              <View style={styles.containerStyle}>
-                <View style={templateUtils.setStyle(cardID).titleText}>
-                  <Text style={templateUtils.setStyle(cardID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+          <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
+            <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
+            <Text style={{ fontSize: 13 }}>{item.profession}</Text>
+          </View>
+          <View style={{ flex: 3, marginRight: -70 }}>
+            <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
+              <ImageBackground source={templateUtils.setImage(cardID)} style={styles.containerStyle}>
+                <View style={styles.containerStyle}>
+                  <View style={templateUtils.setStyle(cardID).titleText}>
+                    <Text style={templateUtils.setStyle(cardID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+                  </View>
+                  <View style={templateUtils.setStyle(cardID).user}>
+                    <Text style={templateUtils.setStyle(cardID).company}>{item.company}</Text>
+                    <Text style={templateUtils.setStyle(cardID).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
+                      <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
+                  </View>
                 </View>
-                <View style={templateUtils.setStyle(cardID).user}>
-                  <Text style={templateUtils.setStyle(cardID).company}>{item.company}</Text>
-                  <Text style={templateUtils.setStyle(cardID).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
-                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
-                </View>
-              </View>
-            </ImageBackground>
-          </TouchableOpacity>
+              </ImageBackground>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
       </Swipeout>
     );
   }
 
-  deleteCard() {
-    apiRequests.removeContact(global.userID, this.state.swipedCardID);
-    if (this.state.swipedCardIsPinned) {
-      this.setState({
-        pinnedContacts: this.state.pinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
-      })
-    } else {
-      this.setState({
-        unpinnedContacts: this.state.unpinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
-      })
-    }
-  }
-
-  pinCard() {
-    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(this.state.swipedCardIsPinned));
-    var unpinned = this.state.unpinnedContacts;
-    var pinned = this.state.pinnedContacts;
-    if (this.state.swipedCardIsPinned) {
-      unpinned = unpinned.concat(pinned.filter(contact => contact.user == this.state.swipedCardID));
-      pinned = pinned.filter(contact => contact.user != this.state.swipedCardID);
-      unpinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = false;
-    } else {
-      pinned = pinned.concat(unpinned.filter(contact => contact.user == this.state.swipedCardID));
-      unpinned = unpinned.filter(contact => contact.user != this.state.swipedCardID);
-      pinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = true;
-    }
-    this.setState({
-      pinnedContacts: pinned,
-      unpinnedContacts: unpinned,
-    })
-  }
-
   render() {
-    var sections = []
-    if (this.state.pinnedContacts.length > 0) {
-      if (this.state.unpinnedContacts.length > 0) {
+    let sections;
+    if (this.props.pinnedContacts.length > 0) {
+      if (this.props.unpinnedContacts.length > 0) {
         // if there are both pinned and unpinned contacts, show to sections
-        sections = [{title: 'Pinned', data: this.state.pinnedContacts},
-                    {title: 'Unpinned', data: this.state.unpinnedContacts}];
+        sections = [{title: 'Pinned', data: this.props.pinnedContacts},
+                    {title: 'Unpinned', data: this.props.unpinnedContacts}];
       } else {
         // if there are only pinned contacts, only show a section for pinned contacts (no section for unpinned)
-        sections = [{title: 'Pinned', data: this.state.pinnedContacts}];
+        sections = [{title: 'Pinned', data: this.props.pinnedContacts}];
       }
     } else {
       // if there are no pinned contacts then just have a single section with no section header
-      sections = [{data: this.state.unpinnedContacts}];
+      sections = [{data: this.props.unpinnedContacts}];
     }
+
     return (
       <SectionList
         renderItem={this.renderRow.bind(this)}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={this.state.pinnedContacts.length > 0 ? styles.sectionHeader : styles.emptySectionHeader}>{title}</Text>
+          <Text style={this.props.pinnedContacts.length > 0 ? styles.sectionHeader : styles.emptySectionHeader}>{title}</Text>
         )}
         sections={sections}
         keyExtractor={item => item.email}
@@ -153,22 +76,6 @@ export default class ContactCollection extends React.Component {
         style={{marginTop: 2, height:'100%'}}
       />
     );
-  }
-
-  seperatePinnedFromUnpinned(contacts) {
-    let unpinnedContacts = [];
-    let pinnedContacts = [];
-    for (var i = 0; i < contacts.length; i++) {
-      if (contacts[i].pinned) {
-        pinnedContacts.push(contacts[i]);
-      } else {
-        unpinnedContacts.push(contacts[i]);
-      }
-    }
-    this.setState({
-      pinnedContacts: pinnedContacts,
-      unpinnedContacts: unpinnedContacts,
-    })
   }
 
 }
@@ -197,7 +104,8 @@ const styles = StyleSheet.create({
   sectionHeader: {
     fontWeight: 'bold',
     fontSize:15,
-    backgroundColor:'lightgrey'
+    backgroundColor:'lightgrey',
+    width:'100%'
   },
   emptySectionHeader: {
     height:0,

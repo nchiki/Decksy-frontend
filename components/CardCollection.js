@@ -1,26 +1,28 @@
 import React from 'react';
-import {View, Text, FlatList, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
+import {View, Text, SectionList, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
 
 import templateUtils from './Templates';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import Swipeout from 'react-native-swipeout';
 
 export default class CardCollection extends React.Component{
-
-  static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
-    return {
-      title: 'CardProfile',
-    }
-  };
 
   handleCardProfile = (item) => {
     this.props.navigation.navigate('CardProfile', {item: item});
   }
 
   _getCards = ({item}) => (
-    <TouchableOpacity style={styles.card}
-      onPress= {()=> this.handleCardProfile(item)}>
+    <Swipeout
+      left={this.props.swipeButtons.left}
+      right={this.props.swipeButtons.right}
+      autoClose={true}
+      backgroundColor='transparent'
+      onOpen={() => {this.props.onSwipe(item.user, item.isPinned)}}
+    >
+      <TouchableOpacity
+        style={styles.card}
+        onPress= {()=> this.handleCardProfile(item)}
+      >
         <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
           <View style={styles.containerStyle}>
             <View style={templateUtils.setProfileStyle(item.card).titleText}>
@@ -33,33 +35,36 @@ export default class CardCollection extends React.Component{
             </View>
           </View>
         </ImageBackground>
-        </TouchableOpacity>
+      </TouchableOpacity>
+    </Swipeout>
   );
 
-  _keyExtractor = (item, index) => {
-    return (item.email);
-  }
-
-  renderSeparator = () => {
-    return (
-      <View
-        style={{
-          height: 15,
-          backgroundColor: 'white',
-        }}
-      />
-    );
-  };
-
   render () {
+    let sections;
+    if (this.props.pinnedContacts.length > 0) {
+      if (this.props.unpinnedContacts.length > 0) {
+        // if there are both pinned and unpinned contacts, show to sections
+        sections = [{title: 'Pinned', data: this.props.pinnedContacts},
+                    {title: 'Unpinned', data: this.props.unpinnedContacts}];
+      } else {
+        // if there are only pinned contacts, only show a section for pinned contacts (no section for unpinned)
+        sections = [{title: 'Pinned', data: this.props.pinnedContacts}];
+      }
+    } else {
+      // if there are no pinned contacts then just have a single section with no section header
+      sections = [{data: this.props.unpinnedContacts}];
+    }
     return (
-      <FlatList
-        data={this.props.contacts}
-        renderItem={this._getCards}
-        keyExtractor={this._keyExtractor}
-        contentContainerStyle={styles.list}
-        ItemSeparatorComponent={this.renderSeparator}
+      <SectionList
+        renderItem={this._getCards.bind(this)}
+        renderSectionHeader={({section: {title}}) => (
+          <Text style={this.props.pinnedContacts.length > 0 ? styles.sectionHeader : styles.emptySectionHeader}>{title}</Text>
+        )}
+        sections={sections}
+        keyExtractor={(item, index) => item.email}
+        ItemSeparatorComponent={() => ( <View style={{height: 15, backgroundColor: 'white'}}/> )}
         style={{marginTop:8}}
+        contentContainerStyle={styles.list}
       />
     )
   }
@@ -67,19 +72,25 @@ export default class CardCollection extends React.Component{
 }
 
 const styles = StyleSheet.create({
-        list: {
-                alignItems: 'center',
-                justifyContent:'center',
-                flexGrow:1
-              },
-
-              containerStyle: {
-                borderRadius: 10,
-              //borderWidth: 1,
-              borderColor: 'white',
-                alignItems: 'center',
-                width: 350,
-                height: 200,
-              },
-
-        });
+  list: {
+    alignItems: 'center',
+    justifyContent:'center',
+    flexGrow:1
+  },
+  containerStyle: {
+    borderRadius: 10,
+    //borderWidth: 1,
+    borderColor: 'white',
+    alignItems: 'center',
+    width: 350,
+    height: 200,
+  },
+  sectionHeader: {
+    fontWeight: 'bold',
+    fontSize:15,
+    backgroundColor:'lightgrey'
+  },
+  emptySectionHeader: {
+    height:0,
+  },
+});
