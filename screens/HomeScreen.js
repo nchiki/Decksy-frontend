@@ -10,10 +10,9 @@ import Dialog from "react-native-dialog";
 import Swipeout from 'react-native-swipeout';
 import OptionsMenu from "react-native-options-menu";
 
-import ContactCollection from '../components/ContactCollection';
+import InformativeContactsView from '../components/card-views/InformativeContactsView';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import CardCollection from '../components/CardCollection';
-
+import VisualContactsView from '../components/card-views/VisualContactsView';
 
 
 // Home screen that will show the deck of business cards
@@ -26,11 +25,10 @@ export default class HomeScreen extends React.Component {
       filterInputDialogVisible: false,
       shortcodeInputVisible: false,
       requestVisible: false,
-      requestUser: "",
       requestID: null,
-      filters: null,
-      userID: null,
-      contacts: [],
+      filter: null,
+      unpinnedContacts: [],
+      pinnedContacts: [],
       displayValue: 1,
       images: []
     }
@@ -38,15 +36,22 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props;
+
     let contacts = this.props.navigation.getParam('contacts', 'NO-ID');
-    let images = this.props.navigation.getParam('images', 'NULL');
     if (contacts == 'NO-ID') {
       contacts = global.contacts;
-    } 
+    }
+
+    let images = this.props.navigation.getParam('images', 'NULL');
     if (images == 'NULL') {
       images = global.images;
-    } 
-    this.setState({ contacts: contacts, images: images });
+    }
+
+    this.setState({
+      images: images
+    });
+    setTimeout(()=> this.setState(this.seperatePinnedFromUnpinned(contacts)), 20);
+
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
@@ -117,7 +122,7 @@ export default class HomeScreen extends React.Component {
   handleAdd = async () => {
     const { navigation } = this.props;
     apiRequests.addCard(this.state.shortcode, global.userID);
-    setTimeout(() => this.getContactsForDisplay(), 20);
+    setTimeout(() => this.updateContacts(), 20);
     this.setState({
       shortcodeInputVisible: false,
       requestVisible: true,
@@ -134,13 +139,13 @@ export default class HomeScreen extends React.Component {
     this.setState({ requestVisible: false });
   }
 
-  getContactsForDisplay = async () => {
+  updateContacts = async () => {
     let images = this.state.images;
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
-      if(Number.parseInt(det.card, 10) == 1) {
+      if (Number.parseInt(det.card, 10) == 1) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
       }
@@ -148,15 +153,15 @@ export default class HomeScreen extends React.Component {
     }));
     this.setState({images:images});
     const items = await Promise.all(listItems);
-    setTimeout(() => this.setState({
-      contacts: items
-    }), 20);
+    setTimeout(() => this.setState(
+      this.seperatePinnedFromUnpinned(items)
+    ), 20);
   }
 
   handleFilter = async () => {
-    const filter = this.state.filters;
+    const filter = this.state.filter;
     if (!filter) {
-      this.getContactsForDisplay();
+      this.updateContacts();
       setTimeout(() =>
         this.setState({
           filterInputDialogVisible: false,
@@ -176,7 +181,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           filterInputDialogVisible: false,
           contacts: listItems,
-          filters: null
+          filter: null
         }), 20);
     }
   };
@@ -185,17 +190,8 @@ export default class HomeScreen extends React.Component {
     this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });
   };
 
-  DeckDisplay(displayValue, navigation, contacts, images) {
-    return displayValue == 1 ?
-      (<ContactCollection contacts={contacts} navigation={navigation}images={images} deleteCard={this.deleteCard} pinCard={this.pinCard}/>)
-      : (<CardCollection contacts={contacts} navigation={navigation} images={images}/>)
-  }
-
   render() {
-    const displayValue = this.state.displayValue;
-    const contacts = this.state.contacts;
-    const images = this.state.images;
-    const changeDisplayButton = Platform.OS === "ios" ? (
+    let changeDisplayButton = Platform.OS === "ios" ? (
       <SegmentedControlIOS
         values={['Informative View', 'Visual View']}
         selectedIndex={this.state.displayValue - 1}
@@ -205,16 +201,20 @@ export default class HomeScreen extends React.Component {
         }}
         style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
       />)
-      : (<Button title='Change Display' onPress={this.updateDisplay} />)
+      : (<Button
+          title='Change Display'
+          onPress={() => this.setState({
+            displayValue: (this.state.displayValue == 1 ? 2 : 1)
+          })}
+        />)
 
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
-        <Dialog.Container
-          visible={this.state.filterInputDialogVisible}>
+        <Dialog.Container visible={this.state.filterInputDialogVisible}>
           <Dialog.Title>Filter</Dialog.Title>
           <Dialog.Description>Enter a keyword that you would like to be used to filter your business cards</Dialog.Description>
-          <Dialog.Input onChangeText={(inputText) => this.setState({ filters: inputText })} />
+          <Dialog.Input onChangeText={(inputText) => this.setState({ filter: inputText })} />
           <Dialog.Button label="Cancel" onPress={this.handleCancelFilter} bold={true} />
           <Dialog.Button label="Filter" onPress={this.handleFilter} />
         </Dialog.Container>
@@ -227,26 +227,46 @@ export default class HomeScreen extends React.Component {
           <Dialog.Button label="Add" onPress={this.handleAdd} />
         </Dialog.Container>
 
-        <Dialog.Container
-          visible={this.state.requestVisible} >
+        <Dialog.Container visible={this.state.requestVisible}>
           <Dialog.Title>Add a Request</Dialog.Title>
           <Dialog.Description>Do you want to send a request to be added as well?</Dialog.Description>
           <Dialog.Button label="Yes" onPress={this.handleSendRequest} />
           <Dialog.Button label="No" onPress={this.handleNoRequest} />
-        </Dialog.Container >
+        </Dialog.Container>
 
         {/* Displays the collection of cards */}
         <View>
           {changeDisplayButton}
-          {this.DeckDisplay(displayValue, this.props.navigation, contacts, images)}
+          {this.state.displayValue == 1 ?
+            (<InformativeContactsView
+              pinnedContacts={this.state.pinnedContacts}
+              unpinnedContacts={this.state.unpinnedContacts}
+              navigation={this.props.navigation}
+              images={this.state.images}
+              deleteCard={this.deleteCard}
+              pinCard={this.pinCard}
+              swipeButtons={this.swipeButtons}
+              onSwipe={this.onSwipe}
+            />)
+            : (<VisualContactsView
+                pinnedContacts={this.state.pinnedContacts}
+                unpinnedContacts={this.state.unpinnedContacts}
+                navigation={this.props.navigation}
+                images={this.state.images}
+                deleteCard={this.deleteCard}
+                pinCard={this.pinCard}
+                swipeButtons={this.swipeButtons}
+                onSwipe={this.onSwipe}
+              />)
+          }
         </View>
       </View>
     );
   }
 
-  deleteCard(userID, swipedCardID, swipedCardIsPinned) {
-    apiRequests.removeContact(global.userID, swipedCardID);
-    if (swipedCardIsPinned) {
+  deleteCard() {
+    apiRequests.removeContact(global.userID, this.state.swipedCardID);
+    if (this.state.swipedCardIsPinned) {
       this.setState({
         pinnedContacts: this.state.pinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
       })
@@ -258,10 +278,10 @@ export default class HomeScreen extends React.Component {
   }
 
   pinCard() {
-    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(swipedCardIsPinned));
+    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(this.state.swipedCardIsPinned));
     var unpinned = this.state.unpinnedContacts;
     var pinned = this.state.pinnedContacts;
-    if (swipedCardIsPinned) {
+    if (this.state.swipedCardIsPinned) {
       unpinned = unpinned.concat(pinned.filter(contact => contact.user == this.state.swipedCardID));
       pinned = pinned.filter(contact => contact.user != this.state.swipedCardID);
       unpinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = false;
@@ -274,6 +294,48 @@ export default class HomeScreen extends React.Component {
       pinnedContacts: pinned,
       unpinnedContacts: unpinned,
     })
+  }
+
+  seperatePinnedFromUnpinned(allContacts) {
+    let unpinnedContacts = [];
+    let pinnedContacts = [];
+    for (var i = 0; i < allContacts.length; i++) {
+      if (allContacts[i].pinned) {
+        pinnedContacts.push(allContacts[i]);
+      } else {
+        unpinnedContacts.push(allContacts[i]);
+      }
+    }
+    return {
+      pinnedContacts: pinnedContacts,
+      unpinnedContacts: unpinnedContacts,
+    };
+  }
+
+  onSwipe = (contactID, contactIsPinned) => {
+    this.setState({
+      swipedCardID: contactID,
+      swipedCardIsPinned: contactIsPinned,
+    })
+  }
+
+  swipeButtons = {
+    left: [
+      {
+        text: 'Pin',
+        backgroundColor: 'orange',
+        underlayColor: 'rgba(255, 255, 255, 1.0)',
+        onPress: () => { this.pinCard() }
+      }
+    ],
+    right: [
+      {
+        text: 'Delete',
+        backgroundColor: 'red',
+        underlayColor: 'rgba(255, 255, 255, 1.0)',
+        onPress: () => { this.deleteCard() }
+      }
+    ]
   }
 
 }
