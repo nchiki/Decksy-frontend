@@ -17,6 +17,7 @@ export default class ContactCollection extends React.Component {
   }
 
   componentWillMount() {
+    console.log(this.props.contacts);
     this.setState(this.seperatePinnedFromUnpinned(this.props.contacts));
   }
 
@@ -99,8 +100,19 @@ export default class ContactCollection extends React.Component {
 
   pinCard() {
     console.log(this.state.swipedCardID);
-    alert("TODO");
-  } 
+    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(this.state.swipedCardIsPinned));
+    this.togglePinned(this.state.swipedCardID);
+  }
+
+  togglePinned(id) {
+    if (this.state.swipedCardIsPinned) {
+      this.state.unpinnedContacts.concat(this.state.pinnedContacts.filter(contact => contact.user == id));
+      this.state.pinnedContacts.filter(contact => contact.user != id);
+    } else {
+      this.state.pinnedContacts.concat(this.state.unpinnedContacts.filter(contact => contact.user == id));
+      this.state.unpinnedContacts.filter(contact => contact.user != id);
+    }
+  }
 
   render() {
     return (

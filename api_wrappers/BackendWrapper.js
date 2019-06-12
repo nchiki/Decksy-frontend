@@ -374,7 +374,7 @@ const apiRequests = {
       });
   },
 
-  setPinned: function(userID, contactID, pinned) {
+  setPinned: function (userID, contactID, pinned) {
     fetch(`${API}/businesscards/setusercard`, {
       method: 'POST',
       headers: {
@@ -382,7 +382,7 @@ const apiRequests = {
       },
       body: JSON.stringify({
         user: userID,
-        contact: templateID,
+        contact: contactID,
         pinned: pinned
       })
     })
