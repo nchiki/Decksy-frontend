@@ -10,10 +10,9 @@ import Dialog from "react-native-dialog";
 import Swipeout from 'react-native-swipeout';
 import OptionsMenu from "react-native-options-menu";
 
-import ContactCollection from '../components/ContactCollection';
+import InformativeContactsView from '../components/card-views/InformativeContactsView';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import CardCollection from '../components/CardCollection';
-
+import VisualContactsView from '../components/card-views/VisualContactsView';
 
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
@@ -238,7 +237,7 @@ export default class HomeScreen extends React.Component {
         <View>
           {changeDisplayButton}
           {this.state.displayValue == 1 ?
-            (<ContactCollection
+            (<InformativeContactsView
               pinnedContacts={this.state.pinnedContacts}
               unpinnedContacts={this.state.unpinnedContacts}
               navigation={this.props.navigation}
@@ -248,7 +247,7 @@ export default class HomeScreen extends React.Component {
               swipeButtons={this.swipeButtons}
               onSwipe={this.onSwipe}
             />)
-            : (<CardCollection
+            : (<VisualContactsView
                 pinnedContacts={this.state.pinnedContacts}
                 unpinnedContacts={this.state.unpinnedContacts}
                 navigation={this.props.navigation}
