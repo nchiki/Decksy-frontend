@@ -138,8 +138,6 @@ export default class RequestsScreen extends React.Component {
     };
 
     render() {
-        console.log("Details in render");
-        console.log(this.state.details);
 
         return (
             <FlatList

@@ -41,8 +41,7 @@ export default class LoginScreen extends Component {
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);    
-      console.log(det);
-      if(Number.parseInt(det.card, 10) == 1) {
+      if(id == 5) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
       }

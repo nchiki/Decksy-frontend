@@ -33,7 +33,6 @@ export default class TemplatesGallery extends React.Component {
   }
 
   _renderItem = (item) => {
-    console.log(item + ': ' + backgroundColor);
     const image = templateUtils.setImage(item);
     const templateStyle = templateUtils.setStyle(item);
     const det = this.state.details;

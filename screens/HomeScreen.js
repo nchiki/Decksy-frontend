@@ -15,6 +15,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 import CardCollection from '../components/CardCollection';
 
 
+
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
 

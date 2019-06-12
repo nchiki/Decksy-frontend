@@ -423,8 +423,6 @@ const apiRequests = {
       cache: 'default',
     }).then(function (response) {
       const image = response;
-      console.log('image:')
-      console.log(image);
       return image;
     })
       .catch(function (error) {

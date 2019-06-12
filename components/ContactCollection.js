@@ -5,6 +5,8 @@ import Swipeout from 'react-native-swipeout';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import templateUtils from './Templates';
 
+
+
 export default class ContactCollection extends React.Component {
 
   constructor(props) {
@@ -19,7 +21,6 @@ export default class ContactCollection extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.contacts);
     setTimeout(()=> this.seperatePinnedFromUnpinned(this.props.contacts), 20);
   }
 
@@ -55,6 +56,38 @@ export default class ContactCollection extends React.Component {
     ];
     
     let cardID = (item.card <2) ? 2 : item.card;
+    let images = this.props.images;
+    
+      if(images[item.user]) {
+        return (
+          <Swipeout
+        left={leftSwipeButtons}
+        right={rightSwipeButtons}
+        autoClose={true}
+        backgroundColor='transparent'
+        onOpen={(swipedCardIsPinned, swipedCardID) => {
+          this.setState({
+            swipedCardIsPinned: item.isPinned,
+            swipedCardID: item.user,
+          })
+        }}
+      >
+          <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
+          <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
+          <Text style={{ fontSize: 13 }}>{item.profession}</Text>
+        </View>
+        <View style={{ flex: 3, marginRight: -70 }}>
+          <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
+      <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
+      </TouchableOpacity>
+        </View>
+      </View>
+      </Swipeout>
+        )
+      }
+      
+  
     return (
       <Swipeout
         left={leftSwipeButtons}
