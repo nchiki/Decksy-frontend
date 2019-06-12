@@ -11,19 +11,29 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
-  
-  static navigationOptions = ({navigation}) => {
+
+  static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
       title: 'Profile',
       headerTitleStyle: {
         fontSize: 25
       },
+      headerLeft: (
+        <Icon
+          containerStyle={{ paddingLeft: 12 }}
+          type="ionicon"
+          name={Platform.OS === "ios" ? "ios-people" : "md-people"}
+          onPress={() => params.showRequests()}
+          size={33}
+          color='dodgerblue'
+        />
+      ),
       headerRight: (
         <OptionsMenu
           customButton={(
             <Icon
-              containerStyle={{paddingRight: 12}}
+              containerStyle={{ paddingRight: 12 }}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-settings" : "md-settings"}
               size={33}
@@ -32,16 +42,17 @@ export default class ProfileScreen extends React.Component {
           )}
           destructiveIndex={1}
           options={["Edit details", "Sign out", "Cancel"]}
-          actions={[() => params.changeSettings(), () => params.logOut(), () => {}]}
+          actions={[() => params.changeSettings(), () => params.logOut(), () => { }]}
         />
       ),
-    }
-  };
+    };
+  }
 
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({
       changeSettings: () => this.changeSettings(),
+      showRequests: () => this.showRequests(),
       logOut: () => this.logOut(),
     });
   }
@@ -49,25 +60,31 @@ export default class ProfileScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     return (
-      <View style={{flex:1}}>
-        <View style={{flex:3}}>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 3 }}>
           <CardTemplate navigation={this.props.navigation} />
         </View>
-        <View style={{flex:1, alignItems:'center'}}>
-          <Text style={{fontSize:24}}>Your shortcode is:</Text>
-          <Text style={{fontSize:30}}>{global.userID}</Text>
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text style={{ fontSize: 24 }}>Your shortcode is:</Text>
+          <Text style={{ fontSize: 30 }}>{global.userID}</Text>
         </View>
       </View>
     );
   }
 
+  showRequests = async () => {
+    const requests = await apiRequests.getRequests(global.userID);
+    console.log(requests);
+    this.props.navigation.navigate('RequestsScreen', { requests: requests.requests });
+  }
+
   changeSettings = async () => {
     const det = await apiRequests.getUserDetails(global.userID);
-    this.props.navigation.navigate('EditDetailsScreen', {details: det});
+    this.props.navigation.navigate('EditDetailsScreen', { details: det });
   }
 
   logOut = () => {
     global.userID = 1;
     this.props.navigation.navigate('Login');
   }
-}
+} 

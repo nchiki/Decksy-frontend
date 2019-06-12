@@ -367,6 +367,9 @@ const apiRequests = {
       }),
       cache: 'default',
     })
+      .then(function (response) {
+        return response.json();
+      })
       .catch(function (error) {
         console.log('There has been a problem with your getLink fetch operation: ' + error.message);
         // ADD THIS THROW error
@@ -391,10 +394,125 @@ const apiRequests = {
       // ADD THIS THROW error
       throw error;
     });
-  }
+  },
+
+  addCardImage: function (userID, image) {
+    return fetch(`${API}/cards/uploadcard`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      user: userID,
+      card: image,
+      }),
+    cache: 'default',
+  })
+    .catch(function (error) {
+      console.log('There has been a problem with your addCardImage fetch operation: ' + error.message);
+      // ADD THIS THROW error
+      throw error;
+    });
+  },
+  getCardImage: function (userID) {
+    return fetch(`${API}/cards/getcard/${userID}`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      cache: 'default',
+    }).then(function (response) {
+      return response.json();
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your getCardImage fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+    },
+
+  getRequests: function (userID) {
+    return fetch(`${API}/requests/get`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: userID,
+      }),
+      cache: 'default',
+    })
+      .then(function (response) {
+        return response.json();
+      })
+      .catch(function (error) {
+        console.log('There has been a problem with your getRequest fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  addRequest: function (user1, user2) {
+    return fetch(`${API}/requests/add`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        to: user1,
+        from: user2,
+      }),
+      cache: 'default',
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your addRequest fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  removeRequest: function (request) {
+    return fetch(`${API}/requests/remove`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        request: request,
+      }),
+      cache: 'default',
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your removeRequest fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
+
+  acceptRequest: function (request) {
+    return fetch(`${API}/requests/accept`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        request: request,
+      }),
+      cache: 'default',
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your acceptRequest fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
 }
-
-
 
 export default apiRequests;

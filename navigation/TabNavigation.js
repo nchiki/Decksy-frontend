@@ -9,15 +9,18 @@ import CardProfileScreen from '../screens/CardProfileScreen';
 import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../components/BusinessCard';
 import CardTemplate from '../components/CardTemplate';
-import { Ionicons } from '@expo/vector-icons';
+import TemplatesGallery from '../components/TemplatesGallery';
 import EditDetailsScreen from '../screens/EditDetailsScreen';
+import LinkScreen from '../screens/LinkScreen';
+import RequestsScreen from '../screens/RequestsScreen';
 
 export const CollectedCardsStack = createStackNavigator({
-    CollectedCards: {screen: HomeScreen},
-    QRScanner: {screen: QRCodeScannerScreen},
-    CardProfile: {screen: CardProfileScreen},
-  },
-  { initialRouteName: 'CollectedCards',
+  CollectedCards: { screen: HomeScreen },
+  QRScanner: { screen: QRCodeScannerScreen },
+  CardProfile: { screen: CardProfileScreen },
+},
+  {
+    initialRouteName: 'CollectedCards',
     swipeEnabled: true,
   }
 );
@@ -38,10 +41,14 @@ CollectedCardsStack.navigationOptions = {
 
 
 const ProfileScreenStack = createStackNavigator({
-  ProfileScreen: {screen: ProfileScreen},
-  CardScreen: {screen : BusinessCard},
-  CardTemplateScreen : {screen : CardTemplate},
-  EditDetailsScreen : {screen: EditDetailsScreen}
+  ProfileScreen: { screen: ProfileScreen },
+  CardScreen: { screen: BusinessCard },
+  CardTemplateScreen: { screen: CardTemplate },
+  EditDetailsScreen: { screen: EditDetailsScreen },
+  LinkScreen: { screen: LinkScreen },
+  RequestsScreen: { screen: RequestsScreen },
+  TemplatesGallery : {screen: TemplatesGallery}
+
 },
 );
 
@@ -56,10 +63,10 @@ ProfileScreenStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
-    CollectedCardsStack,
-    ProfileScreenStack,
-  },
+  CollectedCardsStack,
+  ProfileScreenStack,
+},
   {
-    tabBarOptions: {labelStyle: { fontSize: 14 }}
+    tabBarOptions: { labelStyle: { fontSize: 14 } }
   }
 );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { View, Text,Platform,StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-elements';
 
 import CardFlip from 'react-native-card-flip';
@@ -9,6 +9,8 @@ import templateStyles from '../styles/TemplateStyles';
 import QRCode from 'react-native-qrcode';
 import templateUtils from './Templates';
 import BusinessCard from './BusinessCard';
+import {ImagePicker, Permissions, Constants} from 'expo';
+
 
 const u = {
   firstName: 'FIRST',
@@ -19,6 +21,7 @@ const u = {
   phoneNumber: 99999999,
 }
 
+
 export default class CardTemplate extends React.Component {
   state = {
     userID: 1,
@@ -26,8 +29,11 @@ export default class CardTemplate extends React.Component {
     details: u,
     image: require("../assets/images/template2.png"),
     templateStyle: templateUtils.setProfileStyle(2),
-    saved: false
+    saved: false,
+    picture: null
   }
+
+
 
   onCardTypeRightRequested = () => {
     let cardType = this.state.cardType + 1;
@@ -37,6 +43,11 @@ export default class CardTemplate extends React.Component {
     this.setState({ cardType: cardType });
     setTimeout(() => this.setTemplate(), 20);
   }
+
+  componentDidMount() {
+    this.getPermissionAsync();
+  }
+
   onCardTypeLeftRequested = () => {
     let cardType = this.state.cardType - 1;
     if (cardType < 2) {
@@ -46,11 +57,44 @@ export default class CardTemplate extends React.Component {
     setTimeout(() => this.setTemplate(), 20);
   }
 
+  showGallery = async () => {
+    const det = await apiRequests.getUserDetails(global.userID);
+    this.props.navigation.navigate('TemplatesGallery', {details: det});
+  }
+
   save = async (navigation) => {
     apiRequests.setCard(global.userID, this.state.cardType);
     const det = await apiRequests.getUserDetails(global.userID);
-    this.setState({ saved: true, details: det });
+    this.setState({ saved: true, details: det, picture: null });
   }
+  
+
+  getPermissionAsync = async () => {
+    if (Platform.OS ) {
+      const status  = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      console.log(status.status)
+      if(status.status != 'granted') {
+      alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  }
+
+  _pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+    });
+
+    console.log(result);
+
+    if (!result.cancelled) {
+      apiRequests.addCardImage(global.userID, result.uri);
+      this.setState({ saved: true,picture: result.uri });
+    }
+  };
+
+  
 
   setTemplate = () => {
     const image = templateUtils.setImage(this.state.cardType);
@@ -71,7 +115,7 @@ export default class CardTemplate extends React.Component {
       return (
         <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
           <View style={{ flex: 3 }}>
-            <BusinessCard image={image} details={u} templateStyle={templateStyle} />
+            <BusinessCard image={image} details={u} templateStyle={templateStyle} picture={this.state.picture}/>
           </View>
           <View style={{ flex: 2 }}>
             <Button title='Edit' onPress={() => this.handleEdit()} />
@@ -81,7 +125,20 @@ export default class CardTemplate extends React.Component {
     } else {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
-          <View style={{ top: 40 }}>
+         
+          <View style={{flex:1,flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 5, top:60}}>
+          <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.showGallery()}>
+              <Text style={{ fontWeight: 'bold' }}> Gallery </Text>
+            </TouchableOpacity>
+            <View style={{width:250}}/>
+            <TouchableOpacity style={styles.buttonContainer} onPress={this._pickImage}>
+              <Ionicons name='ios-qr-scanner' size={26} />
+            </TouchableOpacity>
+          </View>
+          <View style={{ top: 0}}>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <ImageBackground source={image} style={styles.containerStyle}>

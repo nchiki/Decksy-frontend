@@ -2,7 +2,7 @@ import React from 'react';
 import { SectionList, StyleSheet, ImageBackground, TouchableOpacity, Text, Image, View } from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Swipeout from 'react-native-swipeout';
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 import templateUtils from './Templates';
 
 export default class ContactCollection extends React.Component {
@@ -66,26 +66,27 @@ export default class ContactCollection extends React.Component {
         }}
       >
         <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
-          <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
-            <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
-            <Text style={{ fontSize: 13 }}>{item.profession}</Text>
-          </View>
-          <View style={{ flex: 3, marginRight: -70 }}>
-            <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
-              <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
-                <View style={styles.containerStyle}>
-                  <View style={templateUtils.setStyle(item.card).titleText}>
-                    <Text style={templateUtils.setStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
-                  </View>
-                  <View style={templateUtils.setStyle(item.card).user}>
-                    <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
-                    <Text style={templateUtils.setStyle(item.card).details}>{item.phoneNumber}{'\n'}{item.email}</Text>
-                  </View>
-                </View>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
+        <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
+          <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
+          <Text style={{ fontSize: 13 }}>{item.profession}</Text>
         </View>
+        <View style={{ flex: 3, marginRight: -70 }}>
+          <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
+            <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+              <View style={styles.containerStyle}>
+                <View style={templateUtils.setStyle(item.card).titleText}>
+                  <Text style={templateUtils.setStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+                </View>
+                <View style={templateUtils.setStyle(item.card).user}>
+                  <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
+                  <Text style={templateUtils.setStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
+                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
+                </View>
+              </View>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      </View>
       </Swipeout>
     );
   }
