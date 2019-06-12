@@ -25,10 +25,8 @@ export default class HomeScreen extends React.Component {
       filterInputDialogVisible: false,
       shortcodeInputVisible: false,
       requestVisible: false,
-      requestUser: "",
       requestID: null,
-      filters: null,
-      userID: null,
+      filter: null,
       unpinnedContacts: [],
       pinnedContacts: [],
       displayValue: 1,
@@ -38,14 +36,17 @@ export default class HomeScreen extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props;
+
     let contacts = this.props.navigation.getParam('contacts', 'NO-ID');
-    let images = this.props.navigation.getParam('images', 'NULL');
     if (contacts == 'NO-ID') {
       contacts = global.contacts;
     }
+
+    let images = this.props.navigation.getParam('images', 'NULL');
     if (images == 'NULL') {
       images = global.images;
     }
+
     this.setState({
       images: images
     });
@@ -158,7 +159,7 @@ export default class HomeScreen extends React.Component {
   }
 
   handleFilter = async () => {
-    const filter = this.state.filters;
+    const filter = this.state.filter;
     if (!filter) {
       this.updateContacts();
       setTimeout(() =>
@@ -180,7 +181,7 @@ export default class HomeScreen extends React.Component {
         this.setState({
           filterInputDialogVisible: false,
           contacts: listItems,
-          filters: null
+          filter: null
         }), 20);
     }
   };
@@ -213,7 +214,7 @@ export default class HomeScreen extends React.Component {
         <Dialog.Container visible={this.state.filterInputDialogVisible}>
           <Dialog.Title>Filter</Dialog.Title>
           <Dialog.Description>Enter a keyword that you would like to be used to filter your business cards</Dialog.Description>
-          <Dialog.Input onChangeText={(inputText) => this.setState({ filters: inputText })} />
+          <Dialog.Input onChangeText={(inputText) => this.setState({ filter: inputText })} />
           <Dialog.Button label="Cancel" onPress={this.handleCancelFilter} bold={true} />
           <Dialog.Button label="Filter" onPress={this.handleFilter} />
         </Dialog.Container>
