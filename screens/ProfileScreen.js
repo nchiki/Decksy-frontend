@@ -41,8 +41,8 @@ export default class ProfileScreen extends React.Component {
             />
           )}
           destructiveIndex={1}
-          options={["Edit details", "Sign out", "Cancel"]}
-          actions={[() => params.changeSettings(), () => params.logOut(), () => { }]}
+          options={["Edit details", "Edit Links", "Sign out", "Cancel"]}
+          actions={[() => params.changeSettings(), () => params.changeToLinks(), () => params.logOut(), () => { }]}
         />
       ),
     };
@@ -52,6 +52,7 @@ export default class ProfileScreen extends React.Component {
     const { navigation } = this.props;
     navigation.setParams({
       changeSettings: () => this.changeSettings(),
+      changeToLinks: () => this.changeToLinks(),
       showRequests: () => this.showRequests(),
       logOut: () => this.logOut(),
     });
@@ -74,13 +75,16 @@ export default class ProfileScreen extends React.Component {
 
   showRequests = async () => {
     const requests = await apiRequests.getRequests(global.userID);
-    console.log(requests);
     this.props.navigation.navigate('RequestsScreen', { requests: requests.requests });
   }
 
   changeSettings = async () => {
     const det = await apiRequests.getUserDetails(global.userID);
     this.props.navigation.navigate('EditDetailsScreen', { details: det });
+  }
+
+  changeToLinks = () => {
+    this.props.navigation.navigate('LinkScreen');
   }
 
   logOut = () => {

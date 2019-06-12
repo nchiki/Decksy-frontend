@@ -44,9 +44,10 @@ export default class CardProfileScreen extends React.Component {
   };
 
   async componentDidMount() {
+    console.log("In component did mount");
     const { navigation } = this.props;
     const details = navigation.getParam('item', 'NO-ID');
-    console.log(details);
+    this.getURL(details);
     this.setState({
       details: details,
     })
@@ -85,8 +86,10 @@ export default class CardProfileScreen extends React.Component {
 
   getURL = async (details) => {
     const link = await apiRequests.getLink(details.links[0]);
+    console.log("Link");
+    console.log(link);
     if (link) {
-      this.setState({ url: link.url });
+      this.setState({ url: link.value });
     }
   }
 
@@ -113,7 +116,7 @@ export default class CardProfileScreen extends React.Component {
                 <View style={templateUtils.setProfileStyle(item.card).user}>
                   <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
                   <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
-                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
+                    <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
                 </View>
               </View>
             </ImageBackground>

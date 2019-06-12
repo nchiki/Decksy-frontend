@@ -1,27 +1,15 @@
 import React, { Component } from 'react';
 
-import { ScrollView, Text, Image, TextInput, View, Button, Alert, TouchableHighlight } from 'react-native';
+import { ScrollView, Text, Image, StyleSheet, TextInput, View, Button, Alert, TouchableHighlight } from 'react-native';
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import { ReactComponent as Logo } from '../assets/images/github-logo.svg';
 
-
 export default class LinkScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            userID: null,
-            email: null,
-            firstName: null,
-            lastName: null,
-            phoneNumber: null,
-            links: [],
-            company: null,
-            profession: null,
-            cardID: null
-        }
     }
 
     static navigationOptions = {
@@ -31,25 +19,16 @@ export default class LinkScreen extends Component {
         },
     };
 
-
-    componentDidMount() {
-        const { navigation } = this.props;
-        const details = navigation.getParam('details', 'NULL');
-        this.setState({
-            userID: details.user,
-            email: details.email,
-            firstName: details.firstName,
-            lastName: details.lastName,
-            phoneNumber: details.phoneNumber,
-            links: details.links,
-            company: details.company,
-            profession: details.profession,
-            cardID: details.card
-        })
+    handleGithubLink = () => {
+        this.props.navigation.navigate('AddLink', { linkType: 'Github' });
     }
 
-    handleSubmit = async () => {
-        this.props.navigation.goBack();
+    handleLinkedInLink = () => {
+        this.props.navigation.navigate('AddLink', { linkType: 'Linkedin' });
+    }
+
+    handlePersonalLink = () => {
+        this.props.navigation.navigate('AddLink', { linkType: 'Personal' });
     }
 
 
@@ -57,12 +36,36 @@ export default class LinkScreen extends Component {
         const details = this.props.navigation.getParam('details', 'NULL');
         const spacing = 10;
         return (
-            <TouchableHighlight onPress={() => this.handleSubmit()} underlayColor='blue'>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Logo />
-                    <Text> Hello world! </Text>
-                </View>
-            </TouchableHighlight>
+            <View>
+                <Button
+                    title="Add a Github Link"
+                    onPress={() => {
+                        this.handleGithubLink()
+                    }}
+                />
+                <Button
+                    title="Add a LinkedIn Link"
+                    onPress={() => {
+                        this.handleLinkedInLink()
+                    }}
+                />
+                <Button
+                    title="Add a Link to a personal website/portfolio"
+                    onPress={() => {
+                        this.handlePersonalLink();
+                    }}
+                />
+            </View>
         );
     }
 }
+
+const buttons = StyleSheet.create({
+
+    buttonStyles: {
+        width: '80%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20
+    }
+})
