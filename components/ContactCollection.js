@@ -13,15 +13,14 @@ export default class ContactCollection extends React.Component {
       details: null,
       swipedCardIsPinned: null,
       swipedCardID: null,
+      pinnedContacts : [],
+      unpinnedContacts : []
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     console.log(this.props.contacts);
-    let seperated = this.seperatePinnedFromUnpinned(this.props.contacts);
-    seperated.pinnedContacts.forEach(function(element) { element.isPinned = true; });
-    seperated.unpinnedContacts.forEach(function(element) { element.isPinned = false; });
-    this.setState(seperated);
+    setTimeout(()=> this.seperatePinnedFromUnpinned(this.props.contacts), 20);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -54,7 +53,8 @@ export default class ContactCollection extends React.Component {
         onPress: () => { this.pinCard() }
       },
     ];
-
+    
+    let cardID = (item.card <2) ? 2 : item.card;
     return (
       <Swipeout
         left={leftSwipeButtons}
@@ -75,15 +75,15 @@ export default class ContactCollection extends React.Component {
         </View>
         <View style={{ flex: 3, marginRight: -70 }}>
           <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
-            <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+            <ImageBackground source={templateUtils.setImage(cardID)} style={styles.containerStyle}>
               <View style={styles.containerStyle}>
-                <View style={templateUtils.setStyle(item.card).titleText}>
-                  <Text style={templateUtils.setStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+                <View style={templateUtils.setStyle(cardID).titleText}>
+                  <Text style={templateUtils.setStyle(cardID).userText} >{`${item.firstName} ${item.lastName}`} </Text>
                 </View>
-                <View style={templateUtils.setStyle(item.card).user}>
-                  <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
-                  <Text style={templateUtils.setStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
-                    <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
+                <View style={templateUtils.setStyle(cardID).user}>
+                  <Text style={templateUtils.setStyle(cardID).company}>{item.company}</Text>
+                  <Text style={templateUtils.setStyle(cardID).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
+                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
                 </View>
               </View>
             </ImageBackground>
@@ -165,10 +165,10 @@ export default class ContactCollection extends React.Component {
         unpinnedContacts.push(contacts[i]);
       }
     }
-    return {
+    this.setState({
       pinnedContacts: pinnedContacts,
       unpinnedContacts: unpinnedContacts,
-    }
+    })
   }
 
 }

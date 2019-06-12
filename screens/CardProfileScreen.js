@@ -46,7 +46,6 @@ export default class CardProfileScreen extends React.Component {
   async componentDidMount() {
     const { navigation } = this.props;
     const details = navigation.getParam('item', 'NO-ID');
-    console.log(details);
     this.setState({
       details: details,
     })

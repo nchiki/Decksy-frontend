@@ -12,6 +12,7 @@ import BusinessCard from './BusinessCard';
 import {ImagePicker, Permissions, Constants} from 'expo';
 
 
+
 const u = {
   firstName: 'FIRST',
   lastName: 'LAST',
@@ -72,7 +73,6 @@ export default class CardTemplate extends React.Component {
   getPermissionAsync = async () => {
     if (Platform.OS ) {
       const status  = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-      console.log(status.status)
       if(status.status != 'granted') {
       alert('Sorry, we need camera roll permissions to make this work!');
       }
@@ -86,15 +86,27 @@ export default class CardTemplate extends React.Component {
       aspect: [4, 3],
     });
 
-    console.log(result);
-
     if (!result.cancelled) {
-      apiRequests.addCardImage(global.userID, result.uri);
-      this.setState({ saved: true,picture: result.uri });
+      const data = new FormData();
+
+      data.append("card", {
+        name: 'businessCard',
+        type: result.type,
+        uri:
+          Platform.OS === "android" ? result.uri : result.uri.replace("file://", "")
+      });
+
+      
+      data.append("user", global.userID);
+      apiRequests.addCardImage(data);
+      apiRequests.setCard(global.userID, 1);
+      this.setState({ saved: true, picture: result.uri });
     }
   };
 
   
+
+
 
   setTemplate = () => {
     const image = templateUtils.setImage(this.state.cardType);

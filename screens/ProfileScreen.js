@@ -74,7 +74,6 @@ export default class ProfileScreen extends React.Component {
 
   showRequests = async () => {
     const requests = await apiRequests.getRequests(global.userID);
-    console.log(requests);
     this.props.navigation.navigate('RequestsScreen', { requests: requests.requests });
   }
 

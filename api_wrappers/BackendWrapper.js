@@ -403,10 +403,7 @@ const apiRequests = {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-      user: userID,
-      card: image,
-      }),
+      body: data,
     cache: 'default',
   })
     .catch(function (error) {
@@ -415,6 +412,7 @@ const apiRequests = {
       throw error;
     });
   },
+  
   getCardImage: function (userID) {
     return fetch(`${API}/cards/getcard/${userID}`, {
       method: 'GET',
@@ -424,7 +422,10 @@ const apiRequests = {
       },
       cache: 'default',
     }).then(function (response) {
-      return response.json();
+      const image = response;
+      console.log('image:')
+      console.log(image);
+      return image;
     })
       .catch(function (error) {
         console.log('There has been a problem with your getCardImage fetch operation: ' + error.message);
