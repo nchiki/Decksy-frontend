@@ -18,7 +18,10 @@ export default class ContactCollection extends React.Component {
 
   componentWillMount() {
     console.log(this.props.contacts);
-    this.setState(this.seperatePinnedFromUnpinned(this.props.contacts));
+    let seperated = this.seperatePinnedFromUnpinned(this.props.contacts);
+    seperated.pinnedContacts.forEach(function(element) { element.isPinned = true; });
+    seperated.unpinnedContacts.forEach(function(element) { element.isPinned = false; });
+    this.setState(seperated);
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -45,7 +48,7 @@ export default class ContactCollection extends React.Component {
 
     let leftSwipeButtons = [
       {
-        text: 'Pin',
+        text: item.isPinned ? 'Unpin' : 'Pin',
         backgroundColor: 'orange',
         underlayColor: 'rgba(255, 255, 255, 1.0)',
         onPress: () => { this.pinCard() }
@@ -60,8 +63,8 @@ export default class ContactCollection extends React.Component {
         backgroundColor='transparent'
         onOpen={(swipedCardIsPinned, swipedCardID) => {
           this.setState({
-            swipedCardIsPinned: false,
-            swipedCardID: item.card,
+            swipedCardIsPinned: item.isPinned,
+            swipedCardID: item.user,
           })
         }}
       >
@@ -80,7 +83,7 @@ export default class ContactCollection extends React.Component {
                 <View style={templateUtils.setStyle(item.card).user}>
                   <Text style={templateUtils.setStyle(item.card).company}>{item.company}</Text>
                   <Text style={templateUtils.setStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
-                        <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
+                    <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
                 </View>
               </View>
             </ImageBackground>
@@ -91,41 +94,60 @@ export default class ContactCollection extends React.Component {
     );
   }
 
-  // renderSeparator = () => {
-  //   return ( <View style={styles.seperator} /> );
-  // };
-
   deleteCard() {
-    apiRequests.removeContact(global.userID, contactID);
-  }
-
-  pinCard() {
-    console.log(this.state.swipedCardID);
-    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(this.state.swipedCardIsPinned));
-    this.togglePinned(this.state.swipedCardID);
-  }
-
-  togglePinned(id) {
+    apiRequests.removeContact(global.userID, this.state.swipedCardID);
     if (this.state.swipedCardIsPinned) {
-      this.state.unpinnedContacts.concat(this.state.pinnedContacts.filter(contact => contact.user == id));
-      this.state.pinnedContacts.filter(contact => contact.user != id);
+      this.setState({
+        pinnedContacts: this.state.pinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
+      })
     } else {
-      this.state.pinnedContacts.concat(this.state.unpinnedContacts.filter(contact => contact.user == id));
-      this.state.unpinnedContacts.filter(contact => contact.user != id);
+      this.setState({
+        unpinnedContacts: this.state.unpinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
+      })
     }
   }
 
+  pinCard() {
+    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(this.state.swipedCardIsPinned));
+    var unpinned = this.state.unpinnedContacts;
+    var pinned = this.state.pinnedContacts;
+    if (this.state.swipedCardIsPinned) {
+      unpinned = unpinned.concat(pinned.filter(contact => contact.user == this.state.swipedCardID));
+      pinned = pinned.filter(contact => contact.user != this.state.swipedCardID);
+      unpinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = false;
+    } else {
+      pinned = pinned.concat(unpinned.filter(contact => contact.user == this.state.swipedCardID));
+      unpinned = unpinned.filter(contact => contact.user != this.state.swipedCardID);
+      pinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = true;
+    }
+    this.setState({
+      pinnedContacts: pinned,
+      unpinnedContacts: unpinned,
+    })
+  }
+
   render() {
+    var sections = []
+    if (this.state.pinnedContacts.length > 0) {
+      if (this.state.unpinnedContacts.length > 0) {
+        // if there are both pinned and unpinned contacts, show to sections
+        sections = [{title: 'Pinned', data: this.state.pinnedContacts},
+                    {title: 'Unpinned', data: this.state.unpinnedContacts}];
+      } else {
+        // if there are only pinned contacts, only show a section for pinned contacts (no section for unpinned)
+        sections = [{title: 'Pinned', data: this.state.pinnedContacts}];
+      }
+    } else {
+      // if there are no pinned contacts then just have a single section with no section header
+      sections = [{data: this.state.unpinnedContacts}];
+    }
     return (
       <SectionList
         renderItem={this.renderRow.bind(this)}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={styles.sectionHeader}>{title}</Text>
+          <Text style={this.state.pinnedContacts.length > 0 ? styles.sectionHeader : styles.emptySectionHeader}>{title}</Text>
         )}
-        sections={[
-          {title: 'Pinned', data: this.state.pinnedContacts},
-          {title: 'Unpinned', data: this.state.unpinnedContacts},
-        ]}
+        sections={sections}
         keyExtractor={item => item.email}
         ItemSeparatorComponent={() => ( <View style={styles.seperator} /> )}
         style={{marginTop: 2, height:'100%'}}
@@ -176,6 +198,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize:15,
     backgroundColor:'lightgrey'
+  },
+  emptySectionHeader: {
+    height:0,
   },
   seperator: {
     height: 1,

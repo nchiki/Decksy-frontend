@@ -22,7 +22,7 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       count: 0,
-      filterMenuVisible: false,
+      filterInputDialogVisible: false,
       shortcodeInputVisible: false,
       requestVisible: false,
       requestUser: "",
@@ -33,7 +33,6 @@ export default class HomeScreen extends React.Component {
       displayValue: 1,
     }
   }
-
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -99,7 +98,7 @@ export default class HomeScreen extends React.Component {
   }
 
   onFiltersPress = () => {
-    this.setState({ filterMenuVisible: true });
+    this.setState({ filterInputDialogVisible: true });
   }
 
   handleCancel = () => {
@@ -107,7 +106,7 @@ export default class HomeScreen extends React.Component {
   };
 
   handleCancelFilter = () => {
-    this.setState({ filterMenuVisible: false });
+    this.setState({ filterInputDialogVisible: false });
   };
 
   handleAdd = async () => {
@@ -141,7 +140,7 @@ export default class HomeScreen extends React.Component {
       this.getContactsForDisplay();
       setTimeout(() =>
         this.setState({
-          filterMenuVisible: false,
+          filterInputDialogVisible: false,
         }), 20);
     } else {
       const contacts = this.state.contacts;
@@ -156,7 +155,7 @@ export default class HomeScreen extends React.Component {
 
       setTimeout(() =>
         this.setState({
-          filterMenuVisible: false,
+          filterInputDialogVisible: false,
           contacts: listItems,
           filters: null
         }), 20);
@@ -169,10 +168,9 @@ export default class HomeScreen extends React.Component {
 
   DeckDisplay(displayValue, navigation, contacts) {
     return displayValue == 1 ?
-      (<ContactCollection contacts={contacts} navigation={navigation} />)
+      (<ContactCollection contacts={contacts} navigation={navigation} deleteCard={this.deleteCard} pinCard={this.pinCard}/>)
       : (<CardCollection contacts={contacts} navigation={navigation} />)
   }
-
 
   render() {
     const displayValue = this.state.displayValue;
@@ -193,7 +191,7 @@ export default class HomeScreen extends React.Component {
       <View>
         {/*Adding a modal that would display the different filters */}
         <Dialog.Container
-          visible={this.state.filterMenuVisible}>
+          visible={this.state.filterInputDialogVisible}>
           <Dialog.Title>Filter</Dialog.Title>
           <Dialog.Description>Enter a keyword that you would like to be used to filter your business cards</Dialog.Description>
           <Dialog.Input onChangeText={(inputText) => this.setState({ filters: inputText })} />
@@ -217,4 +215,37 @@ export default class HomeScreen extends React.Component {
       </View>
     );
   }
+
+  deleteCard(userID, swipedCardID, swipedCardIsPinned) {
+    apiRequests.removeContact(global.userID, swipedCardID);
+    if (swipedCardIsPinned) {
+      this.setState({
+        pinnedContacts: this.state.pinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
+      })
+    } else {
+      this.setState({
+        unpinnedContacts: this.state.unpinnedContacts.filter(contact => contact.user != this.state.swipedCardID)
+      })
+    }
+  }
+
+  pinCard() {
+    apiRequests.setPinned(global.userID, this.state.swipedCardID, !(swipedCardIsPinned));
+    var unpinned = this.state.unpinnedContacts;
+    var pinned = this.state.pinnedContacts;
+    if (swipedCardIsPinned) {
+      unpinned = unpinned.concat(pinned.filter(contact => contact.user == this.state.swipedCardID));
+      pinned = pinned.filter(contact => contact.user != this.state.swipedCardID);
+      unpinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = false;
+    } else {
+      pinned = pinned.concat(unpinned.filter(contact => contact.user == this.state.swipedCardID));
+      unpinned = unpinned.filter(contact => contact.user != this.state.swipedCardID);
+      pinned.filter(contact => contact.user == this.state.swipedCardID)[0].isPinned = true;
+    }
+    this.setState({
+      pinnedContacts: pinned,
+      unpinnedContacts: unpinned,
+    })
+  }
+
 }
