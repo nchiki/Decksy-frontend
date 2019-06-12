@@ -28,7 +28,7 @@ export default class CardTemplate extends React.Component {
     userID: 1,
     cardType: 2,
     details: u,
-    image: require("../assets/images/template2.png"),
+    image: require("../assets/images/templates/template2.png"),
     templateStyle: templateUtils.setProfileStyle(2),
     saved: false,
     picture: null
@@ -68,7 +68,7 @@ export default class CardTemplate extends React.Component {
     const det = await apiRequests.getUserDetails(global.userID);
     this.setState({ saved: true, details: det, picture: null });
   }
-  
+
 
   getPermissionAsync = async () => {
     if (Platform.OS ) {
@@ -96,7 +96,7 @@ export default class CardTemplate extends React.Component {
           Platform.OS === "android" ? result.uri : result.uri.replace("file://", "")
       });
 
-      
+
       data.append("user", global.userID);
       apiRequests.addCardImage(data);
       apiRequests.setCard(global.userID, 1);
@@ -104,7 +104,7 @@ export default class CardTemplate extends React.Component {
     }
   };
 
-  
+
 
 
 
@@ -137,7 +137,7 @@ export default class CardTemplate extends React.Component {
     } else {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
-         
+
           <View style={{flex:1,flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
