@@ -14,6 +14,13 @@ export default class RequestsScreen extends React.Component {
         }
     }
 
+    static navigationOptions = {
+      title: 'Requests',
+      headerTitleStyle: {
+        fontSize: 25
+      },
+    };
+
     componentWillMount = async () => {
         let contacts = [];
         const { navigation } = this.props;
