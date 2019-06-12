@@ -68,7 +68,9 @@ export default class InformativeContactsView extends React.Component {
       <SectionList
         renderItem={this.renderRow.bind(this)}
         renderSectionHeader={({section: {title}}) => (
-          <Text style={this.props.pinnedContacts.length > 0 ? styles.sectionHeader : styles.emptySectionHeader}>{title}</Text>
+          <View style={this.props.pinnedContacts.length > 0 ? styles.sectionHeaderBackground : styles.emptySectionHeader}>
+            <Text style={styles.sectionHeader}>{title}</Text>
+          </View>
         )}
         sections={sections}
         keyExtractor={item => item.email}
@@ -101,11 +103,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center'
   },
+  sectionHeaderBackground: {
+    backgroundColor:'lightgrey',
+    width:'100%',
+    height:20
+  },
   sectionHeader: {
     fontWeight: 'bold',
     fontSize:15,
-    backgroundColor:'lightgrey',
-    width:'100%'
+    marginLeft:10,
   },
   emptySectionHeader: {
     height:0,
