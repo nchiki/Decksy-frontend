@@ -113,18 +113,26 @@ export default class HomeScreen extends React.Component {
   handleAdd = async () => {
     const { navigation } = this.props;
     apiRequests.addCard(this.state.shortcode, global.userID);
-    apiRequests.addRequest(this.state.shortcode, global.userID);
     setTimeout(() => this.getContactsForDisplay(), 20);
     this.setState({
       shortcodeInputVisible: false,
+      requestVisible: true,
     });
   };
+
+  handleSendRequest = async () => {
+    apiRequests.addRequest(this.state.shortcode, global.userID);
+    this.setState({ requestVisible: false });
+  }
+
+  handleNoRequest = () => {
+    this.setState({ requestVisible: false });
+  }
 
   getContactsForDisplay = async () => {
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
-      console.log(id);
       const det = await apiRequests.getUserDetails(id);
       return det
     }));
@@ -207,6 +215,14 @@ export default class HomeScreen extends React.Component {
           <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
           <Dialog.Button label="Add" onPress={this.handleAdd} />
         </Dialog.Container>
+
+        <Dialog.Container
+          visible={this.state.requestVisible} >
+          <Dialog.Title>Add a Request</Dialog.Title>
+          <Dialog.Description>Do you want to send a request to be added as well?</Dialog.Description>
+          <Dialog.Button label="Yes" onPress={this.handleSendRequest} />
+          <Dialog.Button label="No" onPress={this.handleNoRequest} />
+        </Dialog.Container >
 
         {/* Displays the collection of cards */}
         <View>
