@@ -87,20 +87,26 @@ export default class CardTemplate extends React.Component {
     });
 
     if (!result.cancelled) {
-      const data = 
-      {
+      const data = new FormData();
+
+      data.append("card", {
         name: 'businessCard',
         type: result.type,
         uri:
-        Platform.OS == "android" ? result.uri : result.uri.replace("file://", "")
-      };
-      console.log(data);
-      apiRequests.addCardImage(global.userID, data);
+          Platform.OS === "android" ? result.uri : result.uri.replace("file://", "")
+      });
+
+      
+      data.append("user", global.userID);
+      apiRequests.addCardImage(data);
+      apiRequests.setCard(global.userID, 1);
       this.setState({ saved: true, picture: result.uri });
     }
   };
 
   
+
+
 
   setTemplate = () => {
     const image = templateUtils.setImage(this.state.cardType);

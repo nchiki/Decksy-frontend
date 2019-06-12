@@ -5,6 +5,7 @@ import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight } from '
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
+
 export default class LoginScreen extends Component {
 
   constructor(props) {
@@ -35,15 +36,20 @@ export default class LoginScreen extends Component {
   };
 
   handleLogin = async () => {
+    let images = [];
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
-      const det = await apiRequests.getUserDetails(id);
-
+      const det = await apiRequests.getUserDetails(id);    
+      console.log(det);
+      if(Number.parseInt(det.card, 10) == 1) {
+        const pic = await apiRequests.getCardImage(id);
+        images[id] = pic
+      }
       return det
     }));
     const items = await Promise.all(listItems);
-    this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: items })
+    this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: items, images:images })
 
     // Add logic to authenticate user here
   }

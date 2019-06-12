@@ -31,6 +31,7 @@ export default class HomeScreen extends React.Component {
       userID: null,
       contacts: [],
       displayValue: 1,
+      images: []
     }
   }
 
@@ -38,11 +39,14 @@ export default class HomeScreen extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     let contacts = this.props.navigation.getParam('contacts', 'NO-ID');
-
+    let images = this.props.navigation.getParam('images', 'NULL');
     if (contacts == 'NO-ID') {
       contacts = global.contacts;
-    }
-    this.setState({ contacts: contacts });
+    } 
+    if (images == 'NULL') {
+      images = global.images;
+    } 
+    this.setState({ contacts: contacts, images: images });
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
@@ -121,14 +125,18 @@ export default class HomeScreen extends React.Component {
   };
 
   getContactsForDisplay = async () => {
+    let images = this.state.images;
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
-      const pic = await apiRequests.getCardImage(id);
-      if(pic) {console.log('here'+ pic)}
+      if(Number.parseInt(det.card, 10) == 1) {
+        const pic = await apiRequests.getCardImage(id);
+        images[id] = pic
+      }
       return det
     }));
+    this.setState({images:images});
     const items = await Promise.all(listItems);
     setTimeout(() => this.setState({
       contacts: items
@@ -167,16 +175,17 @@ export default class HomeScreen extends React.Component {
     this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });
   };
 
-  DeckDisplay(displayValue, navigation, contacts) {
+  DeckDisplay(displayValue, navigation, contacts, images) {
     return displayValue == 1 ?
-      (<ContactCollection contacts={contacts} navigation={navigation} />)
-      : (<CardCollection contacts={contacts} navigation={navigation} />)
+      (<ContactCollection contacts={contacts} navigation={navigation} images={images}/>)
+      : (<CardCollection contacts={contacts} navigation={navigation} images={images}/>)
   }
 
 
   render() {
     const displayValue = this.state.displayValue;
     const contacts = this.state.contacts;
+    const images = this.state.images;
     const changeDisplayButton = Platform.OS === "ios" ? (
       <SegmentedControlIOS
         values={['Informative View', 'Visual View']}
@@ -212,7 +221,7 @@ export default class HomeScreen extends React.Component {
         {/* Displays the collection of cards */}
         <View>
           {changeDisplayButton}
-          {this.DeckDisplay(displayValue, this.props.navigation, contacts)}
+          {this.DeckDisplay(displayValue, this.props.navigation, contacts, images)}
         </View>
       </View>
     );

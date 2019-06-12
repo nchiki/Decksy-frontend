@@ -354,7 +354,7 @@ const apiRequests = {
       });
   },
 
-  addCardImage: function (userID, image) {
+  addCardImage: function (data) {
     console.log('adding image')
     return fetch(`${API}/cards/uploadcard`, {
       method: 'POST',
@@ -362,10 +362,7 @@ const apiRequests = {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-      user: userID,
-      card: image,
-      }),
+      body: data,
     cache: 'default',
   })
     .catch(function (error) {
@@ -384,8 +381,7 @@ const apiRequests = {
       },
       cache: 'default',
     }).then(function (response) {
-      const image = response.json();
-      console.log('image of card:')
+      const image = response;
       console.log(image);
       return image;
     })
