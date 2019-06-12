@@ -21,7 +21,7 @@ export default class TemplatesGallery extends React.Component {
     userID: 1,
     cardType: 2,
     details: u,
-    image: require("../assets/images/template2.png"),
+    image: require("../assets/images/templates/template2.png"),
     templateStyle: templateUtils.setProfileStyle(2),
     selected: null
   }
@@ -78,7 +78,7 @@ export default class TemplatesGallery extends React.Component {
     this.setState({ image: image, templateStyle: templateStyle })
   }
 
-  
+
 
   render() {
     return (
@@ -86,9 +86,9 @@ export default class TemplatesGallery extends React.Component {
          data={[2,3,4,5,6,7,8,9,10]}
          keyExtractor={item => item}
          numColumns={2}/>
-        
+
     );
-    
+
   }
 }
 

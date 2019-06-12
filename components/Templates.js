@@ -3,15 +3,15 @@ import templateStyles from '../styles/TemplateStyles';
 import { StyleSheet } from 'react-native';
 
 const images = [
-  require("../assets/images/template2.png"),
-  require("../assets/images/template3.png"),
-  require("../assets/images/template4.png"),
-  require("../assets/images/template5.png"),
-  require("../assets/images/template6.png"),
-  require("../assets/images/template7.png"),
-  require("../assets/images/template8.png"),
-  require("../assets/images/template9.png"),
-  require("../assets/images/template10.png")
+  require("../assets/images/templates/template2.png"),
+  require("../assets/images/templates/template3.png"),
+  require("../assets/images/templates/template4.png"),
+  require("../assets/images/templates/template5.png"),
+  require("../assets/images/templates/template6.png"),
+  require("../assets/images/templates/template7.png"),
+  require("../assets/images/templates/template8.png"),
+  require("../assets/images/templates/template9.png"),
+  require("../assets/images/templates/template10.png")
 ];
 
 
