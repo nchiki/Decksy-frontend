@@ -173,7 +173,7 @@ export default class CardTemplate extends React.Component {
                 <Card title='Scan' titleStyle={{ color: 'darkblue', fontSize: 30 }} containerStyle={styles.containerBackStyle}>
                   <View style={{ alignItems: 'center' }} >
                     <QRCode
-                      value={this.state.valueForQRCode}
+                      value={`https://rolodex.tk/api/user/view/${global.userID}`}
                       //Setting the value of QRCode
                       size={100}
                       //Size of QRCode

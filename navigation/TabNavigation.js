@@ -13,6 +13,7 @@ import TemplatesGallery from '../components/TemplatesGallery';
 import EditDetailsScreen from '../screens/EditDetailsScreen';
 import LinkScreen from '../screens/LinkScreen';
 import RequestsScreen from '../screens/RequestsScreen';
+import AddLinkScreen from '../screens/AddLinkScreen';
 
 export const CollectedCardsStack = createStackNavigator({
   CollectedCards: { screen: HomeScreen },
@@ -39,7 +40,6 @@ CollectedCardsStack.navigationOptions = {
   ),
 };
 
-
 const ProfileScreenStack = createStackNavigator({
   ProfileScreen: { screen: ProfileScreen },
   CardScreen: { screen: BusinessCard },
@@ -47,8 +47,8 @@ const ProfileScreenStack = createStackNavigator({
   EditDetailsScreen: { screen: EditDetailsScreen },
   LinkScreen: { screen: LinkScreen },
   RequestsScreen: { screen: RequestsScreen },
-  TemplatesGallery : {screen: TemplatesGallery}
-
+  TemplatesGallery: { screen: TemplatesGallery },
+  AddLink: { screen: AddLinkScreen },
 },
 );
 

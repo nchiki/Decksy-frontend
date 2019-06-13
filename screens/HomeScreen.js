@@ -132,12 +132,13 @@ export default class HomeScreen extends React.Component {
       shortcodeInputVisible: false,
       requestVisible: true,
     });
-    apiRequests.addCard(global.userID, this.state.shortcode);
+    //apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
-  handleSendRequest = async () => {
+  handleSendRequest = () => {
     apiRequests.addRequest(this.state.shortcode, global.userID);
-    this.setState({ requestVisible: false });
+    this.setState({ shortcodeInputVisible: false });
+    //this.setState({ requestVisible: false });
   }
 
   search = () => {
@@ -309,20 +310,16 @@ handleSort = () => {
           <Dialog.Button label="Search" onPress={this.handleSearch} />
         </Dialog.Container>
 
-        <Dialog.Container visible={this.state.shortcodeInputVisible} >
+        <Dialog.Container
+          visible={this.state.shortcodeInputVisible} >
           <Dialog.Title>Add User</Dialog.Title>
           <Dialog.Description>Enter a user's shortcode to add their business card to your collection</Dialog.Description>
           <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
           <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
+          <Dialog.Button label="Add with request" onPress={this.handleSendRequest} />
           <Dialog.Button label="Add" onPress={this.handleAdd} />
         </Dialog.Container>
 
-        <Dialog.Container visible={this.state.requestVisible}>
-          <Dialog.Title>Add a Request</Dialog.Title>
-          <Dialog.Description>Do you want to send a request to be added as well?</Dialog.Description>
-          <Dialog.Button label="Yes" onPress={this.handleSendRequest} />
-          <Dialog.Button label="No" onPress={this.handleNoRequest} />
-        </Dialog.Container>
 
         {/* Displays the collection of cards */}
         <View>
