@@ -15,35 +15,44 @@ export default class InformativeContactsView extends React.Component {
     let item = data.item;
     let cardID = (item.card <2) ? 2 : item.card;
     let images = this.props.images;
-    
-      if(images[item.user]) {
-        return (
-          <Swipeout
-          left={this.props.swipeButtons.left}
-          right={this.props.swipeButtons.right}
+    var swipeButtons = this.props.swipeButtons;
+    // console.log(item)
+    // console.log(item.isPinned)
+    // if (item.isPinned) {
+    //   swipeButtons.left[0].text = "Unpin";
+    // } else {
+    //   swipeButtons.left[0].text = "Pin";
+    // }
+    console.log(swipeButtons)
+
+    if (images[item.user]) {
+      return (
+        <Swipeout
+          left={swipeButtons.left}
+          right={swipeButtons.right}
           autoClose={true}
           backgroundColor='transparent'
           onOpen={() => {this.props.onSwipe(item.user, item.isPinned)}}
         >
           <View style={{ height: 120, flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
-          <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
-          <Text style={{ fontSize: 13 }}>{item.profession}</Text>
-        </View>
-        <View style={{ flex: 3, marginRight: -70 }}>
-          <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
-      <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
-      </TouchableOpacity>
-        </View>
-      </View>
-      </Swipeout>
-        )
-      }
+            <View style={{ flex: 1, alignItems: 'flex-start', marginLeft: 16 }}>
+              <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
+              <Text style={{ fontSize: 13 }}>{item.profession}</Text>
+            </View>
+            <View style={{ flex: 3, marginRight: -70 }}>
+              <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
+                <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Swipeout>
+      )
+    }
 
     return (
       <Swipeout
-        left={this.props.swipeButtons.left}
-        right={this.props.swipeButtons.right}
+        left={swipeButtons.left}
+        right={swipeButtons.right}
         autoClose={true}
         backgroundColor='transparent'
         onOpen={() => {this.props.onSwipe(item.user, item.isPinned)}}
