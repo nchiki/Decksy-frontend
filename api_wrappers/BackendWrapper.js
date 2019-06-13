@@ -181,6 +181,7 @@ const apiRequests = {
   },
 
   setCard: function (userID, cardID) {
+    console.log('update cardID')
     return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       headers: {
@@ -396,17 +397,14 @@ const apiRequests = {
     });
   },
 
-  addCardImage: function (userID, image) {
+  addCardImage: function (data) {
     return fetch(`${API}/cards/uploadcard`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-      user: userID,
-      card: image,
-      }),
+      body: data,
     cache: 'default',
   })
     .catch(function (error) {
@@ -415,6 +413,7 @@ const apiRequests = {
       throw error;
     });
   },
+  
   getCardImage: function (userID) {
     return fetch(`${API}/cards/getcard/${userID}`, {
       method: 'GET',
@@ -424,7 +423,8 @@ const apiRequests = {
       },
       cache: 'default',
     }).then(function (response) {
-      return response.json();
+      const image = response;
+      return image;
     })
       .catch(function (error) {
         console.log('There has been a problem with your getCardImage fetch operation: ' + error.message);

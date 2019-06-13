@@ -14,6 +14,13 @@ export default class RequestsScreen extends React.Component {
         }
     }
 
+    static navigationOptions = {
+      title: 'Requests',
+      headerTitleStyle: {
+        fontSize: 25
+      },
+    };
+
     componentWillMount = async () => {
         let contacts = [];
         const { navigation } = this.props;
@@ -138,8 +145,6 @@ export default class RequestsScreen extends React.Component {
     };
 
     render() {
-        console.log("Details in render");
-        console.log(this.state.details);
 
         return (
             <FlatList
