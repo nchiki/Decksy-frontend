@@ -306,6 +306,12 @@ export default class HomeScreen extends React.Component {
         unpinnedContacts.push(allContacts[i]);
       }
     }
+    pinnedContacts.forEach(function(contact) {
+      contact.isPinned = true;
+    });
+    unpinnedContacts.forEach(function(contact) {
+      contact.isPinned = false;
+    });
     return {
       pinnedContacts: pinnedContacts,
       unpinnedContacts: unpinnedContacts,
