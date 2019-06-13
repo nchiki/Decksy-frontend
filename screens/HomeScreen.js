@@ -14,7 +14,8 @@ import InformativeContactsView from '../components/card-views/InformativeContact
 import apiRequests from '../api_wrappers/BackendWrapper';
 import VisualContactsView from '../components/card-views/VisualContactsView';
 
-
+const ASC = 'ascending';
+    const DSC = 'descending';
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
 
@@ -22,15 +23,16 @@ export default class HomeScreen extends React.Component {
     super(props);
     this.state = {
       count: 0,
-      filterInputDialogVisible: false,
+      searchDialogVisible: false,
       shortcodeInputVisible: false,
       requestVisible: false,
       requestID: null,
-      filter: null,
+      search: null,
       unpinnedContacts: [],
       pinnedContacts: [],
       displayValue: 1,
-      images: []
+      images: [],
+      
     }
   }
 
@@ -56,7 +58,9 @@ export default class HomeScreen extends React.Component {
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
       handleNFCAddButton: this.handleNFC,
-      handleFilterButton: this.onFiltersPress,
+      updateContacts: this.updateContacts,
+      handleSortButton : this.handleSort,
+      handleSearchButton : this.search,
     });
   }
 
@@ -68,14 +72,19 @@ export default class HomeScreen extends React.Component {
         fontSize: 25
       },
       headerLeft: (
+        <OptionsMenu
+          customButton={(
         <Icon
           containerStyle={{ paddingLeft: 12 }}
           type="ionicon"
           name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-          onPress={() => params.handleFilterButton()}
-          size={28}
+          size={39}
           color='dodgerblue'
         />
+        )}
+        options={[ "Search", "Sort", "Restore", "Cancel"]}
+        actions={[() => params.handleSearchButton(),  () => params.handleSortButton(),()=> params.updateContacts(), () => { }]}
+      />
       ),
       headerRight: (
         <OptionsMenu
@@ -107,17 +116,13 @@ export default class HomeScreen extends React.Component {
     alert("TODO");
   }
 
-  onFiltersPress = () => {
-    this.setState({ filterInputDialogVisible: true });
-  }
+  
 
   handleCancel = () => {
     this.setState({ shortcodeInputVisible: false });
   };
 
-  handleCancelFilter = () => {
-    this.setState({ filterInputDialogVisible: false });
-  };
+  
 
   handleAdd = async () => {
     const { navigation } = this.props;
@@ -134,6 +139,76 @@ export default class HomeScreen extends React.Component {
     apiRequests.addRequest(this.state.shortcode, global.userID);
     this.setState({ requestVisible: false });
   }
+
+  search = () => {
+    setTimeout(() => this.updateContacts(), 30);
+    this.setState({ searchDialogVisible: true });
+  };
+
+  handleSearch = () => {
+    const search = this.state.search;
+    if (!search) {
+      setTimeout(() =>
+        this.setState({
+          searchDialogVisible: false,
+        }), 20);
+    } else {
+      const unpinned = this.state.unpinnedContacts;
+      const unpinnedItems = (unpinned.filter(cont => {
+        if (!cont.field) {
+          return false
+        } else {
+          let field = (cont.field).toLowerCase();
+          let firstName = (cont.firstName).toLowerCase();
+          let lastName = (cont.lastName).toLowerCase();
+          let company = (cont.company).toLowerCase();
+          let profession = (cont.profession).toLowerCase();
+          let email = (cont.email).toLowerCase();
+          let phoneNumber = (cont.phoneNumber).toLowerCase();
+          return ((field.indexOf(search.toLowerCase()) != -1) ||
+          (firstName.indexOf(search.toLowerCase()) != -1) ||
+          (lastName.indexOf(search.toLowerCase()) != -1) ||
+          (company.indexOf(search.toLowerCase()) != -1) ||
+          (profession.indexOf(search.toLowerCase()) != -1) ||
+          (email.indexOf(search.toLowerCase()) != -1) ||
+          (phoneNumber.indexOf(search.toLowerCase()) != -1)
+          )}
+      }));
+      const pinned = this.state.pinnedContacts;
+      const pinnedItems = (pinned.filter(cont => {
+        if (!cont.field) {
+          return false
+        } else {
+          let field = (cont.field).toLowerCase();
+          let firstName = (cont.firstName).toLowerCase();
+          let lastName = (cont.lastName).toLowerCase();
+          let company = (cont.company).toLowerCase();
+          let profession = (cont.profession).toLowerCase();
+          let email = (cont.email).toLowerCase();
+          let phoneNumber = (cont.phoneNumber).toLowerCase();
+          return ((field.indexOf(search.toLowerCase()) != -1) ||
+          (firstName.indexOf(search.toLowerCase()) != -1) ||
+          (lastName.indexOf(search.toLowerCase()) != -1) ||
+          (company.indexOf(search.toLowerCase()) != -1) ||
+          (profession.indexOf(search.toLowerCase()) != -1) ||
+          (email.indexOf(search.toLowerCase()) != -1) ||
+          (phoneNumber.indexOf(search.toLowerCase()) != -1)
+          )}
+      }));
+
+      setTimeout(() =>
+        this.setState({
+          searchDialogVisible: false,
+          pinnedContacts: pinnedItems,
+          search: null,
+          unpinnedContacts: unpinnedItems,
+        }), 20);
+    }
+  };
+
+  handleCancelSearch = () => {
+    this.setState({ searchDialogVisible: false });
+  };
 
   handleNoRequest = () => {
     this.setState({ requestVisible: false });
@@ -158,33 +233,46 @@ export default class HomeScreen extends React.Component {
     ), 20);
   }
 
-  handleFilter = async () => {
-    const filter = this.state.filter;
-    if (!filter) {
-      this.updateContacts();
-      setTimeout(() =>
-        this.setState({
-          filterInputDialogVisible: false,
-        }), 20);
-    } else {
-      const contacts = this.state.contacts;
-      const listItems = (contacts.filter(cont => {
-        if (!cont.field) {
-          return false
-        } else {
-          let field = (cont.field).toLowerCase();
-          return field.indexOf(filter.toLowerCase()) != -1
-        }
-      }));
+    
 
-      setTimeout(() =>
-        this.setState({
-          filterInputDialogVisible: false,
-          contacts: listItems,
-          filter: null
-        }), 20);
+sortByName(a, b, order = ASC) {
+  let diff = a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase());
+  if( diff == 0) {
+    const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
+
+  }
+    if (order === ASC) {
+        return diff;
     }
-  };
+
+    return -1 * diff;
+}
+
+sortByCompany(a, b, order = ASC) {
+    const diff = a.company.toLowerCase().localeCompare(b.company.toLowerCase());
+    
+    if (order === ASC) {
+        return diff;
+    }
+
+    return -1 * diff;
+}
+
+handleSort = () => {
+  const pinnedContacts = this.state.pinnedContacts;
+  const unpinnedContacts = this.state.unpinnedContacts;
+  // if(sortValue == 'name') {
+    if(true) {
+    pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+  } else {
+    pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+    unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+  }  
+  this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})  
+}
+
+  
 
   updateDisplay = () => {
     this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });
@@ -211,12 +299,14 @@ export default class HomeScreen extends React.Component {
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
-        <Dialog.Container visible={this.state.filterInputDialogVisible}>
-          <Dialog.Title>Filter</Dialog.Title>
-          <Dialog.Description>Enter a keyword that you would like to be used to filter your business cards</Dialog.Description>
-          <Dialog.Input onChangeText={(inputText) => this.setState({ filter: inputText })} />
-          <Dialog.Button label="Cancel" onPress={this.handleCancelFilter} bold={true} />
-          <Dialog.Button label="Filter" onPress={this.handleFilter} />
+        
+
+        <Dialog.Container visible={this.state.searchDialogVisible}>
+          <Dialog.Title>Search</Dialog.Title>
+          <Dialog.Description>Enter what you want to search:</Dialog.Description>
+          <Dialog.Input onChangeText={(inputText) => this.setState({ search: inputText })} />
+          <Dialog.Button label="Cancel" onPress={this.handleCancelSearch} bold={true} />
+          <Dialog.Button label="Search" onPress={this.handleSearch} />
         </Dialog.Container>
 
         <Dialog.Container visible={this.state.shortcodeInputVisible} >
