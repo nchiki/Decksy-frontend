@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import { Camera, BarCodeScanner } from 'expo';
+import apiRequests from '../api_wrappers/BackendWrapper';
+
 import {
   AppRegistry,
   StyleSheet,
@@ -9,70 +12,51 @@ import {
   View,
 } from 'react-native';
 
-import QRCodeScanner from 'react-native-qrcode-scanner';
 import Permissions from 'react-native-permissions';
-import { RNCamera } from 'react-native-camera';
 import { withNavigationFocus } from 'react-navigation';
 
 export default class QRCodeScannerScreen extends Component {
-  onSuccess = (e) => {
-    Linking
-      .openURL(e.data)
-      .catch(err => console.error('An error occured', err));
-  } 
 
-  takePicture = async function() {
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      console.log(data.uri);
-    }
+  state = {
+      hasCameraPermission: null,
+      type: Camera.Constants.Type.back,
   };
 
-  render() {
-    const { isFocused } = this.props
-    return (
-      <View style={styles.container}>
-        {isFocused &&
-          <RNCamera
-            ref={ref => {
-              this.camera = ref;
-            }}
-            style={styles.preview}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.on}
-          />
-        }
-        <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-          <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-            <Text style={{ fontSize: 14 }}> SNAP </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    )
-    // Permissions.request('camera').then(response => {
-    //   // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-    //   this.setState({ photoPermission: response });
-    //   alert("Hi")
-    // });
-    // alert("Test")
-    // return (
-    //   <QRCodeScanner
-    //     onRead={this.onSuccess}
-    //     topContent={
-    //       <Text style={styles.centerText}>
-    //         Go to <Text style={styles.textBold}>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-    //       </Text>
-    //     }
-    //     bottomContent={
-    //       <TouchableOpacity style={styles.buttonTouchable}>
-    //         <Text style={styles.buttonText}>OK. Got it!</Text>
-    //       </TouchableOpacity>
-    //     }
-    //   />
-    // );
+  async componentDidMount() {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA);
+    this.setState({ hasCameraPermission: status === 'granted' });
   }
 
+  handleAddUser = (url) => {
+    let elems = url.split('/');
+    let userId = parseInt(elems[elems.length - 1]);
+    apiRequests.addCard(userId, global.userID);
+    this.props.navigation.navigate("CollectedCards");
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <Camera
+         style={{ flex: 1 }}
+         type={this.state.type}
+         barCodeScannerSettings={{barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],}}
+         onBarCodeScanned={((obj) => {
+            console.log("Scanned barcode!");
+            this.handleAddUser(obj.data);
+         })}
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: 'transparent',
+              flexDirection: 'row',
+            }}>
+          </View>
+        </Camera>
+      </View>
+    );
+  }
 }
 const styles = StyleSheet.create({
   container: {
