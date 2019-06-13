@@ -130,15 +130,13 @@ export default class HomeScreen extends React.Component {
     setTimeout(() => this.updateContacts(), 20);
     this.setState({
       shortcodeInputVisible: false,
-      requestVisible: true,
     });
     //apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
   handleSendRequest = () => {
     apiRequests.addRequest(this.state.shortcode, global.userID);
-    this.setState({ shortcodeInputVisible: false });
-    //this.setState({ requestVisible: false });
+    this.handleAdd();
   }
 
   search = () => {
