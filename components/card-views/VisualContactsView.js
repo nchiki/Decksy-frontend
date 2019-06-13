@@ -14,7 +14,7 @@ export default class VisualContactsView extends React.Component{
   _getCards({item}){
     let images = this.props.images;
     
-    if(images[item.user]) {
+    if(item.card == 1) {
         return (
           <Swipeout
           left={this.props.swipeButtons.left}

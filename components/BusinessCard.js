@@ -84,15 +84,7 @@ displayCard(props) {
 }
 
   render() {
-    // const u = this.props.navigation.getParam('details', 'NO-ID');
-    // const image = this.props.navigation.getParam('image', 'NO-ID');
-    // const templateStyle = this.props.navigation.getParam('templateStyle', 'NO-ID');
 
-    const u = this.props.details;
-    //this.resolveLinks();
-    //console.log(this.state.links[0]);
-    const image = this.props.image;
-    const templateStyle = this.props.templateStyle;
 
     if (this.state.saved) {
       return (

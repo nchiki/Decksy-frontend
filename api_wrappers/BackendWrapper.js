@@ -181,6 +181,7 @@ const apiRequests = {
   },
 
   setCard: function (userID, cardID) {
+    console.log('update cardID')
     return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       headers: {
@@ -396,7 +397,7 @@ const apiRequests = {
     });
   },
 
-  addCardImage: function (userID, image) {
+  addCardImage: function (data) {
     return fetch(`${API}/cards/uploadcard`, {
       method: 'POST',
       headers: {
