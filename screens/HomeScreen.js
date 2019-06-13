@@ -32,7 +32,7 @@ export default class HomeScreen extends React.Component {
       pinnedContacts: [],
       displayValue: 1,
       images: [],
-      
+
     }
   }
 
@@ -109,20 +109,20 @@ export default class HomeScreen extends React.Component {
   };
 
   handleQRCode = () => {
-    alert("TODO");
+      this.props.navigation.navigate("QRScanner");
   }
 
   handleNFC = () => {
     alert("TODO");
   }
 
-  
+
 
   handleCancel = () => {
     this.setState({ shortcodeInputVisible: false });
   };
 
-  
+
 
   handleAdd = async () => {
     const { navigation } = this.props;
@@ -234,7 +234,7 @@ export default class HomeScreen extends React.Component {
     ), 20);
   }
 
-    
+
 
 sortByName(a, b, order = ASC) {
   let diff = a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase());
@@ -251,7 +251,7 @@ sortByName(a, b, order = ASC) {
 
 sortByCompany(a, b, order = ASC) {
     const diff = a.company.toLowerCase().localeCompare(b.company.toLowerCase());
-    
+
     if (order === ASC) {
         return diff;
     }
@@ -269,11 +269,11 @@ handleSort = () => {
   } else {
     pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
     unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-  }  
-  this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})  
+  }
+  this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})
 }
 
-  
+
 
   updateDisplay = () => {
     this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });
@@ -300,7 +300,7 @@ handleSort = () => {
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
-        
+
 
         <Dialog.Container visible={this.state.searchDialogVisible}>
           <Dialog.Title>Search</Dialog.Title>
