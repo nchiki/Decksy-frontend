@@ -56,7 +56,8 @@ export default class RequestsScreen extends React.Component {
         const request = requests[indexRequest].request;
         apiRequests.acceptRequest(request);
 
-
+        const contacts = await apiRequests.getUserContacts(global.userID);
+        global.contacts = contacts;
         var index = this.state.details.indexOf(user);
         const newDetails = [].concat(this.state.details);
         newDetails.splice(index, 1);

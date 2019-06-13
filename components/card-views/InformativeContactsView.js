@@ -16,14 +16,7 @@ export default class InformativeContactsView extends React.Component {
     let cardID = (item.card <2) ? 2 : item.card;
     let images = this.props.images;
     var swipeButtons = this.props.swipeButtons;
-    // console.log(item)
-    // console.log(item.isPinned)
-    // if (item.isPinned) {
-    //   swipeButtons.left[0].text = "Unpin";
-    // } else {
-    //   swipeButtons.left[0].text = "Pin";
-    // }
-    console.log(swipeButtons)
+    
 
     if (images[item.user]) {
       return (

@@ -25,7 +25,7 @@ export default class QRCodeScannerScreen extends Component {
     if (this.camera) {
       const options = { quality: 0.5, base64: true };
       const data = await this.camera.takePictureAsync(options);
-      console.log(data.uri);
+     // console.log(data.uri);
     }
   };
 
