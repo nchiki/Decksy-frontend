@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "packagerNgrokUrl": "https://packager.zg-75x.anonymous.webapps-frontend.exp.direct",
-  "ngrokPid": 15298,
-  "expoServerNgrokUrl": "https://zg-75x.anonymous.webapps-frontend.exp.direct"
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "expoServerNgrokUrl": null
 }
