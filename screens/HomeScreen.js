@@ -9,6 +9,7 @@ import DialogInput from 'react-native-dialog-input';
 import Dialog from "react-native-dialog";
 import Swipeout from 'react-native-swipeout';
 import OptionsMenu from "react-native-options-menu";
+import NfcManager, {Ndef, NfcTech, ByteParser, NfcAdapter} from 'react-native-nfc-manager'
 
 import InformativeContactsView from '../components/card-views/InformativeContactsView';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -103,8 +104,22 @@ export default class HomeScreen extends React.Component {
     alert("TODO");
   }
 
-  handleNFC = () => {
-    alert("TODO");
+  handleNFC = async () => {
+    NfcManager.start({});
+    let enable = await NfcManager.isEnabled()
+    console.log(enable);
+    NfcManager.registerTagEvent(
+      tag => {
+        console.log('Tag Discovered', tag);
+      },
+      'Hold your device over the tag',
+      {
+        invalidateAfterFirstRead: true,
+        isReaderModeEnabled: true,
+        readerModeFlags:
+          NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK,
+      },
+    );
   }
 
   onFiltersPress = () => {
