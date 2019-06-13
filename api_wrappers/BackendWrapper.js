@@ -131,9 +131,7 @@ const apiRequests = {
   },
 
   removeContact: function (userID, contactID) {
-    console.log("removeContact called:");
-    console.log(userID);
-    console.log(contactID);
+    
     return fetch(`${API}/user/removecontact`, {
       method: 'POST',
       headers: {

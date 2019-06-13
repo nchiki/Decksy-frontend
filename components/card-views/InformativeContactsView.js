@@ -23,7 +23,7 @@ export default class InformativeContactsView extends React.Component {
     // } else {
     //   swipeButtons.left[0].text = "Pin";
     // }
-    console.log(swipeButtons)
+   // console.log(swipeButtons)
 
     if (images[item.user]) {
       return (

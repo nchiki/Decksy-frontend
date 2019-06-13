@@ -309,7 +309,8 @@ handleSort = () => {
           <Dialog.Button label="Search" onPress={this.handleSearch} />
         </Dialog.Container>
 
-        <Dialog.Container visible={this.state.shortcodeInputVisible} >
+        <Dialog.Container
+          visible={this.state.shortcodeInputVisible} >
           <Dialog.Title>Add User</Dialog.Title>
           <Dialog.Description>Enter a user's shortcode to add their business card to your collection</Dialog.Description>
           <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
