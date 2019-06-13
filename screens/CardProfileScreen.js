@@ -51,8 +51,8 @@ export default class CardProfileScreen extends React.Component {
     }
   };
 
-  async componentDidMount() {
-    console.log("In component did mount");
+  componentDidMount() {
+    //console.log("In component did mount");
     const { navigation } = this.props;
     const details = navigation.getParam('item', 'NO-ID');
     this.setState({
@@ -67,7 +67,7 @@ export default class CardProfileScreen extends React.Component {
     this.getURL(details);
   }
 
-  async componentWillUnmount() {
+  componentWillUnmount() {
     apiRequests.setNote(global.userID, this.state.details.user, this.state.note);
   }
 
@@ -166,18 +166,18 @@ export default class CardProfileScreen extends React.Component {
   render() {
     const { navigation } = this.props;
     const item = navigation.getParam('item', 'NO-ID');
-
+    const curLink = this.state.curLink;
     return (
       <View>
         <Dialog.Container
           visible={this.state.linkPopupVisible} >
           <Dialog.Title>Redirect to link reference</Dialog.Title>
-          <Dialog.Description>Do you want to be redirected to {this.state.curLink}</Dialog.Description>
-          <Dialog.Button label="Yes" onPress={console.log("Pressing button")} />
-          <Dialog.Button label="No" onPress={this.handleNoRequest()} />
+          <Dialog.Description>Do you want to be redirected to {curLink}</Dialog.Description>
+          <Dialog.Button label="Yes" onPress={() => {console.log("Pressing button")}} />
+          <Dialog.Button label="No" onPress={() => this.handleNoRequest()} />
         </Dialog.Container >
         <View style={{ flex: 1 }}>
-          <View style={{ marginTop: 30 }} alignItems='center'>
+          <View style={{ marginTop: 30 , flex: 1}} alignItems='center'>
             <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
               <View style={styles.containerStyle}>
                 <View style={templateUtils.setProfileStyle(item.card).titleText}>
@@ -191,11 +191,11 @@ export default class CardProfileScreen extends React.Component {
               </View>
             </ImageBackground>
           </View>
-          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             {this.getButtons()}
           </View>
           <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 30, }}>Notes:</Text>
-          <View style={{ backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>
+          <View style={{ flex: 1, backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>
             <TextInput
               value={this.state.note}
               style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10 }}
