@@ -40,14 +40,6 @@ CollectedCardsStack.navigationOptions = {
   ),
 };
 
-/*
-const LinkStack = createStackNavigator({
-  LinkScreen: { screen: LinkScreen },
-  AddLink: { screen: AddLinkScreen },
-},
-); 
-*/
-
 const ProfileScreenStack = createStackNavigator({
   ProfileScreen: { screen: ProfileScreen },
   CardScreen: { screen: BusinessCard },

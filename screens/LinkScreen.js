@@ -4,7 +4,6 @@ import { ScrollView, Text, Image, StyleSheet, TextInput, View, Button, Alert, To
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import { ReactComponent as Logo } from '../assets/images/github-logo.svg';
 
 export default class LinkScreen extends Component {
 

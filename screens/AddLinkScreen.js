@@ -4,7 +4,6 @@ import { ScrollView, Text, Image, StyleSheet, TextInput, View, Button, Alert, To
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import { ReactComponent as Logo } from '../assets/images/github-logo.svg';
 import { tsMethodSignature } from '@babel/types';
 
 
@@ -33,9 +32,9 @@ export default class AddLinkScreen extends Component {
         if (type == 'Github') {
             this.setState({ linkURL: "https://www.github.com/" });
         } else if (type == 'Linkedin') {
-            this.setState({ linkURL: "https://www.linkedin.com/" });
+            this.setState({ linkURL: "https://www.linkedin.com/in/" });
         } else {
-            this.setState({ linkURL: "" });
+            this.setState({ linkURL: "https://www." });
         }
     }
 
