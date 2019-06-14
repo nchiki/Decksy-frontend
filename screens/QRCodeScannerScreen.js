@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Camera, BarCodeScanner } from 'expo';
+import { Camera, BarCodeScanner, Permissions } from 'expo';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 import {
@@ -12,7 +12,6 @@ import {
   View,
 } from 'react-native';
 
-import Permissions from 'react-native-permissions';
 import { withNavigationFocus } from 'react-navigation';
 
 export default class QRCodeScannerScreen extends Component {
@@ -27,17 +26,26 @@ export default class QRCodeScannerScreen extends Component {
     this.setState({ hasCameraPermission: status === 'granted' });
   }
 
-  handleAddUser = (url) => {
-    let elems = url.split('/');
-    let userId = parseInt(elems[elems.length - 1]);
-    apiRequests.addCard(userId, global.userID);
+  adding = false;
 
+  handleAddUser = (url) => {
+
+    /* We're already executing this function */
+    if (this.adding) {
+      return;
+    }
+
+    this.adding = true;
+    let elems = url.split('/');
+    console.log(`elems: ${elems}`);
+    let userId = parseInt(elems[elems.length - 1]);
+    console.log(`userID: ${userId}`);
+    apiRequests.addCard(userId, global.userID);
     let cb = this.props.navigation.getParam('cb', null);
     if (cb) {
       cb();
     }
-
-    this.props.navigation.navigate("CollectedCards");
+    this.adding = false;
   }
 
   render() {
@@ -48,8 +56,8 @@ export default class QRCodeScannerScreen extends Component {
          type={this.state.type}
          barCodeScannerSettings={{barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],}}
          onBarCodeScanned={((obj) => {
-            console.log("Scanned barcode!");
             this.handleAddUser(obj.data);
+            this.props.navigation.navigate("CollectedCards");
          })}
         >
           <View
