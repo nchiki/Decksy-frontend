@@ -33,31 +33,13 @@ export default class BusinessCard extends React.Component {
   }
 
   resolveLinks = async () => {
-    //const link = await apiRequests.getLink(this.props.details.links[0]);
-    for (let i = 0; i < this.props.details.links.length; i++) {
       const link = apiRequests.getLink(this.props.details.links[i]);
-      // console.log(link);
-      // console.log(link.name);
-      // console.log(link.value);
       this.state.links.push({ name: link.name });
-    }
   }
 
-  /*  var linkName = [];
-     for (let i = 0; i < this.state.links.length; i++) {
-       linkName.push(
-         <Text key={i}>
-           {'\n'}{this.state.links[i]}
-         </Text>
-       )
-     }
-     return linkName;
-   }
-   */
+ 
 displayCard(props) {
   const u = props.details;
-    //this.resolveLinks();
-    //console.log(this.state.links[0]);
    let image = props.image;
     const templateStyle = props.templateStyle;
     if(props.picture) {

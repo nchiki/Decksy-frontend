@@ -109,7 +109,7 @@ export default class HomeScreen extends React.Component {
   };
 
   handleQRCode = () => {
-    alert("TODO");
+      this.props.navigation.navigate("QRScanner");
   }
 
   handleNFC = () => {
@@ -120,6 +120,8 @@ export default class HomeScreen extends React.Component {
     this.setState({ shortcodeInputVisible: false });
   };
 
+
+
   handleAdd = async () => {
     const { navigation } = this.props;
     apiRequests.addCard(this.state.shortcode, global.userID);
@@ -127,16 +129,12 @@ export default class HomeScreen extends React.Component {
     this.setState({
       shortcodeInputVisible: false,
     });
-    setTimeout(() =>
-      this.setState({
-        requestVisible: true,
-      })
-    )
+    //apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
-  handleSendRequest = async () => {
+  handleSendRequest = () => {
     apiRequests.addRequest(this.state.shortcode, global.userID);
-    this.setState({ requestVisible: false });
+    this.handleAdd();
   }
 
   search = () => {
@@ -273,6 +271,20 @@ export default class HomeScreen extends React.Component {
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
+handleSort = () => {
+  const pinnedContacts = this.state.pinnedContacts;
+  const unpinnedContacts = this.state.unpinnedContacts;
+  // if(sortValue == 'name') {
+    if(true) {
+    pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+  } else {
+    pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+    unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+  }
+  this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})
+}
+
 
 
   updateDisplay = () => {
@@ -316,15 +328,10 @@ export default class HomeScreen extends React.Component {
           <Dialog.Description>Enter a user's shortcode to add their business card to your collection</Dialog.Description>
           <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
           <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
+          <Dialog.Button label="Add with request" onPress={this.handleSendRequest} />
           <Dialog.Button label="Add" onPress={this.handleAdd} />
         </Dialog.Container>
 
-        <Dialog.Container visible={this.state.requestVisible}>
-          <Dialog.Title>Add a Request</Dialog.Title>
-          <Dialog.Description>Do you want to send a request to be added as well?</Dialog.Description>
-          <Dialog.Button label="Yes" onPress={this.handleSendRequest} />
-          <Dialog.Button label="No" onPress={this.handleNoRequest} />
-        </Dialog.Container>
 
         {/* Displays the collection of cards */}
         <View>

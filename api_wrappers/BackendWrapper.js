@@ -131,7 +131,6 @@ const apiRequests = {
   },
 
   removeContact: function (userID, contactID) {
-    
     return fetch(`${API}/user/removecontact`, {
       method: 'POST',
       headers: {
@@ -179,7 +178,7 @@ const apiRequests = {
   },
 
   setCard: function (userID, cardID) {
-    console.log('update cardID')
+    ('update cardID')
     return fetch(`${API}/user/setdetails`, {
       method: 'POST',
       headers: {
