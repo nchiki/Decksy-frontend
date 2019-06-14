@@ -109,20 +109,16 @@ export default class HomeScreen extends React.Component {
   };
 
   handleQRCode = () => {
-      this.props.navigation.navigate("QRScanner");
+      this.props.navigation.navigate("QRScanner", {cb: this.updateContacts});
   }
 
   handleNFC = () => {
     alert("TODO");
   }
 
-
-
   handleCancel = () => {
     this.setState({ shortcodeInputVisible: false });
   };
-
-
 
   handleAdd = async () => {
     const { navigation } = this.props;
