@@ -83,8 +83,9 @@ export default class ProfileScreen extends React.Component {
     this.props.navigation.navigate('EditDetailsScreen', { details: det });
   }
 
-  changeToLinks = () => {
-    this.props.navigation.navigate('LinkScreen');
+  changeToLinks = async () => {
+    const det = await apiRequests.getUserDetails(global.userID);
+    this.props.navigation.navigate('LinkScreen', { details: det });
   }
 
   logOut = () => {

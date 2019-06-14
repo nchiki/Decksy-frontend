@@ -19,15 +19,18 @@ export default class LinkScreen extends Component {
     };
 
     handleGithubLink = () => {
-        this.props.navigation.navigate('AddLink', { linkType: 'Github' });
+        const details = this.props.navigation.getParam('details', 'NULL');
+        this.props.navigation.navigate('AddLink', { details: details, linkType: 'Github' });
     }
 
     handleLinkedInLink = () => {
-        this.props.navigation.navigate('AddLink', { linkType: 'Linkedin' });
+        const details = this.props.navigation.getParam('details', 'NULL');
+        this.props.navigation.navigate('AddLink', { details: details, linkType: 'Linkedin' });
     }
 
     handlePersonalLink = () => {
-        this.props.navigation.navigate('AddLink', { linkType: 'Personal' });
+        const details = this.props.navigation.getParam('details', 'NULL');
+        this.props.navigation.navigate('AddLink', { details: details, linkType: 'Personal' });
     }
 
 
@@ -37,19 +40,19 @@ export default class LinkScreen extends Component {
         return (
             <View>
                 <Button
-                    title="Add a Github Link"
+                    title="Add/Edit a Github Link"
                     onPress={() => {
                         this.handleGithubLink()
                     }}
                 />
                 <Button
-                    title="Add a LinkedIn Link"
+                    title="Add/Edit a LinkedIn Link"
                     onPress={() => {
                         this.handleLinkedInLink()
                     }}
                 />
                 <Button
-                    title="Add a Link to a personal website/portfolio"
+                    title="Add/Edit a Link to a personal website/portfolio"
                     onPress={() => {
                         this.handlePersonalLink();
                     }}

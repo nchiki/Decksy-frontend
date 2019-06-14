@@ -15,7 +15,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 import VisualContactsView from '../components/card-views/VisualContactsView';
 
 const ASC = 'ascending';
-    const DSC = 'descending';
+const DSC = 'descending';
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
 
@@ -32,7 +32,7 @@ export default class HomeScreen extends React.Component {
       pinnedContacts: [],
       displayValue: 1,
       images: [],
-      
+
     }
   }
 
@@ -52,15 +52,15 @@ export default class HomeScreen extends React.Component {
     this.setState({
       images: images
     });
-    setTimeout(()=> this.setState(this.seperatePinnedFromUnpinned(contacts)), 20);
+    setTimeout(() => this.setState(this.seperatePinnedFromUnpinned(contacts)), 20);
 
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
       handleNFCAddButton: this.handleNFC,
       updateContacts: this.updateContacts,
-      handleSortButton : this.handleSort,
-      handleSearchButton : this.search,
+      handleSortButton: this.handleSort,
+      handleSearchButton: this.search,
     });
   }
 
@@ -74,17 +74,17 @@ export default class HomeScreen extends React.Component {
       headerLeft: (
         <OptionsMenu
           customButton={(
-        <Icon
-          containerStyle={{ paddingLeft: 12 }}
-          type="ionicon"
-          name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-          size={39}
-          color='dodgerblue'
+            <Icon
+              containerStyle={{ paddingLeft: 12 }}
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+              size={39}
+              color='dodgerblue'
+            />
+          )}
+          options={["Search", "Sort", "Restore", "Cancel"]}
+          actions={[() => params.handleSearchButton(), () => params.handleSortButton(), () => params.updateContacts(), () => { }]}
         />
-        )}
-        options={[ "Search", "Sort", "Restore", "Cancel"]}
-        actions={[() => params.handleSearchButton(),  () => params.handleSortButton(),()=> params.updateContacts(), () => { }]}
-      />
       ),
       headerRight: (
         <OptionsMenu
@@ -116,13 +116,9 @@ export default class HomeScreen extends React.Component {
     alert("TODO");
   }
 
-  
-
   handleCancel = () => {
     this.setState({ shortcodeInputVisible: false });
   };
-
-  
 
   handleAdd = async () => {
     const { navigation } = this.props;
@@ -130,9 +126,12 @@ export default class HomeScreen extends React.Component {
     setTimeout(() => this.updateContacts(), 20);
     this.setState({
       shortcodeInputVisible: false,
-      requestVisible: true,
     });
-    apiRequests.addCard(global.userID, this.state.shortcode);
+    setTimeout(() =>
+      this.setState({
+        requestVisible: true,
+      })
+    )
   };
 
   handleSendRequest = async () => {
@@ -166,13 +165,14 @@ export default class HomeScreen extends React.Component {
           let email = (cont.email).toLowerCase();
           let phoneNumber = (cont.phoneNumber).toLowerCase();
           return ((field.indexOf(search.toLowerCase()) != -1) ||
-          (firstName.indexOf(search.toLowerCase()) != -1) ||
-          (lastName.indexOf(search.toLowerCase()) != -1) ||
-          (company.indexOf(search.toLowerCase()) != -1) ||
-          (profession.indexOf(search.toLowerCase()) != -1) ||
-          (email.indexOf(search.toLowerCase()) != -1) ||
-          (phoneNumber.indexOf(search.toLowerCase()) != -1)
-          )}
+            (firstName.indexOf(search.toLowerCase()) != -1) ||
+            (lastName.indexOf(search.toLowerCase()) != -1) ||
+            (company.indexOf(search.toLowerCase()) != -1) ||
+            (profession.indexOf(search.toLowerCase()) != -1) ||
+            (email.indexOf(search.toLowerCase()) != -1) ||
+            (phoneNumber.indexOf(search.toLowerCase()) != -1)
+          )
+        }
       }));
       const pinned = this.state.pinnedContacts;
       const pinnedItems = (pinned.filter(cont => {
@@ -187,13 +187,14 @@ export default class HomeScreen extends React.Component {
           let email = (cont.email).toLowerCase();
           let phoneNumber = (cont.phoneNumber).toLowerCase();
           return ((field.indexOf(search.toLowerCase()) != -1) ||
-          (firstName.indexOf(search.toLowerCase()) != -1) ||
-          (lastName.indexOf(search.toLowerCase()) != -1) ||
-          (company.indexOf(search.toLowerCase()) != -1) ||
-          (profession.indexOf(search.toLowerCase()) != -1) ||
-          (email.indexOf(search.toLowerCase()) != -1) ||
-          (phoneNumber.indexOf(search.toLowerCase()) != -1)
-          )}
+            (firstName.indexOf(search.toLowerCase()) != -1) ||
+            (lastName.indexOf(search.toLowerCase()) != -1) ||
+            (company.indexOf(search.toLowerCase()) != -1) ||
+            (profession.indexOf(search.toLowerCase()) != -1) ||
+            (email.indexOf(search.toLowerCase()) != -1) ||
+            (phoneNumber.indexOf(search.toLowerCase()) != -1)
+          )
+        }
       }));
 
       setTimeout(() =>
@@ -226,53 +227,53 @@ export default class HomeScreen extends React.Component {
       }
       return det
     }));
-    this.setState({images:images});
+    this.setState({ images: images });
     const items = await Promise.all(listItems);
     setTimeout(() => this.setState(
       this.seperatePinnedFromUnpinned(items)
     ), 20);
   }
 
-    
 
-sortByName(a, b, order = ASC) {
-  let diff = a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase());
-  if( diff == 0) {
-    const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
 
+  sortByName(a, b, order = ASC) {
+    let diff = a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase());
+    if (diff == 0) {
+      const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
+
+    }
+    if (order === ASC) {
+      return diff;
+    }
+
+    return -1 * diff;
   }
-    if (order === ASC) {
-        return diff;
-    }
 
-    return -1 * diff;
-}
-
-sortByCompany(a, b, order = ASC) {
+  sortByCompany(a, b, order = ASC) {
     const diff = a.company.toLowerCase().localeCompare(b.company.toLowerCase());
-    
+
     if (order === ASC) {
-        return diff;
+      return diff;
     }
 
     return -1 * diff;
-}
+  }
 
-handleSort = () => {
-  const pinnedContacts = this.state.pinnedContacts;
-  const unpinnedContacts = this.state.unpinnedContacts;
-  // if(sortValue == 'name') {
-    if(true) {
-    pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-    unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-  } else {
-    pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-    unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-  }  
-  this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})  
-}
+  handleSort = () => {
+    const pinnedContacts = this.state.pinnedContacts;
+    const unpinnedContacts = this.state.unpinnedContacts;
+    // if(sortValue == 'name') {
+    if (true) {
+      pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+      unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    } else {
+      pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+      unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+    }
+    this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
+  }
 
-  
+
 
   updateDisplay = () => {
     this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });
@@ -290,16 +291,16 @@ handleSort = () => {
         style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
       />)
       : (<Button
-          title='Change Display'
-          onPress={() => this.setState({
-            displayValue: (this.state.displayValue == 1 ? 2 : 1)
-          })}
-        />)
+        title='Change Display'
+        onPress={() => this.setState({
+          displayValue: (this.state.displayValue == 1 ? 2 : 1)
+        })}
+      />)
 
     return (
       <View>
         {/*Adding a modal that would display the different filters */}
-        
+
 
         <Dialog.Container visible={this.state.searchDialogVisible}>
           <Dialog.Title>Search</Dialog.Title>
@@ -340,15 +341,15 @@ handleSort = () => {
               onSwipe={this.onSwipe}
             />)
             : (<VisualContactsView
-                pinnedContacts={this.state.pinnedContacts}
-                unpinnedContacts={this.state.unpinnedContacts}
-                navigation={this.props.navigation}
-                images={this.state.images}
-                deleteCard={this.deleteCard}
-                pinCard={this.pinCard}
-                swipeButtons={this.swipeButtons}
-                onSwipe={this.onSwipe}
-              />)
+              pinnedContacts={this.state.pinnedContacts}
+              unpinnedContacts={this.state.unpinnedContacts}
+              navigation={this.props.navigation}
+              images={this.state.images}
+              deleteCard={this.deleteCard}
+              pinCard={this.pinCard}
+              swipeButtons={this.swipeButtons}
+              onSwipe={this.onSwipe}
+            />)
           }
         </View>
       </View>
@@ -397,10 +398,10 @@ handleSort = () => {
         unpinnedContacts.push(allContacts[i]);
       }
     }
-    pinnedContacts.forEach(function(contact) {
+    pinnedContacts.forEach(function (contact) {
       contact.isPinned = true;
     });
-    unpinnedContacts.forEach(function(contact) {
+    unpinnedContacts.forEach(function (contact) {
       contact.isPinned = false;
     });
     return {
