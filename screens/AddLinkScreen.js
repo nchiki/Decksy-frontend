@@ -15,6 +15,8 @@ export default class AddLinkScreen extends Component {
             linkType: null,
             linkValue: null,
             linkURL: null,
+            existingID: null,
+            existingValue: null,
         }
     }
 
@@ -36,15 +38,34 @@ export default class AddLinkScreen extends Component {
         } else {
             this.setState({ linkURL: "https://www." });
         }
+        this.getExistingLinks();
     }
-
 
     handleSubmit = async () => {
         const finalLink = this.state.linkURL + this.state.linkValue;
-        apiRequests.addLink(global.userID, this.state.linkType, finalLink);
+        if (this.state.existingID) {
+            console.log("right case");
+            console.log(this.state.existingID);
+            apiRequests.removeLink(this.state.existingID);
+            apiRequests.addLink(global.userID, this.state.linkType, finalLink);
+            //  apiRequests.editLink(this.state.existingID, this.state.linkType, finalLink);
+        } else {
+            apiRequests.addLink(global.userID, this.state.linkType, finalLink);
+        }
         this.props.navigation.goBack();
     }
 
+    getExistingLinks = async () => {
+        const { navigation } = this.props;
+        const details = this.props.navigation.getParam('details', 'NULL');
+        for (let i = 0; i < details.links.length; i++) {
+            let linkID = details.links[i];
+            const link = await apiRequests.getLink(linkID);
+            if (link.name == this.state.linkType) {
+                this.setState({ existingID: linkID, existingValue: link.value });
+            }
+        }
+    }
 
     render() {
         return (
