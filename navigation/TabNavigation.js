@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Text, View, Platform } from 'react-native';
 import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation';
+
 import ProfileScreen from '../screens/ProfileScreen';
 import HomeScreen from '../screens/HomeScreen';
 import QRCodeScannerScreen from '../screens/QRCodeScannerScreen';
