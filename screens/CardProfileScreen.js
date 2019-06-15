@@ -163,10 +163,36 @@ export default class CardProfileScreen extends React.Component {
     this.setState({ linkPopupVisible: false });
   }
 
+  renderCardImage = () => {
+    let { navigation } = this.props;
+    let item = navigation.getParam('item', 'NO-ID');
+    /* The card is an image*/
+    if (item.card === 1) {
+      return (
+        <ImageBackground source={{url: `https://rolodex.tk/api/cards/getcard/${item.user}`}} style={styles.containerStyle}>
+        </ImageBackground>
+      );
+    }
+    return (
+      <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+        <View style={styles.containerStyle}>
+          <View style={templateUtils.setProfileStyle(item.card).titleText}>
+            <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
+          </View>
+          <View style={templateUtils.setProfileStyle(item.card).user}>
+            <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
+            <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
+              <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
+            </View>
+        </View>
+      </ImageBackground>
+    );
+  }
+
   render() {
-    const { navigation } = this.props;
-    const item = navigation.getParam('item', 'NO-ID');
-    const message = "Do you want to be redirected to " + this.state.curLink;
+    let { navigation } = this.props;
+    let item = navigation.getParam('item', 'NO-ID');
+    let message = "Do you want to be redirected to " + this.state.curLink;
     return (
       <View style={{ flex: 1 }}>
         <Dialog.Container
@@ -177,18 +203,7 @@ export default class CardProfileScreen extends React.Component {
           <Dialog.Button label="No" onPress={() => this.handleNoRequest()} />
         </Dialog.Container >
         <View style={{ marginTop: 30, marginBottom: 20, flex: 1 }} alignItems='center'>
-          <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
-            <View style={styles.containerStyle}>
-              <View style={templateUtils.setProfileStyle(item.card).titleText}>
-                <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
-              </View>
-              <View style={templateUtils.setProfileStyle(item.card).user}>
-                <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
-                <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
-                  <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
-              </View>
-            </View>
-          </ImageBackground>
+          { this.renderCardImage() }
         </View>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           {this.getButtons()}

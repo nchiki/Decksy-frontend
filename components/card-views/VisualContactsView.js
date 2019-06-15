@@ -13,7 +13,7 @@ export default class VisualContactsView extends React.Component{
 
   _getCards({item}){
     let images = this.props.images;
-    
+
     if(item.card == 1) {
         return (
           <Swipeout
@@ -26,7 +26,7 @@ export default class VisualContactsView extends React.Component{
           <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
       <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
       </TouchableOpacity>
-        
+
       </Swipeout>
         )
       }
