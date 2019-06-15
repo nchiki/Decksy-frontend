@@ -62,6 +62,8 @@ export default class HomeScreen extends React.Component {
       handleSortButton: this.handleSort,
       handleSearchButton: this.search,
     });
+
+    this.updateContacts();
   }
 
   static navigationOptions = ({ navigation }) => {
