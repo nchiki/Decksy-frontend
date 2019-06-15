@@ -5,6 +5,7 @@ import Swipeout from 'react-native-swipeout';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import templateUtils from '../Templates';
 
+
 export default class InformativeContactsView extends React.Component {
 
   handleCardProfile = (item) => {
@@ -15,10 +16,11 @@ export default class InformativeContactsView extends React.Component {
     let item = data.item;
     let cardID = (item.card <2) ? 2 : item.card;
     let images = this.props.images;
+    console.log(images)
     var swipeButtons = this.props.swipeButtons;
     
 
-    if (images[item.user]) {
+    if (item.card == 1 && images[item.user]) {
       return (
         <Swipeout
           left={swipeButtons.left}

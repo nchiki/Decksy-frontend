@@ -1,12 +1,12 @@
 import React from 'react';
-import {View,Text, Platform, SegmentedControlIOS} from 'react-native';
+import {View,Text, Platform, StyleSheet,SegmentedControlIOS} from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 import QRCode from 'react-native-qrcode';
 import CardFlip from 'react-native-card-flip';
 import templateStyles from '../styles/TemplateStyles';
 import { Icon } from "react-native-elements";
-import { FlatList } from 'react-native-gesture-handler';
+import Grid from 'react-native-grid-component';
 
 
 export default class Albums extends React.Component {
@@ -15,7 +15,7 @@ export default class Albums extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      albums: [{
+      albums : [{
         name:'event',
         date:'date',
         time:'time',
@@ -56,19 +56,16 @@ export default class Albums extends React.Component {
       };
     }
 
-    handleAlbum = (name) => {
+    handleAlbum = (item) => {
       alert('todo');
     }
 
-    _getAlbums = ({item}) => (
-      <View style={{height:120, flexDirection: 'row', alignItems:'center'}}>
-        <View style={{flex:1, alignItems:'flex-start', marginLeft:16}}>
-          <Text style={{fontSize:18}}>{`${item.name}`}</Text>
-          <Text style={{fontSize:13}}>{item.profession}</Text>
-        </View>
-        <View style={{flex:3, marginRight:-70, width: 200, height: 200, backgroundColor: 'red'}}>
-         
-        </View>
+    _renderAlbum = (item) => (
+      <View style={{width: 180, height: 180, alignItems:'center', justifyContent:'center'}}>
+        
+          <Text style={{fontSize:18, textAlign: 'center'}}>{`${item.name}`}</Text>
+          <Text style={{fontSize:13, textAlign: 'center'}}>{item.date}</Text>
+        
       </View>
     );
   
@@ -87,13 +84,39 @@ export default class Albums extends React.Component {
   
 
     render() {
+      console.log(this.state.albums)
       return(
-      <FlatList
-      data={this.state.albums}
-      renderItem={this._getAlbums}
-      keyExtractor={item => item.name}
-      ItemSeparatorComponent={this.renderSeparator}
-      />
+        <Grid style={styles.list} renderItem={this._renderAlbum}
+        data={this.state.albums}
+        keyExtractor={item => item.name}
+        numColumns={2}/>
       )
     }
 }
+
+const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+  },
+  containerStyle: {
+    width: 350,
+    height: 200,
+    transform: [{
+      scale: 0.5
+    }],
+  },
+  containerBackStyle: {
+    width: 350,
+    height: 200,
+  },
+  user: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignContent: 'center'
+  }
+
+})
