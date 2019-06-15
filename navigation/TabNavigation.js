@@ -14,6 +14,26 @@ import EditDetailsScreen from '../screens/EditDetailsScreen';
 import LinkScreen from '../screens/LinkScreen';
 import RequestsScreen from '../screens/RequestsScreen';
 import AddLinkScreen from '../screens/AddLinkScreen';
+import Albums from '../components/Albums';
+
+const AlbumsStack = createStackNavigator({
+  AlbumsScreen: { screen: Albums },
+},
+  {
+    initialRouteName: 'AlbumsScreen',
+    swipeEnabled: true,
+  }
+);
+
+AlbumsStack.navigationOptions = {
+  tabBarLabel: 'Albums',
+  tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+      focused={focused}
+      name={Platform.OS === 'ios' ? 'ios-albums' : 'md-albums'}
+    />
+  ),
+};
 
 export const CollectedCardsStack = createStackNavigator({
   CollectedCards: { screen: HomeScreen },
@@ -63,8 +83,10 @@ ProfileScreenStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
+  AlbumsStack,
   CollectedCardsStack,
   ProfileScreenStack,
+
 },
   {
     tabBarOptions: { labelStyle: { fontSize: 14 } }

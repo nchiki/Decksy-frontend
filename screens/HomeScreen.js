@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { Modal, Text, View, TouchableOpacity, SectionList, Button, Alert, Platform, SegmentedControlIOS, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { CheckBox } from 'react-native-elements';
-import { NavigationActions, StackActions } from 'react-navigation';
+import {View, Button, Platform, SegmentedControlIOS} from 'react-native';
+
 import { Icon } from "react-native-elements";
-import DialogInput from 'react-native-dialog-input';
+
 import Dialog from "react-native-dialog";
-import Swipeout from 'react-native-swipeout';
+
 import OptionsMenu from "react-native-options-menu";
 
 import InformativeContactsView from '../components/card-views/InformativeContactsView';
@@ -15,7 +13,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 import VisualContactsView from '../components/card-views/VisualContactsView';
 
 const ASC = 'ascending';
-const DSC = 'descending';
+
 // Home screen that will show the deck of business cards
 export default class HomeScreen extends React.Component {
 
