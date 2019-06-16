@@ -3,7 +3,7 @@ import React from 'react';
 import { Platform, View, Text } from 'react-native';
 
 import { Icon } from 'react-native-elements';
-
+import { LinearGradient } from 'expo';
 import CardTemplate from '../components/CardTemplate';
 import OptionsMenu from "react-native-options-menu";
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -62,6 +62,7 @@ export default class ProfileScreen extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
+        
         <View style={{ flex: 3 }}>
           <CardTemplate navigation={this.props.navigation} />
         </View>

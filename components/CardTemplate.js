@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text,Platform,StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-elements';
-
+import { LinearGradient } from 'expo';
 import CardFlip from 'react-native-card-flip';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -120,6 +120,7 @@ export default class CardTemplate extends React.Component {
   }
 
   handleEdit = () => {
+    global.fromLogin = false;
     this.setState({ saved: false, details: u });
   }
 
@@ -131,6 +132,7 @@ export default class CardTemplate extends React.Component {
     if (saved || global.fromLogin) {
       return (
         <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
+          
           <View style={{ flex: 3 }}>
             <BusinessCard image={image} details={u} templateStyle={templateStyle} picture={this.state.picture}/>
           </View>
