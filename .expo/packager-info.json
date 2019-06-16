@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "packagerNgrokUrl": "https://packager.48-qvy.anonymous.webapps-frontend.exp.direct",
-  "ngrokPid": 2181,
-  "expoServerNgrokUrl": "https://48-qvy.anonymous.webapps-frontend.exp.direct"
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "expoServerNgrokUrl": null
 }
