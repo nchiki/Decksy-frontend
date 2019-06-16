@@ -14,10 +14,12 @@ import EditDetailsScreen from '../screens/EditDetailsScreen';
 import LinkScreen from '../screens/LinkScreen';
 import RequestsScreen from '../screens/RequestsScreen';
 import AddLinkScreen from '../screens/AddLinkScreen';
-import Albums from '../components/Albums';
+import AlbumsScreen from '../screens/AlbumsScreen';
+import Album from '../components/Album';
 
 const AlbumsStack = createStackNavigator({
-  AlbumsScreen: { screen: Albums },
+  AlbumsScreen: { screen: AlbumsScreen },
+  Album : {screen: Album}
 },
   {
     initialRouteName: 'AlbumsScreen',
@@ -26,7 +28,7 @@ const AlbumsStack = createStackNavigator({
 );
 
 AlbumsStack.navigationOptions = {
-  tabBarLabel: 'Albums',
+  tabBarLabel: 'Collections',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
