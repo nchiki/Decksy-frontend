@@ -36,6 +36,12 @@ export default class LoginScreen extends Component {
   };
 
   handleLogin = async () => {
+    
+    const details = await apiRequests.getUserDetails(global.userID);
+    if(details.card == 1) {
+      global.picture = await apiRequests.getCardImage(global.userID);
+    }
+    global.details = details;
     let images = [];
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
@@ -54,6 +60,7 @@ export default class LoginScreen extends Component {
   }
 
   render() {
+    global.fromLogin = true;
     return (
       <View style={{ padding: 10, flex: 1, justifyContent: 'center' }}>
         <View style={{ flex: 5, justifyContent: "center", alignItems: "center" }}>

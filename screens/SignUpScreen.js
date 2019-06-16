@@ -64,6 +64,7 @@ export default class SignUpScreen extends Component {
   }
 
   render() {
+    global.fromLogin = false;
     const spacing = 10;
     return (
       <ScrollView style={{ padding: 10, flex: 1 }}>

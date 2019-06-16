@@ -13,6 +13,7 @@ import {ImagePicker, Permissions, Constants} from 'expo';
 
 
 
+
 const u = {
   firstName: 'FIRST',
   lastName: 'LAST',
@@ -46,6 +47,10 @@ export default class CardTemplate extends React.Component {
   }
 
   componentDidMount() {
+    if(global.fromLogin) {
+      this.setState({details: global.details, picture:global.picture})
+    }
+
     this.getPermissionAsync();
   }
 
@@ -123,7 +128,7 @@ export default class CardTemplate extends React.Component {
     const u = this.state.details;
     const templateStyle = this.state.templateStyle;
     const saved = this.state.saved;
-    if (saved) {
+    if (saved || global.fromLogin) {
       return (
         <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
           <View style={{ flex: 3 }}>

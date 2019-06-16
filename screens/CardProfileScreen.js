@@ -1,6 +1,6 @@
 import React from 'react';
-import { Alert, ScrollView, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
+import { Icon} from 'react-native-elements';
 import Dialog from "react-native-dialog";
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';

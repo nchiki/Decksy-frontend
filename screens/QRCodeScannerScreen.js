@@ -37,9 +37,9 @@ export default class QRCodeScannerScreen extends Component {
 
     this.adding = true;
     let elems = url.split('/');
-    console.log(`elems: ${elems}`);
+   
     let userId = parseInt(elems[elems.length - 1]);
-    console.log(`userID: ${userId}`);
+
     apiRequests.addCard(userId, global.userID);
     let cb = this.props.navigation.getParam('cb', null);
     if (cb) {

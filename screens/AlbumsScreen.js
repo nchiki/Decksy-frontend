@@ -11,8 +11,6 @@ import Grid from 'react-native-grid-component';
 
 export default class AlbumsScreen extends React.Component {
 
-
-
     state = {
       albums : [{
         name:'event',
@@ -34,7 +32,7 @@ export default class AlbumsScreen extends React.Component {
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         return {
-          title: 'Albums',
+          title: 'Collections',
           headerTitleStyle: {
             fontSize: 25
           },
@@ -79,7 +77,6 @@ export default class AlbumsScreen extends React.Component {
         time:'',
       }
       albums.push(newCollection)
-      console.log(albums);
       this.setState({albums: albums, createAlbumVisible : false})
       this.render();
     }
@@ -96,8 +93,6 @@ export default class AlbumsScreen extends React.Component {
           </TouchableOpacity>   
       </View>
     );
-  
-  
 
     renderSeparator = () => {
       return (
