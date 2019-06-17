@@ -46,7 +46,7 @@ export default class ProfileScreen extends React.Component {
             />
           )}
           destructiveIndex={2}
-          options={["Edit details", "Edit Links", "Sign out", "Cancel"]}
+          options={["Edit Details", "Edit Links", "Sign Out", "Cancel"]}
           actions={[() => params.changeSettings(), () => params.changeToLinks(), () => params.logOut(), () => { }]}
         />
       ),

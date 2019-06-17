@@ -133,7 +133,7 @@ export default class CardTemplate extends React.Component {
     if (saved || global.fromLogin) {
       return (
         <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
-          
+
           <View style={{ flex: 3 }}>
             <BusinessCard image={image} details={u} templateStyle={templateStyle} picture={this.state.picture}/>
           </View>
