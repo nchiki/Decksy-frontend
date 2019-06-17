@@ -33,7 +33,7 @@ AlbumsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-albums' : 'md-albums'}
+      name={Platform.OS === 'ios' ? `ios-browsers` : 'md-browsers'}
     />
   ),
 };
@@ -54,9 +54,8 @@ CollectedCardsStack.navigationOptions = {
     <TabBarIcon
       focused={focused}
       name={
-        Platform.OS === 'ios'
-          ? `ios-browsers`
-          : 'md-browsers'
+        Platform.OS === 'ios' ? 'ios-albums' : 'md-albums'
+
       }
     />
   ),
