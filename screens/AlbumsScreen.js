@@ -90,14 +90,14 @@ export default class AlbumsScreen extends React.Component {
       let date = null;
       if (item.date && item.date != '') {
         date = <Text style={{fontSize:10, textAlign: 'center'}}>{item.date}</Text>
-              
+
       }
       return (
       <View style={{flex:1, margin:0.5, alignItems:'center', justifyContent:'center'}}>
-          <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>   
+          <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
             <Text style={{fontSize:20, textAlign: 'center'}}>{`${item.name}`}</Text>
-            {date} 
-          </TouchableOpacity>   
+            {date}
+          </TouchableOpacity>
       </View>
     );
     }
@@ -129,13 +129,10 @@ export default class AlbumsScreen extends React.Component {
           <View style={{flex:1}}>
           <Grid style={styles.list} renderItem={this._renderAlbum}
           data={this.state.albums}
-<<<<<<< HEAD
           keyExtractor={item => item.name}
-          numColumns={2}/> 
-=======
+          numColumns={2}/>
           keyExtractor={item => item}
           numColumns={2}/>
->>>>>>> dc7143feb51e5fb2e244551b5860194c1094d331
           </View>
         </View>
       )
