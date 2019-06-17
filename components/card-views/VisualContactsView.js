@@ -16,21 +16,19 @@ export default class VisualContactsView extends React.Component{
 
     if(item.card == 1) {
         return (
-          <View style={{shadowOffset:{ width: 5, height: 5}, shadowColor: 'black', shadowOpacity: 0.4, shadowRadius: 8}}>
-     
+        <View style={{shadowOffset:{ width: 5, height: 5}, shadowColor: 'black', shadowOpacity: 0.4, shadowRadius: 8}}>
           <Swipeout
           left={this.props.swipeButtons.left}
           right={this.props.swipeButtons.right}
           autoClose={true}
           backgroundColor='transparent'
           onOpen={() => {this.props.onSwipe(item.user, item.isPinned)}}
-        >
-          <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
-      <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
-      </TouchableOpacity>
-
-      </Swipeout>
-      </View>
+          >
+            <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
+              <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
+            </TouchableOpacity>
+          </Swipeout>
+        </View>
         )
       }
   return (

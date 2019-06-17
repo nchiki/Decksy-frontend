@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text, Platform, StyleSheet,TouchableOpacity} from 'react-native';
+import {View, Image,Text, Platform, StyleSheet,TouchableOpacity} from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Dialog from "react-native-dialog";
 
@@ -12,11 +12,7 @@ import Grid from 'react-native-grid-component';
 export default class AlbumsScreen extends React.Component {
 
     state = {
-      albums : [{
-        name:'event',
-        date:'date',
-        time:'time',
-      }],
+      albums : [],
       createAlbumVisible:false,
 
     }
@@ -28,6 +24,7 @@ export default class AlbumsScreen extends React.Component {
       handleCreateAlbum: this.handleCreateAlbum,
 
     });
+    this.setState({albums: global.tags})
   }
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
@@ -72,18 +69,33 @@ export default class AlbumsScreen extends React.Component {
     handleAlbum = () => {
       let name = this.state.newCollection;
       let albums = this.state.albums;
-      const newCollection = {
-        name: name,
-        date: '',
-        time:'',
-      }
-      albums.push(newCollection)
+      albums.push(name);
       this.setState({albums: albums, createAlbumVisible : false})
       this.render();
     }
 
-    handleOpenCollection = (item) => {
-      this.props.navigation.navigate('Album', { tag: item.name });
+    handleOpenCollection = async (item) => {
+      let images = [];
+      let contacts = [];
+      const allcontacts = await apiRequests.getUserContacts(global.userID);
+      const listItems = (allcontacts.map(async (cont) => {
+        const id = Number.parseInt(cont.user, 10);
+        const det = await apiRequests.getUserDetails(id); 
+        if(det.tags && det.tags.length > 0) {
+          
+          if (det.tags.some(v => (v.toLowerCase() === item.toLowerCase()))){
+            contacts.push(det);
+          }
+          
+        }   
+        if (det.card == 1) {
+          const pic = await apiRequests.getCardImage(id);
+          images[id] = pic
+        }
+        return det
+      }));
+      const items = await Promise.all(listItems);
+      this.props.navigation.navigate('Album', { tag: item, contacts: contacts });
     }
 
     renderPlaceholder = () => {
@@ -94,16 +106,12 @@ export default class AlbumsScreen extends React.Component {
     }
 
     _renderAlbum = (item) => {
-      let date = null;
-      if (item.date && item.date != '') {
-        date = <Text style={{fontSize:10, textAlign: 'center'}}>{item.date}</Text>
-
-      }
+     
       return (
       <View style={{flex:1, margin:0.5, alignItems:'center', justifyContent:'center'}}>
           <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
-            <Text style={{fontSize:20, textAlign: 'center'}}>{`${item.name}`}</Text>
-            {date}
+            <Text style={{fontSize:20, textAlign: 'center'}}>{`${item}`}</Text>
+         
           </TouchableOpacity>
       </View>
     );

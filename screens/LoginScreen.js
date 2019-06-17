@@ -6,6 +6,7 @@ import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 
+
 export default class LoginScreen extends Component {
 
   constructor(props) {
@@ -48,17 +49,27 @@ export default class LoginScreen extends Component {
     global.details = details;
     if(requests && requests.length > 0) { global.requests = requests;} else {global.requests = null;}
     let images = [];
-    const contacts = await apiRequests.getUserContacts(global.userID);
-    const listItems = (contacts.map(async (cont) => {
-      const id = Number.parseInt(cont.user, 10);
-      const det = await apiRequests.getUserDetails(id);    
-      if (det.card == 1) {
-        const pic = await apiRequests.getCardImage(id);
-        images[id] = pic
-      }
-      return det
-    }));
+    let tags = [];
+      const contacts = await apiRequests.getUserContacts(global.userID);
+      const listItems = (contacts.map(async (cont) => {
+        const id = Number.parseInt(cont.user, 10);
+        const det = await apiRequests.getUserDetails(id); 
+        if(det.tags && det.tags.length > 0) {
+          console.log(det.tags);
+          for(let i = 0; i < tags.length; i++) {
+            if (!tags.some(v => (v.toLowerCase() === det.tags[i].toLowerCase()))){
+              tags.push(det.tags[i]);
+            }
+          }
+        }   
+        if (det.card == 1) {
+          const pic = await apiRequests.getCardImage(id);
+          images[id] = pic
+        }
+        return det
+      }));
     const items = await Promise.all(listItems);
+    global.tags = tags;
     this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: items, images:images })
 
     // Add logic to authenticate user here

@@ -1,15 +1,10 @@
 
 import React from 'react';
-import { Alert, ScrollView, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon, Button } from 'react-native-elements';
-import Dialog from "react-native-dialog";
-import call from 'react-native-phone-call';
+import { StyleSheet, View, Platform} from 'react-native';
+import { Icon } from 'react-native-elements';
 import apiRequests from '../api_wrappers/BackendWrapper';
-import OptionsMenu from "react-native-options-menu";
-import email from 'react-native-email';
-import templateUtils from '../components/Templates';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import { SocialIcon } from 'react-native-elements';
+
+
 
 
 export default class Album extends React.Component {
@@ -18,7 +13,7 @@ export default class Album extends React.Component {
     super(props);
     this.state = {
       tag: null,
-      cards: []
+      contacts: []
     }
   }
 
@@ -46,8 +41,11 @@ export default class Album extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     const tag = navigation.getParam('tag', 'NO-ID');
+    let contacts = navigation.getParam('contacts', 'NULL');
+    if (contacts == 'NULL') { contacts = []}
     this.setState({
       tag: tag,
+      contacts : contacts
     })
     navigation.setParams({
       handleAdd: () => this.handleAddCardToCollection(),
@@ -65,11 +63,12 @@ export default class Album extends React.Component {
       if (det.card == 1) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
+        console.log('there is a card for:' + id)
       }
       return det
     }));
     const items = await Promise.all(listItems);
-    this.props.navigation.navigate('CollectionSelection', {contacts: items, images:images })
+    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: items, images:images })
   }
 
   
