@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Button, Platform, SegmentedControlIOS} from 'react-native';
+import { View, Button, Platform, SegmentedControlIOS } from 'react-native';
 
 import { Icon } from "react-native-elements";
 
@@ -97,7 +97,7 @@ export default class HomeScreen extends React.Component {
             />
           )}
           options={["Shortcode", "QR Code", "Cancel"]}
-          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => {}]}
+          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => { }]}
         />
       ),
     }
@@ -108,7 +108,7 @@ export default class HomeScreen extends React.Component {
   };
 
   handleQRCode = () => {
-      this.props.navigation.navigate("QRScanner", {cb: this.updateContacts});
+    this.props.navigation.navigate("QRScanner", { cb: this.updateContacts });
   }
 
   handleCancel = () => {
@@ -212,6 +212,7 @@ export default class HomeScreen extends React.Component {
     const listItems = (contacts.map(async (cont) => {
       const id = Number.parseInt(cont.user, 10);
       const det = await apiRequests.getUserDetails(id);
+      console.log(det);
       if (Number.parseInt(det.card, 10) == 1) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
@@ -268,14 +269,14 @@ export default class HomeScreen extends React.Component {
     const pinnedContacts = this.state.pinnedContacts;
     const unpinnedContacts = this.state.unpinnedContacts;
     // if(sortValue == 'name') {
-    if(true) {
+    if (true) {
       pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
       unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
     } else {
       pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
       unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
     }
-    this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})
+    this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
   updateDisplay = () => {

@@ -14,11 +14,11 @@ import EditDetailsScreen from '../screens/EditDetailsScreen';
 import LinkScreen from '../screens/LinkScreen';
 import RequestsScreen from '../screens/RequestsScreen';
 import AddLinkScreen from '../screens/AddLinkScreen';
-import Albums from '../components/Albums';
+import Album from '../components/Album';
 import TimeLine from '../screens/TimeLine';
 
 const AlbumsStack = createStackNavigator({
-  AlbumsScreen: { screen: Albums },
+  AlbumsScreen: { screen: Album },
   TimeLineScreen: { screen: TimeLine }
 },
   {
