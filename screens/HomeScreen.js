@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Button, Platform, SegmentedControlIOS} from 'react-native';
+import {View, Button, Platform, SegmentedControlIOS, Text} from 'react-native';
 
 import { Icon } from "react-native-elements";
 
@@ -23,14 +23,12 @@ export default class HomeScreen extends React.Component {
       count: 0,
       searchDialogVisible: false,
       shortcodeInputVisible: false,
-      requestVisible: false,
       requestID: null,
       search: null,
       unpinnedContacts: [],
       pinnedContacts: [],
       displayValue: 1,
       images: [],
-
     }
   }
 
@@ -202,10 +200,6 @@ export default class HomeScreen extends React.Component {
     this.setState({ searchDialogVisible: false });
   };
 
-  handleNoRequest = () => {
-    this.setState({ requestVisible: false });
-  }
-
   updateContacts = async () => {
     let images = this.state.images;
     const contacts = await apiRequests.getUserContacts(global.userID);
@@ -300,31 +294,16 @@ export default class HomeScreen extends React.Component {
         })}
       />)
 
-    return (
-      <View>
-        {/*Adding a modal that would display the different filters */}
-
-
-        <Dialog.Container visible={this.state.searchDialogVisible}>
-          <Dialog.Title>Search</Dialog.Title>
-          <Dialog.Description>Enter what you want to search:</Dialog.Description>
-          <Dialog.Input onChangeText={(inputText) => this.setState({ search: inputText })} />
-          <Dialog.Button label="Cancel" onPress={this.handleCancelSearch} bold={true} />
-          <Dialog.Button label="Search" onPress={this.handleSearch} />
-        </Dialog.Container>
-
-        <Dialog.Container
-          visible={this.state.shortcodeInputVisible} >
-          <Dialog.Title>Add User</Dialog.Title>
-          <Dialog.Description>Enter a user's shortcode to add their business card to your collection</Dialog.Description>
-          <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
-          <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
-          <Dialog.Button label="Add with request" onPress={this.handleSendRequest} />
-          <Dialog.Button label="Add" onPress={this.handleAdd} />
-        </Dialog.Container>
-
-
-        {/* Displays the collection of cards */}
+    let mainScreen;
+    if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0) {
+      mainScreen = (
+        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 25, color: 'grey'}}>You have no cards</Text>
+          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Add someone by tapping the + button in the top-right corner</Text>
+        </View>
+      )
+    } else {
+      mainScreen = (
         <View>
           {changeDisplayButton}
           {this.state.displayValue == 1 ?
@@ -350,6 +329,35 @@ export default class HomeScreen extends React.Component {
             />)
           }
         </View>
+      )
+    }
+
+    return (
+      <View style={{flex:1}}>
+        {/*Adding a modal that would display the different filters */}
+
+
+        <Dialog.Container visible={this.state.searchDialogVisible}>
+          <Dialog.Title>Search</Dialog.Title>
+          <Dialog.Description>Enter what you want to search:</Dialog.Description>
+          <Dialog.Input onChangeText={(inputText) => this.setState({ search: inputText })} />
+          <Dialog.Button label="Cancel" onPress={this.handleCancelSearch} bold={true} />
+          <Dialog.Button label="Search" onPress={this.handleSearch} />
+        </Dialog.Container>
+
+        <Dialog.Container
+          visible={this.state.shortcodeInputVisible} >
+          <Dialog.Title>Add User</Dialog.Title>
+          <Dialog.Description>Enter a user's shortcode to add their business card to your collection</Dialog.Description>
+          <Dialog.Input onChangeText={(inputText) => this.setState({ shortcode: inputText })} />
+          <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
+          <Dialog.Button label="Add with request" onPress={this.handleSendRequest} />
+          <Dialog.Button label="Add" onPress={this.handleAdd} />
+        </Dialog.Container>
+
+
+        {/* Displays the collection of cards */}
+        {mainScreen}
       </View>
     );
   }

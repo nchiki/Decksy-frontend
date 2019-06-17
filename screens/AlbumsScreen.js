@@ -97,14 +97,14 @@ export default class AlbumsScreen extends React.Component {
       let date = null;
       if (item.date && item.date != '') {
         date = <Text style={{fontSize:10, textAlign: 'center'}}>{item.date}</Text>
-              
+
       }
       return (
       <View style={{flex:1, margin:0.5, alignItems:'center', justifyContent:'center'}}>
-          <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>   
+          <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
             <Text style={{fontSize:20, textAlign: 'center'}}>{`${item.name}`}</Text>
-            {date} 
-          </TouchableOpacity>   
+            {date}
+          </TouchableOpacity>
       </View>
     );
     }
