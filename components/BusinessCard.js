@@ -37,7 +37,7 @@ export default class BusinessCard extends React.Component {
       this.state.links.push({ name: link.name });
   }
 
- 
+
 displayCard(props) {
   const u = props.details;
    let image = props.image;
@@ -80,7 +80,7 @@ displayCard(props) {
       return (
         // implemented without image with header
         <View style={{ flex: 1, alignItems: 'center' }}>
-          <View>
+          <View style={{shadowOffset:{ width: 10, height: 10, }, shadowColor: 'black', shadowOpacity: 1.0, shadowRadius: 8}}>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 {this.displayCard(this.props)}
@@ -88,7 +88,7 @@ displayCard(props) {
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <Card title='Scan' titleStyle={{ color: 'darkblue', fontSize: 30 }} containerStyle={styles.containerBackStyle}>
                   <QRCode
-                    value={this.state.valueForQRCode}
+                    value={`https://rolodex.tk/api/user/view/${global.userID}`}
                     //Setting the value of QRCode
                     size={100}
                     //Size of QRCode
@@ -102,7 +102,7 @@ displayCard(props) {
             </CardFlip>
           </View>
           <View style={styles.buttonRowContainer}>
- 
+
           </View>
         </View>
       );
@@ -153,7 +153,8 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     //borderWidth: 1,
-    borderColor: 'white'
+    borderColor: 'white',
+    alignItems: 'center',
   },
 
 })

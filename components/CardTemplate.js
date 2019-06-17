@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text,Platform,StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-elements';
-
+import { LinearGradient } from 'expo';
 import CardFlip from 'react-native-card-flip';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -10,6 +10,7 @@ import QRCode from 'react-native-qrcode';
 import templateUtils from './Templates';
 import BusinessCard from './BusinessCard';
 import {ImagePicker, Permissions, Constants} from 'expo';
+
 
 
 
@@ -46,6 +47,10 @@ export default class CardTemplate extends React.Component {
   }
 
   componentDidMount() {
+    if(global.fromLogin) {
+      this.setState({details: global.details, cardType: global.details.card, picture:global.picture})
+    }
+    setTimeout(() => this.setTemplate(), 20);
     this.getPermissionAsync();
   }
 
@@ -115,17 +120,20 @@ export default class CardTemplate extends React.Component {
   }
 
   handleEdit = () => {
+    global.fromLogin = false;
     this.setState({ saved: false, details: u });
   }
 
   render() {
     const image = this.state.image;
     const u = this.state.details;
+    console.log(u.card)
     const templateStyle = this.state.templateStyle;
     const saved = this.state.saved;
-    if (saved) {
+    if (saved || global.fromLogin) {
       return (
         <View style={{ flex: 1, alignItems: 'center', marginTop: 40 }}>
+
           <View style={{ flex: 3 }}>
             <BusinessCard image={image} details={u} templateStyle={templateStyle} picture={this.state.picture}/>
           </View>
@@ -150,7 +158,7 @@ export default class CardTemplate extends React.Component {
               <Ionicons name='ios-qr-scanner' size={26} />
             </TouchableOpacity>
           </View>
-          <View style={{ top: 0}}>
+          <View style={{ top: 0, shadowOffset:{ width: 10, height: 10, }, shadowColor: 'black', shadowOpacity: 1.0, shadowRadius: 8}}>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <ImageBackground source={image} style={styles.containerStyle}>

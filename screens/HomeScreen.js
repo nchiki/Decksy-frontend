@@ -55,7 +55,6 @@ export default class HomeScreen extends React.Component {
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
-      handleNFCAddButton: this.handleNFC,
       updateContacts: this.updateContacts,
       handleSortButton: this.handleSort,
       handleSearchButton: this.search,
@@ -78,7 +77,7 @@ export default class HomeScreen extends React.Component {
               containerStyle={{ paddingLeft: 12 }}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-              size={39}
+              size={31}
               color='dodgerblue'
             />
           )}
@@ -93,12 +92,12 @@ export default class HomeScreen extends React.Component {
               containerStyle={{ paddingRight: 12 }}
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-add" : "md-add"}
-              size={39}
+              size={41}
               color='dodgerblue'
             />
           )}
-          options={["Shortcode", "QR Code", "NFC", "Cancel"]}
-          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => params.handleNFCAddButton(), () => { }]}
+          options={["Shortcode", "QR Code", "Cancel"]}
+          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => {}]}
         />
       ),
     }
@@ -110,10 +109,6 @@ export default class HomeScreen extends React.Component {
 
   handleQRCode = () => {
       this.props.navigation.navigate("QRScanner", {cb: this.updateContacts});
-  }
-
-  handleNFC = () => {
-    alert("TODO");
   }
 
   handleCancel = () => {
@@ -269,21 +264,19 @@ export default class HomeScreen extends React.Component {
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
-handleSort = () => {
-  const pinnedContacts = this.state.pinnedContacts;
-  const unpinnedContacts = this.state.unpinnedContacts;
-  // if(sortValue == 'name') {
+  handleSort = () => {
+    const pinnedContacts = this.state.pinnedContacts;
+    const unpinnedContacts = this.state.unpinnedContacts;
+    // if(sortValue == 'name') {
     if(true) {
-    pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-    unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-  } else {
-    pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-    unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+      pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+      unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    } else {
+      pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+      unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
+    }
+    this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})
   }
-  this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})
-}
-
-
 
   updateDisplay = () => {
     this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });

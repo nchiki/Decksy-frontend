@@ -23,12 +23,11 @@ const AlbumsStack = createStackNavigator({
 },
   {
     initialRouteName: 'AlbumsScreen',
-    swipeEnabled: true,
   }
 );
 
 AlbumsStack.navigationOptions = {
-  tabBarLabel: 'Albums',
+  tabBarLabel: 'Collections',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -44,7 +43,6 @@ export const CollectedCardsStack = createStackNavigator({
 },
   {
     initialRouteName: 'CollectedCards',
-    swipeEnabled: true,
   }
 );
 
@@ -91,6 +89,7 @@ export default createBottomTabNavigator({
 
 },
   {
-    tabBarOptions: { labelStyle: { fontSize: 14 } }
+    tabBarOptions: { labelStyle: { fontSize: 14 } },
+    swipeEnabled: true,
   }
 );

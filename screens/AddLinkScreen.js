@@ -44,8 +44,6 @@ export default class AddLinkScreen extends Component {
     handleSubmit = async () => {
         const finalLink = this.state.linkURL + this.state.linkValue;
         if (this.state.existingID) {
-            console.log("right case");
-            console.log(this.state.existingID);
             apiRequests.removeLink(this.state.existingID);
             apiRequests.addLink(global.userID, this.state.linkType, finalLink);
             //  apiRequests.editLink(this.state.existingID, this.state.linkType, finalLink);
