@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
 import { Camera, BarCodeScanner, Permissions } from 'expo';
-import apiRequests from '../api_wrappers/BackendWrapper';
-
 import {
   AppRegistry,
   StyleSheet,
@@ -11,8 +8,9 @@ import {
   Linking,
   View,
 } from 'react-native';
-
 import { withNavigationFocus } from 'react-navigation';
+
+import apiRequests from '../api_wrappers/BackendWrapper';
 
 export default class QRCodeScannerScreen extends Component {
 
@@ -21,7 +19,26 @@ export default class QRCodeScannerScreen extends Component {
       type: Camera.Constants.Type.back,
   };
 
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      title: 'Scan QR Code',
+      headerTitleStyle: {
+        fontSize: 25
+      }
+    }
+  };
+
+  static navigatorStyle = {
+        tabBarHidden: true,
+        drawUnderTabBar: true
+    };
+
   async componentDidMount() {
+    this.props.navigator.toggleTabs({
+        to: 'hidden',
+        animate: true,
+    })
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
@@ -37,7 +54,7 @@ export default class QRCodeScannerScreen extends Component {
 
     this.adding = true;
     let elems = url.split('/');
-   
+
     let userId = parseInt(elems[elems.length - 1]);
 
     apiRequests.addCard(userId, global.userID);
@@ -57,7 +74,7 @@ export default class QRCodeScannerScreen extends Component {
         <Camera
          style={{ flex: 1 }}
          type={this.state.type}
-         barCodeScannerSettings={{barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],}}
+         barCodeScannerSettings={{barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr]}}
          onBarCodeScanned={((obj) => {
             this.handleAddUser(obj.data);
             this.props.navigation.navigate("CollectedCards");
