@@ -23,14 +23,12 @@ export default class HomeScreen extends React.Component {
       count: 0,
       searchDialogVisible: false,
       shortcodeInputVisible: false,
-      requestVisible: false,
       requestID: null,
       search: null,
       unpinnedContacts: [],
       pinnedContacts: [],
       displayValue: 1,
       images: [],
-
     }
   }
 
@@ -201,10 +199,6 @@ export default class HomeScreen extends React.Component {
   handleCancelSearch = () => {
     this.setState({ searchDialogVisible: false });
   };
-
-  handleNoRequest = () => {
-    this.setState({ requestVisible: false });
-  }
 
   updateContacts = async () => {
     let images = this.state.images;
