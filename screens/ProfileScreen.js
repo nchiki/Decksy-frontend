@@ -40,7 +40,7 @@ export default class ProfileScreen extends React.Component {
               color='dodgerblue'
             />
           )}
-          destructiveIndex={1}
+          destructiveIndex={2}
           options={["Edit details", "Edit Links", "Sign out", "Cancel"]}
           actions={[() => params.changeSettings(), () => params.changeToLinks(), () => params.logOut(), () => { }]}
         />
@@ -62,7 +62,7 @@ export default class ProfileScreen extends React.Component {
     const { navigation } = this.props;
     return (
       <View style={{ flex: 1 }}>
-        
+
         <View style={{ flex: 3 }}>
           <CardTemplate navigation={this.props.navigation} />
         </View>
@@ -93,4 +93,4 @@ export default class ProfileScreen extends React.Component {
     global.userID = 1;
     this.props.navigation.navigate('Login');
   }
-} 
+}
