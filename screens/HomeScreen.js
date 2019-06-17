@@ -56,7 +56,6 @@ export default class HomeScreen extends React.Component {
       updateContacts: this.updateContacts,
       handleSortButton: this.handleSort,
       handleSearchButton: this.search,
-      numberOfContacts: contacts.length,
     });
 
     //this.updateContacts();
@@ -69,30 +68,21 @@ export default class HomeScreen extends React.Component {
       headerTitleStyle: {
         fontSize: 25
       },
-      headerLeft: (params.numberOfContacts == 0 ? (
-        <Icon
-          containerStyle={{ paddingLeft: 12 }}
-          type="ionicon"
-          name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-          size={31}
-          color='lightgrey'
+      headerLeft: (
+        <OptionsMenu
+          customButton={(
+            <Icon
+              containerStyle={{ paddingLeft: 12 }}
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-options" : "md-options"}
+              size={31}
+              color='dodgerblue'
+            />
+          )}
+          options={["Search", "Sort", "Restore", "Cancel"]}
+          actions={[() => params.handleSearchButton(), () => params.handleSortButton(), () => params.updateContacts(), () => { }]}
         />
-        ):
-        (
-          <OptionsMenu
-            customButton={(
-              <Icon
-                containerStyle={{ paddingLeft: 12 }}
-                type="ionicon"
-                name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-                size={31}
-                color='dodgerblue'
-              />
-            )}
-            options={["Search", "Sort", "Restore", "Cancel"]}
-            actions={[() => params.handleSearchButton(), () => params.handleSortButton(), () => params.updateContacts(), () => { }]}
-          />
-        )),
+      ),
       headerRight: (
         <OptionsMenu
           customButton={(
