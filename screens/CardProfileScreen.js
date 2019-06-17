@@ -192,27 +192,27 @@ export default class CardProfileScreen extends React.Component {
   render() {
     let { navigation } = this.props;
     let item = navigation.getParam('item', 'NO-ID');
-    let message = "Do you want to be redirected to " + this.state.curLink;
     return (
       <View style={{ flex: 1 }}>
         <Dialog.Container
           visible={this.state.linkPopupVisible} >
           <Dialog.Title>Redirect to link reference</Dialog.Title>
-          <Dialog.Description>{message}</Dialog.Description>
+          <Dialog.Description>{`Do you want to be redirected to ${this.state.curLink}?`}</Dialog.Description>
+          <Dialog.Button label="No" onPress={() => this.handleNoRequest()} bold={true} />
           <Dialog.Button label="Yes" onPress={() => { Linking.openURL(this.state.curLink) }} />
-          <Dialog.Button label="No" onPress={() => this.handleNoRequest()} />
         </Dialog.Container >
-        <View style={{ marginTop: 30, marginBottom: 20, flex: 1 }} alignItems='center'>
+
+        <View style={{ marginTop: 30, marginBottom: 0, flex: 3 }} alignItems='center'>
           { this.renderCardImage() }
         </View>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           {this.getButtons()}
         </View>
         <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 10, }}>Notes:</Text>
-        <View style={{ flex: 1, backgroundColor: 'lightyellow', width: 350, alignSelf: 'center', marginTop: 3, borderRadius: 8 }}>
+        <View style={styles.notesView}>
           <TextInput
             value={this.state.note}
-            style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10 }}
+            style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, backgroundColor: 'green' }}
             onChangeText={(note) => {
               this.setState({ note: note });
             }}
@@ -248,5 +248,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E0F7FA',
+  },
+  notesView: {
+    flex: 3,
+    backgroundColor: 'lightyellow',
+    width: '88%',
+    alignSelf: 'center',
+    marginTop: 3,
+    borderRadius: 8
   }
 });

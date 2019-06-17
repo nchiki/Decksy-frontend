@@ -19,7 +19,6 @@ const u = {
   lastName: 'LAST',
   company: 'COMPANY',
   email: 'NAME@EMAIL.COM',
-  links: 'website.com',
   phoneNumber: 99999999,
 }
 
@@ -169,8 +168,7 @@ export default class CardTemplate extends React.Component {
                     <View style={templateStyle.user}>
                       <Text style={templateStyle.company}>{u.company}</Text>
                       <Text style={templateStyle.details}><Ionicons name='ios-call' size={10} /> {u.phoneNumber}{'\n'}
-                        <Ionicons name='ios-mail' size={10} /> {u.email}{'\n'}
-                        <Ionicons name='ios-globe' size={10} />{u.links}
+                        <Ionicons name='ios-mail' size={10} /> {u.email}
                       </Text>
                     </View>
                   </View>
