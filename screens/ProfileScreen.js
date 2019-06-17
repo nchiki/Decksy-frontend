@@ -3,10 +3,12 @@ import React from 'react';
 import { Platform, View, Text } from 'react-native';
 
 import { Icon } from 'react-native-elements';
+import withBadge from "../components/Badge";
 import { LinearGradient } from 'expo';
 import CardTemplate from '../components/CardTemplate';
 import OptionsMenu from "react-native-options-menu";
 import apiRequests from '../api_wrappers/BackendWrapper';
+
 
 
 // Profile screen that shows own card
@@ -14,13 +16,16 @@ export default class ProfileScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
+    console.log(params)
+    
+    const BadgedIcon = withBadge(global.requests)(Icon);
     return {
       title: 'Profile',
       headerTitleStyle: {
         fontSize: 25
       },
       headerLeft: (
-        <Icon
+        <BadgedIcon
           containerStyle={{ paddingLeft: 12 }}
           type="ionicon"
           name={Platform.OS === "ios" ? "ios-people" : "md-people"}
@@ -48,6 +53,8 @@ export default class ProfileScreen extends React.Component {
     };
   }
 
+  
+
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({
@@ -55,6 +62,7 @@ export default class ProfileScreen extends React.Component {
       changeToLinks: () => this.changeToLinks(),
       showRequests: () => this.showRequests(),
       logOut: () => this.logOut(),
+      getNumberRequests: () => this.getNumberRequests(),
     });
   }
 
@@ -72,6 +80,10 @@ export default class ProfileScreen extends React.Component {
         </View>
       </View>
     );
+  }
+  getNumberRequests = async () => {
+    const requests = await apiRequests.getRequests(global.userID);
+    return requests.length
   }
 
   showRequests = async () => {
