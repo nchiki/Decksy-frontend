@@ -16,10 +16,12 @@ import RequestsScreen from '../screens/RequestsScreen';
 import AddLinkScreen from '../screens/AddLinkScreen';
 import AlbumsScreen from '../screens/AlbumsScreen';
 import Album from '../components/Album';
+import CollectionSelection from '../components/utilsCollections/CollectionSelection';
 
 const AlbumsStack = createStackNavigator({
   AlbumsScreen: { screen: AlbumsScreen },
-  Album : {screen: Album}
+  Album : {screen: Album},
+  CollectionSelection : {screen: CollectionSelection}
 },
   {
     initialRouteName: 'AlbumsScreen',

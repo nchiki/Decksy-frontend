@@ -146,7 +146,7 @@ export default class RequestsScreen extends React.Component {
     };
 
     render() {
-
+        global.requests = 0;
         return (
             <FlatList
                 data={this.state.details}

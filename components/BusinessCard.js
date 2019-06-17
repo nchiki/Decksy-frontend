@@ -8,6 +8,7 @@ import CardFlip from 'react-native-card-flip';
 import templateStyles from '../styles/TemplateStyles';
 
 
+
 const ID = 2;
 export default class BusinessCard extends React.Component {
 
@@ -66,17 +67,7 @@ displayCard(props) {
 }
 
   render() {
-
-
-    if (this.state.saved) {
-      return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>
-            Saved!
-          </Text>
-        </View>
-      )
-    } else {
+      console.log(this.props.details.card)
       return (
         // implemented without image with header
         <View style={{ flex: 1, alignItems: 'center' }}>
@@ -107,7 +98,7 @@ displayCard(props) {
         </View>
       );
     }
-  }
+  
 }
 const styles = StyleSheet.create({
   cardContainer: {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
-import { Button } from 'react-native-elements';
+import { Text, View, StyleSheet,Platform, TouchableOpacity, ImageBackground} from 'react-native';
+import { Icon } from 'react-native-elements';
 import Grid from 'react-native-grid-component';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import templateUtils from './Templates';
@@ -26,10 +26,40 @@ export default class TemplatesGallery extends React.Component {
     selected: null
   }
 
+  static navigationOptions = ({ navigation }) => {
+    const { params = {} } = navigation.state;
+    return {
+      title: 'Gallery of templates',
+      headerTitleStyle: {
+        fontSize: 25
+      },
+      headerRight: (
+            <Icon
+              containerStyle={{ paddingRight: 12 }}
+              type="ionicon"
+              name={Platform.OS === "ios" ? "ios-checkmark" : "md-checkmark"}
+              size={41}
+              color='dodgerblue'
+              onPress={()=> params.save()}
+            />
+
+      )
+  };
+}
+
   componentDidMount() {
     const { navigation } = this.props;
+    navigation.setParams({
+      save: this.save
+    });
     const details = navigation.getParam('details', 'NULL');
     this.setState({details: details});
+  }
+  renderPlaceholder = () => {
+    <View style={{flex:1}}>
+        <View style={styles.containerStyle}>
+        </View>
+    </View>
   }
 
   _renderItem = (item) => {
@@ -38,13 +68,12 @@ export default class TemplatesGallery extends React.Component {
     const det = this.state.details;
     let backgroundColor = 'white';
     if(this.state.selected && this.state.selected == item) {
-      backgroundColor = 'powderblue';
+      backgroundColor = 'grey';
     }
     return (
       <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
-    <TouchableOpacity style={styles.card} onPress={() => {
-      this.setState({selected: item});
-      this.handleSelected()}}>
+    <TouchableOpacity style={styles.card} onPress={() => 
+      this.setState({selected: item})}>
             <ImageBackground source={image} style={styles.containerStyle}>
               <View style={styles.containerStyle}>
                 <View style={templateStyle.titleText}>
@@ -61,14 +90,15 @@ export default class TemplatesGallery extends React.Component {
     </View>
     )
   }
-  save = async (navigation) => {
-    apiRequests.setCard(global.userID, this.state.cardType);
-    const det = await apiRequests.getUserDetails(global.userID);
-    this.setState({ saved: true, details: det });
-  }
 
-  handleSelected = async () => {
+  save = async (navigation) => {
+    console.log('fromLogin (gallery) is: ' + global.fromLogin)
     apiRequests.setCard(global.userID, this.state.selected);
+    const det = await apiRequests.getUserDetails(global.userID);
+    this.setState({ selected: null, details: det });
+    global.details = det;
+    global.fromLogin = true;
+    alert('Saved!')
   }
 
   setTemplate = () => {
@@ -78,11 +108,11 @@ export default class TemplatesGallery extends React.Component {
   }
 
 
-
   render() {
     return (
          <Grid style={styles.list} renderItem={this._renderItem}
          data={[2,3,4,5,6,7,8,9,10]}
+         renderPlaceholder = {this.renderPlaceholder}
          keyExtractor={item => item}
          numColumns={2}/>
 

@@ -50,14 +50,26 @@ export default class Album extends React.Component {
       tag: tag,
     })
     navigation.setParams({
-      handleAdd: () => this.handleAddCard(),
+      handleAdd: () => this.handleAddCardToCollection(),
     });
    
   }
 
 
-  async handleAddCard() {
-    
+  async handleAddCardToCollection() {
+    let images = [];
+    const contacts = await apiRequests.getUserContacts(global.userID);
+    const listItems = (contacts.map(async (cont) => {
+      const id = Number.parseInt(cont.user, 10);
+      const det = await apiRequests.getUserDetails(id);    
+      if (det.card == 1) {
+        const pic = await apiRequests.getCardImage(id);
+        images[id] = pic
+      }
+      return det
+    }));
+    const items = await Promise.all(listItems);
+    this.props.navigation.navigate('CollectionSelection', {contacts: items, images:images })
   }
 
   

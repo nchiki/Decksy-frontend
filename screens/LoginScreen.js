@@ -39,6 +39,9 @@ export default class LoginScreen extends Component {
     
     const details = await apiRequests.getUserDetails(global.userID);
     const requests = await apiRequests.getRequests(global.userID);
+    if(!details.card || details.card == null) {
+      details.card = 2;
+    }
     if(details.card == 1) {
       global.picture = await apiRequests.getCardImage(global.userID);
     }

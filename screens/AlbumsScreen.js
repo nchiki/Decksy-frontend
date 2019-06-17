@@ -86,6 +86,13 @@ export default class AlbumsScreen extends React.Component {
       this.props.navigation.navigate('Album', { tag: item.name });
     }
 
+    renderPlaceholder = () => {
+      <View style={{flex:1}}>
+          <View style={styles.containerStyle}>
+          </View>
+      </View>
+    }
+
     _renderAlbum = (item) => {
       let date = null;
       if (item.date && item.date != '') {
@@ -102,17 +109,7 @@ export default class AlbumsScreen extends React.Component {
     );
     }
 
-    renderSeparator = () => {
-      return (
-        <View
-          style={{
-            height: 1,
-            backgroundColor: "#CED0CE",
-          }}
-        />
-      );
-    };
-
+    
 
     render() {
       return(
@@ -129,13 +126,9 @@ export default class AlbumsScreen extends React.Component {
           <View style={{flex:1}}>
           <Grid style={styles.list} renderItem={this._renderAlbum}
           data={this.state.albums}
-<<<<<<< HEAD
+          renderPlaceholder = {this.renderPlaceholder}
           keyExtractor={item => item.name}
           numColumns={2}/> 
-=======
-          keyExtractor={item => item}
-          numColumns={2}/>
->>>>>>> dc7143feb51e5fb2e244551b5860194c1094d331
           </View>
         </View>
       )

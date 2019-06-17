@@ -16,8 +16,6 @@ export default class ProfileScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
-    console.log(params)
-    
     const BadgedIcon = withBadge(global.requests)(Icon);
     return {
       title: 'Profile',

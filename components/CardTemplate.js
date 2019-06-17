@@ -14,6 +14,7 @@ import {ImagePicker, Permissions, Constants} from 'expo';
 
 
 
+
 const u = {
   firstName: 'FIRST',
   lastName: 'LAST',
@@ -107,9 +108,7 @@ export default class CardTemplate extends React.Component {
       apiRequests.setCard(global.userID, 1);
       this.setState({ saved: true, picture: result.uri });
     }
-  };
-
-
+  }
 
 
 
@@ -125,9 +124,9 @@ export default class CardTemplate extends React.Component {
   }
 
   render() {
+    console.log('fromLogin is: ' + global.fromLogin)
     const image = this.state.image;
     const u = this.state.details;
-    console.log(u.card)
     const templateStyle = this.state.templateStyle;
     const saved = this.state.saved;
     if (saved || global.fromLogin) {

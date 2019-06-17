@@ -45,7 +45,7 @@ export default class CardProfileScreen extends React.Component {
             />
           )}
           options={["Email", "Message", "Call", "Cancel"]}
-          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), console.log]}
+          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), ]}
         />
       ),
     }
