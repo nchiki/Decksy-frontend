@@ -135,74 +135,86 @@ export default class CardTemplate extends React.Component {
           <View style={{ flex: 3 }}>
             <BusinessCard image={image} details={u} templateStyle={templateStyle} picture={this.state.picture}/>
           </View>
-          <View style={{ flex: 2 }}>
-            <Button title='Edit' onPress={() => this.handleEdit()} />
+          <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Button
+              onPress={() => this.handleEdit()}
+              title="Edit"
+              color="#841584"
+              // style={{marginRight:5}}
+            />
+            <View style={{width:50}}/>
+            <Button
+              onPress={() => {}}
+              title="Share"
+              color="#841584"
+            />
           </View>
         </View>
       )
     } else {
       return (
         <View style={{ flex: 1, alignItems: 'center' }}>
-
-          <View style={{flex:1,flexDirection: 'row',
+          <View style={{
+            flex:1,
+            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 5, top:60}}>
-          <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.showGallery()}>
+            padding: 5}}
+          >
+            <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.showGallery()}>
               <Text style={{ fontWeight: 'bold' }}> Gallery </Text>
             </TouchableOpacity>
             <View style={{width:250}}/>
-            <TouchableOpacity style={styles.buttonContainer} onPress={this._pickImage}>
-              <Ionicons name='ios-qr-scanner' size={26} />
-            </TouchableOpacity>
-          </View>
-          <View style={{ top: 0, shadowOffset:{ width: 10, height: 10, }, shadowColor: 'black', shadowOpacity: 1.0, shadowRadius: 8}}>
-            <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
-              <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
-                <ImageBackground source={image} style={styles.containerStyle}>
-                  <View style={styles.containerStyle}>
-                    <View style={templateStyle.titleText}>
-                      <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
-                    </View>
-                    <View style={templateStyle.user}>
-                      <Text style={templateStyle.company}>{u.company}</Text>
-                      <Text style={templateStyle.details}><Ionicons name='ios-call' size={10} /> {u.phoneNumber}{'\n'}
-                        <Ionicons name='ios-mail' size={10} /> {u.email}
-                      </Text>
-                    </View>
-                  </View>
-
-                </ImageBackground>
+              <TouchableOpacity style={styles.buttonContainer} onPress={this._pickImage}>
+                <Ionicons name='ios-qr-scanner' size={26} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
-                <Card title='Scan' titleStyle={{ color: 'darkblue', fontSize: 30 }} containerStyle={styles.containerBackStyle}>
-                  <View style={{ alignItems: 'center' }} >
-                    <QRCode
-                      value={`https://rolodex.tk/api/user/view/${global.userID}`}
-                      //Setting the value of QRCode
-                      size={100}
-                      //Size of QRCode
-                      bgColor="#000"
-                      //Backgroun Color of QRCode
-                      fgColor="#fff"
-                    //Front Color of QRCode
-                    />
-                  </View>
-                </Card>
+            </View>
+            <View style={{ top: 0, shadowOffset:{ width: 10, height: 10, }, shadowColor: 'black', shadowOpacity: 1.0, shadowRadius: 8}}>
+              <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
+                <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
+                  <ImageBackground source={image} style={styles.containerStyle}>
+                    <View style={styles.containerStyle}>
+                      <View style={templateStyle.titleText}>
+                        <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
+                      </View>
+                      <View style={templateStyle.user}>
+                        <Text style={templateStyle.company}>{u.company}</Text>
+                        <Text style={templateStyle.details}><Ionicons name='ios-call' size={10} /> {u.phoneNumber}{'\n'}
+                          <Ionicons name='ios-mail' size={10} /> {u.email}
+                        </Text>
+                      </View>
+                    </View>
+                  </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
+                  <Card title='Scan' titleStyle={{ color: 'darkblue', fontSize: 30 }} containerStyle={styles.containerBackStyle}>
+                    <View style={{ alignItems: 'center' }} >
+                      <QRCode
+                        value={`https://rolodex.tk/api/user/view/${global.userID}`}
+                        //Setting the value of QRCode
+                        size={100}
+                        //Size of QRCode
+                        bgColor="#000"
+                        //Backgroun Color of QRCode
+                        fgColor="#fff"
+                      //Front Color of QRCode
+                      />
+                    </View>
+                  </Card>
+                </TouchableOpacity>
+              </CardFlip>
+            </View>
+            <View style={styles.buttonRowContainer}>
+              <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onCardTypeLeftRequested()}>
+                <Ionicons name='ios-arrow-dropleft' size={26} />
               </TouchableOpacity>
-            </CardFlip>
-          </View>
-          <View style={styles.buttonRowContainer}>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onCardTypeLeftRequested()}>
-              <Ionicons name='ios-arrow-dropleft' size={26} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.save(this.props.navigation)}>
-              <Text style={{ fontWeight: 'bold' }}> Save </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onCardTypeRightRequested()}>
-              <Ionicons name='ios-arrow-dropright' size={26} />
-            </TouchableOpacity>
-          </View>
+              <TouchableOpacity style={styles.buttonSaveContainer} onPress={() => this.save(this.props.navigation)}>
+                <Text style={{ fontWeight: 'bold' }}> Save </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonContainer} onPress={() => this.onCardTypeRightRequested()}>
+                <Ionicons name='ios-arrow-dropright' size={26} />
+              </TouchableOpacity>
+            </View>
         </View>
       );
     }
