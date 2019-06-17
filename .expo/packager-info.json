@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "packagerNgrokUrl": "https://packager.48-qvy.anonymous.webapps-frontend.exp.direct",
-  "ngrokPid": 7090,
-  "expoServerNgrokUrl": "https://48-qvy.anonymous.webapps-frontend.exp.direct"
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 7687,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
+  "expoServerNgrokUrl": null
 }

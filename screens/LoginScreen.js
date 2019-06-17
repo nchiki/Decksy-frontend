@@ -38,10 +38,12 @@ export default class LoginScreen extends Component {
   handleLogin = async () => {
     
     const details = await apiRequests.getUserDetails(global.userID);
+    const requests = await apiRequests.getRequests(global.userID);
     if(details.card == 1) {
       global.picture = await apiRequests.getCardImage(global.userID);
     }
     global.details = details;
+    if(requests && requests.length > 0) { global.requests = requests;} else {global.requests = null;}
     let images = [];
     const contacts = await apiRequests.getUserContacts(global.userID);
     const listItems = (contacts.map(async (cont) => {
