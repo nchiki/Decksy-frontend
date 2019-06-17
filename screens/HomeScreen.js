@@ -268,7 +268,7 @@ export default class HomeScreen extends React.Component {
     const pinnedContacts = this.state.pinnedContacts;
     const unpinnedContacts = this.state.unpinnedContacts;
     // if(sortValue == 'name') {
-      if(true) {
+    if(true) {
       pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
       unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
     } else {

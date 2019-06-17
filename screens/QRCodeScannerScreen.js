@@ -29,16 +29,7 @@ export default class QRCodeScannerScreen extends Component {
     }
   };
 
-  static navigatorStyle = {
-        tabBarHidden: true,
-        drawUnderTabBar: true
-    };
-
   async componentDidMount() {
-    this.props.navigator.toggleTabs({
-        to: 'hidden',
-        animate: true,
-    })
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
@@ -51,11 +42,14 @@ export default class QRCodeScannerScreen extends Component {
     if (this.adding) {
       return;
     }
-
     this.adding = true;
+
     let elems = url.split('/');
 
     let userId = parseInt(elems[elems.length - 1]);
+    console.log("ADDING QR CODE")
+    console.log(url);
+    console.log(userID);
 
     apiRequests.addCard(userId, global.userID);
     let cb = this.props.navigation.getParam('cb', null);
@@ -72,7 +66,7 @@ export default class QRCodeScannerScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Camera
-         style={{ flex: 1 }}
+         style={styles.camera}
          type={this.state.type}
          barCodeScannerSettings={{barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr]}}
          onBarCodeScanned={((obj) => {
@@ -80,18 +74,14 @@ export default class QRCodeScannerScreen extends Component {
             this.props.navigation.navigate("CollectedCards");
          })}
         >
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: 'transparent',
-              flexDirection: 'row',
-            }}>
-          </View>
+          <View style={styles.view} />
         </Camera>
       </View>
     );
   }
 }
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -111,54 +101,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf: 'center',
     margin: 20,
+  },
+  view: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
+  },
+  camera: {
+    flex: 1,
   }
 });
-// const styles = StyleSheet.create({
-//   centerText: {
-//     flex: 1,
-//     fontSize: 18,
-//     padding: 32,
-//     color: '#777',
-//   },
-//   textBold: {
-//     fontWeight: '500',
-//     color: '#000',
-//   },
-//   buttonText: {
-//     fontSize: 21,
-//     color: 'rgb(0,122,255)',
-//   },
-//   buttonTouchable: {
-//     padding: 16,
-//   },
-// });
-
-// import React, { Component } from 'react';
-//
-// import addUserToContacts from '../api_wrappers/BackendWrapper';
-//
-// import { QRCodeScanner } from 'react-native-qrcode-scanner';
-// import { Alert, Text, TouchableOpacity } from 'react-native';
-//
-// export default class QRCodeScannerScreen extends Component {
-//   render() {
-//     return (
-//       // <Text>Hello!</Text>
-//       // <QRCodeScanner onRead={(qrCode) => alert(`QR Code Scanned! (${qrCode})`)} />
-//       <QRCodeScanner
-//         onRead={alert("YAY!")}
-//         topContent={
-//           <Text>
-//             Go to <Text>wikipedia.org/wiki/QR_code</Text> on your computer and scan the QR code.
-//           </Text>
-//         }
-//         bottomContent={
-//           <TouchableOpacity>
-//             <Text>OK. Got it!</Text>
-//           </TouchableOpacity>
-//         }
-//       />
-//       // <QRCodeScanner onRead={(qrCode) => addUserToContacts(this.userID, qrCode)} />
-//     );
-//   }
-// }
