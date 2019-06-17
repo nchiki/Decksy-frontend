@@ -14,6 +14,15 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 // Profile screen that shows own card
 export default class ProfileScreen extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      details: null,
+      links: [],
+      linkPopupVisible: false,
+    }
+  }
+
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     const BadgedIcon = withBadge(global.requests)(Icon);
@@ -51,7 +60,6 @@ export default class ProfileScreen extends React.Component {
     };
   }
 
-  
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -62,7 +70,9 @@ export default class ProfileScreen extends React.Component {
       logOut: () => this.logOut(),
       getNumberRequests: () => this.getNumberRequests(),
     });
+    this.getExistingLinks();
   }
+
 
   render() {
     const { navigation } = this.props;
@@ -72,13 +82,50 @@ export default class ProfileScreen extends React.Component {
         <View style={{ flex: 3 }}>
           <CardTemplate navigation={this.props.navigation} />
         </View>
-        <View style={{ flex: 1, alignItems: 'center' }}>
-          <Text style={{ fontSize: 24 }}>Your shortcode is:</Text>
-          <Text style={{ fontSize: 30 }}>{global.userID}</Text>
+        <View style={{ flex: 2, alignItems: 'center' }}>
+          <Text style={{ fontSize: 24 }}>Your links</Text>
+          <Icon
+            containerStyle={{ paddingRight: 12 }}
+            type="ionicon"
+            name={Platform.OS === "ios" ? "ios-add" : "md-add"}
+            size={39}
+            color='dodgerblue'
+            onPress={() => this.setState({ linkPopupVisible: true })}
+          />
+          <Dialog.Container
+            visible={this.state.linkPopupVisible} >
+            <Dialog.Title>Add a link</Dialog.Title>
+            <Dialog.Description>{'What type of link do you want to add?'}</Dialog.Description>
+            <Dialog.Button label="Github" onPress={() => this.handleGithubLink()} />
+            <Dialog.Button label="LinkedIn" onPress={() => this.handleLinkedinLink()} />
+            <Dialog.Button label="Personal Website/Portfolio" onPress={() => this.handlePersonalLink()} bold={true} />
+            <Dialog.Button label="Cancel" onPress={() => this.handleNoRequest()} bold={true} />
+          </Dialog.Container >
         </View>
       </View>
     );
   }
+
+
+  updateLinks = () => {
+
+  }
+
+  getExistingLinks = async () => {
+    const details = await apiRequests.getUserDetails(global.userID);
+    this.setState({ details: details });
+    let links = details.links;
+    let existingLinks = [];
+    for (let i = 0; i < links.length; i++) {
+      let link = await apiRequests.getLink(details.links[i]);
+      existingLinks.push(link);
+    }
+    this.setState({
+      links: existingLinks
+    })
+    console.log(this.state.links);
+  }
+
   getNumberRequests = async () => {
     const requests = await apiRequests.getRequests(global.userID);
     return requests.length
