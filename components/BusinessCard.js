@@ -80,7 +80,7 @@ displayCard(props) {
       return (
         // implemented without image with header
         <View style={{ flex: 1, alignItems: 'center' }}>
-          <View>
+          <View style={{shadowOffset:{ width: 10, height: 10, }, shadowColor: 'black', shadowOpacity: 1.0, shadowRadius: 8}}>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 {this.displayCard(this.props)}

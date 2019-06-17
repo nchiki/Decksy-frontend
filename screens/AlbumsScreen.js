@@ -69,10 +69,11 @@ export default class AlbumsScreen extends React.Component {
       this.setState({createAlbumVisible : false})
     }
 
-    handleAlbum = (name) => {
+    handleAlbum = () => {
+      let name = this.state.newCollection;
       let albums = this.state.albums;
       const newCollection = {
-        name:name,
+        name: name,
         date: '',
         time:'',
       }
@@ -85,14 +86,21 @@ export default class AlbumsScreen extends React.Component {
       this.props.navigation.navigate('Album', { tag: item.name });
     }
 
-    _renderAlbum = (item) => (
-      <View style={{flex:1, margin:0.5, alignItems:'center'}}>
-          <TouchableOpacity style={{width:100, height:100}} onPress={()=>this.handleOpenCollection(item)}>   
-            <Text style={{width: 150,fontSize:28, textAlign: 'center'}}>{`${item.name}`}</Text>
-            <Text style={{width: 150, fontSize:23, textAlign: 'center'}}>{item.date}</Text>
+    _renderAlbum = (item) => {
+      let date = null;
+      if (item.date && item.date != '') {
+        date = <Text style={{fontSize:10, textAlign: 'center'}}>{item.date}</Text>
+              
+      }
+      return (
+      <View style={{flex:1, margin:0.5, alignItems:'center', justifyContent:'center'}}>
+          <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>   
+            <Text style={{fontSize:20, textAlign: 'center'}}>{`${item.name}`}</Text>
+            {date} 
           </TouchableOpacity>   
       </View>
     );
+    }
 
     renderSeparator = () => {
       return (
@@ -113,7 +121,7 @@ export default class AlbumsScreen extends React.Component {
            <Dialog.Container visible={this.state.createAlbumVisible}>
             <Dialog.Title>New Collection</Dialog.Title>
             <Dialog.Description>Enter the name of the new collection:</Dialog.Description>
-            <Dialog.Input onChangeText={(inputText) => alert(inputText)} />
+            <Dialog.Input onChangeText={(inputText) => this.setState({newCollection: inputText})} />
             <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
             <Dialog.Button label="Create" onPress={this.handleAlbum} />
           </Dialog.Container>
@@ -121,7 +129,7 @@ export default class AlbumsScreen extends React.Component {
           <View style={{flex:1}}>
           <Grid style={styles.list} renderItem={this._renderAlbum}
           data={this.state.albums}
-          keyExtractor={item => item}
+          keyExtractor={item => item.name}
           numColumns={2}/> 
           </View>
         </View>

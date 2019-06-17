@@ -16,6 +16,8 @@ export default class VisualContactsView extends React.Component{
 
     if(item.card == 1) {
         return (
+          <View style={{shadowOffset:{ width: 5, height: 5}, shadowColor: 'black', shadowOpacity: 0.4, shadowRadius: 8}}>
+     
           <Swipeout
           left={this.props.swipeButtons.left}
           right={this.props.swipeButtons.right}
@@ -28,9 +30,12 @@ export default class VisualContactsView extends React.Component{
       </TouchableOpacity>
 
       </Swipeout>
+      </View>
         )
       }
   return (
+    <View style={{shadowOffset:{ width: 5, height: 5}, shadowColor: 'black', shadowOpacity: 0.4, shadowRadius: 8}}>
+        
     <Swipeout
       left={this.props.swipeButtons.left}
       right={this.props.swipeButtons.right}
@@ -43,6 +48,7 @@ export default class VisualContactsView extends React.Component{
         onPress= {()=> this.handleCardProfile(item)}
       >
         <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+        
           <View style={styles.containerStyle}>
             <View style={templateUtils.setProfileStyle(item.card).titleText}>
               <Text style={templateUtils.setProfileStyle(item.card).userText} >{`${item.firstName} ${item.lastName}`} </Text>
@@ -53,9 +59,13 @@ export default class VisualContactsView extends React.Component{
               <Ionicons name='ios-mail' size={10}/> {item.email}</Text>
             </View>
           </View>
+         
         </ImageBackground>
+        
       </TouchableOpacity>
+      
     </Swipeout>
+    </View>
   )
 }
 

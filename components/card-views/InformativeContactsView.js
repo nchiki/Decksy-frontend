@@ -33,7 +33,7 @@ export default class InformativeContactsView extends React.Component {
               <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
               <Text style={{ fontSize: 13 }}>{item.profession}</Text>
             </View>
-            <View style={{ flex: 3, marginRight: -70 }}>
+            <View style={{ flex: 3, marginRight: -70 , shadowOffset:{ width: 5, height: 5}, shadowColor: 'black', shadowOpacity: 0.4, shadowRadius: 8}}>
               <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
                 <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
               </TouchableOpacity>
@@ -56,7 +56,8 @@ export default class InformativeContactsView extends React.Component {
             <Text style={{ fontSize: 18 }}>{`${item.firstName} ${item.lastName}`}</Text>
             <Text style={{ fontSize: 13 }}>{item.profession}</Text>
           </View>
-          <View style={{ flex: 3, marginRight: -70 }}>
+          <View style={{ flex: 3, marginRight: -70, shadowOffset:{ width: 5, height: 5}, shadowColor: 'black', shadowOpacity: 0.4, shadowRadius: 8}}>
+       
             <TouchableOpacity style={styles.card} onPress={() => this.handleCardProfile(item)}>
               <ImageBackground source={templateUtils.setImage(cardID)} style={styles.containerStyle}>
                 <View style={styles.containerStyle}>

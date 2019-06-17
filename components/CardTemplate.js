@@ -48,9 +48,9 @@ export default class CardTemplate extends React.Component {
 
   componentDidMount() {
     if(global.fromLogin) {
-      this.setState({details: global.details, picture:global.picture})
+      this.setState({details: global.details, cardType: global.details.card, picture:global.picture})
     }
-
+    setTimeout(() => this.setTemplate(), 20);
     this.getPermissionAsync();
   }
 
@@ -127,6 +127,7 @@ export default class CardTemplate extends React.Component {
   render() {
     const image = this.state.image;
     const u = this.state.details;
+    console.log(u.card)
     const templateStyle = this.state.templateStyle;
     const saved = this.state.saved;
     if (saved || global.fromLogin) {
@@ -157,7 +158,7 @@ export default class CardTemplate extends React.Component {
               <Ionicons name='ios-qr-scanner' size={26} />
             </TouchableOpacity>
           </View>
-          <View style={{ top: 0}}>
+          <View style={{ top: 0, shadowOffset:{ width: 10, height: 10, }, shadowColor: 'black', shadowOpacity: 1.0, shadowRadius: 8}}>
             <CardFlip style={styles.cardContainer} ref={(card) => this.card = card}>
               <TouchableOpacity style={styles.card} onPress={() => this.card.flip()} >
                 <ImageBackground source={image} style={styles.containerStyle}>
