@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking, ScrollView } from 'react-native';
 import { Icon} from 'react-native-elements';
 import Dialog from "react-native-dialog";
 import call from 'react-native-phone-call';
@@ -193,7 +193,7 @@ export default class CardProfileScreen extends React.Component {
     let { navigation } = this.props;
     let item = navigation.getParam('item', 'NO-ID');
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <Dialog.Container
           visible={this.state.linkPopupVisible} >
           <Dialog.Title>Redirect to link reference</Dialog.Title>
@@ -208,12 +208,12 @@ export default class CardProfileScreen extends React.Component {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           {this.getButtons()}
         </View>
-        <View style={{flex:2}}>
-          <Text style={{ fontSize: 24, textAlign: 'center', }}>Notes:</Text>
+        <View style={{flex:3, marginTop:30}}>
+          <Text style={{ fontSize: 24, textAlign: 'center'}}>Notes:</Text>
           <View style={styles.notesView}>
             <TextInput
               value={this.state.note}
-              style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, backgroundColor: 'green' }}
+              style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, marginBottom:5 }}
               onChangeText={(note) => {
                 this.setState({ note: note });
               }}
@@ -222,7 +222,7 @@ export default class CardProfileScreen extends React.Component {
             />
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -256,6 +256,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightyellow',
     width: '88%',
     alignSelf: 'center',
-    borderRadius: 8
+    borderRadius: 8,
+    marginTop: 4,
   }
 });
