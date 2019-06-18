@@ -104,7 +104,7 @@ export default class AlbumsScreen extends React.Component {
     _renderAlbum = (item) => {
 
       return (
-      <View style={{width: 200, height: 150, margin:1, alignItems:'center', justifyContent:'center', backgroundColor: '#2f95dc'}}>
+      <View style={{width: 200, height: 150, margin:1, alignItems:'center', justifyContent:'center', backgroundColor: '#2970FF'}}>
           <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
 
             <Text style={{fontSize:20, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>{`${item}`}</Text>
@@ -130,13 +130,13 @@ export default class AlbumsScreen extends React.Component {
         <Grid style={styles.list} renderItem={this._renderAlbum}
         data={this.state.albums}
         renderPlaceholder = {this.renderPlaceholder}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item}
         numColumns={2}/>
         </View>
       )
     }
       return (
-        <View style={{flex:1}}>
+        <View style={{flex:1, alignContent:'center', justifyContent: 'center', alignItems: 'center'}}>
 
            <Dialog.Container visible={this.state.createAlbumVisible}>
             <Dialog.Title>New Collection</Dialog.Title>
@@ -176,7 +176,8 @@ const styles = StyleSheet.create({
   card: {
     alignItems: 'center',
     justifyContent: 'center',
-    alignContent: 'center'
+    alignContent: 'center',
+    width: 200, height: 150
   }
 
 })

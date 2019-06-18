@@ -1,10 +1,11 @@
 
 import React from 'react';
-import { StyleSheet,Image,  View, Platform, Text,TouchableOpacity} from 'react-native';
+import { StyleSheet,Image,ImageBackground,  View, Platform, Text,TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
+import templateUtils from './Templates';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Grid from 'react-native-grid-component';
-
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 
 export default class Album extends React.Component {
@@ -69,7 +70,12 @@ export default class Album extends React.Component {
         images[id] = pic;
       }
     }
-    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: contacts, images:images, selected: this.state.contacts })
+    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: contacts, images:images, selected: this.state.contacts, updateSelected: this.updateSelected })
+  }
+
+  updateSelected = (items) => {
+    this.setState({contacts: items});
+    this.render();
   }
 
   renderPlaceholder = () => {
@@ -119,6 +125,7 @@ export default class Album extends React.Component {
     </View>
     )
   }
+
   
   render() {
     let { navigation } = this.props;
@@ -133,11 +140,13 @@ export default class Album extends React.Component {
         </View>
       )
     } else {
-        mainScreen = ( <Grid style={styles.list} renderItem={this._renderItem}
+        mainScreen = ( 
+        <Grid style={styles.list} renderItem={this._renderItem}
           data={contacts}
           keyExtractor={item => item.user}
           renderPlaceholder={this.renderPlaceholder}
           numColumns={2}/>
+     
       )
     }
    return mainScreen;

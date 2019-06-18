@@ -6,6 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import apiRequests from '../../api_wrappers/BackendWrapper';
 
 
+
 const u = {
   firstName: 'FIRST',
   lastName: 'LAST',
@@ -48,7 +49,7 @@ export default class CollectionSelection extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({
-        save:  () => this.save()
+        save:  () => this.save(navigation)
     })
     const title =  navigation.getParam('tag', 'NULL');
     const contacts = navigation.getParam('contacts', 'NULL');
@@ -74,7 +75,7 @@ export default class CollectionSelection extends React.Component {
         return (
         <View style={{flex:1, margin:1}}>
             <TouchableOpacity style={styles.card} onPress={() => this.handleSelected(item)}>
-                <Image source={{url: images[item.user].url}} style={[styles.containerStyle, {borderWidth:1, borderColor:backgroundColor}]}/>
+                <Image source={{url: images[item.user].url}} style={[styles.containerStyle, {borderWidth:3, borderColor:backgroundColor}]}/>
             </TouchableOpacity>
         </View>
         )
@@ -83,7 +84,7 @@ export default class CollectionSelection extends React.Component {
       <View style={{flex:1, margin:1}}>
     <TouchableOpacity style={styles.card} onPress={() => {
       this.handleSelected(item)}}>
-             <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:1,borderColor:backgroundColor}]}>
+             <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:3,borderColor:backgroundColor}]}>
         
         <View style={styles.containerStyle}>
           <View style={templateUtils.setStyle(item.card).titleText}>
@@ -116,11 +117,18 @@ export default class CollectionSelection extends React.Component {
             apiRequests.addTag(global.userID, item.user, contactTags)
         }
     }
+    navigation.state.params.updateSelected(selected);
+    navigation.goBack();
   }
 
-  handleSelected = async (item) => {
+  handleSelected = (item) => {
     let selected = this.state.selected;
+    
     if(selected.some(i => (i.user && i.user === item.user ))) {
+        const index = selected.indexOf(item);
+        
+        selected.splice(index, 1);
+       
         let tags = item.tags;
         if(tags) {
         const indexTag = tags.indexOf(this.state.title);
@@ -128,8 +136,6 @@ export default class CollectionSelection extends React.Component {
             tags.splice(indexTag, 1);
             apiRequests.addTag(global.userID, item.user, tags)
         }}
-        const index = selected.indexOf(item.user);
-        selected.splice(index, 1);
     } else {
         selected.push(item);
     }

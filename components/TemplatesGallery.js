@@ -50,7 +50,7 @@ export default class TemplatesGallery extends React.Component {
   componentDidMount() {
     const { navigation } = this.props;
     navigation.setParams({
-      save: this.save
+      save: this.save(navigation)
     });
     const details = navigation.getParam('details', 'NULL');
     this.setState({details: details});
@@ -98,7 +98,7 @@ export default class TemplatesGallery extends React.Component {
     this.setState({ selected: null, details: det });
     global.details = det;
     global.fromLogin = true;
-    alert('Saved!')
+    navigation.goBack();
   }
 
   setTemplate = () => {
