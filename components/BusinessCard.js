@@ -113,7 +113,6 @@ displayCard(props) {
 }
 const styles = StyleSheet.create({
   cardContainer: {
-    top: 20,
     width: 350,
     height: 200,
     alignItems: 'center',

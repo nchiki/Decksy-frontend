@@ -1,12 +1,8 @@
 import React from 'react';
 
-<<<<<<< HEAD
-import { Platform, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-=======
-import { StyleSheet, TouchableOpacity, Picker, Platform, View, Text } from 'react-native';
+import { Platform, View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 
 import Dialog from "react-native-dialog";
->>>>>>> nahida/improveLinks
 
 import { Icon, Card, Button } from 'react-native-elements';
 import withBadge from "../components/Badge";
@@ -15,20 +11,16 @@ import OptionsMenu from "react-native-options-menu";
 import apiRequests from '../api_wrappers/BackendWrapper';
 import { TextButton, RaisedTextButton } from 'react-native-material-buttons';
 
-
-<<<<<<< HEAD
 import BusinessCard from '../components/BusinessCard';
-=======
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { SocialIcon } from 'react-native-elements';
->>>>>>> nahida/improveLinks
 
 import templateUtils from '../components/Templates';
 
 
-import {ImagePicker, Permissions, Constants} from 'expo';
+import Links from '../components/Links';
 
-import Ionicons from '@expo/vector-icons/Ionicons';
+import {ImagePicker, Permissions, Constants} from 'expo';
 
 const u = {
   firstName: 'FIRST',
@@ -103,7 +95,6 @@ export default class ProfileScreen extends React.Component {
     };
   }
 
-<<<<<<< HEAD
   handleEdit = () => {
       this.setState({ editing: true });
   }
@@ -155,8 +146,6 @@ export default class ProfileScreen extends React.Component {
 
     this.forceUpdate();
   }
-=======
->>>>>>> nahida/improveLinks
 
   componentDidMount = () => {
     const { navigation } = this.props;
@@ -194,8 +183,9 @@ export default class ProfileScreen extends React.Component {
     const { navigation } = this.props;
     let doRefresh = this.refresh;
     this.refresh = false;
+
     let defaultComponent = (
-      <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 }}>
         <Button
           onPress={() => this.handleEdit()}
           title="Edit"
@@ -210,8 +200,9 @@ export default class ProfileScreen extends React.Component {
         />
       </View>
     );
+
     let editingComponent = (
-      <View style={{ flex: 2, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10}}>
         <TouchableOpacity style={styles.buttonSaveContainer} onPress={this.showGallery}>
           <Text style={{ fontWeight: 'bold' }}> Gallery </Text>
         </TouchableOpacity>
@@ -227,77 +218,17 @@ export default class ProfileScreen extends React.Component {
     );
 
     return (
-      <View style={{ flex: 1 }}>
-<<<<<<< HEAD
-
+      <View style={{flex: 2}}>
         { this.state.editing ? editingComponent : defaultComponent }
+              <BusinessCard details={global.details} refresh={doRefresh} />
 
-=======
->>>>>>> nahida/improveLinks
-        <View style={{ flex: 3 }}>
-          <BusinessCard details={global.details} refresh={doRefresh} />
-        </View>
-        <View style={{ flex: 2, alignItems: 'center' }}>
-          <Text style={{ fontSize: 24 }}>Your links</Text>
-          <Icon
-            containerStyle={{ paddingRight: 12 }}
-            type="ionicon"
-            name={Platform.OS === "ios" ? "ios-add" : "md-add"}
-            size={39}
-            color='dodgerblue'
-            onPress={() => this.setState({ linkPopupVisible: true })}
-          />
-          {this.linkDisplay()}
-          <Dialog.Container
-            visible={this.state.linkPopupVisible} >
-            <Dialog.Title>Add a link</Dialog.Title>
-            <Dialog.Description>{'What type of link do you want to add?'}</Dialog.Description>
-            <Picker
-              style={{ height: 50, width: 100 }}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ linkType: itemValue })
-              }
-            >
-              {this.getLinksToDisplay()}
-            </Picker >
-            <Dialog.Button label="Submit" onPress={() => this.setState({ linkPopupVisible: false, linkValueVisible: true })} bold={true} />
-            <Dialog.Button label="Cancel" onPress={() => this.setState({ linkPopupVisible: false })} bold={true} />
-          </Dialog.Container >
-
-          <Dialog.Container
-            visible={this.state.linkValueVisible} >
-            <Dialog.Title>Add your link</Dialog.Title>
-            <Dialog.Description>{`Please add your profile name (if adding a Linkedin or Github link) or your portfolio URL`}</Dialog.Description>
-            <Dialog.Input onChangeText={(inputText) => this.setState({ linkValue: inputText })} />
-            <Dialog.Button label="Submit" onPress={() => this.handleAddLink()} bold={true} />
-            <Dialog.Button label="Cancel" onPress={() => this.setState({ linkValueVisible: false })} bold={true} />
-          </Dialog.Container >
-
-          <Dialog.Container
-            visible={this.state.editLinkVisible} >
-            <Dialog.Title>Edit your link</Dialog.Title>
-            <Dialog.Description>{`Do you want to edit or delete your link?`}</Dialog.Description>
-            <Dialog.Button label="Edit" onPress={() => this.setState({ editLinkVisible: false, modifyLinkVisible: true })} bold={true} />
-            <Dialog.Button label="Delete" onPress={() => this.removeLink()} bold={true} />
-            <Dialog.Button label="Cancel" onPress={() => this.setState({ editLinkVisible: false })} bold={true} />
-          </Dialog.Container >
-
-          <Dialog.Container
-            visible={this.state.modifyLinkVisible} >
-            <Dialog.Title>Edit your link</Dialog.Title>
-            <Dialog.Description>{`Please add your new profile name (if adding a Linkedin or Github link) or your new portfolio URL`}</Dialog.Description>
-            <Dialog.Input onChangeText={(inputText) => this.setState({ linkValue: inputText })} />
-            <Dialog.Button label="Submit" onPress={() => this.editLink()} bold={true} />
-            <Dialog.Button label="Cancel" onPress={() => this.setState({ edit: false })} bold={true} />
-          </Dialog.Container >
-
-        </View>
+        <Links />
       </View >
     );
   }
 
-<<<<<<< HEAD
-=======
+
+
   removeLink = async () => {
     console.log("LinkID");
     console.log(this.state.linkID);
@@ -391,7 +322,6 @@ export default class ProfileScreen extends React.Component {
     })
   }
 
->>>>>>> nahida/improveLinks
   getNumberRequests = async () => {
     const requests = await apiRequests.getRequests(global.userID);
     return requests.length
@@ -419,7 +349,6 @@ export default class ProfileScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
-<<<<<<< HEAD
   cardContainer: {
     top: 20,
     width: 350,
@@ -472,9 +401,6 @@ const styles = StyleSheet.create({
     //borderWidth: 1,
     borderColor: 'white'
   },
-
-})
-=======
   linksButton: {
     width: '100%',
     height: '30%',
@@ -515,5 +441,3 @@ const styles = StyleSheet.create({
             <Dialog.Button label="Cancel" onPress={() => this.handleNoRequest()} bold={true} />
           </Dialog.Container >
           */
-
->>>>>>> nahida/improveLinks
