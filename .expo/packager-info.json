@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
-  "expoServerNgrokUrl": null
+  "packagerNgrokUrl": "https://packager.t5-naa.anonymous.webapps-frontend.exp.direct",
+  "ngrokPid": 27693,
+  "expoServerNgrokUrl": "https://t5-naa.anonymous.webapps-frontend.exp.direct"
 }
