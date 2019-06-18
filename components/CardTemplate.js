@@ -123,7 +123,7 @@ export default class CardTemplate extends React.Component {
   }
 
   render() {
-    console.log('fromLogin is: ' + global.fromLogin)
+  
     const image = this.state.image;
     const u = this.state.details;
     const templateStyle = this.state.templateStyle;

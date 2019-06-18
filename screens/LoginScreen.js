@@ -51,26 +51,23 @@ export default class LoginScreen extends Component {
     let images = [];
     let tags = [];
       const contacts = await apiRequests.getUserContacts(global.userID);
-      const listItems = (contacts.map(async (cont) => {
-        const id = Number.parseInt(cont.user, 10);
-        const det = await apiRequests.getUserDetails(id); 
-        if(det.tags && det.tags.length > 0) {
-          console.log(det.tags);
-          for(let i = 0; i < tags.length; i++) {
-            if (!tags.some(v => (v.toLowerCase() === det.tags[i].toLowerCase()))){
-              tags.push(det.tags[i]);
+      for(let j = 0; j < contacts.length; j++) {
+        const id = Number.parseInt(contacts[j].user, 10);
+        if(contacts[j].tags && contacts[j].tags.length > 0) {
+          console.log(contacts[j].tags)
+          for(let i = 0; i < contacts[j].tags.length; i++) {
+            if (!tags.some(v => (v.toLowerCase() === contacts[j].tags[i].toLowerCase()))){
+              tags.push(contacts[j].tags[i]);
             }
           }
         }   
-        if (det.card == 1) {
+        if (contacts[j].card == 1) {
           const pic = await apiRequests.getCardImage(id);
           images[id] = pic
         }
-        return det
-      }));
-    const items = await Promise.all(listItems);
+      }
     global.tags = tags;
-    this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: items, images:images })
+    this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: contacts, images:images })
 
     // Add logic to authenticate user here
   }

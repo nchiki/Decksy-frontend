@@ -78,24 +78,20 @@ export default class AlbumsScreen extends React.Component {
       let images = [];
       let contacts = [];
       const allcontacts = await apiRequests.getUserContacts(global.userID);
-      const listItems = (allcontacts.map(async (cont) => {
-        const id = Number.parseInt(cont.user, 10);
-        const det = await apiRequests.getUserDetails(id); 
-        if(det.tags && det.tags.length > 0) {
-          
-          if (det.tags.some(v => (v.toLowerCase() === item.toLowerCase()))){
-            contacts.push(det);
-          }
-          
+      for(let j = 0; j < allcontacts.length; j++) {
+        const id = Number.parseInt(allcontacts[j].user, 10);
+        if(allcontacts[j].tags && allcontacts[j].tags.length > 0) {
+
+          if (allcontacts[j].tags.some(v => (v.toLowerCase() === item.toLowerCase()))){
+            contacts.push(allcontacts[j]);
+          }  
         }   
-        if (det.card == 1) {
+        if (allcontacts[j].card == 1) {
           const pic = await apiRequests.getCardImage(id);
           images[id] = pic
         }
-        return det
-      }));
-      const items = await Promise.all(listItems);
-      this.props.navigation.navigate('Album', { tag: item, contacts: contacts });
+      }
+      this.props.navigation.navigate('Album', { tag: item, contacts: contacts, images: images });
     }
 
     renderPlaceholder = () => {
@@ -120,7 +116,25 @@ export default class AlbumsScreen extends React.Component {
     
 
     render() {
-      return(
+      let mainScreen;
+      if (this.state.albums.length == 0) {
+      mainScreen = (
+        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 25, color: 'grey'}}>You have no collecions</Text>
+          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Create one by tapping the + button in the top-right corner</Text>
+        </View>
+      )
+    } else {
+        mainScreen = ( <View style={{flex:1}}>
+        <Grid style={styles.list} renderItem={this._renderAlbum}
+        data={this.state.albums}
+        renderPlaceholder = {this.renderPlaceholder}
+        keyExtractor={item => item.name}
+        numColumns={2}/> 
+        </View>
+      )
+    }
+      return (
         <View style={{flex:1}}>
 
            <Dialog.Container visible={this.state.createAlbumVisible}>
@@ -130,16 +144,11 @@ export default class AlbumsScreen extends React.Component {
             <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
             <Dialog.Button label="Create" onPress={this.handleAlbum} />
           </Dialog.Container>
-
-          <View style={{flex:1}}>
-          <Grid style={styles.list} renderItem={this._renderAlbum}
-          data={this.state.albums}
-          renderPlaceholder = {this.renderPlaceholder}
-          keyExtractor={item => item.name}
-          numColumns={2}/> 
-          </View>
+          {mainScreen}
+         
         </View>
       )
+    
     }
 }
 

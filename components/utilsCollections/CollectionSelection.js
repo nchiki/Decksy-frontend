@@ -67,7 +67,7 @@ export default class CollectionSelection extends React.Component {
         return ( null )
     }
     if(item.card == 1) {
-        console.log(item.user)
+        
         return (
         <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
             <TouchableOpacity style={styles.card} onPress={() => this.handleSelected(item)}>
