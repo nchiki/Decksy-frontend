@@ -198,17 +198,15 @@ export default class HomeScreen extends React.Component {
   updateContacts = async () => {
     let images = this.state.images;
     const contacts = await apiRequests.getUserContacts(global.userID);
-    const listItems = (contacts.map(async (cont) => {
-      const id = Number.parseInt(cont.user, 10);
-      const det = await apiRequests.getUserDetails(id);
-      if (Number.parseInt(det.card, 10) == 1) {
+    for(let j = 0; j < contacts.length; j++) {
+      const id = Number.parseInt(contacts[j].user, 10);
+      if (contacts[j].card == 1) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
       }
-      return det
-    }));
+    }
+   
     this.setState({ images: images });
-    const items = await Promise.all(listItems);
     setTimeout(() => this.setState(
       this.seperatePinnedFromUnpinned(items)
     ), 20);
