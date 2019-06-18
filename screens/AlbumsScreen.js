@@ -84,8 +84,8 @@ export default class AlbumsScreen extends React.Component {
 
           if (allcontacts[j].tags.some(v => (v.toLowerCase() === item.toLowerCase()))){
             contacts.push(allcontacts[j]);
-          }  
-        }   
+          }
+        }
         if (allcontacts[j].card == 1) {
           const pic = await apiRequests.getCardImage(id);
           images[id] = pic
@@ -102,27 +102,27 @@ export default class AlbumsScreen extends React.Component {
     }
 
     _renderAlbum = (item) => {
-     
+
       return (
       <View style={{width: 200, height: 150, margin:1, alignItems:'center', justifyContent:'center', backgroundColor: '#2f95dc'}}>
           <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
-            
+
             <Text style={{fontSize:20, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>{`${item}`}</Text>
-         
+
           </TouchableOpacity>
       </View>
     );
     }
 
-    
+
 
     render() {
       let mainScreen;
       if (this.state.albums.length == 0) {
       mainScreen = (
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 25, color: 'grey'}}>You have no collecions</Text>
-          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Create one by tapping the + button in the top-right corner</Text>
+          <Text style={{fontSize: 25, color: 'grey'}}>You have no collections</Text>
+          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center', width: "90%"}}>Create one by tapping the + button in the top-right corner</Text>
         </View>
       )
     } else {
@@ -131,7 +131,7 @@ export default class AlbumsScreen extends React.Component {
         data={this.state.albums}
         renderPlaceholder = {this.renderPlaceholder}
         keyExtractor={item => item.name}
-        numColumns={2}/> 
+        numColumns={2}/>
         </View>
       )
     }
@@ -146,10 +146,10 @@ export default class AlbumsScreen extends React.Component {
             <Dialog.Button label="Create" onPress={this.handleAlbum} />
           </Dialog.Container>
           {mainScreen}
-         
+
         </View>
       )
-    
+
     }
 }
 

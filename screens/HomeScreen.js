@@ -24,7 +24,6 @@ export default class HomeScreen extends React.Component {
       searchDialogVisible: false,
       shortcodeInputVisible: false,
       requestID: null,
-      search: null,
       unpinnedContacts: [],
       pinnedContacts: [],
       displayValue: 1,
@@ -49,7 +48,14 @@ export default class HomeScreen extends React.Component {
     this.setState({
       images: images
     });
-    setTimeout(() => this.setState(this.seperatePinnedFromUnpinned(contacts)), 20);
+    let allContacts = this.seperatePinnedFromUnpinned(contacts)
+    setTimeout(() => this.setState(allContacts), 20);
+    this.setState({
+      allContacts: {
+        pinned: allContacts.pinnedContacts,
+        unpinned: allContacts.unpinnedContacts,
+      }
+    })
 
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
@@ -74,8 +80,8 @@ export default class HomeScreen extends React.Component {
           customButton={(
             <Text style={{color:"dodgerblue", marginLeft:10, fontSize:20}}>Sort</Text>
           )}
-          options={["Search", "Sort", "Restore", "Cancel"]}
-          actions={[() => params.handleSearchButton(), () => params.handleSortButton(), () => params.updateContacts(), () => { }]}
+          options={["By First Name", "By Surname", "By Most Recently Added", "Cancel"]}
+          actions={[() => params.handleSortButton(), () => params.handleSortButton(), () => params.handleSortButton(), () => { }]}
         />
       ),
       headerRight: (
@@ -123,20 +129,14 @@ export default class HomeScreen extends React.Component {
     this.handleAdd();
   }
 
-  search = () => {
-    setTimeout(() => this.updateContacts(), 30);
-    this.setState({ searchDialogVisible: true });
-  };
-
-  handleSearch = () => {
-    const search = this.state.search;
+  handleSearch = (search) => {
     if (!search) {
       setTimeout(() =>
         this.setState({
           searchDialogVisible: false,
         }), 20);
     } else {
-      const unpinned = this.state.unpinnedContacts;
+      const unpinned = this.state.allContacts.unpinned;
       const unpinnedItems = (unpinned.filter(cont => {
         if (!cont.field) {
           return false
@@ -158,7 +158,7 @@ export default class HomeScreen extends React.Component {
           )
         }
       }));
-      const pinned = this.state.pinnedContacts;
+      const pinned = this.state.allContacts.pinned;
       const pinnedItems = (pinned.filter(cont => {
         if (!cont.field) {
           return false
@@ -185,7 +185,6 @@ export default class HomeScreen extends React.Component {
         this.setState({
           searchDialogVisible: false,
           pinnedContacts: pinnedItems,
-          search: null,
           unpinnedContacts: unpinnedItems,
         }), 20);
     }
@@ -275,7 +274,7 @@ export default class HomeScreen extends React.Component {
       />)
 
     let mainScreen;
-    if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0) {
+    if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0 && this.state.search == '') {
       mainScreen = (
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{fontSize: 25, color: 'grey'}}>You have no cards</Text>
@@ -290,12 +289,28 @@ export default class HomeScreen extends React.Component {
             placeholder="Search"
             onChangeText={(text) => {
               this.setState({ search: text });
-              this.handleSearch();
+              if (text == '') {
+                this.setState({
+                  pinnedContacts: this.state.allContacts.pinned,
+                  unpinnedContacts: this.state.allContacts.unpinned,
+                });
+              } else {
+                this.handleSearch(text);
+              }
             }}
-            onClear={this.updateContacts}
+            onClear={() => {
+              this.setState({
+                search: '',
+                pinnedContacts: this.state.allContacts.pinned,
+                unpinnedContacts: this.state.allContacts.unpinned,
+              });
+            }}
             onCancel={() => {
-              this.setState({ search: '' });
-              this.updateContacts();
+              this.setState({
+                search: '',
+                pinnedContacts: this.state.allContacts.pinned,
+                unpinnedContacts: this.state.allContacts.unpinned,
+              });
             }}
             value={search}
             platform="ios"
