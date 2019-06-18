@@ -29,7 +29,7 @@ export default class ProfileScreen extends React.Component {
           name={Platform.OS === "ios" ? "ios-people" : "md-people"}
           onPress={() => params.showRequests()}
           size={33}
-          color='dodgerblue'
+          color='#2970FF'
         />
       ),
       headerRight: (
@@ -40,7 +40,7 @@ export default class ProfileScreen extends React.Component {
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-settings" : "md-settings"}
               size={33}
-              color='dodgerblue'
+              color='#2970FF'
             />
           )}
           destructiveIndex={2}

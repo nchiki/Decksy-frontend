@@ -80,7 +80,7 @@ export default class HomeScreen extends React.Component {
       headerLeft: (
         <OptionsMenu
           customButton={(
-            <Text style={{color:"dodgerblue", marginLeft:10, fontSize:20}}>Sort</Text>
+            <Text style={{color:'#2970FF', marginLeft:10, fontSize:20}}>Sort</Text>
           )}
           options={["By First Name", "By Surname", "By Most Recently Added", "Cancel"]}
           actions={[() => params.handleSortByNameButton(), () => params.handleSortBySurnameButton(), () => params.handleSortByAddedButton(), () => { }]}
@@ -94,7 +94,7 @@ export default class HomeScreen extends React.Component {
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-add" : "md-add"}
               size={41}
-              color='dodgerblue'
+              color='#2970FF'
             />
           )}
           options={["Shortcode", "QR Code", "Cancel"]}

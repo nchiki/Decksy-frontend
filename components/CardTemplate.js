@@ -139,14 +139,15 @@ export default class CardTemplate extends React.Component {
             <Button
               onPress={() => this.handleEdit()}
               title="Edit"
-              color="#841584"
+      
+              style={{width:100, backgroundColor:'#2970FF'}}
               // style={{marginRight:5}}
             />
             <View style={{width:50}}/>
             <Button
               onPress={() => {}}
               title="Share"
-              color="#841584"
+              style={{width:100, backgroundColor:'#2970FF'}}
             />
           </View>
         </View>

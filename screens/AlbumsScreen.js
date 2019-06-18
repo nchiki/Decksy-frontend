@@ -39,7 +39,7 @@ export default class AlbumsScreen extends React.Component {
                   type="ionicon"
                   name={Platform.OS === "ios" ? "ios-calendar" : "md-calendar"}
                   size={31}
-                  color='dodgerblue'
+                  color='#2970FF'
                   onPress={()=> alert('hi')}
                 />
 
@@ -50,7 +50,7 @@ export default class AlbumsScreen extends React.Component {
                   type="ionicon"
                   name={Platform.OS === "ios" ? "ios-add" : "md-add"}
                   size={41}
-                  color='dodgerblue'
+                  color='#2970FF'
                   onPress={()=> params.handleCreateAlbum()}
                 />
 

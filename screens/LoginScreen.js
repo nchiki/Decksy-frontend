@@ -102,8 +102,8 @@ export default class LoginScreen extends Component {
             secureTextEntry={true}
             textContentType="password"
           />
-          <TouchableHighlight onPress={() => this.handleLogin()} underlayColor='blue'>
-            <View style={{ alignItems: 'center', backgroundColor: '#2196F3', width: 100, height: 40, borderRadius: 5, marginTop: 10 }}>
+          <TouchableHighlight onPress={() => this.handleLogin()} underlayColor='#2970FF'>
+            <View style={{ alignItems: 'center', backgroundColor: '#2970FF', width: 100, height: 40, borderRadius: 5, marginTop: 10 }}>
               <Text style={{ color: 'white', fontSize: 30 }}>Log In</Text>
             </View>
           </TouchableHighlight>

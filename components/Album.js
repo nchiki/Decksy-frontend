@@ -33,7 +33,7 @@ export default class Album extends React.Component {
         type="ionicon"
         name={Platform.OS === "ios" ? "ios-add" : "md-add"}
         size={39}
-        color='dodgerblue'
+        color='#2970FF'
         onPress={()=> params.handleAdd()}
       />
       ),

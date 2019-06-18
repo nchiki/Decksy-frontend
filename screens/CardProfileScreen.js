@@ -41,7 +41,7 @@ export default class CardProfileScreen extends React.Component {
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
               size={35}
-              color='dodgerblue'
+              color='#2970FF'
             />
           )}
           options={["Email", "Message", "Call", "Cancel"]}
