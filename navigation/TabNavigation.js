@@ -8,7 +8,6 @@ import QRCodeScannerScreen from '../screens/QRCodeScannerScreen';
 import CardProfileScreen from '../screens/CardProfileScreen';
 import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../components/BusinessCard';
-import CardTemplate from '../components/CardTemplate';
 import TemplatesGallery from '../components/TemplatesGallery';
 import EditDetailsScreen from '../screens/EditDetailsScreen';
 import LinkScreen from '../screens/LinkScreen';
@@ -65,7 +64,6 @@ CollectedCardsStack.navigationOptions = {
 const ProfileScreenStack = createStackNavigator({
   ProfileScreen: { screen: ProfileScreen },
   CardScreen: { screen: BusinessCard },
-  CardTemplateScreen: { screen: CardTemplate },
   EditDetailsScreen: { screen: EditDetailsScreen },
   LinkScreen: { screen: LinkScreen },
   RequestsScreen: { screen: RequestsScreen },

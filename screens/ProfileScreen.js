@@ -5,7 +5,6 @@ import { Platform, View, Text, TouchableOpacity, StyleSheet } from 'react-native
 import { Icon, Card, Button } from 'react-native-elements';
 import withBadge from "../components/Badge";
 import { LinearGradient } from 'expo';
-import CardTemplate from '../components/CardTemplate';
 import OptionsMenu from "react-native-options-menu";
 import apiRequests from '../api_wrappers/BackendWrapper';
 
