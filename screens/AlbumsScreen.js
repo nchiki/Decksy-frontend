@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Image,Text, Platform, StyleSheet,TouchableOpacity} from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Dialog from "react-native-dialog";
-
+import Swiper from 'react-native-deck-swiper'
 import templateStyles from '../styles/TemplateStyles';
 import { Icon} from "react-native-elements";
 import Grid from 'react-native-grid-component';
@@ -104,9 +104,10 @@ export default class AlbumsScreen extends React.Component {
     _renderAlbum = (item) => {
      
       return (
-      <View style={{flex:1, margin:0.5, alignItems:'center', justifyContent:'center'}}>
+      <View style={{width: 200, height: 150, margin:1, alignItems:'center', justifyContent:'center', backgroundColor: '#2f95dc'}}>
           <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
-            <Text style={{fontSize:20, textAlign: 'center'}}>{`${item}`}</Text>
+            
+            <Text style={{fontSize:20, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>{`${item}`}</Text>
          
           </TouchableOpacity>
       </View>

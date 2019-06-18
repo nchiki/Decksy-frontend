@@ -60,6 +60,7 @@ export default class CollectionSelection extends React.Component {
 
   _renderItem = (item) => {
     const images = this.props.navigation.getParam('images', 'NULL');
+    
     //const images = this.state.images;
     let backgroundColor = 'white';
     if(this.state.selected && this.state.selected.some(i => (i.user && i.user === item.user ))) {
@@ -79,7 +80,7 @@ export default class CollectionSelection extends React.Component {
         )
       }
     return (
-      <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+      <View style={{flex:1, margin:1}}>
     <TouchableOpacity style={styles.card} onPress={() => {
       this.handleSelected(item)}}>
              <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:1,borderColor:backgroundColor}]}>
