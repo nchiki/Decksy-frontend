@@ -45,7 +45,7 @@ export default class CardProfileScreen extends React.Component {
             />
           )}
           options={["Email", "Message", "Call", "Cancel"]}
-          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), ]}
+          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), () => {}]}
         />
       ),
     }
@@ -208,17 +208,19 @@ export default class CardProfileScreen extends React.Component {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           {this.getButtons()}
         </View>
-        <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 10, }}>Notes:</Text>
-        <View style={styles.notesView}>
-          <TextInput
-            value={this.state.note}
-            style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, backgroundColor: 'green' }}
-            onChangeText={(note) => {
-              this.setState({ note: note });
-            }}
-            editable={true}
-            multiline={true}
-          />
+        <View style={{flex:2}}>
+          <Text style={{ fontSize: 24, textAlign: 'center', }}>Notes:</Text>
+          <View style={styles.notesView}>
+            <TextInput
+              value={this.state.note}
+              style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, backgroundColor: 'green' }}
+              onChangeText={(note) => {
+                this.setState({ note: note });
+              }}
+              editable={true}
+              multiline={true}
+            />
+          </View>
         </View>
       </View>
     );
@@ -254,7 +256,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightyellow',
     width: '88%',
     alignSelf: 'center',
-    marginTop: 3,
     borderRadius: 8
   }
 });
