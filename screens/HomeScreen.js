@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {View, Button, Platform, SegmentedControlIOS, Text} from 'react-native';
+import { View, Button, Platform, SegmentedControlIOS, Text } from 'react-native';
 
 import { Icon, SearchBar } from "react-native-elements";
 
@@ -73,14 +73,14 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: 'Cards',
+      title: 'Your Cards',
       headerTitleStyle: {
         fontSize: 25
       },
       headerLeft: (
         <OptionsMenu
           customButton={(
-            <Text style={{color:'#2970FF', marginLeft:10, fontSize:20}}>Sort</Text>
+            <Text style={{ color: '#2970FF', marginLeft: 10, fontSize: 20 }}>Sort</Text>
           )}
           options={["By First Name", "By Surname", "By Most Recently Added", "Cancel"]}
           actions={[() => params.handleSortByNameButton(), () => params.handleSortBySurnameButton(), () => params.handleSortByAddedButton(), () => { }]}
@@ -98,7 +98,7 @@ export default class HomeScreen extends React.Component {
             />
           )}
           options={["Shortcode", "QR Code", "Cancel"]}
-          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => {}]}
+          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => { }]}
         />
       ),
     }
@@ -109,7 +109,7 @@ export default class HomeScreen extends React.Component {
   };
 
   handleQRCode = () => {
-      this.props.navigation.navigate("QRScanner", {cb: this.updateContacts});
+    this.props.navigation.navigate("QRScanner", { cb: this.updateContacts });
   }
 
   handleCancel = () => {
@@ -198,14 +198,14 @@ export default class HomeScreen extends React.Component {
   updateContacts = async () => {
     let images = this.state.images;
     const contacts = await apiRequests.getUserContacts(global.userID);
-    for(let j = 0; j < contacts.length; j++) {
+    for (let j = 0; j < contacts.length; j++) {
       const id = Number.parseInt(contacts[j].user, 10);
       if (contacts[j].card == 1) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
       }
     }
-   
+
     this.setState({ images: images });
     setTimeout(() => this.setState(
       this.seperatePinnedFromUnpinned(items)
@@ -248,9 +248,9 @@ export default class HomeScreen extends React.Component {
     const unpinnedContacts = this.state.unpinnedContacts;
     pinnedContacts.sort((a, b) => this.sortByAdded(a, b, ASC));
     unpinnedContacts.sort((a, b) => this.sortByAdded(a, b, ASC));
-    
+
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
-  
+
   }
 
   handleSortbyName = () => {
@@ -258,7 +258,7 @@ export default class HomeScreen extends React.Component {
     const unpinnedContacts = this.state.unpinnedContacts;
     pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
     unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-    
+
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
@@ -267,7 +267,7 @@ export default class HomeScreen extends React.Component {
     const unpinnedContacts = this.state.unpinnedContacts;
     pinnedContacts.sort((a, b) => this.sortBySurname(a, b, ASC));
     unpinnedContacts.sort((a, b) => this.sortBySurname(a, b, ASC));
-    
+
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
@@ -297,9 +297,9 @@ export default class HomeScreen extends React.Component {
     let mainScreen;
     if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0 && this.state.search == '') {
       mainScreen = (
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 25, color: 'grey'}}>You have no cards</Text>
-          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Add someone by tapping the + button in the top-right corner</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontSize: 25, color: 'grey' }}>You have no cards</Text>
+          <Text style={{ fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center' }}>Add someone by tapping the + button in the top-right corner</Text>
         </View>
       )
     } else {
@@ -335,8 +335,8 @@ export default class HomeScreen extends React.Component {
             }}
             value={search}
             platform="ios"
-            inputContainerStyle={{height:20, backgroundColor:"gainsboro"}}
-            containerStyle={{height:50, backgroundColor:"white", width:"95%", alignSelf:'center'}}
+            inputContainerStyle={{ height: 20, backgroundColor: "gainsboro" }}
+            containerStyle={{ height: 50, backgroundColor: "white", width: "95%", alignSelf: 'center' }}
           />
           {this.state.displayValue == 1 ?
             (<InformativeContactsView
@@ -365,7 +365,7 @@ export default class HomeScreen extends React.Component {
     }
 
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         {/*Adding a modal that would display the different filters */}
 
 
