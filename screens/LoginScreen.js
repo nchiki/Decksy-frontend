@@ -54,7 +54,7 @@ export default class LoginScreen extends Component {
       for(let j = 0; j < contacts.length; j++) {
         const id = Number.parseInt(contacts[j].user, 10);
         if(contacts[j].tags && contacts[j].tags.length > 0) {
-          console.log(contacts[j].tags)
+        
           for(let i = 0; i < contacts[j].tags.length; i++) {
             if (!tags.some(v => (v.toLowerCase() === contacts[j].tags[i].toLowerCase()))){
               tags.push(contacts[j].tags[i]);

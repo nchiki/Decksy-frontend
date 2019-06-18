@@ -5,6 +5,7 @@ import templateUtils from '../Templates';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import apiRequests from '../../api_wrappers/BackendWrapper';
 
+
 const u = {
   firstName: 'FIRST',
   lastName: 'LAST',
@@ -62,7 +63,7 @@ export default class CollectionSelection extends React.Component {
     //const images = this.state.images;
     let backgroundColor = 'white';
     if(this.state.selected && this.state.selected.some(i => (i.user && i.user === item.user ))) {
-      backgroundColor = 'grey';
+      backgroundColor = 'red';
     }
     if(!item.card) {
         return ( null )
@@ -72,7 +73,7 @@ export default class CollectionSelection extends React.Component {
         return (
         <View style={{flex:1, margin:1}}>
             <TouchableOpacity style={styles.card} onPress={() => this.handleSelected(item)}>
-                <Image source={{url: images[item.user].url}} style={[styles.containerStyle, {borderWidth:30,borderColor:backgroundColor}]}/>
+                <Image source={{url: images[item.user].url}} style={[styles.containerStyle, {borderWidth:1, borderColor:backgroundColor}]}/>
             </TouchableOpacity>
         </View>
         )
@@ -81,7 +82,7 @@ export default class CollectionSelection extends React.Component {
       <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
     <TouchableOpacity style={styles.card} onPress={() => {
       this.handleSelected(item)}}>
-             <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:30,borderColor:backgroundColor}]}>
+             <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:1,borderColor:backgroundColor}]}>
         
         <View style={styles.containerStyle}>
           <View style={templateUtils.setStyle(item.card).titleText}>
@@ -119,6 +120,13 @@ export default class CollectionSelection extends React.Component {
   handleSelected = async (item) => {
     let selected = this.state.selected;
     if(selected.some(i => (i.user && i.user === item.user ))) {
+        let tags = item.tags;
+        if(tags) {
+        const indexTag = tags.indexOf(this.state.title);
+        if(indexTag != -1) {
+            tags.splice(indexTag, 1);
+            apiRequests.addTag(global.userID, item.user, tags)
+        }}
         const index = selected.indexOf(item.user);
         selected.splice(index, 1);
     } else {

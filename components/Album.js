@@ -62,18 +62,17 @@ export default class Album extends React.Component {
   async handleAddCardToCollection() {
     let images = [];
     const contacts = await apiRequests.getUserContacts(global.userID);
-    const listItems = (contacts.map(async (cont) => {
-      const id = Number.parseInt(cont.user, 10);
-      const det = await apiRequests.getUserDetails(id);    
-      if (det.card == 1) {
-        const pic = await apiRequests.getCardImage(id);
-        images[id] = pic
-
+    for(let j = 0; j < contacts.length; j++) {
+      const id = Number.parseInt(contacts[j].user, 10);
+      if(contacts[j].tags && contacts[j].tags.length > 0) {  
+        if (contacts[j].card == 1) {
+          const pic = await apiRequests.getCardImage(id);
+          images[id] = pic
+        }
       }
-      return det
-    }));
-    const items = await Promise.all(listItems);
-    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: items, images:images, selected: this.state.contacts })
+    }
+    
+    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: contacts, images:images, selected: this.state.contacts })
   }
 
   renderPlaceholder = () => {
@@ -130,13 +129,24 @@ export default class Album extends React.Component {
     let { navigation } = this.props;
     let tag = navigation.getParam('tag', 'NO-ID');
     let contacts = navigation.getParam('contacts', []);
-    
+    let mainScreen;
+    if (this.state.contacts .length == 0) {
+      mainScreen = (
+        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 25, color: 'grey'}}>You have no cards in the collection</Text>
+          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Add one by tapping the + button in the top-right corner</Text>
+        </View>
+      )
+    } else {
+        mainScreen = ( <Grid style={styles.list} renderItem={this._renderItem}
+          data={contacts}
+          keyExtractor={item => item.user}
+          renderPlaceholder={this.renderPlaceholder}
+          numColumns={2}/>
+      )
+    }
    return (
-      <Grid style={styles.list} renderItem={this._renderItem}
-      data={contacts}
-      keyExtractor={item => item.user}
-      renderPlaceholder={this.renderPlaceholder}
-      numColumns={2}/>
+      {mainScreen}
 
     );
   }

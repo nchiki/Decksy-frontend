@@ -68,13 +68,13 @@ export default class TemplatesGallery extends React.Component {
     const det = this.state.details;
     let backgroundColor = 'white';
     if(this.state.selected && this.state.selected == item) {
-      backgroundColor = 'grey';
+      backgroundColor = 'red';
     }
     return (
       <View style={{flex:1, margin:1}}>
     <TouchableOpacity style={styles.card} onPress={() => 
       this.setState({selected: item})}>
-            <ImageBackground source={image} style={[styles.containerStyle, {borderWidth:30,borderColor:backgroundColor}]}>
+            <ImageBackground source={image} style={[styles.containerStyle, {borderWidth:1,borderColor:backgroundColor}]}>
               <View style={styles.containerStyle}>
                 <View style={templateStyle.titleText}>
                   <Text style={templateStyle.userText} >{`${det.firstName} ${det.lastName}`} </Text>
