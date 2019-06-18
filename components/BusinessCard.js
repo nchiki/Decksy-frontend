@@ -5,8 +5,7 @@ import apiRequests from '../api_wrappers/BackendWrapper';
 
 import QRCode from 'react-native-qrcode';
 import CardFlip from 'react-native-card-flip';
-import templateStyles from '../styles/TemplateStyles';
-
+import templateUtils from '../components/Templates';
 
 
 const ID = 2;
@@ -40,34 +39,46 @@ export default class BusinessCard extends React.Component {
 
 
 displayCard(props) {
-  const u = props.details;
-   let image = props.image;
-    const templateStyle = props.templateStyle;
-    if(props.picture) {
-      image= props.picture;
+
+  console.log(`details: ${JSON.stringify(props.details)}`);
+
+    if(props.details.card === 1) {
+      let url = `https://rolodex.tk/api/cards/getcard/${props.details.user}`;
+      console.log("updating ")
+
+      if (props.refresh) {
+        console.log("refreshing");
+        return (
+          <Image key={new Date()} source={{ uri: url }} style={{ width: 350, height: 200 }} />
+        )
+      }
+
       return (
-        <Image source={{ uri: image }} style={{ width: 350, height: 200 }} />
+        <Image source={{ uri: url }} style={{ width: 350, height: 200 }} />
       )
-    } else {
+
+    }
+
+    let image = templateUtils.setImage(props.details.card);
+    let templateStyle = templateUtils.setProfileStyle(props.details.card);
+    let u = props.details;
+
     return (
       <ImageBackground source={image} style={styles.containerStyle}>
-                  <View style={styles.containerStyle}>
-                    <View style={templateStyle.titleText}>
-                      <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
-                    </View>
-                    <View style={templateStyle.user}>
-                      <Text style={templateStyle.company}>{u.company}</Text>
-                      <Text style={templateStyle.details}>{u.phoneNumber}{'\n'}{u.email}{'\n'}{this.state.links.pop()}</Text>
-                    </View>
-                  </View>
-
-    </ImageBackground>
-    )
-    }
-}
+        <View style={styles.containerStyle}>
+          <View style={templateStyle.titleText}>
+              <Text style={templateStyle.userText} >{`${u.firstName} ${u.lastName}`} </Text>
+          </View>
+          <View style={templateStyle.user}>
+            <Text style={templateStyle.company}>{u.company}</Text>
+            <Text style={templateStyle.details}>{u.phoneNumber}{'\n'}{u.email}{'\n'}{this.state.links.pop()}</Text>
+          </View>
+        </View>
+      </ImageBackground>
+    );
+  }
 
   render() {
-      console.log(this.props.details.card)
       return (
         // implemented without image with header
         <View style={{ flex: 1, alignItems: 'center' }}>
@@ -98,7 +109,7 @@ displayCard(props) {
         </View>
       );
     }
-  
+
 }
 const styles = StyleSheet.create({
   cardContainer: {
