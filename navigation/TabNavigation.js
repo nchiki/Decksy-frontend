@@ -21,7 +21,8 @@ import CollectionSelection from '../components/utilsCollections/CollectionSelect
 const AlbumsStack = createStackNavigator({
   AlbumsScreen: { screen: AlbumsScreen },
   Album : {screen: Album},
-  CollectionSelection : {screen: CollectionSelection}
+  CollectionSelection : {screen: CollectionSelection},
+  CardProfile: { screen: CardProfileScreen },
 },
   {
     initialRouteName: 'AlbumsScreen',

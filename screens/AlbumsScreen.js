@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text, Platform, StyleSheet,TouchableOpacity} from 'react-native';
+import {View, Image,Text, Platform, StyleSheet,TouchableOpacity} from 'react-native';
 import apiRequests from '../api_wrappers/BackendWrapper';
 import Dialog from "react-native-dialog";
 
@@ -12,11 +12,7 @@ import Grid from 'react-native-grid-component';
 export default class AlbumsScreen extends React.Component {
 
     state = {
-      albums : [{
-        name:'event',
-        date:'date',
-        time:'time',
-      }],
+      albums : [],
       createAlbumVisible:false,
 
     }
@@ -28,6 +24,7 @@ export default class AlbumsScreen extends React.Component {
       handleCreateAlbum: this.handleCreateAlbum,
 
     });
+    this.setState({albums: global.tags})
   }
     static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
@@ -72,18 +69,29 @@ export default class AlbumsScreen extends React.Component {
     handleAlbum = () => {
       let name = this.state.newCollection;
       let albums = this.state.albums;
-      const newCollection = {
-        name: name,
-        date: '',
-        time:'',
-      }
-      albums.push(newCollection)
+      albums.push(name);
       this.setState({albums: albums, createAlbumVisible : false})
       this.render();
     }
 
-    handleOpenCollection = (item) => {
-      this.props.navigation.navigate('Album', { tag: item.name });
+    handleOpenCollection = async (item) => {
+      let images = [];
+      let contacts = [];
+      const allcontacts = await apiRequests.getUserContacts(global.userID);
+      for(let j = 0; j < allcontacts.length; j++) {
+        const id = Number.parseInt(allcontacts[j].user, 10);
+        if(allcontacts[j].tags && allcontacts[j].tags.length > 0) {
+
+          if (allcontacts[j].tags.some(v => (v.toLowerCase() === item.toLowerCase()))){
+            contacts.push(allcontacts[j]);
+          }  
+        }   
+        if (allcontacts[j].card == 1) {
+          const pic = await apiRequests.getCardImage(id);
+          images[id] = pic
+        }
+      }
+      this.props.navigation.navigate('Album', { tag: item, contacts: contacts, images: images });
     }
 
     renderPlaceholder = () => {
@@ -94,16 +102,12 @@ export default class AlbumsScreen extends React.Component {
     }
 
     _renderAlbum = (item) => {
-      let date = null;
-      if (item.date && item.date != '') {
-        date = <Text style={{fontSize:10, textAlign: 'center'}}>{item.date}</Text>
-
-      }
+     
       return (
       <View style={{flex:1, margin:0.5, alignItems:'center', justifyContent:'center'}}>
           <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
-            <Text style={{fontSize:20, textAlign: 'center'}}>{`${item.name}`}</Text>
-            {date}
+            <Text style={{fontSize:20, textAlign: 'center'}}>{`${item}`}</Text>
+         
           </TouchableOpacity>
       </View>
     );
@@ -112,7 +116,25 @@ export default class AlbumsScreen extends React.Component {
     
 
     render() {
-      return(
+      let mainScreen;
+      if (this.state.albums.length == 0) {
+      mainScreen = (
+        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 25, color: 'grey'}}>You have no collecions</Text>
+          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Create one by tapping the + button in the top-right corner</Text>
+        </View>
+      )
+    } else {
+        mainScreen = ( <View style={{flex:1}}>
+        <Grid style={styles.list} renderItem={this._renderAlbum}
+        data={this.state.albums}
+        renderPlaceholder = {this.renderPlaceholder}
+        keyExtractor={item => item.name}
+        numColumns={2}/> 
+        </View>
+      )
+    }
+      return (
         <View style={{flex:1}}>
 
            <Dialog.Container visible={this.state.createAlbumVisible}>
@@ -122,16 +144,11 @@ export default class AlbumsScreen extends React.Component {
             <Dialog.Button label="Cancel" onPress={this.handleCancel} bold={true} />
             <Dialog.Button label="Create" onPress={this.handleAlbum} />
           </Dialog.Container>
-
-          <View style={{flex:1}}>
-          <Grid style={styles.list} renderItem={this._renderAlbum}
-          data={this.state.albums}
-          renderPlaceholder = {this.renderPlaceholder}
-          keyExtractor={item => item.name}
-          numColumns={2}/> 
-          </View>
+          {mainScreen}
+         
         </View>
       )
+    
     }
 }
 
