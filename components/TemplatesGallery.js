@@ -92,7 +92,7 @@ export default class TemplatesGallery extends React.Component {
   }
 
   save = async (navigation) => {
-    console.log('fromLogin (gallery) is: ' + global.fromLogin)
+
     apiRequests.setCard(global.userID, this.state.selected);
     const det = await apiRequests.getUserDetails(global.userID);
     this.setState({ selected: null, details: det });

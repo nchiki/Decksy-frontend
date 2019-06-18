@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Text, AppRegistry, View, StyleSheet, ScrollView, TextInput, Button, Alert, ActivityIndicator } from 'react-native';
+import { Text, AppRegistry, View, StyleSheet, ScrollView, TextInput, Button, Alert, ActivityIndicator, ImageBackground } from 'react-native';
 import { LinearGradient } from 'expo';
 
 import AppNavigation from './navigation/AppNavigation';
 const NavigatorTypes = Object.freeze({"stack":1, "tab":2, "drawer":3})
+
+const logoText = require('./assets/images/text-only-white.png');
+const logoImage = require('./assets/images/logo-white.png');
 
 // default initial screen/class
 export default class FlexDimensionsBasics extends Component {
@@ -28,35 +31,23 @@ export default class FlexDimensionsBasics extends Component {
     return this.navigationForType(this.state.navigationType);
   }
 
-  const  gradientHeight=500;
-  const gradientBackground  = 'purple';
-  const data = Array.from({ length: gradientHeight });
+  //background #2970FF
+
   return (
     //on start should set responder acts when tapping the screen
     <View style={{ flex: 1,
+      backgroundColor: '#2970FF',
       flexDirection: 'column',
       justifyContent: 'center',
-      alignItems: 'stretch',}} onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}>
-      <LinearGradient
-        colors={['#4AB3F6', '#A4D8F9']}
-        style={{flex: 1, justifyContent: 'center'}}
-      >
-        <Text style={styles.bigTitle}>RoloDex</Text>
-      </LinearGradient>
+      alignItems: 'stretch'
+    }}
+    onStartShouldSetResponder={() => this.onNavigationTypeRequested(NavigatorTypes.tab)}
+    >
+    <ImageBackground source={require('./assets/images/splash.png')}  style={{width: '100%', height: '100%'}}>
+    </ImageBackground>
     </View>
   )}
 }
 
-const styles = StyleSheet.create({
-  bigTitle: {
-    textAlign: 'center',
-    color:'white',
-    fontWeight: 'bold',
-    fontSize: 30,
-  },
-  red: {
-    color: 'red',
-  },
-});
 
 AppRegistry.registerComponent('rolodex', () => FlexDimensionsBasics);

@@ -67,7 +67,7 @@ displayCard(props) {
 }
 
   render() {
-      console.log(this.props.details.card)
+     
       return (
         // implemented without image with header
         <View style={{ flex: 1, alignItems: 'center' }}>

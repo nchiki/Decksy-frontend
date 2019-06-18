@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 
-import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight } from 'react-native';
+import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight, Image } from 'react-native';
 
 import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
+
 
 
 export default class LoginScreen extends Component {
@@ -36,7 +37,7 @@ export default class LoginScreen extends Component {
   };
 
   handleLogin = async () => {
-    
+
     const details = await apiRequests.getUserDetails(global.userID);
     const requests = await apiRequests.getRequests(global.userID);
     if(!details.card || details.card == null) {
@@ -48,18 +49,25 @@ export default class LoginScreen extends Component {
     global.details = details;
     if(requests && requests.length > 0) { global.requests = requests;} else {global.requests = null;}
     let images = [];
-    const contacts = await apiRequests.getUserContacts(global.userID);
-    const listItems = (contacts.map(async (cont) => {
-      const id = Number.parseInt(cont.user, 10);
-      const det = await apiRequests.getUserDetails(id);    
-      if (det.card == 1) {
-        const pic = await apiRequests.getCardImage(id);
-        images[id] = pic
+    let tags = [];
+      const contacts = await apiRequests.getUserContacts(global.userID);
+      for(let j = 0; j < contacts.length; j++) {
+        const id = Number.parseInt(contacts[j].user, 10);
+        if(contacts[j].tags && contacts[j].tags.length > 0) {
+          console.log(contacts[j].tags)
+          for(let i = 0; i < contacts[j].tags.length; i++) {
+            if (!tags.some(v => (v.toLowerCase() === contacts[j].tags[i].toLowerCase()))){
+              tags.push(contacts[j].tags[i]);
+            }
+          }
+        }   
+        if (contacts[j].card == 1) {
+          const pic = await apiRequests.getCardImage(id);
+          images[id] = pic
+        }
       }
-      return det
-    }));
-    const items = await Promise.all(listItems);
-    this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: items, images:images })
+    global.tags = tags;
+    this.props.navigation.navigate('CollectedCards', { userID: global.userID, contacts: contacts, images:images })
 
     // Add logic to authenticate user here
   }
@@ -68,8 +76,14 @@ export default class LoginScreen extends Component {
     global.fromLogin = true;
     return (
       <View style={{ padding: 10, flex: 1, justifyContent: 'center' }}>
-        <View style={{ flex: 5, justifyContent: "center", alignItems: "center" }}>
-          <Text style={styles.bigTitle}>RoloDex</Text>
+        <View paddingTop={100} paddingBottom={20} style={{ flex: 1}}>
+          <Image source={require('../assets/images/logo-web.png')}
+            style={{ flex: 1,
+              width: undefined,
+              height: undefined,
+            }}
+            resizeMode="contain"
+          />
         </View>
         <View style={{ flex: 1 }}>
           <TextInput
