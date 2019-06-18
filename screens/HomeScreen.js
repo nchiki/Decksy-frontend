@@ -2,7 +2,7 @@ import React from 'react';
 
 import {View, Button, Platform, SegmentedControlIOS, Text} from 'react-native';
 
-import { Icon } from "react-native-elements";
+import { Icon, SearchBar } from "react-native-elements";
 
 import Dialog from "react-native-dialog";
 
@@ -29,6 +29,7 @@ export default class HomeScreen extends React.Component {
       pinnedContacts: [],
       displayValue: 1,
       images: [],
+      search: '',
     }
   }
 
@@ -71,13 +72,7 @@ export default class HomeScreen extends React.Component {
       headerLeft: (
         <OptionsMenu
           customButton={(
-            <Icon
-              containerStyle={{ paddingLeft: 12 }}
-              type="ionicon"
-              name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-              size={31}
-              color='dodgerblue'
-            />
+            <Text style={{color:"dodgerblue", marginLeft:10, fontSize:20}}>Sort</Text>
           )}
           options={["Search", "Sort", "Restore", "Cancel"]}
           actions={[() => params.handleSearchButton(), () => params.handleSortButton(), () => params.updateContacts(), () => { }]}
@@ -263,6 +258,7 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    const { search } = this.state;
     let changeDisplayButton = Platform.OS === "ios" ? (
       <SegmentedControlIOS
         values={['Informative View', 'Visual View']}
@@ -289,9 +285,25 @@ export default class HomeScreen extends React.Component {
         </View>
       )
     } else {
+      // {changeDisplayButton}
       mainScreen = (
         <View>
-          {changeDisplayButton}
+          <SearchBar
+            placeholder="Search"
+            onChangeText={(text) => {
+              this.setState({ search: text });
+              this.handleSearch();
+            }}
+            onClear={this.updateContacts}
+            onCancel={() => {
+              this.setState({ search: '' });
+              this.updateContacts();
+            }}
+            value={search}
+            platform="ios"
+            inputContainerStyle={{height:20, backgroundColor:"gainsboro"}}
+            containerStyle={{height:50, backgroundColor:"white", width:"95%", alignSelf:'center'}}
+          />
           {this.state.displayValue == 1 ?
             (<InformativeContactsView
               pinnedContacts={this.state.pinnedContacts}
