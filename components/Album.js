@@ -64,14 +64,11 @@ export default class Album extends React.Component {
     const contacts = await apiRequests.getUserContacts(global.userID);
     for(let j = 0; j < contacts.length; j++) {
       const id = Number.parseInt(contacts[j].user, 10);
-      if(contacts[j].tags && contacts[j].tags.length > 0) {  
-        if (contacts[j].card == 1) {
-          const pic = await apiRequests.getCardImage(id);
-          images[id] = pic
-        }
+      if (contacts[j].card == 1) {
+        const pic = await apiRequests.getCardImage(id);
+        images[id] = pic;
       }
     }
-    
     this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: contacts, images:images, selected: this.state.contacts })
   }
 
@@ -85,17 +82,15 @@ export default class Album extends React.Component {
   _renderItem = (item) => {
     const images = this.props.navigation.getParam('images', 'NULL');
     //const images = this.state.images;
-    let backgroundColor = 'white';
-    if(this.state.selected && this.state.selected.some(i => (i.user && i.user === item.user ))) {
-      backgroundColor = 'grey';
-    }
+    
+   
     if(!item.card) {
         return ( null )
     }
     if(item.card == 1) {
         
         return (
-        <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+        <View style={{flex:1, margin:1}}>
             <TouchableOpacity style={styles.card} onPress={() => this.handleSelected(item)}>
                 <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
             </TouchableOpacity>
@@ -103,7 +98,7 @@ export default class Album extends React.Component {
         )
       }
     return (
-      <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+    <View style={{flex:1, margin:1}}>
     <TouchableOpacity style={styles.card} onPress={() => {
       this.handleSelected(item)}}>
              <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
@@ -130,7 +125,7 @@ export default class Album extends React.Component {
     let tag = navigation.getParam('tag', 'NO-ID');
     let contacts = navigation.getParam('contacts', []);
     let mainScreen;
-    if (this.state.contacts .length == 0) {
+    if (this.state.contacts.length == 0) {
       mainScreen = (
         <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
           <Text style={{fontSize: 25, color: 'grey'}}>You have no cards in the collection</Text>
@@ -145,10 +140,7 @@ export default class Album extends React.Component {
           numColumns={2}/>
       )
     }
-   return (
-      {mainScreen}
-
-    );
+   return mainScreen;
   }
 }
 
