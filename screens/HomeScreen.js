@@ -61,7 +61,9 @@ export default class HomeScreen extends React.Component {
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
       updateContacts: this.updateContacts,
-      handleSortButton: this.handleSort,
+      handleSortByNameButton: this.handleSortbyName,
+      handleSortBySurnameButton: this.handleSortbySurname,
+      handleSortByAddedButton: this.handleSortByRecentlyAdded,
       handleSearchButton: this.search,
     });
 
@@ -81,7 +83,7 @@ export default class HomeScreen extends React.Component {
             <Text style={{color:"dodgerblue", marginLeft:10, fontSize:20}}>Sort</Text>
           )}
           options={["By First Name", "By Surname", "By Most Recently Added", "Cancel"]}
-          actions={[() => params.handleSortButton(), () => params.handleSortButton(), () => params.handleSortButton(), () => { }]}
+          actions={[() => params.handleSortByNameButton(), () => params.handleSortBySurnameButton(), () => params.handleSortByAddedButton(), () => { }]}
         />
       ),
       headerRight: (
@@ -121,7 +123,6 @@ export default class HomeScreen extends React.Component {
     this.setState({
       shortcodeInputVisible: false,
     });
-    //apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
   handleSendRequest = () => {
@@ -216,7 +217,7 @@ export default class HomeScreen extends React.Component {
   sortByName(a, b, order = ASC) {
     let diff = a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase());
     if (diff == 0) {
-      const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
+      diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
 
     }
     if (order === ASC) {
@@ -226,27 +227,47 @@ export default class HomeScreen extends React.Component {
     return -1 * diff;
   }
 
-  sortByCompany(a, b, order = ASC) {
-    const diff = a.company.toLowerCase().localeCompare(b.company.toLowerCase());
-
+  sortBySurname(a, b, order = ASC) {
+    const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
     if (order === ASC) {
       return diff;
     }
-
     return -1 * diff;
   }
 
-  handleSort = () => {
+  sortByAdded(a, b, order = ASC) {
+    const diff = Number.parseInt(b.added, 10) - Number.parseInt(a.added, 10);
+    if (order === ASC) {
+      return diff;
+    }
+    return -1 * diff;
+  }
+
+  handleSortByRecentlyAdded = () => {
     const pinnedContacts = this.state.pinnedContacts;
     const unpinnedContacts = this.state.unpinnedContacts;
-    // if(sortValue == 'name') {
-    if (true) {
-      pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-      unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-    } else {
-      pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-      unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-    }
+    pinnedContacts.sort((a, b) => this.sortByAdded(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortByAdded(a, b, ASC));
+    
+    this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
+  
+  }
+
+  handleSortbyName = () => {
+    const pinnedContacts = this.state.pinnedContacts;
+    const unpinnedContacts = this.state.unpinnedContacts;
+    pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    
+    this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
+  }
+
+  handleSortbySurname = () => {
+    const pinnedContacts = this.state.pinnedContacts;
+    const unpinnedContacts = this.state.unpinnedContacts;
+    pinnedContacts.sort((a, b) => this.sortBySurname(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortBySurname(a, b, ASC));
+    
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
