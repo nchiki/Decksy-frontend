@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon} from 'react-native-elements';
+import { Icon } from 'react-native-elements';
 import Dialog from "react-native-dialog";
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -45,7 +45,7 @@ export default class CardProfileScreen extends React.Component {
             />
           )}
           options={["Email", "Message", "Call", "Cancel"]}
-          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), ]}
+          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(),]}
         />
       ),
     }
@@ -169,7 +169,7 @@ export default class CardProfileScreen extends React.Component {
     /* The card is an image*/
     if (item.card === 1) {
       return (
-        <ImageBackground source={{url: `https://rolodex.tk/api/cards/getcard/${item.user}`}} style={styles.containerStyle}>
+        <ImageBackground source={{ url: `https://rolodex.tk/api/cards/getcard/${item.user}` }} style={styles.containerStyle}>
         </ImageBackground>
       );
     }
@@ -183,7 +183,7 @@ export default class CardProfileScreen extends React.Component {
             <Text style={templateUtils.setProfileStyle(item.card).company}>{item.company}</Text>
             <Text style={templateUtils.setProfileStyle(item.card).details}><Ionicons name='ios-call' size={10} /> {item.phoneNumber}{'\n'}
               <Ionicons name='ios-mail' size={10} /> {item.email}</Text>
-            </View>
+          </View>
         </View>
       </ImageBackground>
     );
@@ -203,7 +203,7 @@ export default class CardProfileScreen extends React.Component {
         </Dialog.Container >
 
         <View style={{ marginTop: 30, marginBottom: 0, flex: 3 }} alignItems='center'>
-          { this.renderCardImage() }
+          {this.renderCardImage()}
         </View>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           {this.getButtons()}
