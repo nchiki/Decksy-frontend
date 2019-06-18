@@ -52,7 +52,8 @@ export default class CollectionSelection extends React.Component {
     const title =  navigation.getParam('tag', 'NULL');
     const contacts = navigation.getParam('contacts', 'NULL');
     const images = navigation.getParam('images', 'NULL');
-    this.setState({images:images, contacts: contacts, title: title});
+    const selected = navigation.getParam('selected', [])
+    this.setState({images:images, contacts: contacts, title: title, selected: selected});
     //this.render();
   }
 
@@ -69,9 +70,9 @@ export default class CollectionSelection extends React.Component {
     if(item.card == 1) {
         
         return (
-        <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+        <View style={{flex:1, margin:1}}>
             <TouchableOpacity style={styles.card} onPress={() => this.handleSelected(item)}>
-                <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
+                <Image source={{url: images[item.user].url}} style={[styles.containerStyle, {borderWidth:30,borderColor:backgroundColor}]}/>
             </TouchableOpacity>
         </View>
         )
@@ -80,7 +81,7 @@ export default class CollectionSelection extends React.Component {
       <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
     <TouchableOpacity style={styles.card} onPress={() => {
       this.handleSelected(item)}}>
-             <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+             <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:30,borderColor:backgroundColor}]}>
         
         <View style={styles.containerStyle}>
           <View style={templateUtils.setStyle(item.card).titleText}>

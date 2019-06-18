@@ -73,7 +73,7 @@ export default class Album extends React.Component {
       return det
     }));
     const items = await Promise.all(listItems);
-    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: items, images:images })
+    this.props.navigation.navigate('CollectionSelection', {tag: this.state.tag, contacts: items, images:images, selected: this.state.contacts })
   }
 
   renderPlaceholder = () => {

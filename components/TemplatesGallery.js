@@ -71,10 +71,10 @@ export default class TemplatesGallery extends React.Component {
       backgroundColor = 'grey';
     }
     return (
-      <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+      <View style={{flex:1, margin:1}}>
     <TouchableOpacity style={styles.card} onPress={() => 
       this.setState({selected: item})}>
-            <ImageBackground source={image} style={styles.containerStyle}>
+            <ImageBackground source={image} style={[styles.containerStyle, {borderWidth:30,borderColor:backgroundColor}]}>
               <View style={styles.containerStyle}>
                 <View style={templateStyle.titleText}>
                   <Text style={templateStyle.userText} >{`${det.firstName} ${det.lastName}`} </Text>
