@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight, Image } from 'react-native';
+import { AppRegistry, Text, TextInput, View, Button, TouchableHighlight, Image, StyleSheet } from 'react-native';
 
-import styles from '../styles/Styles';
 import apiRequests from '../api_wrappers/BackendWrapper';
 
 
@@ -60,7 +59,7 @@ export default class LoginScreen extends Component {
               tags.push(contacts[j].tags[i]);
             }
           }
-        }   
+        }
         if (contacts[j].card == 1) {
           const pic = await apiRequests.getCardImage(id);
           images[id] = pic
@@ -78,26 +77,24 @@ export default class LoginScreen extends Component {
       <View style={{ padding: 10, flex: 1, justifyContent: 'center' }}>
         <View paddingTop={100} paddingBottom={20} style={{ flex: 1}}>
           <Image source={require('../assets/images/logo-web.png')}
-            style={{ flex: 1,
-              width: undefined,
-              height: undefined,
+            style={{ flex: 3,
+              width: '85%',
+              alignSelf: 'center'
             }}
             resizeMode="contain"
           />
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 3, alignItems: 'center' }}>
           <TextInput
-            style={styles.loginInputs}
+            style={styles.inputs}
             placeholder="User ID"
             onChangeText={(id) => global.userID = Number.parseInt(id, 10)}
             autoCorrect={false}
             keyboardType="numeric"
             autoCapitalize="none"
           />
-        </View>
-        <View style={{ flex: 1 }}>
           <TextInput
-            style={styles.loginInputs}
+            style={styles.inputs}
             placeholder="Password"
             onChangeText={(password) => this.setState({ password })}
             autoCorrect={false}
@@ -105,16 +102,29 @@ export default class LoginScreen extends Component {
             secureTextEntry={true}
             textContentType="password"
           />
-        </View>
-        <View style={{ flex: 1, alignItems: 'center' }}>
           <TouchableHighlight onPress={() => this.handleLogin()} underlayColor='blue'>
-            <View style={{ alignItems: 'center', backgroundColor: '#2196F3', width: 100, height: 40, borderRadius: 5 }}>
+            <View style={{ alignItems: 'center', backgroundColor: '#2196F3', width: 100, height: 40, borderRadius: 5, marginTop: 10 }}>
               <Text style={{ color: 'white', fontSize: 30 }}>Log In</Text>
             </View>
           </TouchableHighlight>
         </View>
-        <View style={{ flex: 5 }} />
+
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  inputs: {
+    fontSize: 26,
+    textAlign: 'center',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 4,
+    width: '70%',
+    alignSelf: 'center',
+    height: 45,
+    marginBottom: 20,
+    marginTop: 0,
+  }
+})
