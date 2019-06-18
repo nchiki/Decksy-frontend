@@ -43,6 +43,7 @@
     "react-native-image-picker": "^0.28.1",
     "react-native-mail-launcher": "^1.0.5",
     "react-native-options-menu": "^2.0.2",
+    "react-native-paper": "^2.16.0",
     "react-native-phone-call": "^1.0.9",
     "react-native-qrcode": "^0.2.7",
     "react-native-qrcode-scanner": "1.2.1",
@@ -51,6 +52,7 @@
     "react-native-swipeout": "^2.3.6",
     "react-native-view-overflow": "0.0.4",
     "react-navigation": "^3.11.0",
+    "react-navigation-material-bottom-tabs": "^1.0.0",
     "react-router-dom": "^5.0.0",
     "react-test-renderer": "^16.8.6"
   },
