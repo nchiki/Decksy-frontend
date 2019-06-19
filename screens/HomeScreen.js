@@ -205,7 +205,7 @@ export default class HomeScreen extends React.Component {
         images[id] = pic
       }
     }
-
+    const items = await Promise.all(listItems);
     this.setState({ images: images });
     setTimeout(() => this.setState(
       this.seperatePinnedFromUnpinned(items)
