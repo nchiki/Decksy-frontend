@@ -1,11 +1,6 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
-import { Icon } from 'react-native-elements';
-=======
 import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking, ScrollView } from 'react-native';
 import { Icon} from 'react-native-elements';
->>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
 import Dialog from "react-native-dialog";
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -50,11 +45,7 @@ export default class CardProfileScreen extends React.Component {
             />
           )}
           options={["Email", "Message", "Call", "Cancel"]}
-<<<<<<< HEAD
-          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(),]}
-=======
           actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), () => {}]}
->>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
         />
       ),
     }
