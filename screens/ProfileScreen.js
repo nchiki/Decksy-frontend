@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Platform, View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
+import { Platform, ScrollView, View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 
 import Dialog from "react-native-dialog";
 
@@ -159,22 +159,6 @@ export default class ProfileScreen extends React.Component {
     this.getExistingLinks();
   }
 
-  handleAddLink = () => {
-    const linkType = this.state.linkType;
-    if (linkType == "Github") {
-      console.log("went into Github");
-      apiRequests.addLink(global.userID, "Github", "https://www.github.com/" + this.state.linkValue);
-    } else if (linkType == "Linkedin") {
-      console.log("went into Linkedin");
-      apiRequests.addLink(global.userID, "Linkedin", "https://www.linkedin.com/in/" + this.state.linkValue);
-    } else if (linkType == "Personal") {
-      console.log("went into personal");
-      apiRequests.addLink(global.userID, "Personal", "https://www." + this.state.linkValue);
-    }
-    this.setState({ linkValueVisible: false })
-    this.getExistingLinks();
-  }
-
   saveCard = () => {
     this.setState({editing: false});
   }
@@ -216,110 +200,17 @@ export default class ProfileScreen extends React.Component {
     )
 
     return (
-      <View style={{flex: 2, top: 10}}>
+      <ScrollView >
+        <View style={{top: 30}}>
+          <BusinessCard details={global.details} refresh={doRefresh} />
+        </View>
         { this.state.editing ? saveComponent :defaultComponent}
         <View style={{flex: 1, top: 30}} >
         <BusinessCard details={global.details} refresh={doRefresh} />
         </View>
         <Links />
-       
-      </View >
+      </ScrollView >
     );
-  }
-
-
-
-  removeLink = async () => {
-    console.log("LinkID");
-    console.log(this.state.linkID);
-    apiRequests.removeLink(this.state.linkID);
-    this.setState({ editLinkVisible: false });
-    setTimeout(() => this.getExistingLinks(), 20);
-  }
-
-  editLink = async () => {
-    const linkType = this.state.linkType;
-    if (linkType == "Github") {
-      await apiRequests.editLink(this.state.linkID, "Github", "https://www.github.com/" + this.state.linkValue);
-    } else if (linkType == "Linkedin") {
-      await apiRequests.editLink(this.state.linkID, "Linkedin", "https://www.linkedin.com/in/" + this.state.linkValue);
-    } else if (linkType == "Personal") {
-      await apiRequests.editLink(this.state.linkID, "Personal", "https://www." + this.state.linkValue);
-    }
-    this.setState({ modifyLinkVisible: false })
-    setTimeout(() => this.getExistingLinks(), 20);
-  }
-
-  linkDisplay = () => {
-    let display = [];
-    for (let i = 0; i < this.state.links.length; i++) {
-      let fontColor = null;
-      let backgColor = null;
-      const type = this.state.links[i].name;
-      if (type == "Github") {
-        fontColor = 'white';
-        backgColor = 'black';
-      } else if (type == "Linkedin") {
-        fontColor = 'white';
-        backgColor = 'deepskyblue';
-      } else {
-        fontColor = 'dimgrey';
-        backgColor = 'white';
-      }
-      display.push(
-        <TextButton key={this.state.links[i].value} title={this.state.links[i].name + ": " + this.state.links[i].value} titleColor={fontColor}
-          color={backgColor} shadeColor='grey' onPress={() =>
-            this.setState({
-              editLinkVisible: true, linkID: this.state.links[i].link, linkValue: this.state.links[i].value, linkType: this.state.links[i].name
-            })} />)
-    }
-    return display;
-  }
-
-  getLinksToDisplay = () => {
-    var linksToAdd = [];
-    let github = true;
-    let linkedin = true;
-    let personal = true;
-    for (let i = 0; i < this.state.links.length; i++) {
-      var type = this.state.links[i].name;
-      if (type == "Github") {
-        github = false;
-      }
-      if (type == "Linkedin") {
-        linkedin = false;
-      }
-      if (type == "Personal") {
-        personal = false;
-      }
-    }
-    linksToAdd.push(<Picker.Item key="Default" label="Choose the type of link" value="Default" />)
-    if (github) {
-      linksToAdd.push(<Picker.Item key="Github" label="Github" value="Github" />)
-    }
-    if (linkedin) {
-      linksToAdd.push(<Picker.Item key="Linkedin" label="LinkedIn" value="Linkedin" />);
-    }
-    if (personal) {
-      linksToAdd.push(<Picker.Item key="Personal" label="Personal Website/Portfolio" value="Personal" />);
-    }
-    return linksToAdd;
-  }
-
-  getExistingLinks = async () => {
-    const details = await apiRequests.getUserDetails(global.userID);
-    console.log(details);
-    this.setState({ details: details });
-    let links = details.links;
-    console.log(links);
-    let existingLinks = [];
-    for (let i = 0; i < links.length; i++) {
-      let link = await apiRequests.getLink(details.links[i]);
-      existingLinks.push(link);
-    }
-    this.setState({
-      links: existingLinks
-    })
   }
 
   getNumberRequests = async () => {
