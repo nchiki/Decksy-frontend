@@ -93,8 +93,8 @@ export default createMaterialBottomTabNavigator({
 },
   {
     initialRouteName: "CollectedCardsStack",
-    activeColor: '#f0edf6',
-    inactiveColor: '#226557',
+    activeColor: '#2970FF',
+    inactiveColor: '#ccc',
     barStyle: { backgroundColor: '#ffffff' },
   },
 );
