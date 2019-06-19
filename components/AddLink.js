@@ -39,7 +39,7 @@ export default class AddLink extends React.Component {
     }
     return (
       <Modal
-        visible={this.state.modalVisible}
+        visible={this.props.visible}
         animationType={'fade'}
         onRequestClose={this.closeModal}
         transparent={true}

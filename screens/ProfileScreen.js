@@ -17,6 +17,7 @@ import { SocialIcon } from 'react-native-elements';
 
 import templateUtils from '../components/Templates';
 
+import ShareModal from '../components/ShareModal';
 
 import Links from '../components/Links';
 
@@ -38,6 +39,7 @@ export default class ProfileScreen extends React.Component {
     details: u,
     image: require("../assets/images/templates/template2.png"),
     templateStyle: templateUtils.setProfileStyle(2),
+    shareVisible: false
   };
 
   refresh = false;
@@ -176,7 +178,7 @@ export default class ProfileScreen extends React.Component {
         <View style={{width:50}}/>
         <TouchableOpacity
           style={[styles.buttonSaveContainer, {width: 100, height: 50}]}
-          onPress={() => {}}>
+          onPress={() => this.setState({shareVisible: true})}>
             <Text style={{ fontSize: 20,fontWeight: 'bold', color: 'white' }}> Share </Text>
         </TouchableOpacity>
       </View>
@@ -198,6 +200,8 @@ export default class ProfileScreen extends React.Component {
 
     return (
       <ScrollView >
+
+        <ShareModal visible={this.state.shareVisible} modalClose={() => this.setState({shareVisible: false})} />
 
         <View style={{flex: 1, top: 15}}>
           { this.state.editing ? saveComponent :defaultComponent}
