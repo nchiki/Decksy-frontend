@@ -14,7 +14,7 @@ export default class AlbumsScreen extends React.Component {
     state = {
       albums : [],
       createAlbumVisible:false,
-
+      deleteVisible : false,
     }
 
 
@@ -22,7 +22,8 @@ export default class AlbumsScreen extends React.Component {
     const { navigation } = this.props;
     navigation.setParams({
       handleCreateAlbum: this.handleCreateAlbum,
-
+      deleteAlbums : this.deleteAlbums,
+      saveState : this.saveState,
     });
     this.setState({albums: global.tags})
   }
@@ -34,15 +35,15 @@ export default class AlbumsScreen extends React.Component {
             fontSize: 25
           },
           headerLeft: (
+            
                 <Icon
                   containerStyle={{ paddingLeft: 12 }}
                   type="ionicon"
-                  name={Platform.OS === "ios" ? "ios-calendar" : "md-calendar"}
+                  name={Platform.OS === "ios" ? "ios-trash" : "md-trash"}
                   size={31}
                   color='#2970FF'
-                  onPress={()=> alert('hi')}
+                  onPress={()=> params.deleteAlbums()}
                 />
-
           ),
           headerRight: (
                 <Icon
@@ -58,6 +59,12 @@ export default class AlbumsScreen extends React.Component {
       };
     }
 
+   
+
+    saveState = () => {
+      setTimeout( () => this.setState({deleteVisible: false}), 20);
+      
+    }
     handleCreateAlbum= () => {
       this.setState({createAlbumVisible : true})
     }
@@ -75,6 +82,10 @@ export default class AlbumsScreen extends React.Component {
     }
 
     handleOpenCollection = async (item) => {
+      if(this.state.deleteVisible) {
+        setTimeout(() => this.delete(item), 20);
+      
+      } else {
       let images = [];
       let contacts = [];
       const allcontacts = await apiRequests.getUserContacts(global.userID);
@@ -93,6 +104,7 @@ export default class AlbumsScreen extends React.Component {
       }
       this.props.navigation.navigate('Album', { tag: item, contacts: contacts, images: images });
     }
+    }
 
     renderPlaceholder = () => {
       <View style={{flex:1}}>
@@ -102,18 +114,69 @@ export default class AlbumsScreen extends React.Component {
     }
 
     _renderAlbum = (item) => {
-
+      let conditionalButton = null;
+      if (this.state.deleteVisible) { 
+       conditionalButton = 
+        <Icon
+                  containerStyle={{
+                    borderRadius: 20,
+                    height: 30,
+                    width: 30,
+                    backgroundColor: 'red',
+                    position: 'absolute',
+                    left: 170,
+                    right: 0,
+                    top: 0,
+                    bottom: 0, alignItems:'center', justifyContent:'center' }}
+                  type="ionicon"
+                  name={Platform.OS === "ios" ? "ios-close" : "md-close"}
+                  size={30}
+                  color='white'
+                  onPress={()=> this.delete(item)}
+                />
+      }
       return (
-      <View style={{width: 200, height: 150, margin:1, alignItems:'center', justifyContent:'center', backgroundColor: '#2970FF'}}>
+        <View style={{width: 200, height: 150, margin:1}}>
+          
+      <View style={{width: 200, height: 150, alignItems:'center', justifyContent:'center', backgroundColor: '#2970FF'}}>
+        { conditionalButton}
+ 
           <TouchableOpacity style={styles.card} onPress={()=> this.handleOpenCollection(item)}>
 
             <Text style={{fontSize:20, textAlign: 'center', color: 'white', fontWeight: 'bold'}}>{`${item}`}</Text>
 
           </TouchableOpacity>
       </View>
+      </View>
     );
     }
 
+
+    delete = async (item) => {
+      const albums = this.state.albums;
+      const indexAlbum = albums.indexOf(item);
+      const allcontacts = await apiRequests.getUserContacts(global.userID);
+      for(let j = 0; j < allcontacts.length; j++) {
+        const id = Number.parseInt(allcontacts[j].user, 10);
+        if(allcontacts[j].tags && allcontacts[j].tags.length > 0) {
+          if (allcontacts[j].tags.some(v => (v.toLowerCase() === item.toLowerCase()))){
+            const tags = allcontacts[j].tags;
+            const index = tags.indexOf(item);
+            tags.splice(index, 1);
+            apiRequests.addTag(global.userID, id, tags);
+          }
+        }
+      }
+      albums.splice(indexAlbum, 1);
+      this.setState({albums: albums});
+    }
+
+
+    deleteAlbums = () => {
+      let newVisible = !this.state.deleteVisible;
+      setTimeout(()=> this.setState({deleteVisible : newVisible}), 20);
+      
+    }
 
 
     render() {
