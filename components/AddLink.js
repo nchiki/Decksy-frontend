@@ -59,6 +59,8 @@ export default class AddLink extends React.Component {
               style={{padding:30, fontSize: 25}}
               placeholder={(this.state.selected == 'Portfolio') ? 'URL' : 'Username'}
               onChangeText={(inp) => this.setState({curValue: inp})}
+              autoCompleteType='off'
+              autoCorrect={false}
             />
             <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
               <TouchableOpacity

@@ -88,8 +88,8 @@ export default class ProfileScreen extends React.Component {
             />
           )}
           destructiveIndex={2}
-          options={["Edit Details", "Edit Links", "Sign Out", "Cancel"]}
-          actions={[() => params.changeSettings(), () => params.changeToLinks(), () => params.logOut(), () => { }]}
+          options={["Edit Details", "Sign Out", "Cancel"]}
+          actions={[() => params.changeSettings(), () => params.logOut(), () => { }]}
         />
       ),
     };
@@ -104,7 +104,6 @@ export default class ProfileScreen extends React.Component {
   }
 
   showGallery = async () => {
-    global.details = await apiRequests.getUserDetails(global.userID);
     this.props.navigation.navigate('TemplatesGallery', {details: global.details, cb: this.doUpdate});
   }
 
@@ -151,12 +150,10 @@ export default class ProfileScreen extends React.Component {
     const { navigation } = this.props;
     navigation.setParams({
       changeSettings: () => this.changeSettings(),
-      changeToLinks: () => this.changeToLinks(),
       showRequests: () => this.showRequests(),
       logOut: () => this.logOut(),
       getNumberRequests: () => this.getNumberRequests(),
     });
-    this.getExistingLinks();
   }
 
   saveCard = () => {
@@ -169,7 +166,7 @@ export default class ProfileScreen extends React.Component {
     this.refresh = false;
 
     let defaultComponent = (
-      <View style={{ flexDirection: 'row', justifyContent: 'center', bottom: 50, top: 10 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center'}}>
         <TouchableOpacity
           style ={[styles.buttonSaveContainer, {width: 100, height: 50}]}
           onPress={this.handleEdit}>
@@ -186,7 +183,7 @@ export default class ProfileScreen extends React.Component {
     );
 
     let saveComponent = (
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around',}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around'}}>
         <TouchableOpacity style={[styles.buttonSaveContainer, {width: 50, height: 50}]} onPress={this.showGallery}>
           <Ionicons name='ios-apps' size={30} color='white'/>
         </TouchableOpacity>
@@ -201,12 +198,12 @@ export default class ProfileScreen extends React.Component {
 
     return (
       <ScrollView >
-        <View style={{top: 30}}>
-          <BusinessCard details={global.details} refresh={doRefresh} />
+
+        <View style={{flex: 1, top: 15}}>
+          { this.state.editing ? saveComponent :defaultComponent}
         </View>
-        { this.state.editing ? saveComponent :defaultComponent}
-        <View style={{flex: 1, top: 30}} >
-        <BusinessCard details={global.details} refresh={doRefresh} />
+        <View style={{flex: 1, top: 20}} >
+          <BusinessCard details={global.details} refresh={doRefresh} />
         </View>
         <Links />
       </ScrollView >
@@ -226,11 +223,6 @@ export default class ProfileScreen extends React.Component {
   changeSettings = async () => {
     const det = await apiRequests.getUserDetails(global.userID);
     this.props.navigation.navigate('EditDetailsScreen', { details: det });
-  }
-
-  changeToLinks = async () => {
-    const det = await apiRequests.getUserDetails(global.userID);
-    this.props.navigation.navigate('LinkScreen', { details: det });
   }
 
   logOut = () => {

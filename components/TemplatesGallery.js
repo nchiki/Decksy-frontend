@@ -37,7 +37,7 @@ export default class TemplatesGallery extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: 'Gallery of templates',
+      title: 'Templates',
       headerTitleStyle: {
         fontSize: 25
       },
@@ -92,6 +92,13 @@ export default class TemplatesGallery extends React.Component {
   }
 
   save = async (navigation) => {
+
+    /* If there's no template selected then ignore it */
+    if (!this.state.selected) {
+      this.props.navigation.goBack();
+      return;
+    }
+
     console.log('fromLogin (gallery) is: ' + global.fromLogin)
     apiRequests.setCard(global.userID, this.state.selected);
     global.details.card = this.state.selected;
