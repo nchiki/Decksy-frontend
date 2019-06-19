@@ -26,14 +26,6 @@ export default class TemplatesGallery extends React.Component {
     selected: null
   }
 
-  componentDidMount() {
-     const { navigation } = this.props;
-
-     navigation.setParams({
-       save: this.save
-     });
-   }
-
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
@@ -48,20 +40,15 @@ export default class TemplatesGallery extends React.Component {
               name={Platform.OS === "ios" ? "ios-checkmark" : "md-checkmark"}
               size={41}
               color='dodgerblue'
-              onPress={params.save}
+              onPress={this.save}
             />
 
       )
   };
 }
 
-
   componentDidMount() {
-    const { navigation } = this.props;
-    navigation.setParams({
-      save: this.save(navigation)
-    });
-    const details = navigation.getParam('details', 'NULL');
+    const details = this.props.navigation.getParam('details', 'NULL');
     this.setState({details: details});
   }
 
@@ -101,7 +88,7 @@ export default class TemplatesGallery extends React.Component {
     )
   }
 
-  save = async (navigation) => {
+  save = async () => {
     /* If there's no template selected then ignore it */
     if (!this.state.selected) {
       this.props.navigation.goBack();
