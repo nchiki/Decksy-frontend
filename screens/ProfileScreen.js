@@ -185,15 +185,15 @@ export default class ProfileScreen extends React.Component {
     this.refresh = false;
 
     let defaultComponent = (
-      <View style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 10, marginTop: 40 }}>
-        <TouchableOpacity 
+      <View style={{ flexDirection: 'row', justifyContent: 'center', top: 50 }}>
+        <TouchableOpacity
           style ={[styles.buttonSaveContainer, {width: 100, height: 50}]}
           onPress={this.handleEdit}>
             <Text style={{fontSize: 20,fontWeight: 'bold', color: 'white' }}> Edit </Text>
         </TouchableOpacity>
-          
+
         <View style={{width:50}}/>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={[styles.buttonSaveContainer, {width: 100, height: 50}]}
           onPress={() => {}}>
             <Text style={{ fontSize: 20,fontWeight: 'bold', color: 'white' }}> Share </Text>
@@ -201,38 +201,24 @@ export default class ProfileScreen extends React.Component {
       </View>
     );
 
-    let editingComponent = (
-      <View style={{ flex: 0, flexDirection: 'row', justifyContent:'space-around', marginBottom: 20, marginTop: 20}}>
-        <TouchableOpacity style={[styles.buttonSaveContainer, {width: 100, height: 50}]} onPress={this.showGallery}>
-          <Text style={{ fontSize: 20 , color: 'white'}}> Gallery </Text>
-        </TouchableOpacity>
-       
-          <TouchableOpacity style={[styles.buttonSaveContainer, {width: 100, height: 50}]} onPress={this._pickImage}>
-          <Ionicons name='ios-qr-scanner' size={26} color='white'/>
-          </TouchableOpacity>
-        </View>
-    );
-
-    let emptyView = (
-      <View style={{ flex: 0, flexDirection: 'row', justifyContent:'space-around', marginBottom: 20, marginTop: 20}}>
-        </View>
-    );
-
     let saveComponent = (
-      <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', top: 60}}>
-      <TouchableOpacity style={[styles.buttonSaveContainer, {width: 150, height: 50}]}
-      onPress={this.saveCard} >
-     <Text style={{ fontSize: 25, color: 'white' }}> Save Card </Text>
-      
-      </TouchableOpacity>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', top: 50}}>
+        <TouchableOpacity onPress={this.showGallery}>
+          <Ionicons name='ios-apps' size={52} color='#2970FF'/>
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.buttonSaveContainer, {width: 150, height: 50}]} onPress={this.saveCard} >
+          <Text style={{ fontSize: 20, color: 'white' }}> Save Card </Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={this._pickImage}>
+          <Ionicons name='ios-share' size={52} color='#2970FF'/>
+        </TouchableOpacity>
       </View>
     )
 
     return (
-      <View style={{flex: 2}}>
-        { this.state.editing ? editingComponent : emptyView }
-              <BusinessCard details={global.details} refresh={doRefresh} />
-        { this.state.editing ? saveComponent :defaultComponent}    
+      <View style={{flex: 2, top: 35}}>
+        <BusinessCard details={global.details} refresh={doRefresh} />
+        { this.state.editing ? saveComponent :defaultComponent}
         <Links />
       </View >
     );
@@ -388,7 +374,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     margin: 5,
-    
+
   },
   buttonSaveContainer: {
     margin: 5,
