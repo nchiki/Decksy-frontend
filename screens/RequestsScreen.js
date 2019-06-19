@@ -65,6 +65,7 @@ export default class RequestsScreen extends React.Component {
             details: newDetails
         }), 20);
         this.render();
+        global.updateHomeScreenContacts();
     }
 
     handleRemoveRequest = async (user) => {

@@ -40,6 +40,7 @@ export default class HomeScreen extends React.Component {
     const { navigation } = this.props;
 
     global.updateHomeScreen = this.makeMeUpdate;
+    global.updateHomeScreenContacts = this.updateContacts;
 
     let contacts = this.props.navigation.getParam('contacts', 'NO-ID');
     if (contacts == 'NO-ID') {
@@ -122,7 +123,7 @@ export default class HomeScreen extends React.Component {
     this.setState({ shortcodeInputVisible: false });
   };
 
-  handleAdd = async () => {
+  handleAdd = () => {
     const { navigation } = this.props;
     apiRequests.addCard(this.state.shortcode, global.userID);
     setTimeout(() => this.updateContacts(), 20);
