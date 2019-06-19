@@ -10,9 +10,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import BusinessCard from '../components/BusinessCard';
 import TemplatesGallery from '../components/TemplatesGallery';
 import EditDetailsScreen from '../screens/EditDetailsScreen';
-import LinkScreen from '../screens/LinkScreen';
 import RequestsScreen from '../screens/RequestsScreen';
-import AddLinkScreen from '../screens/AddLinkScreen';
 import AlbumsScreen from '../screens/AlbumsScreen';
 import Album from '../components/Album';
 import CollectionSelection from '../components/utilsCollections/CollectionSelection';
@@ -65,12 +63,9 @@ const ProfileScreenStack = createStackNavigator({
   ProfileScreen: { screen: ProfileScreen },
   CardScreen: { screen: BusinessCard },
   EditDetailsScreen: { screen: EditDetailsScreen },
-  LinkScreen: { screen: LinkScreen },
   RequestsScreen: { screen: RequestsScreen },
   TemplatesGallery: { screen: TemplatesGallery },
-  AddLink: { screen: AddLinkScreen },
-},
-);
+});
 
 ProfileScreenStack.navigationOptions = {
   tabBarLabel: 'Profile',

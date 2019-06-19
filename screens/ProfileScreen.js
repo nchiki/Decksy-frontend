@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Platform, View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
+import { Platform, ScrollView, View, Text, TouchableOpacity, StyleSheet, Picker } from 'react-native';
 
 import Dialog from "react-native-dialog";
 
@@ -216,11 +216,13 @@ export default class ProfileScreen extends React.Component {
     )
 
     return (
-      <View style={{flex: 2, top: 35}}>
-        <BusinessCard details={global.details} refresh={doRefresh} />
+      <ScrollView >
+        <View style={{top: 30}}>
+          <BusinessCard details={global.details} refresh={doRefresh} />
+        </View>
         { this.state.editing ? saveComponent :defaultComponent}
         <Links />
-      </View >
+      </ScrollView >
     );
   }
 
