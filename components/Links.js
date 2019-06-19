@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, View, Text, Modal,TouchableOpacity, Button, StyleSheet, FlatList, Picker, TextInput } from 'react-native';
+import { AlertIOS, Platform, View, Text, Modal, TouchableOpacity, Button, StyleSheet, FlatList, Picker, TextInput } from 'react-native';
 import { Icon, SocialIcon } from 'react-native-elements';
 import Swipeout from 'react-native-swipeout';
 import Dialog from "react-native-dialog";
@@ -91,7 +91,7 @@ export default class Links extends React.Component {
         newLinks.push(l);
       }
     }
-    
+
     global.details.links = newLinks;
 
     let allLinks = [];
@@ -104,8 +104,38 @@ export default class Links extends React.Component {
     this.setState({links: allLinks});
   }
 
-  editLinkPress = async (link) => {
-    console.log(`editing ${link}`);
+  editLinkPress = (link) => {
+    console.log(`editing ${JSON.stringify(link)}`);
+
+    if (Platform.OS != 'ios') {
+      console.log('Siike you thought?')
+      return;
+    }
+
+    AlertIOS.prompt('Update Link',
+      null,
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel pressed'),
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+          onPress: (newVal) => this.updateLinkValue(link, newVal)
+        }
+      ],
+      'plain-text',
+      link.value
+    );
+  }
+
+  updateLinkValue = async (link, value) => {
+    link.value = value;
+
+    apiRequests.editLink(link.link, link.name, link.value);
+
+    this.forceUpdate();
   }
 
   renderLinkRow = (link) => {
