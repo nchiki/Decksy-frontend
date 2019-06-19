@@ -53,7 +53,7 @@ export default class LoginScreen extends Component {
       for(let j = 0; j < contacts.length; j++) {
         const id = Number.parseInt(contacts[j].user, 10);
         if(contacts[j].tags && contacts[j].tags.length > 0) {
-        
+
           for(let i = 0; i < contacts[j].tags.length; i++) {
             if (!tags.some(v => (v.toLowerCase() === contacts[j].tags[i].toLowerCase()))){
               tags.push(contacts[j].tags[i]);
@@ -103,7 +103,7 @@ export default class LoginScreen extends Component {
             textContentType="password"
           />
           <TouchableHighlight onPress={() => this.handleLogin()} underlayColor='#2970FF'>
-            <View style={{ alignItems: 'center', backgroundColor: '#2970FF', width: 100, height: 40, borderRadius: 5, marginTop: 10 }}>
+            <View style={{ alignItems: 'center', backgroundColor: '#2970FF', borderRadius: 5, padding: 10 }}>
               <Text style={{ color: 'white', fontSize: 30 }}>Log In</Text>
             </View>
           </TouchableHighlight>
