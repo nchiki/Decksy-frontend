@@ -45,6 +45,7 @@ export default class SignUpScreen extends Component {
       }
       const IDobject = await apiRequests.addUser(details);
       global.userID = Number.parseInt(IDobject.user, 10);
+      global.tags = [];
       let images = [];
       const contacts = await apiRequests.getUserContacts(global.userID);
       const listItems = (contacts.map(async (cont) => {

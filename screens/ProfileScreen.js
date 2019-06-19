@@ -62,6 +62,7 @@ export default class ProfileScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
+
     const BadgedIcon = withBadge(global.requests)(Icon);
     return {
       title: 'Profile',
@@ -90,12 +91,25 @@ export default class ProfileScreen extends React.Component {
             />
           )}
           destructiveIndex={2}
-          options={["Edit Details", "Sign Out", "Cancel"]}
-          actions={[() => params.changeSettings(), () => params.logOut(), () => { }]}
+          options={[params.displayValueOption, "Edit Details", "Sign Out", "Cancel"]}
+          actions={[
+            () => params.updateDisplayValue(),
+            () => params.changeSettings(),
+            () => params.logOut(),
+            () => { }
+          ]}
         />
       ),
     };
   }
+
+  updateDisplayValue = () => {
+    global.displayValue = (global.displayValue === 1) ? 0 : 1;
+    global.updateHomeScreen();
+    let dispVal = (global.displayValue === 1) ?  "Use Visual View" : "Use Informative View";
+    this.props.navigation.setParams({displayValueOption: dispVal});
+  }
+
 
   handleEdit = () => {
       this.setState({ editing: true });
@@ -150,11 +164,14 @@ export default class ProfileScreen extends React.Component {
 
   componentDidMount = () => {
     const { navigation } = this.props;
+    let dispVal = (global.displayValue === 1) ? "Use Visual View" : "Use Informative View";
     navigation.setParams({
       changeSettings: () => this.changeSettings(),
       showRequests: () => this.showRequests(),
       logOut: () => this.logOut(),
       getNumberRequests: () => this.getNumberRequests(),
+      updateDisplayValue: () => this.updateDisplayValue(),
+      displayValueOption: dispVal
     });
   }
 

@@ -32,8 +32,14 @@ export default class HomeScreen extends React.Component {
     }
   }
 
+  makeMeUpdate = () => {
+    this.forceUpdate();
+  }
+
   componentDidMount() {
     const { navigation } = this.props;
+
+    global.updateHomeScreen = this.makeMeUpdate;
 
     let contacts = this.props.navigation.getParam('contacts', 'NO-ID');
     if (contacts == 'NO-ID') {
@@ -197,7 +203,8 @@ export default class HomeScreen extends React.Component {
 
   updateContacts = async () => {
     let images = this.state.images;
-    const contacts = await apiRequests.getUserContacts(global.userID);
+    let contacts = await apiRequests.getUserContacts(global.userID);
+
     for (let j = 0; j < contacts.length; j++) {
       const id = Number.parseInt(contacts[j].user, 10);
       if (contacts[j].card == 1) {
@@ -205,10 +212,9 @@ export default class HomeScreen extends React.Component {
         images[id] = pic
       }
     }
-    const items = await Promise.all(listItems);
     this.setState({ images: images });
     setTimeout(() => this.setState(
-      this.seperatePinnedFromUnpinned(items)
+      this.seperatePinnedFromUnpinned(contacts)
     ), 20);
   }
 
@@ -271,28 +277,8 @@ export default class HomeScreen extends React.Component {
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
-  updateDisplay = () => {
-    this.setState({ displayValue: (this.state.displayValue == 1 ? 2 : 1) });
-  };
-
   render() {
     const { search } = this.state;
-    let changeDisplayButton = Platform.OS === "ios" ? (
-      <SegmentedControlIOS
-        values={['Informative View', 'Visual View']}
-        selectedIndex={this.state.displayValue - 1}
-        onChange={(event) => {
-          this.setState(
-            { displayValue: event.nativeEvent.selectedSegmentIndex + 1 });
-        }}
-        style={{ marginTop: 7, width: "70%", alignSelf: 'center' }}
-      />)
-      : (<Button
-        title='Change Display'
-        onPress={() => this.setState({
-          displayValue: (this.state.displayValue == 1 ? 2 : 1)
-        })}
-      />)
 
     let mainScreen;
     if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0 && this.state.search == '') {
@@ -338,7 +324,7 @@ export default class HomeScreen extends React.Component {
             inputContainerStyle={{ height: 20, backgroundColor: "gainsboro" }}
             containerStyle={{ height: 50, backgroundColor: "white", width: "95%", alignSelf: 'center' }}
           />
-          {this.state.displayValue == 1 ?
+          {global.displayValue == 1 ?
             (<InformativeContactsView
               pinnedContacts={this.state.pinnedContacts}
               unpinnedContacts={this.state.unpinnedContacts}
