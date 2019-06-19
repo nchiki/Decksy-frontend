@@ -23,9 +23,8 @@ const styles = StyleSheet.create({
   },
   leftTop: {
     position: 'absolute',
-                left: 20,
-                top: 40,
-
+    left: 20,
+    top: 40,
   },
   modalContainer: {
     flex: 1,

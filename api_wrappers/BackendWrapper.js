@@ -503,7 +503,29 @@ const apiRequests = {
         throw error;
       });
   },
+  addTag: function (userID, contactID, tagArray) {
+    return fetch(`${API}/user/setcontacttags`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        user: userID,
+        contact: contactID,
+        tags : tagArray
+      }),
+      cache: 'default',
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your setUserDetails fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
+  },
 
 }
+
+
 
 export default apiRequests;

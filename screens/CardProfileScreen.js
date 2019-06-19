@@ -1,6 +1,11 @@
 import React from 'react';
+<<<<<<< HEAD
 import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking } from 'react-native';
 import { Icon } from 'react-native-elements';
+=======
+import { Alert, StyleSheet, ImageBackground, Text, View, TextInput, Platform, Linking, ScrollView } from 'react-native';
+import { Icon} from 'react-native-elements';
+>>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
 import Dialog from "react-native-dialog";
 import call from 'react-native-phone-call';
 import apiRequests from '../api_wrappers/BackendWrapper';
@@ -41,11 +46,15 @@ export default class CardProfileScreen extends React.Component {
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-chatboxes" : "md-chatboxes"}
               size={35}
-              color='dodgerblue'
+              color='#2970FF'
             />
           )}
           options={["Email", "Message", "Call", "Cancel"]}
+<<<<<<< HEAD
           actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(),]}
+=======
+          actions={[() => params.handleEmailButton(), () => params.handleMessageButton(), () => params.handleCallButton(), () => {}]}
+>>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
         />
       ),
     }
@@ -193,7 +202,7 @@ export default class CardProfileScreen extends React.Component {
     let { navigation } = this.props;
     let item = navigation.getParam('item', 'NO-ID');
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <Dialog.Container
           visible={this.state.linkPopupVisible} >
           <Dialog.Title>Redirect to link reference</Dialog.Title>
@@ -208,19 +217,21 @@ export default class CardProfileScreen extends React.Component {
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
           {this.getButtons()}
         </View>
-        <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 10, }}>Notes:</Text>
-        <View style={styles.notesView}>
-          <TextInput
-            value={this.state.note}
-            style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, backgroundColor: 'green' }}
-            onChangeText={(note) => {
-              this.setState({ note: note });
-            }}
-            editable={true}
-            multiline={true}
-          />
+        <View style={{flex:3, marginTop:30}}>
+          <Text style={{ fontSize: 24, textAlign: 'center'}}>Notes:</Text>
+          <View style={styles.notesView}>
+            <TextInput
+              value={this.state.note}
+              style={{ textAlign: 'left', fontSize: 16, marginLeft: 10, marginRight: 10, marginBottom:5 }}
+              onChangeText={(note) => {
+                this.setState({ note: note });
+              }}
+              editable={true}
+              multiline={true}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -254,7 +265,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightyellow',
     width: '88%',
     alignSelf: 'center',
-    marginTop: 3,
-    borderRadius: 8
+    borderRadius: 8,
+    marginTop: 4,
   }
 });

@@ -101,7 +101,7 @@ export default class RequestsScreen extends React.Component {
                 name={Platform.OS === "ios" ? "ios-checkmark-circle" : "md-checkmark-circle"}
                 onPress={() => this.handleAddRequest(item)}
                 size={40}
-                color='dodgerblue'
+                color='#2970FF'
             />
             <Icon
                 type="ionicon"
@@ -109,7 +109,7 @@ export default class RequestsScreen extends React.Component {
                 name={Platform.OS === "ios" ? "ios-close-circle" : "md-close-circle"}
                 onPress={() => this.handleRemoveRequest(item)}
                 size={40}
-                color='dodgerblue'
+                color='#2970FF'
             />
         </View>
     );

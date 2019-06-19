@@ -121,8 +121,8 @@ export default class EditDetailsScreen extends Component {
           />
         </View>
         <View style={{ flex: 1, marginTop: spacing + 4, alignItems: 'center' }}>
-          <TouchableHighlight onPress={() => this.handleSubmit()} underlayColor='blue'>
-            <View style={{ alignItems: 'center', backgroundColor: '#2196F3', width: 100, height: 40, borderRadius: 5 }}>
+          <TouchableHighlight onPress={() => this.handleSubmit()} underlayColor='#2970FF'>
+            <View style={{ alignItems: 'center', backgroundColor: '#2970FF', width: 100, height: 40, borderRadius: 5 }}>
               <Text style={{ color: 'white', fontSize: 30 }}>Save</Text>
             </View>
           </TouchableHighlight>

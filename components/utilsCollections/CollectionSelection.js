@@ -1,8 +1,11 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
+import { Text, Button, View, Image, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native';
 import Grid from 'react-native-grid-component';
 import templateUtils from '../Templates';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import apiRequests from '../../api_wrappers/BackendWrapper';
+
+
 
 const u = {
   firstName: 'FIRST',
@@ -14,42 +17,74 @@ const u = {
 }
 
 export default class CollectionSelection extends React.Component {
-  state = {
-    details: u,
-    image: require("../../assets/images/templates/template2.png"),
-    templateStyle: templateUtils.setStyle(2),
-    selected:[],
-    contacts: [],
-    images: []
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: "",
+            selected:[],
+            contacts: [],
+            images: []
+          }
+      }
+    
+      static navigationOptions = ({ navigation }) => {
+        const { params = {} } = navigation.state;
+        return {
+          title: 'Login',
+          headerTitleStyle: {
+            fontSize: 25
+          },
+          headerRight: (
+            <Button
+              title="Save"
+              onPress={() => {
+                params.save()
+              }}
+            />
+          ),
+        }
+      };
+    
 
   componentDidMount() {
     const { navigation } = this.props;
+    navigation.setParams({
+        save:  () => this.save(navigation)
+    })
+    const title =  navigation.getParam('tag', 'NULL');
     const contacts = navigation.getParam('contacts', 'NULL');
     const images = navigation.getParam('images', 'NULL');
-    this.setState({images:images, contacts: contacts});
+    const selected = navigation.getParam('selected', [])
+    this.setState({images:images, contacts: contacts, title: title, selected: selected});
+    //this.render();
   }
 
   _renderItem = (item) => {
+    const images = this.props.navigation.getParam('images', 'NULL');
+    
+    //const images = this.state.images;
     let backgroundColor = 'white';
-    if(this.state.selected && this.state.selected == item) {
-      backgroundColor = 'powderblue';
+    if(this.state.selected && this.state.selected.some(i => (i.user && i.user === item.user ))) {
+      backgroundColor = 'red';
+    }
+    if(!item.card) {
+        return ( null )
     }
     if(item.card == 1) {
+        
         return (
-        <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+        <View style={{flex:1, margin:1}}>
             <TouchableOpacity style={styles.card} onPress={() => this.handleSelected(item)}>
-                <Image source={{url: images[item.user].url}} style={styles.containerStyle}/>
+                <Image source={{url: images[item.user].url}} style={[styles.containerStyle, {borderWidth:3, borderColor:backgroundColor}]}/>
             </TouchableOpacity>
         </View>
         )
       }
     return (
-      <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
+      <View style={{flex:1, margin:1}}>
     <TouchableOpacity style={styles.card} onPress={() => {
-      this.setState({selected: item});
-      this.handleSelected()}}>
-             <ImageBackground source={templateUtils.setImage(item.card)} style={styles.containerStyle}>
+      this.handleSelected(item)}}>
+             <ImageBackground source={templateUtils.setImage(item.card)} style={[styles.containerStyle, {borderWidth:3,borderColor:backgroundColor}]}>
         
         <View style={styles.containerStyle}>
           <View style={templateUtils.setStyle(item.card).titleText}>
@@ -68,21 +103,43 @@ export default class CollectionSelection extends React.Component {
     )
   }
   save = async (navigation) => {
-    //apiRequests.setCard(global.userID, this.state.cardType);
-    //const det = await apiRequests.getUserDetails(global.userID);
-    //this.setState({ saved: true, details: det });
+      let selected = this.state.selected;
+    for(let i = 0; i < selected.length; i++) {
+        const item = selected[i];
+        let contactTags = item.tags;
+        if( !contactTags) {
+            contactTags = [];
+            contactTags.push(this.state.title);
+            apiRequests.addTag(global.userID, item.user, contactTags)
+        
+        } else if (!contactTags.some(v => (v.toLowerCase() === this.state.title.toLowerCase()))){
+            contactTags.push(this.state.title);
+            apiRequests.addTag(global.userID, item.user, contactTags)
+        }
+    }
+    navigation.state.params.updateSelected(selected);
+    navigation.goBack();
   }
 
-  handleSelected = async () => {
-    // api call for setting the tag to that card
-    // once clicking on save button the album will render all cards with the tag 
-    // equal to the name of the album
-  }
-
-  setTemplate = () => {
-    //const image = templateUtils.setImage(this.state.cardType);
-    //const templateStyle = templateUtils.setStyle(this.state.cardType);
-    //this.setState({ image: image, templateStyle: templateStyle })
+  handleSelected = (item) => {
+    let selected = this.state.selected;
+    
+    if(selected.some(i => (i.user && i.user === item.user ))) {
+        const index = selected.indexOf(item);
+        
+        selected.splice(index, 1);
+       
+        let tags = item.tags;
+        if(tags) {
+        const indexTag = tags.indexOf(this.state.title);
+        if(indexTag != -1) {
+            tags.splice(indexTag, 1);
+            apiRequests.addTag(global.userID, item.user, tags)
+        }}
+    } else {
+        selected.push(item);
+    }
+    this.setState({selected : selected});
   }
 
   renderPlaceholder = () => {
@@ -100,7 +157,7 @@ export default class CollectionSelection extends React.Component {
     return (
          <Grid style={styles.list} renderItem={this._renderItem}
          data={contacts}
-         keyExtractor={item => item}
+         keyExtractor={item => item.user}
          renderPlaceholder={this.renderPlaceholder}
          numColumns={2}/>
 

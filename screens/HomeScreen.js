@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {View, Button, Platform, SegmentedControlIOS, Text} from 'react-native';
+import { View, Button, Platform, SegmentedControlIOS, Text } from 'react-native';
 
-import { Icon } from "react-native-elements";
+import { Icon, SearchBar } from "react-native-elements";
 
 import Dialog from "react-native-dialog";
 
@@ -24,11 +24,11 @@ export default class HomeScreen extends React.Component {
       searchDialogVisible: false,
       shortcodeInputVisible: false,
       requestID: null,
-      search: null,
       unpinnedContacts: [],
       pinnedContacts: [],
       displayValue: 1,
       images: [],
+      search: '',
     }
   }
 
@@ -48,13 +48,22 @@ export default class HomeScreen extends React.Component {
     this.setState({
       images: images
     });
-    setTimeout(() => this.setState(this.seperatePinnedFromUnpinned(contacts)), 20);
+    let allContacts = this.seperatePinnedFromUnpinned(contacts)
+    setTimeout(() => this.setState(allContacts), 20);
+    this.setState({
+      allContacts: {
+        pinned: allContacts.pinnedContacts,
+        unpinned: allContacts.unpinnedContacts,
+      }
+    })
 
     navigation.setParams({
       handleShortcodeAddButton: this.showShortcodeInput,
       handleQRCodeAddButton: this.handleQRCode,
       updateContacts: this.updateContacts,
-      handleSortButton: this.handleSort,
+      handleSortByNameButton: this.handleSortbyName,
+      handleSortBySurnameButton: this.handleSortbySurname,
+      handleSortByAddedButton: this.handleSortByRecentlyAdded,
       handleSearchButton: this.search,
     });
 
@@ -64,23 +73,17 @@ export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: 'Cards',
+      title: 'Your Cards',
       headerTitleStyle: {
         fontSize: 25
       },
       headerLeft: (
         <OptionsMenu
           customButton={(
-            <Icon
-              containerStyle={{ paddingLeft: 12 }}
-              type="ionicon"
-              name={Platform.OS === "ios" ? "ios-options" : "md-options"}
-              size={31}
-              color='dodgerblue'
-            />
+            <Text style={{ color: '#2970FF', marginLeft: 10, fontSize: 20 }}>Sort</Text>
           )}
-          options={["Search", "Sort", "Restore", "Cancel"]}
-          actions={[() => params.handleSearchButton(), () => params.handleSortButton(), () => params.updateContacts(), () => { }]}
+          options={["By First Name", "By Surname", "By Most Recently Added", "Cancel"]}
+          actions={[() => params.handleSortByNameButton(), () => params.handleSortBySurnameButton(), () => params.handleSortByAddedButton(), () => { }]}
         />
       ),
       headerRight: (
@@ -91,11 +94,11 @@ export default class HomeScreen extends React.Component {
               type="ionicon"
               name={Platform.OS === "ios" ? "ios-add" : "md-add"}
               size={41}
-              color='dodgerblue'
+              color='#2970FF'
             />
           )}
           options={["Shortcode", "QR Code", "Cancel"]}
-          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => {}]}
+          actions={[() => params.handleShortcodeAddButton(), () => params.handleQRCodeAddButton(), () => { }]}
         />
       ),
     }
@@ -106,7 +109,7 @@ export default class HomeScreen extends React.Component {
   };
 
   handleQRCode = () => {
-      this.props.navigation.navigate("QRScanner", {cb: this.updateContacts});
+    this.props.navigation.navigate("QRScanner", { cb: this.updateContacts });
   }
 
   handleCancel = () => {
@@ -120,7 +123,6 @@ export default class HomeScreen extends React.Component {
     this.setState({
       shortcodeInputVisible: false,
     });
-    //apiRequests.addCard(global.userID, this.state.shortcode);
   };
 
   handleSendRequest = () => {
@@ -128,20 +130,14 @@ export default class HomeScreen extends React.Component {
     this.handleAdd();
   }
 
-  search = () => {
-    setTimeout(() => this.updateContacts(), 30);
-    this.setState({ searchDialogVisible: true });
-  };
-
-  handleSearch = () => {
-    const search = this.state.search;
+  handleSearch = (search) => {
     if (!search) {
       setTimeout(() =>
         this.setState({
           searchDialogVisible: false,
         }), 20);
     } else {
-      const unpinned = this.state.unpinnedContacts;
+      const unpinned = this.state.allContacts.unpinned;
       const unpinnedItems = (unpinned.filter(cont => {
         if (!cont.field) {
           return false
@@ -163,7 +159,7 @@ export default class HomeScreen extends React.Component {
           )
         }
       }));
-      const pinned = this.state.pinnedContacts;
+      const pinned = this.state.allContacts.pinned;
       const pinnedItems = (pinned.filter(cont => {
         if (!cont.field) {
           return false
@@ -190,7 +186,6 @@ export default class HomeScreen extends React.Component {
         this.setState({
           searchDialogVisible: false,
           pinnedContacts: pinnedItems,
-          search: null,
           unpinnedContacts: unpinnedItems,
         }), 20);
     }
@@ -203,17 +198,15 @@ export default class HomeScreen extends React.Component {
   updateContacts = async () => {
     let images = this.state.images;
     const contacts = await apiRequests.getUserContacts(global.userID);
-    const listItems = (contacts.map(async (cont) => {
-      const id = Number.parseInt(cont.user, 10);
-      const det = await apiRequests.getUserDetails(id);
-      if (Number.parseInt(det.card, 10) == 1) {
+    for (let j = 0; j < contacts.length; j++) {
+      const id = Number.parseInt(contacts[j].user, 10);
+      if (contacts[j].card == 1) {
         const pic = await apiRequests.getCardImage(id);
         images[id] = pic
       }
-      return det
-    }));
-    this.setState({ images: images });
+    }
     const items = await Promise.all(listItems);
+    this.setState({ images: images });
     setTimeout(() => this.setState(
       this.seperatePinnedFromUnpinned(items)
     ), 20);
@@ -224,7 +217,7 @@ export default class HomeScreen extends React.Component {
   sortByName(a, b, order = ASC) {
     let diff = a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase());
     if (diff == 0) {
-      const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
+      diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
 
     }
     if (order === ASC) {
@@ -234,42 +227,48 @@ export default class HomeScreen extends React.Component {
     return -1 * diff;
   }
 
-  sortByCompany(a, b, order = ASC) {
-    const diff = a.company.toLowerCase().localeCompare(b.company.toLowerCase());
-
+  sortBySurname(a, b, order = ASC) {
+    const diff = a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase());
     if (order === ASC) {
       return diff;
     }
-
     return -1 * diff;
   }
 
-  handleSort = () => {
+  sortByAdded(a, b, order = ASC) {
+    const diff = Number.parseInt(b.added, 10) - Number.parseInt(a.added, 10);
+    if (order === ASC) {
+      return diff;
+    }
+    return -1 * diff;
+  }
+
+  handleSortByRecentlyAdded = () => {
     const pinnedContacts = this.state.pinnedContacts;
     const unpinnedContacts = this.state.unpinnedContacts;
-    // if(sortValue == 'name') {
-    if (true) {
-      pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-      unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-    } else {
-      pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-      unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-    }
+    pinnedContacts.sort((a, b) => this.sortByAdded(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortByAdded(a, b, ASC));
+
+    this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
+
+  }
+
+  handleSortbyName = () => {
+    const pinnedContacts = this.state.pinnedContacts;
+    const unpinnedContacts = this.state.unpinnedContacts;
+    pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
+
     this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
-  handleSort = () => {
+  handleSortbySurname = () => {
     const pinnedContacts = this.state.pinnedContacts;
     const unpinnedContacts = this.state.unpinnedContacts;
-    // if(sortValue == 'name') {
-    if(true) {
-      pinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-      unpinnedContacts.sort((a, b) => this.sortByName(a, b, ASC));
-    } else {
-      pinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-      unpinnedContacts.sort((a, b) => sortByCompany(a, b, ASC));
-    }
-    this.setState({pinnedContacts : pinnedContacts, unpinnedContacts: unpinnedContacts})
+    pinnedContacts.sort((a, b) => this.sortBySurname(a, b, ASC));
+    unpinnedContacts.sort((a, b) => this.sortBySurname(a, b, ASC));
+
+    this.setState({ pinnedContacts: pinnedContacts, unpinnedContacts: unpinnedContacts })
   }
 
   updateDisplay = () => {
@@ -277,6 +276,7 @@ export default class HomeScreen extends React.Component {
   };
 
   render() {
+    const { search } = this.state;
     let changeDisplayButton = Platform.OS === "ios" ? (
       <SegmentedControlIOS
         values={['Informative View', 'Visual View']}
@@ -295,17 +295,49 @@ export default class HomeScreen extends React.Component {
       />)
 
     let mainScreen;
-    if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0) {
+    if (this.state.pinnedContacts.length == 0 && this.state.unpinnedContacts.length == 0 && this.state.search == '') {
       mainScreen = (
-        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 25, color: 'grey'}}>You have no cards</Text>
-          <Text style={{fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center'}}>Add someone by tapping the + button in the top-right corner</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+          <Text style={{ fontSize: 25, color: 'grey' }}>You have no cards</Text>
+          <Text style={{ fontSize: 15, color: 'grey', marginTop: 12, textAlign: 'center' }}>Add someone by tapping the + button in the top-right corner</Text>
         </View>
       )
     } else {
+      // {changeDisplayButton}
       mainScreen = (
         <View>
-          {changeDisplayButton}
+          <SearchBar
+            placeholder="Search"
+            onChangeText={(text) => {
+              this.setState({ search: text });
+              if (text == '') {
+                this.setState({
+                  pinnedContacts: this.state.allContacts.pinned,
+                  unpinnedContacts: this.state.allContacts.unpinned,
+                });
+              } else {
+                this.handleSearch(text);
+              }
+            }}
+            onClear={() => {
+              this.setState({
+                search: '',
+                pinnedContacts: this.state.allContacts.pinned,
+                unpinnedContacts: this.state.allContacts.unpinned,
+              });
+            }}
+            onCancel={() => {
+              this.setState({
+                search: '',
+                pinnedContacts: this.state.allContacts.pinned,
+                unpinnedContacts: this.state.allContacts.unpinned,
+              });
+            }}
+            value={search}
+            platform="ios"
+            inputContainerStyle={{ height: 20, backgroundColor: "gainsboro" }}
+            containerStyle={{ height: 50, backgroundColor: "white", width: "95%", alignSelf: 'center' }}
+          />
           {this.state.displayValue == 1 ?
             (<InformativeContactsView
               pinnedContacts={this.state.pinnedContacts}
@@ -333,7 +365,7 @@ export default class HomeScreen extends React.Component {
     }
 
     return (
-      <View style={{flex:1}}>
+      <View style={{ flex: 1 }}>
         {/*Adding a modal that would display the different filters */}
 
 

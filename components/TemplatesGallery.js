@@ -55,6 +55,17 @@ export default class TemplatesGallery extends React.Component {
   };
 }
 
+<<<<<<< HEAD
+=======
+  componentDidMount() {
+    const { navigation } = this.props;
+    navigation.setParams({
+      save: this.save(navigation)
+    });
+    const details = navigation.getParam('details', 'NULL');
+    this.setState({details: details});
+  }
+>>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
   renderPlaceholder = () => {
     <View style={{flex:1}}>
         <View style={styles.containerStyle}>
@@ -68,13 +79,18 @@ export default class TemplatesGallery extends React.Component {
     const det = global.details;
     let backgroundColor = 'white';
     if(this.state.selected && this.state.selected == item) {
-      backgroundColor = 'grey';
+      backgroundColor = 'red';
     }
     return (
+<<<<<<< HEAD
       <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
     <TouchableOpacity style={styles.card} onPress={() =>
+=======
+      <View style={{flex:1, margin:1}}>
+    <TouchableOpacity style={styles.card} onPress={() => 
+>>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
       this.setState({selected: item})}>
-            <ImageBackground source={image} style={styles.containerStyle}>
+            <ImageBackground source={image} style={[styles.containerStyle, {borderWidth:1,borderColor:backgroundColor}]}>
               <View style={styles.containerStyle}>
                 <View style={templateStyle.titleText}>
                   <Text style={templateStyle.userText} >{`${det.firstName} ${det.lastName}`} </Text>
@@ -93,6 +109,7 @@ export default class TemplatesGallery extends React.Component {
 
   save = async (navigation) => {
 
+<<<<<<< HEAD
     /* If there's no template selected then ignore it */
     if (!this.state.selected) {
       this.props.navigation.goBack();
@@ -112,6 +129,14 @@ export default class TemplatesGallery extends React.Component {
     }
 
     this.props.navigation.goBack();
+=======
+    apiRequests.setCard(global.userID, this.state.selected);
+    const det = await apiRequests.getUserDetails(global.userID);
+    this.setState({ selected: null, details: det });
+    global.details = det;
+    global.fromLogin = true;
+    navigation.goBack();
+>>>>>>> e6800cdddbcce2f5a5d2f7569835765dd5798479
   }
 
   setTemplate = () => {
