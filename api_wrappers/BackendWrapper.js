@@ -143,11 +143,11 @@ const apiRequests = {
       }),
       cache: 'default',
     })
-    .catch(function (error) {
-      console.log('There has been a problem with your removeContact fetch operation: ' + error.message);
-      // ADD THIS THROW error
-      throw error;
-    });
+      .catch(function (error) {
+        console.log('There has been a problem with your removeContact fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
   },
 
   setUserWithFieldDetails: function (userID, firstname, lastname, phonenumber, email, company, profession, field, cardID) {
@@ -321,9 +321,6 @@ const apiRequests = {
       }),
       cache: 'default',
     })
-      .then(function (response) {
-        return response.json();
-      })
       .catch(function (error) {
         console.log('There has been a problem with your editLink fetch operation: ' + error.message);
         // ADD THIS THROW error
@@ -343,9 +340,6 @@ const apiRequests = {
       }),
       cache: 'default',
     })
-      .then(function (response) {
-        return response.json();
-      })
       .catch(function (error) {
         console.log('There has been a problem with your removeLink fetch operation: ' + error.message);
         // ADD THIS THROW error
@@ -387,11 +381,11 @@ const apiRequests = {
         pinned: pinned
       })
     })
-    .catch(function (error) {
-      console.log('There has been a problem with your setPinned fetch operation: ' + error.message);
-      // ADD THIS THROW error
-      throw error;
-    });
+      .catch(function (error) {
+        console.log('There has been a problem with your setPinned fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
   },
 
   addCardImage: function (data) {
@@ -402,15 +396,15 @@ const apiRequests = {
         'Content-Type': 'application/json'
       },
       body: data,
-    cache: 'default',
-  })
-    .catch(function (error) {
-      console.log('There has been a problem with your addCardImage fetch operation: ' + error.message);
-      // ADD THIS THROW error
-      throw error;
-    });
+      cache: 'default',
+    })
+      .catch(function (error) {
+        console.log('There has been a problem with your addCardImage fetch operation: ' + error.message);
+        // ADD THIS THROW error
+        throw error;
+      });
   },
-  
+
   getCardImage: function (userID) {
     return fetch(`${API}/cards/getcard/${userID}`, {
       method: 'GET',
@@ -428,7 +422,7 @@ const apiRequests = {
         // ADD THIS THROW error
         throw error;
       });
-    },
+  },
 
   getRequests: function (userID) {
     return fetch(`${API}/requests/get`, {

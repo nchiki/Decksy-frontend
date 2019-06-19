@@ -26,10 +26,18 @@ export default class TemplatesGallery extends React.Component {
     selected: null
   }
 
+  componentDidMount() {
+     const { navigation } = this.props;
+
+     navigation.setParams({
+       save: this.save
+     });
+   }
+
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
     return {
-      title: 'Gallery of templates',
+      title: 'Templates',
       headerTitleStyle: {
         fontSize: 25
       },
@@ -40,21 +48,13 @@ export default class TemplatesGallery extends React.Component {
               name={Platform.OS === "ios" ? "ios-checkmark" : "md-checkmark"}
               size={41}
               color='dodgerblue'
-              onPress={()=> params.save()}
+              onPress={params.save}
             />
 
       )
   };
 }
 
-  componentDidMount() {
-    const { navigation } = this.props;
-    navigation.setParams({
-      save: this.save
-    });
-    const details = navigation.getParam('details', 'NULL');
-    this.setState({details: details});
-  }
   renderPlaceholder = () => {
     <View style={{flex:1}}>
         <View style={styles.containerStyle}>
@@ -65,14 +65,14 @@ export default class TemplatesGallery extends React.Component {
   _renderItem = (item) => {
     const image = templateUtils.setImage(item);
     const templateStyle = templateUtils.setStyle(item);
-    const det = this.state.details;
+    const det = global.details;
     let backgroundColor = 'white';
     if(this.state.selected && this.state.selected == item) {
       backgroundColor = 'grey';
     }
     return (
       <View style={{flex:1, margin:1, backgroundColor:backgroundColor}}>
-    <TouchableOpacity style={styles.card} onPress={() => 
+    <TouchableOpacity style={styles.card} onPress={() =>
       this.setState({selected: item})}>
             <ImageBackground source={image} style={styles.containerStyle}>
               <View style={styles.containerStyle}>
@@ -92,13 +92,26 @@ export default class TemplatesGallery extends React.Component {
   }
 
   save = async (navigation) => {
+
+    /* If there's no template selected then ignore it */
+    if (!this.state.selected) {
+      this.props.navigation.goBack();
+      return;
+    }
+
     console.log('fromLogin (gallery) is: ' + global.fromLogin)
     apiRequests.setCard(global.userID, this.state.selected);
-    const det = await apiRequests.getUserDetails(global.userID);
-    this.setState({ selected: null, details: det });
-    global.details = det;
-    global.fromLogin = true;
-    alert('Saved!')
+    global.details.card = this.state.selected;
+    let details = global.details;
+    this.setState({ saved: true, details: details });
+
+    let cb = this.props.navigation.getParam('cb', null);
+
+    if (cb) {
+      setTimeout(cb, 20);
+    }
+
+    this.props.navigation.goBack();
   }
 
   setTemplate = () => {

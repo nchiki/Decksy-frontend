@@ -43,7 +43,7 @@ export default class LoginScreen extends Component {
       details.card = 2;
     }
     if(details.card == 1) {
-      global.picture = await apiRequests.getCardImage(global.userID);
+      global.picture = `https://rolodex.tk/api/cards/getcard/${global.userID}`;
     }
     global.details = details;
     if(requests && requests.length > 0) { global.requests = requests;} else {global.requests = null;}
