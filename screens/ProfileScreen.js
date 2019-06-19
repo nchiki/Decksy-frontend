@@ -169,7 +169,7 @@ export default class ProfileScreen extends React.Component {
     this.refresh = false;
 
     let defaultComponent = (
-      <View style={{ flexDirection: 'row', justifyContent: 'center', top: 50 }}>
+      <View style={{ flexDirection: 'row', justifyContent: 'center', bottom: 50, top: 10 }}>
         <TouchableOpacity
           style ={[styles.buttonSaveContainer, {width: 100, height: 50}]}
           onPress={this.handleEdit}>
@@ -186,15 +186,15 @@ export default class ProfileScreen extends React.Component {
     );
 
     let saveComponent = (
-      <View style={{ flexDirection: 'row', justifyContent: 'space-around', top: 50}}>
-        <TouchableOpacity onPress={this.showGallery}>
-          <Ionicons name='ios-apps' size={52} color='#2970FF'/>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around',}}>
+        <TouchableOpacity style={[styles.buttonSaveContainer, {width: 50, height: 50}]} onPress={this.showGallery}>
+          <Ionicons name='ios-apps' size={30} color='white'/>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.buttonSaveContainer, {width: 150, height: 50}]} onPress={this.saveCard} >
           <Text style={{ fontSize: 20, color: 'white' }}> Save Card </Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this._pickImage}>
-          <Ionicons name='ios-share' size={52} color='#2970FF'/>
+        <TouchableOpacity style={[styles.buttonSaveContainer, {width: 50, height: 50}]} onPress={this._pickImage}>
+          <Ionicons name='ios-share' size={30} color='white'/>
         </TouchableOpacity>
       </View>
     )
@@ -205,6 +205,9 @@ export default class ProfileScreen extends React.Component {
           <BusinessCard details={global.details} refresh={doRefresh} />
         </View>
         { this.state.editing ? saveComponent :defaultComponent}
+        <View style={{flex: 1, top: 30}} >
+        <BusinessCard details={global.details} refresh={doRefresh} />
+        </View>
         <Links />
       </ScrollView >
     );
