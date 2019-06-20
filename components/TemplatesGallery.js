@@ -40,7 +40,7 @@ export default class TemplatesGallery extends React.Component {
               name={Platform.OS === "ios" ? "ios-checkmark" : "md-checkmark"}
               size={41}
               color='dodgerblue'
-              onPress={this.save}
+              onPress={params.save}
             />
 
       )
@@ -50,6 +50,10 @@ export default class TemplatesGallery extends React.Component {
   componentDidMount() {
     const details = this.props.navigation.getParam('details', 'NULL');
     this.setState({details: details});
+    const { navigation } = this.props;
+    navigation.setParams({
+        save:  () => this.save(navigation)
+    })
   }
 
   renderPlaceholder = () => {
