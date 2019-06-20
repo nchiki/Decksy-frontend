@@ -155,7 +155,7 @@ export default class ProfileScreen extends React.Component {
     apiRequests.addCardImage(data);
     apiRequests.setCard(global.userID, 1);
 
-    console.log("updating picture");
+ 
     global.details.card = 1;
     this.refresh = true;
 

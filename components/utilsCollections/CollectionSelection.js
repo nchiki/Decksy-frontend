@@ -30,7 +30,7 @@ export default class CollectionSelection extends React.Component {
       static navigationOptions = ({ navigation }) => {
         const { params = {} } = navigation.state;
         return {
-          title: 'Login',
+          title: 'Cards',
           headerTitleStyle: {
             fontSize: 25
           },

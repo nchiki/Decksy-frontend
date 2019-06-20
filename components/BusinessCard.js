@@ -40,14 +40,14 @@ export default class BusinessCard extends React.Component {
 
 displayCard(props) {
 
-  console.log(`details: ${JSON.stringify(props.details)}`);
+ 
 
     if(props.details.card === 1) {
       let url = `https://rolodex.tk/api/cards/getcard/${props.details.user}`;
-      console.log("updating ")
+     
 
       if (props.refresh) {
-        console.log("refreshing");
+        
         return (
           <Image key={new Date()} source={{ uri: url }} style={{ width: 350, height: 200 }} />
         )

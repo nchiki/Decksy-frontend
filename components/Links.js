@@ -82,7 +82,6 @@ export default class Links extends React.Component {
   }
 
   deleteLinkPress = async (link) => {
-    console.log(`deleting ${link}`);
     apiRequests.removeLink(link.link);
 
     let newLinks = [];
@@ -105,10 +104,9 @@ export default class Links extends React.Component {
   }
 
   editLinkPress = (link) => {
-    console.log(`editing ${JSON.stringify(link)}`);
-
+  
     if (Platform.OS != 'ios') {
-      console.log('Siike you thought?')
+     
       return;
     }
 

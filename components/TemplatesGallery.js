@@ -99,7 +99,7 @@ export default class TemplatesGallery extends React.Component {
       return;
     }
 
-    console.log('fromLogin (gallery) is: ' + global.fromLogin)
+
     apiRequests.setCard(global.userID, this.state.selected);
     global.details.card = this.state.selected;
     let details = global.details;
